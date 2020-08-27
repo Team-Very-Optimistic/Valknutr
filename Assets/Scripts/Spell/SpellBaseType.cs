@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public abstract class SpellBaseType
 {
-    private SpellObject _objectForSpell; //can be anything
+    
+    [SerializeField]
+    public GameObject _objectForSpell; //can be anything
+    [SerializeField]
+    public Vector3 _posDiff;
+    
     
     
 
-    protected abstract void SpellBehaviour();
+    public abstract void SpellBehaviour(Spell spell);
 
 }
