@@ -18,19 +18,23 @@ public class Spell
     }
 
     [SerializeField] public SpellProperties _spellProperties =  new SpellProperties();
-    
+
     public void CastSpell(Vector3 mouseDirection = new Vector3())
     {
+        _spellBaseType._posDiff = mouseDirection;
+        SpellModifier.SpellChain spell = new SpellModifier.SpellChain(()   => _spellBaseType.SpellBehaviour(this));
+        
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
                 modifier.ModifySpell(this);
+                spell = modifier.ModifyBehaviour(spell);
             }
-        }
-        _spellBaseType._posDiff = mouseDirection;
-        _spellBaseType.SpellBehaviour(this);
 
+        }
+        spell.spell.Invoke();
+        
     }
     
 }

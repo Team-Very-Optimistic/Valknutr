@@ -31,5 +31,6 @@ class ProjectileSpell : SpellBaseType
             
             p.AddComponent<Projectile>().Launch(newDirection, speed);
         }
+        
     }
 }

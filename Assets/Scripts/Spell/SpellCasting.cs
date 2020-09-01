@@ -24,6 +24,7 @@ public class SpellCasting : MonoBehaviour
         var movementSpell1 = new MovementSpell();
         mainCharPos = GameManager.Instance._player.transform;
         movementSpell1.Init();
+        movementSpell._spellModifiers.Add(mod);
         movementSpell._spellBaseType = movementSpell1;
         
         var s = new ShieldSpell();
