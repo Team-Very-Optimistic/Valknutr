@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public abstract class SpellModifier
@@ -24,27 +25,42 @@ class FireMod : SpellModifier
     {
         private GameObject fire;
         private bool canSpread;
+        public bool isInitializer;
         
         private void Start()
         {
-            Debug.Log(gameObject.tag);
-            fire = SpellManager.Instance.fireObject;
-            fire = Instantiate(fire, gameObject.transform.position, gameObject.transform.rotation);
-            fire.transform.parent = gameObject.transform;
-            WaitCooldown(0.01f);
-            Destroy(fire, 2f);
-            Destroy(this, 2f);
+            if (isInitializer)
+            {
+                fire = SpellManager.Instance.fireObject;
+                fire = Instantiate(fire, gameObject.transform.position, gameObject.transform.rotation);
+                fire.AddComponent<Fire>();
+                fire.transform.SetParent(gameObject.transform);
+                Destroy(this);
+            }
+            else{
+                StartCoroutine(WaitCooldown(0.01f));
+                // Destroy(fire, 10f);
+                // Destroy(this, 1.5f);
+                Destroy(gameObject, 5f);
+            }
         }
 
+        /*
+         * This doesn't work for now because the collider only chekcs the current game object, need to create new gameobject for this.
+         */
         public void OnTriggerEnter(Collider other)
         {
             if (!canSpread) return;
+            Debug.Log(other.gameObject.tag);
+
             if (!gameObject.CompareTag(other.gameObject.tag))
             {
-                other.gameObject.AddComponent<Fire>();
+                Debug.Log(other.gameObject.tag);
+                other.gameObject.AddComponent<Fire>().isInitializer = true;
             }
-            WaitCooldown(0.1f);
+            StartCoroutine(WaitCooldown(0.1f));
         }
+       
 
         IEnumerator WaitCooldown(float cooldown)
         {
@@ -57,10 +73,25 @@ class FireMod : SpellModifier
             
         }
     }
+
     public override void ModifySpell(SpellBaseType spell)
     {
-        spell._objectForSpell.AddComponent<Fire>();
+        spell._objectForSpell.AddComponent<Fire>().isInitializer = true;
     }
+    // public override SpellBaseType ModifyBehaviour(SpellBaseType action)
+    // {
+    //     //important to make sure it doesnt cast a recursive method
+    //     Action oldBehavior = action.behaviour;
+    //     Action spell = () =>
+    //     {
+    //         var fire = action._objectForSpell.AddComponent<Fire>();
+    //         oldBehavior.Invoke();
+    //         GameManager.Destroy(fire);
+    //
+    //     };
+    //     action.behaviour = spell;
+    //     return action;
+    // }
     
 }
 class SplitShotMod : SpellModifier

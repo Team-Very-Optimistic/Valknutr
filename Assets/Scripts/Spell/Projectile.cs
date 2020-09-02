@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
     public float speed;
-    public float timeToExpire = 50f;
+    public float timeToExpire = 20f;
 
     public void Launch(Vector3 direction, float speed)
     {
@@ -22,7 +22,6 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        Debug.Log(other.gameObject.tag);
         Destroy(gameObject);
     }
 }
