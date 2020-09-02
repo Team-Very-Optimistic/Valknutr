@@ -10,31 +10,44 @@ public class Spell
     public SpellBaseType _spellBaseType;
     [SerializeField]
     public List<SpellModifier> _spellModifiers =  new List<SpellModifier>() ;
+
+    private bool isCooldown;
     
-    //Modifiable properties
-    public class SpellProperties
-    {
-        public int iterations = 1;
-    }
-
-    [SerializeField] public SpellProperties _spellProperties =  new SpellProperties();
-
     public void CastSpell(Vector3 mouseDirection = new Vector3())
     {
+        if (isCooldown) return; //On cooldown
+        
+        float totalCooldown = _spellBaseType._cooldown;
         _spellBaseType._posDiff = mouseDirection;
-        SpellModifier.SpellChain spell = new SpellModifier.SpellChain(()   => _spellBaseType.SpellBehaviour(this));
+        _spellBaseType.behaviour = () => _spellBaseType.SpellBehaviour(this);
         
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(this);
-                spell = modifier.ModifyBehaviour(spell);
+                modifier.ModifySpell(_spellBaseType);
+                _spellBaseType = modifier.ModifyBehaviour(_spellBaseType);
+                totalCooldown *= modifier._cooldownMultiplier;
             }
 
         }
-        spell.spell.Invoke();
-        
+        _spellBaseType.Cast();
+        GameManager.Instance.StartCoroutine(WaitCooldown(totalCooldown));
     }
-    
+
+    public void AddBaseType(SpellBaseType baseType)
+    {
+        _spellBaseType = baseType;
+    }
+    public void AddModifier(SpellModifier modifier)
+    {
+        _spellModifiers.Add(modifier);
+    }
+
+    IEnumerator WaitCooldown(float cooldown)
+    {
+        isCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        isCooldown = false;
+    }
 }

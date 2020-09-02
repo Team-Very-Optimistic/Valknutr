@@ -21,6 +21,8 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+
+        Debug.Log(other.gameObject.tag);
         Destroy(gameObject);
     }
 }
