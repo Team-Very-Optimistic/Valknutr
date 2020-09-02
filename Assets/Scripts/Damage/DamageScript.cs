@@ -20,24 +20,11 @@ public class DamageScript : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    public void DealDamage(Collider other)
     {
-        // If friendly projectile, check for "Enemies" tag
-        // Else, it is enemy's projectile, check for "Player" tag
-
-        if (isFriendly)
+        if(other.gameObject.GetComponent<HealthScript>() != null)
         {
-            if(other.gameObject.CompareTag("Enemies"))
-            {
-                other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
-            }
-        }
-        else
-        {
-            if(other.gameObject.CompareTag("Player"))
-            {
-                other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
-            }
+            other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
         }
     }
 
