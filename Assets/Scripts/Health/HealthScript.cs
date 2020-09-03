@@ -6,17 +6,16 @@ public class HealthScript : MonoBehaviour
 {
     [SerializeField]
     private float currentHealth = 10;
-
-    public GameObject damageTextPrefab;
+    private GameObject damageTextPrefab;
 
     void Start()
     {
-        
+        damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
     }
 
     void Update()
     {
-       
+
     }
 
     public void ApplyDamage(float damage)
