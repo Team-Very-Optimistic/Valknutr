@@ -13,6 +13,7 @@ class MovementSpell : SpellBaseType
     }
     public override void SpellBehaviour(Spell spell)
     {
+        _posDiff.y = 0;
         _rb.AddForce(_posDiff * _speed);
     }
 }
