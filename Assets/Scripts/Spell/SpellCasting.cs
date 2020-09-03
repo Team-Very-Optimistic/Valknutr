@@ -20,6 +20,7 @@ public class SpellCasting : MonoBehaviour
         
         var mod = new SplitShotMod();
         var fire = new FireMod();
+        var big = new BigMod();
 
 
         
@@ -29,17 +30,22 @@ public class SpellCasting : MonoBehaviour
         movementSpell._spellModifiers.Add(mod);
         movementSpell._spellBaseType = movementSpell1;
         movementSpell.AddModifier(fire);
+        movementSpell.AddModifier(big);
         var s = new ShieldSpell();
         s.Init();
         shieldSpell._spellBaseType = s;
         shieldSpell._spellModifiers.Add(mod);
         shieldSpell._spellModifiers.Add(fire);
+        shieldSpell.AddModifier(big);
+
 
         var projectile = new ProjectileSpell();
         projectile.Init();
         spell._spellBaseType = projectile;
         spell._spellModifiers.Add(mod);       
         spell.AddModifier(fire);
+        spell.AddModifier(big);
+
 
         mainCam = Camera.main;
     }

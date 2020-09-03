@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 class MovementSpell : SpellBaseType
 {
@@ -14,6 +15,8 @@ class MovementSpell : SpellBaseType
     public override void SpellBehaviour(Spell spell)
     {
         _posDiff.y = 0;
+        //Todo: make dash better
+        // _objectForSpell.GetComponent<ThirdPersonCharacter>().Move(_posDiff * _speed, false, false);
         _rb.AddForce(_posDiff * _speed);
     }
 }

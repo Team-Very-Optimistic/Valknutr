@@ -18,6 +18,7 @@ public class Spell
         if (isCooldown) return; //On cooldown
         
         float totalCooldown = _spellBaseType._cooldown;
+        _spellBaseType.Init();
         _spellBaseType._posDiff = mouseDirection;
         _spellBaseType.behaviour = () => _spellBaseType.SpellBehaviour(this);
         
