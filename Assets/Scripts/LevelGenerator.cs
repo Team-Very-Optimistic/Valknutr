@@ -145,4 +145,12 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
+
+    public void RemoveRoomColliders()
+    {
+        foreach (var room in _rooms)
+        {
+            DestroyImmediate(room.GetComponent<Collider>());
+        }
+    }
 }

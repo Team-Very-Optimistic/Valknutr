@@ -26,5 +26,10 @@ public class LevelGeneratorInspector : Editor
         {
             generator.RemoveConnectedExits();
         }
+        
+        if (GUILayout.Button("Remove Colliders"))
+        {
+            generator.RemoveRoomColliders();
+        }
     }
 }
