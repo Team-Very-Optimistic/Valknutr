@@ -85,11 +85,11 @@ public class LevelGenerator : MonoBehaviour
 
         GameObject newRoom = null;
         int iterations = 100;
-
+        
+        // select random room type
+        var roomType = roomPrefabs[Random.Range(0, roomPrefabs.Length)].prefab;
         while (newRoom == null && iterations-- > 0)
         {
-            // select random room type
-            var roomType = roomPrefabs[Random.Range(0, roomPrefabs.Length)].prefab;
             var rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 4) * 90);
             print(roomType);
 
