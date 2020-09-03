@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -120,6 +121,9 @@ public class LevelGenerator : MonoBehaviour
             GenerateRooms();
 
         }
+        RemoveConnectedExits();
+        RemoveRoomColliders();
+        _rooms.First().GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     public void Cleanup()
@@ -142,6 +146,17 @@ public class LevelGenerator : MonoBehaviour
             if (exit.isConnected)
             {
                 DestroyImmediate(exit.gameObject);
+            }
+        }
+    }
+
+    public void RemoveRoomColliders()
+    {
+        foreach (var room in _rooms)
+        {
+            foreach (var component in room.GetComponents<Collider>())
+            {
+                DestroyImmediate(component);
             }
         }
     }
