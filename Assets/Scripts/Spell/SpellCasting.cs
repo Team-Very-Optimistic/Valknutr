@@ -12,6 +12,8 @@ public class SpellCasting : MonoBehaviour
     private Transform mainCharPos;
     private Camera mainCam;
 
+    public UiManager UiManager;
+
     private void Start()
     {
         movementSpell = new Spell();
@@ -48,11 +50,15 @@ public class SpellCasting : MonoBehaviour
 
 
         mainCam = Camera.main;
+
+        UiManager.keyCodeSkill1 = KeyCode.Mouse0;
+        UiManager.keyCodeSkill2 = KeyCode.Q;
+        UiManager.keyCodeSkill3 = KeyCode.Mouse1;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && UiManager.skill1.isCooldown == false)
         {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -67,17 +73,20 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 spell.CastSpell(direction.normalized);
-
+                UiManager.SetSkillCooldown(1, spell._coolDown);
+                UiManager.skill1.isCooldown = true;
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && UiManager.skill2.isCooldown == false)
         {
            
             shieldSpell.CastSpell();
+            UiManager.SetSkillCooldown(2, spell._coolDown);
+            UiManager.skill2.isCooldown = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && UiManager.skill3.isCooldown == false)
         {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -92,6 +101,8 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 movementSpell.CastSpell(direction.normalized);
+                UiManager.SetSkillCooldown(3, spell._coolDown);
+                UiManager.skill3.isCooldown = true;
             }
         }
     }
