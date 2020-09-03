@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyNavigationScript : MonoBehaviour
+public class EnemyNavigation : MonoBehaviour
 {
     private GameObject player;
     private NavMeshAgent navMeshAgent;

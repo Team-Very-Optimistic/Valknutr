@@ -3,6 +3,7 @@
 [RequireComponent(typeof(Collider))]
 public class Projectile : MonoBehaviour
 {
+    public float _damage;
     public Vector3 direction;
     public float speed;
     public float timeToExpire = 20f;
@@ -22,6 +23,9 @@ public class Projectile : MonoBehaviour
             return;
         }
 
+        var damageScript = GetComponent<Damage>();
+        damageScript.SetDamage(_damage);   
+        damageScript.DealDamage(other);
         Destroy(gameObject);
     }
 }

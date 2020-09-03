@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 7389188040908293253}
   - component: {fileID: 6989888037487065206}
   - component: {fileID: 6989888037487065201}
+  - component: {fileID: 6845507097958051061}
   m_Layer: 9
   m_Name: Spell_Projectile
   m_TagString: Projectile
@@ -106,7 +107,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7908457230315757119}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 7.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -143,3 +144,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.20211172
   m_Center: {x: 0, y: 0.1633048, z: 0}
+--- !u!114 &6845507097958051061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908457230315757119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  isFriendly: 0

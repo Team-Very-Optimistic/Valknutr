@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     [SerializeField]
-    private float currentHealth;
+    private float currentHealth = 10;
 
     void Start()
     {

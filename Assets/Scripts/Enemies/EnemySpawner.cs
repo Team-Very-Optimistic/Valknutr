@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnerScript : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     public GameObject paladinPrefab;
     public GameObject spawnLocationObject;
