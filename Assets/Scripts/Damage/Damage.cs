@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageScript : MonoBehaviour
+public class Damage : MonoBehaviour
 {
     [SerializeField]
     private float damage;
@@ -17,12 +17,12 @@ public class DamageScript : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void DealDamage(Collider other)
     {
-        if(other.gameObject.GetComponent<HealthScript>() != null)
+        if (other.gameObject.GetComponent<HealthScript>() != null)
         {
             other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
         }
