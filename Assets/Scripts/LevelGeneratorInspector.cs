@@ -21,5 +21,10 @@ public class LevelGeneratorInspector : Editor
         {
             generator.Cleanup();
         }
+        
+        if (GUILayout.Button("Remove Connected"))
+        {
+            generator.RemoveConnectedExits();
+        }
     }
 }
