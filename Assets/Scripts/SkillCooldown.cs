@@ -10,7 +10,7 @@ public class SkillCooldown : MonoBehaviour
 
     public bool isCooldown;
 
-    public float skillCooldown { get; set; }
+    public float skillCooldown = 1; //placeholder cooldown time
 
     public void RestartSkill()
     {
