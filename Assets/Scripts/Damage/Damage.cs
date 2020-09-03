@@ -10,16 +10,6 @@ public class Damage : MonoBehaviour
     [SerializeField]
     private bool isFriendly;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-
-    }
-
     public void DealDamage(Collider other)
     {
         if (other.gameObject.GetComponent<HealthScript>() != null)
