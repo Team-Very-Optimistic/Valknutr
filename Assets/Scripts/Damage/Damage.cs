@@ -3,23 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageScript : MonoBehaviour
+public class Damage : MonoBehaviour
 {
     [SerializeField]
-    private float damage;
+    private float damage = 1;
     [SerializeField]
     private bool isFriendly;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
+    
     public void DealDamage(Collider other)
     {
         if(other.gameObject.GetComponent<HealthScript>() != null)
