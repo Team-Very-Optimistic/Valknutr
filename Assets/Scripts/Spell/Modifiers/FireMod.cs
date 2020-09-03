@@ -50,7 +50,9 @@ class FireMod : SpellModifier
             {
                 var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
                 other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
-                
+                var damageScript = GetComponent<Damage>();
+                damageScript.SetDamage(1);   
+                damageScript.DealDamage(other);
             }
             StartCoroutine(WaitCooldown(0.5f));
         }

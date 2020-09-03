@@ -24,7 +24,6 @@ class ProjectileSpell : SpellBaseType
     {
 
         _posDiff.y = 0;
-        Debug.Log(_posDiff);
         for (int i = 0; i < _iterations; i++)
         {
             var p = GameObject.Instantiate(_objectForSpell, player.position + offset, Quaternion.Euler(_posDiff));

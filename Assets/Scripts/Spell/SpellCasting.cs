@@ -12,13 +12,14 @@ public class SpellCasting : MonoBehaviour
     private Transform mainCharPos;
     private Camera mainCam;
 
-    public UiManager UiManager;
+    public UiManager uiManager;
 
     private void Start()
     {
         movementSpell = new Spell();
         spell = new Spell();
         shieldSpell = new Spell();
+        
         
         var mod = new SplitShotMod();
         var fire = new FireMod();
@@ -33,6 +34,7 @@ public class SpellCasting : MonoBehaviour
         movementSpell._spellBaseType = movementSpell1;
         movementSpell.AddModifier(fire);
         movementSpell.AddModifier(big);
+        
         var s = new ShieldSpell();
         s.Init();
         shieldSpell._spellBaseType = s;
@@ -50,15 +52,12 @@ public class SpellCasting : MonoBehaviour
 
 
         mainCam = Camera.main;
-
-        UiManager.keyCodeSkill1 = KeyCode.Mouse0;
-        UiManager.keyCodeSkill2 = KeyCode.Q;
-        UiManager.keyCodeSkill3 = KeyCode.Mouse1;
+        uiManager = UiManager.Instance;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && UiManager.skill1.isCooldown == false)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -73,20 +72,20 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 spell.CastSpell(direction.normalized);
-                UiManager.SetSkillCooldown(1, spell._coolDown);
-                UiManager.skill1.isCooldown = true;
+                uiManager.SetSkillCooldown(1, spell._coolDown);
+                uiManager.skill1.isCooldown = true;
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.Q) && UiManager.skill2.isCooldown == false)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
            
             shieldSpell.CastSpell();
-            UiManager.SetSkillCooldown(2, spell._coolDown);
-            UiManager.skill2.isCooldown = true;
+            uiManager.SetSkillCooldown(2, spell._coolDown);
+            uiManager.skill2.isCooldown = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && UiManager.skill3.isCooldown == false)
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -101,8 +100,8 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 movementSpell.CastSpell(direction.normalized);
-                UiManager.SetSkillCooldown(3, spell._coolDown);
-                UiManager.skill3.isCooldown = true;
+                uiManager.SetSkillCooldown(3, spell._coolDown);
+                uiManager.skill3.isCooldown = true;
             }
         }
     }
