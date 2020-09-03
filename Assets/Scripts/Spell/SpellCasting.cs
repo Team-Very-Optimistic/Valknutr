@@ -1,0 +1,110 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpellCasting : MonoBehaviour
+{
+    public Spell spell;
+    public Spell movementSpell;
+    public Spell shieldSpell;
+    public LayerMask planeLayer;
+    private Transform mainCharPos;
+    private Camera mainCam;
+
+    public UiManager UiManager;
+
+    private void Start()
+    {
+        movementSpell = new Spell();
+        spell = new Spell();
+        shieldSpell = new Spell();
+        
+        var mod = new SplitShotMod();
+        var fire = new FireMod();
+        var big = new BigMod();
+
+
+        
+        var movementSpell1 = new MovementSpell();
+        mainCharPos = GameManager.Instance._player.transform;
+        movementSpell1.Init();
+        movementSpell._spellModifiers.Add(mod);
+        movementSpell._spellBaseType = movementSpell1;
+        movementSpell.AddModifier(fire);
+        movementSpell.AddModifier(big);
+        var s = new ShieldSpell();
+        s.Init();
+        shieldSpell._spellBaseType = s;
+        shieldSpell._spellModifiers.Add(mod);
+        shieldSpell._spellModifiers.Add(fire);
+        shieldSpell.AddModifier(big);
+
+
+        var projectile = new ProjectileSpell();
+        projectile.Init();
+        spell._spellBaseType = projectile;
+        spell._spellModifiers.Add(mod);       
+        spell.AddModifier(fire);
+        spell.AddModifier(big);
+
+
+        mainCam = Camera.main;
+
+        UiManager.keyCodeSkill1 = KeyCode.Mouse0;
+        UiManager.keyCodeSkill2 = KeyCode.Q;
+        UiManager.keyCodeSkill3 = KeyCode.Mouse1;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && UiManager.skill1.isCooldown == false)
+        {
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int maskOfPlane = 1 << planeLayer;
+            if (Physics.Raycast(ray, out hit,30000f, maskOfPlane))
+            {
+                //one of coordiantes being always zero for aligned plane
+
+                var position = hit.point; //this is relative to 0,0,0
+
+
+                //relative to a gameObject other
+                Vector3 direction = position - mainCharPos.position;
+                spell.CastSpell(direction.normalized);
+                UiManager.SetSkillCooldown(1, spell._coolDown);
+                UiManager.skill1.isCooldown = true;
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Q) && UiManager.skill2.isCooldown == false)
+        {
+           
+            shieldSpell.CastSpell();
+            UiManager.SetSkillCooldown(2, spell._coolDown);
+            UiManager.skill2.isCooldown = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && UiManager.skill3.isCooldown == false)
+        {
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int maskOfPlane = 1 << planeLayer;
+            if (Physics.Raycast(ray, out hit, 30000f, maskOfPlane))
+            {
+                //one of coordiantes being always zero for aligned plane
+
+                var position = hit.point; //this is relative to 0,0,0
+
+
+                //relative to a gameObject other
+                Vector3 direction = position - mainCharPos.position;
+                movementSpell.CastSpell(direction.normalized);
+                UiManager.SetSkillCooldown(3, spell._coolDown);
+                UiManager.skill3.isCooldown = true;
+            }
+        }
+    }
+}
+    
