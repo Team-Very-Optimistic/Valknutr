@@ -6,7 +6,7 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField]
-    private float damage;
+    private float damage = 1;
     [SerializeField]
     private bool isFriendly;
 
