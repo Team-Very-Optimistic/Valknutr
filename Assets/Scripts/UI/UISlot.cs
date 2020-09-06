@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-class UISlot : MonoBehaviour, IDropHandler
+public class UISlot : MonoBehaviour, IDropHandler
 {
     private UIItem slottedItem;
     public void OnDrop(PointerEventData eventData)
@@ -17,5 +17,20 @@ class UISlot : MonoBehaviour, IDropHandler
             rectTransform.position =
                 GetComponent<RectTransform>().position;
         }
+    }
+
+    public void Slot(UIItem uiItem)
+    {
+        slottedItem = uiItem;
+        uiItem.isSlotted = true;
+        var rectTransform =uiItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(transform, true);
+        rectTransform.position =
+            GetComponent<RectTransform>().position;
+    }
+    
+    public bool IsSlotted()
+    {
+        return slottedItem.isSlotted;
     }
 }

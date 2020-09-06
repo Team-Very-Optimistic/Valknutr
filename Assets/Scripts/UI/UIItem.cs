@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+[RequireComponent (typeof (Selectable))]
+public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private CanvasGroup _canvasGroup;
     private Vector3 _oriPos;
@@ -57,5 +58,28 @@ public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             transform.SetParent(_oriParent);
             transform.SetSiblingIndex(_siblingIndex);
         }
+    }
+
+    public override void OnSelect(BaseEventData eventData)
+    {
+        transform.localScale *= 0.8f;   
+        if (Input.GetButtonDown("Submit"))
+        {
+            Debug.Log("Submit");
+            var itemSlots = CraftMenuManager.Instance._itemSlots;
+
+            foreach (var slot in itemSlots)
+            {
+                if (!slot.IsSlotted())
+                {
+                    slot.Slot(this);
+                }
+            }
+        }
+    }
+
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        transform.localScale *= 1.25f;
     }
 }

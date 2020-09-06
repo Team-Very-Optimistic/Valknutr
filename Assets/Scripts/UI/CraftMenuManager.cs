@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CraftMenuManager : Singleton<CraftMenuManager>
 {
     public GameObject craftMenu;
     public DisplaySpells displaySpells;
+    public List<UISlot> _itemSlots;
 
     public void AddItem(SpellItem spellItem)
     {
