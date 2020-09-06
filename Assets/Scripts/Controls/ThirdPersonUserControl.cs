@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace UnityStandardAssets.Characters.ThirdPerson
-{
+using UnityStandardAssets.Characters.ThirdPerson;
+
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour
     {
@@ -35,6 +35,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+            if (Input.GetButtonDown("CraftMenu"))
+            {
+                CraftMenuManager.Instance.Display();
+            }
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
@@ -72,4 +76,4 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Jump = false;
         }
     }
-}
+

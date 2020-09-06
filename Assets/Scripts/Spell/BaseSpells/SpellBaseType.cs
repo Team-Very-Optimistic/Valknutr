@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public abstract class SpellBaseType
+public abstract class SpellBaseType : SpellElement 
 {
     [SerializeField]
     public GameObject _objectForSpell; //can be anything

@@ -5,4 +5,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject _player;
+    
+    
 }
