@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu]
 class ProjectileSpell : SpellBaseType
 {
     private Transform player;
