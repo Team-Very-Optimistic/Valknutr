@@ -45,6 +45,8 @@ public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         _siblingIndex = transform.GetSiblingIndex();
         transform.SetParent(CraftMenuManager.Instance.transform);
         _canvasGroup.blocksRaycasts = false;
+        isSlotted = false;
+        
     }
 
     public void OnEndDrag(PointerEventData eventData)

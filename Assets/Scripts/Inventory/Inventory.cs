@@ -8,7 +8,16 @@ public class Inventory : Singleton<Inventory>
 
     public void Start()
     {
-        //_spellItems = new List<SpellItem>();
+        _inventoryUI = CraftMenuManager.Instance;
+        if(_spellItems == null)
+            _spellItems = new List<SpellItem>();
+        else
+        {
+            foreach (var i in _spellItems)
+            {
+               _inventoryUI.AddItem(i);
+            }
+        }
     }
 
     public void Add(SpellItem spellItem)
