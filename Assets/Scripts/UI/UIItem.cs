@@ -14,7 +14,8 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
     public bool isSlotted;
     private int _siblingIndex;
     public SpellItem _spellItem;
-    
+    private bool selected;
+
     private void Start()
     {
         _oriParent = transform.parent;
@@ -62,8 +63,13 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
 
     public override void OnSelect(BaseEventData eventData)
     {
-        transform.localScale *= 0.8f;   
-        if (Input.GetButtonDown("Submit"))
+        base.OnSelect(eventData);
+        selected = true;
+    }
+
+    public void Update()
+    {
+        if (selected && Input.GetButtonDown("Submit"))
         {
             Debug.Log("Submit");
             var itemSlots = CraftMenuManager.Instance._itemSlots;
@@ -73,6 +79,8 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
                 if (!slot.IsSlotted())
                 {
                     slot.Slot(this);
+                    break;
+                    
                 }
             }
         }
@@ -80,6 +88,7 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
 
     public override void OnDeselect(BaseEventData eventData)
     {
-        transform.localScale *= 1.25f;
+        base.OnDeselect(eventData);
+        selected = false;
     }
 }
