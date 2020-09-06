@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -11,13 +12,17 @@ public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     private Transform _oriParent;
     public bool isSlotted;
     private int _siblingIndex;
-    
+    public SpellItem _spellItem;
     
     private void Start()
     {
         _oriParent = transform.parent;
         _oriPos = transform.position;
         _canvasGroup = GetComponent<CanvasGroup>();
+        if (_spellItem != null)
+        {
+            GetComponent<Image>().sprite = _spellItem._UIsprite;
+        }
     }
 
 

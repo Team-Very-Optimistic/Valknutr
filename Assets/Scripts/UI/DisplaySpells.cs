@@ -7,24 +7,35 @@ public class DisplaySpells : MonoBehaviour
 {
     public GameObject prefab; // This is our prefab object that will be exposed in the inspector
 
-    public int numberToCreate; // number of objects to create. Exposed in inspector
+
+    public List<SpellItem> _spellItems;
 
     void Start()
     {
         Populate();
     }
+    
+    
     void Populate()
     {
         GameObject newObj; // Create GameObject instance
 
-        for (int i = 0; i < numberToCreate; i++)
+        foreach (var spellItem in _spellItems)
         {
             // Create new instances of our prefab until we've created as many as we specified
             newObj = (GameObject)Instantiate(prefab, transform);
-			
-            // Randomize the color of our image
-            newObj.GetComponent<Image>().color = Random.ColorHSV(); 
+            newObj.GetComponent<UIItem>()._spellItem = spellItem;
         }
 
+    }
+
+    public void RemoveItem(SpellItem spellItem)
+    {
+        _spellItems.Remove(spellItem);
+    }
+
+    public void AddItem(SpellItem spellItem)
+    {
+        _spellItems.Add(spellItem);
     }
 }

@@ -6,6 +6,8 @@ public abstract class SpellBaseType : SpellElement
 {
     [SerializeField]
     public GameObject _objectForSpell; //can be anything
+
+    public GameObject _objectCollided; // can use this to make other people big
     [SerializeField]
     public Vector3 _posDiff;
     public Action behaviour;
