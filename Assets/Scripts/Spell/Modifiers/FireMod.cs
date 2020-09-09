@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 class FireMod : SpellModifier
@@ -44,27 +45,31 @@ class FireMod : SpellModifier
         public void OnTriggerEnter(Collider other)
         {
             if (!canSpread) return;
-            Debug.Log(other.gameObject.tag);
 
             if (!gameObject.CompareTag(other.gameObject.tag))
             {
                 var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
-                Debug.Log(other.gameObject.tag);
                 other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
+                var damageScript = GetComponent<Damage>();
+                damageScript.SetDamage(1);   
+                damageScript.DealDamage(other);
             }
-            StartCoroutine(WaitCooldown(0.3f));
+            StartCoroutine(WaitCooldown(0.5f));
         }
-       
-
+        
         IEnumerator WaitCooldown(float cooldown)
         {
             canSpread = false;
             yield return new WaitForSeconds(cooldown);
             canSpread = true;
         }
-        public void Update()
+
+        /*
+         * Prevent explosive behaviour
+         */
+        public void OnDestroy()
         {
-            
+            StopAllCoroutines();
         }
     }
 
