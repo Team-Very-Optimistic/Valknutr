@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Spell : SpellItem
+public class Spell
 {
     [SerializeField]
     public SpellBaseType _spellBaseType;

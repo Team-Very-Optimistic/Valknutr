@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using Object = System.Object;
+﻿using Object = System.Object;
 
-public abstract class SpellModifier : SpellElement
+public abstract class SpellModifier
 {
     public float _cooldownMultiplier = 1;
 

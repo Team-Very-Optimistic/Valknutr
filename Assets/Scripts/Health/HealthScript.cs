@@ -6,24 +6,19 @@ public class HealthScript : MonoBehaviour
 {
     [SerializeField]
     private float currentHealth = 10;
-    private GameObject damageTextPrefab;
 
     void Start()
     {
-        damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
+        
     }
 
     void Update()
     {
-
+        
     }
 
     public void ApplyDamage(float damage)
     {
-        Quaternion rotation = Quaternion.LookRotation(this.transform.position - GameObject.FindGameObjectWithTag("MainCamera").transform.position);
-        GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, rotation, this.gameObject);
-
         currentHealth -= damage;
 
         if (currentHealth <= 0.0f)

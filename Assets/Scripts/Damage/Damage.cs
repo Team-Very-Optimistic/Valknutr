@@ -9,10 +9,10 @@ public class Damage : MonoBehaviour
     private float damage = 1;
     [SerializeField]
     private bool isFriendly;
-
+    
     public void DealDamage(Collider other)
     {
-        if (other.gameObject.GetComponent<HealthScript>() != null)
+        if(other.gameObject.GetComponent<HealthScript>() != null)
         {
             other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
         }

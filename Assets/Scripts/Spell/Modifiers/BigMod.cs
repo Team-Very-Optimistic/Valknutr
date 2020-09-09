@@ -11,10 +11,9 @@ class BigMod : SpellModifier
         Action oldBehavior = action.behaviour;
         Action spell = () =>
         {
-            float sizeChange = Math.Max(1.5f, 3f * action._cooldown);
-            action._objectForSpell.transform.localScale *= sizeChange;
+            action._objectForSpell.transform.localScale *= 1.5f;
             oldBehavior.Invoke();
-            GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, action._objectForSpell.transform.localScale / sizeChange));
+            GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, action._objectForSpell.transform.localScale / 1.5f));
 
         };
         action.behaviour = spell;

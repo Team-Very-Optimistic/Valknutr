@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -43,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
         var validExitName = validExit.name;
 
         var transform1 = sourceExit.transform;
-        var offset = transform1.position + transform1.forward * 0.2f - rotation * validExit.transform.localPosition;
+        var offset = transform1.position + transform1.forward * 0.25f - rotation * validExit.transform.localPosition;
         var newRoom = GenerateRoom(roomPrefab, offset, rotation);
         if (newRoom == null) return newRoom;
         
@@ -121,9 +120,6 @@ public class LevelGenerator : MonoBehaviour
             GenerateRooms();
 
         }
-        RemoveConnectedExits();
-        RemoveRoomColliders();
-        _rooms.First().GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     public void Cleanup()
@@ -137,27 +133,5 @@ public class LevelGenerator : MonoBehaviour
 
         _rooms.Clear();
         _exits.Clear();
-    }
-
-    public void RemoveConnectedExits()
-    {
-        foreach (var exit in _exits)
-        {
-            if (exit.isConnected)
-            {
-                DestroyImmediate(exit.gameObject);
-            }
-        }
-    }
-
-    public void RemoveRoomColliders()
-    {
-        foreach (var room in _rooms)
-        {
-            foreach (var component in room.GetComponents<Collider>())
-            {
-                DestroyImmediate(component);
-            }
-        }
     }
 }
