@@ -14,7 +14,7 @@ class ProjectileSpell : SpellBaseType
     {
         _speed = 25f;
         _cooldown = 0.05f;
-        offset = new Vector3(0f, 1.5f, 0f);
+        offset = new Vector3(0f, 0.85f, 0f);
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
         player = GameManager.Instance._player.transform;

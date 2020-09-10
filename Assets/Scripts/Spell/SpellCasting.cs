@@ -48,7 +48,6 @@ public class SpellCasting : MonoBehaviour
         spell._spellBaseType = projectile;
         spell._spellModifiers.Add(mod);       
         spell.AddModifier(fire);
-        spell.AddModifier(big);
 
 
         mainCam = Camera.main;
