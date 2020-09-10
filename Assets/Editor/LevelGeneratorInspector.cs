@@ -31,5 +31,10 @@ public class LevelGeneratorInspector : Editor
         {
             generator.RemoveRoomColliders();
         }
+        
+        if (GUILayout.Button("Rebuild Navmesh"))
+        {
+            generator.RebuildNavMesh();
+        }
     }
 }

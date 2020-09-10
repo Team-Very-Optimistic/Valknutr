@@ -17,12 +17,10 @@ public class LevelGenerator : MonoBehaviour
 {
     public WeightedPrefab[] roomPrefabs;
     public int numberOfRooms = 5;
-    [SerializeField]
-    private List<GameObject> _rooms = new List<GameObject>();
-    [SerializeField]
-    private List<RoomExit> _exits = new List<RoomExit>();
+    [SerializeField] private List<GameObject> _rooms = new List<GameObject>();
+    [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     private bool _isGenerating = false;
-    private Random _random = new Random();
+    [SerializeField] private NavMeshSurface _navMeshSurface;
 
     // public void Update()
     // {
@@ -35,8 +33,9 @@ public class LevelGenerator : MonoBehaviour
     private GameObject GenerateRoom(GameObject roomPrefab, RoomExit sourceExit, Quaternion rotation)
     {
         var newRoomExits = roomPrefab.GetComponent<Room>().exits;
-        
-        var validExitCandidates = newRoomExits.Where(otherExit => Vector3.Angle(sourceExit.transform.forward, rotation * -otherExit.transform.forward) < 15).ToList();
+
+        var validExitCandidates = newRoomExits.Where(otherExit =>
+            Vector3.Angle(sourceExit.transform.forward, rotation * -otherExit.transform.forward) < 15).ToList();
         if (validExitCandidates.Count == 0) return null;
         var index = Random.Range(0, validExitCandidates.Count);
         var validExit = validExitCandidates.ElementAt(index);
@@ -44,37 +43,40 @@ public class LevelGenerator : MonoBehaviour
 
         var transform1 = sourceExit.transform;
         // todo: account for scaling
-        var offset = transform1.position - Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
+        var offset = transform1.position -
+                     Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
         var newRoom = GenerateRoom(roomPrefab, offset, rotation);
         if (newRoom == null) return newRoom;
-        
-        var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName).GetComponent<RoomExit>();
+
+        var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName)
+            .GetComponent<RoomExit>();
         sourceExit.Connect(newRoomExit);
         sourceExit.isOpen = true;
         newRoomExit.isOpen = true;
         return newRoom;
     }
-    
+
     private GameObject GenerateRoom(GameObject roomPrefab, Vector3 position, Quaternion rotation)
     {
         var newRoom = Instantiate(roomPrefab, position, rotation, transform);
-        
+
         if (CheckIntersect(newRoom))
         {
             DestroyImmediate(newRoom);
             print("failed");
             return null;
         }
-        
+
         var newExits = newRoom.GetComponent<Room>().exits;
         _rooms.Add(newRoom);
         foreach (var newExit in newExits)
         {
             _exits.Add(newExit.GetComponent<RoomExit>());
         }
+
         return newRoom;
     }
-    
+
     public void GenerateRooms()
     {
         // Generate entrance
@@ -86,21 +88,21 @@ public class LevelGenerator : MonoBehaviour
 
         GameObject newRoom = null;
         int iterations = 100;
-        
+
         // select random room type
         var roomType = roomPrefabs[Random.Range(0, roomPrefabs.Length)].prefab;
         while (newRoom == null && iterations-- > 0)
         {
             var rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 4) * 90);
-            print(roomType);
+            // print(roomType);
 
             var validExits = _exits.Where(exit => !exit.isConnected);
-            print(validExits);
+            // print(validExits);
             // var targetExit = validExits.[Random.Range(0, validExits.Length)];
             var roomExits = validExits.ToList();
             var index = Random.Range(0, roomExits.Count());
             var targetExit = roomExits.ElementAt(index);
-            print("generating room");
+            // print("generating room");
             newRoom = GenerateRoom(roomType, targetExit, rotation);
         }
     }
@@ -119,11 +121,11 @@ public class LevelGenerator : MonoBehaviour
         for (var i = 0; i < numberOfRooms; i++)
         {
             GenerateRooms();
-
         }
+
         RemoveRoomColliders();
-        _rooms.First().GetComponent<NavMeshSurface>().BuildNavMesh();
         PlaceExit();
+        _navMeshSurface.BuildNavMesh();
     }
 
     public void Cleanup()
@@ -138,7 +140,7 @@ public class LevelGenerator : MonoBehaviour
         _rooms.Clear();
         _exits.Clear();
 
-        while(transform.childCount > 0)
+        while (transform.childCount > 0)
         {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }
@@ -169,5 +171,10 @@ public class LevelGenerator : MonoBehaviour
     public void PlaceExit()
     {
         //todo
+    }
+
+    public void RebuildNavMesh()
+    {
+        _navMeshSurface.BuildNavMesh();
     }
 }

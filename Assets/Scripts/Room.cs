@@ -7,4 +7,6 @@ public class Room : MonoBehaviour
 {
     public GameObject[] exits;
     public GameObject[] spawnZones;
+    public bool isActive = false;
+    public bool isCleared = false;
 }

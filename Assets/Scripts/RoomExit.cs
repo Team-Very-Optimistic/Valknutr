@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Assertions;
 
 public class RoomExit : MonoBehaviour
@@ -13,12 +14,14 @@ public class RoomExit : MonoBehaviour
     private RoomExit _connectedExit;
     private Collider _collider;
     private Renderer _renderer;
+    private NavMeshObstacle _navMeshObstacle;
 
     private void Start()
     {
         _originalPosition = transform.position;
         _collider = GetComponentInChildren<Collider>();
         _renderer = GetComponentInChildren<Renderer>();
+        _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
 
         if (isOpen)
         {
@@ -45,17 +48,18 @@ public class RoomExit : MonoBehaviour
         other.isConnected = true;
     }
 
-    public void Open()
+    public void Open(bool rebuildNavMesh = true)
     {
         if (isLocked) return;
-        
+
         isOpen = true;
         _renderer.enabled = false;
         _collider.enabled = false;
-        
+        _navMeshObstacle.enabled = false;
+
         // Open other door
         if (!isConnected || _connectedExit == null || _connectedExit.isOpen) return;
-        _connectedExit.Open();
+        _connectedExit.Open(false);
     }
 
     public void Close()
@@ -65,8 +69,9 @@ public class RoomExit : MonoBehaviour
         isOpen = false;
         _renderer.enabled = true;
         _collider.enabled = true;
+        _navMeshObstacle.enabled = true;
 
-        // Open other door
+        // Close other door
         if (!isConnected || _connectedExit == null || !_connectedExit.isOpen) return;
         _connectedExit.Close();
     }
