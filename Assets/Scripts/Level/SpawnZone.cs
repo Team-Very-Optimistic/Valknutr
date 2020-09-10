@@ -28,7 +28,7 @@ public class SpawnZone : MonoBehaviour
         {
             var facing = Random.insideUnitCircle;
             var rotation = Quaternion.Euler(new Vector3(facing.x, 0, facing.y));
-            Instantiate(enemyPrefab, transform.position, rotation, transform);
+            Instantiate(enemyPrefab, transform.position, rotation);
         }
     }
 }
