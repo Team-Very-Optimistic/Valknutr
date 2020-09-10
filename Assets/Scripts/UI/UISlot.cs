@@ -12,9 +12,7 @@ public class UISlot : MonoBehaviour, IDropHandler
         {
             var uiItem = eventData.pointerDrag.GetComponent<UIItem>();
             if (uiItem == null) return;
-
             
-
             Slot(uiItem);
         }
     }
@@ -25,12 +23,25 @@ public class UISlot : MonoBehaviour, IDropHandler
         {
             return false;
         }
+
+        if (uiItem.isSlotted)
+        {
+            foreach (var slot in CraftMenuManager.Instance._itemSlots)
+            {
+                if (slot != this && uiItem == slot.slottedItem)
+                {
+                    Debug.Log("dup");
+                    slot.slottedItem = null;
+                    break;
+                    
+                }
+            }
+        }
         if (IsSlotted())
         {
             slottedItem.isSlotted = false;
             slottedItem.OnEndDrag(null);
         }
-        
         slottedItem = uiItem;
         uiItem.isSlotted = true;
         var rectTransform =uiItem.GetComponent<RectTransform>();
