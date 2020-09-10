@@ -79,7 +79,7 @@ public class SpellCasting : MonoBehaviour
         {
            
             shieldSpell.CastSpell();
-            uiManager.SetSkillCooldown(2, spell._coolDown);
+            uiManager.SetSkillCooldown(2, shieldSpell._coolDown);
             uiManager.skill2.isCooldown = true;
         }
 
@@ -98,7 +98,7 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 movementSpell.CastSpell(direction.normalized);
-                uiManager.SetSkillCooldown(3, spell._coolDown);
+                uiManager.SetSkillCooldown(3, movementSpell._coolDown);
                 uiManager.skill3.isCooldown = true;
             }
         }
