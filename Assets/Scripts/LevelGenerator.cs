@@ -44,15 +44,14 @@ public class LevelGenerator : MonoBehaviour
 
         var transform1 = sourceExit.transform;
         // todo: account for scaling
-        var offset = transform1.position + transform1.forward * 0.2f - Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
+        var offset = transform1.position - Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
         var newRoom = GenerateRoom(roomPrefab, offset, rotation);
         if (newRoom == null) return newRoom;
         
         var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName).GetComponent<RoomExit>();
-        print(newRoomExit);
-        newRoomExit.isConnected = true;
-        sourceExit.isConnected = true;
-
+        sourceExit.Connect(newRoomExit);
+        sourceExit.isOpen = true;
+        newRoomExit.isOpen = true;
         return newRoom;
     }
     
@@ -122,9 +121,9 @@ public class LevelGenerator : MonoBehaviour
             GenerateRooms();
 
         }
-        RemoveConnectedExits();
         RemoveRoomColliders();
         _rooms.First().GetComponent<NavMeshSurface>().BuildNavMesh();
+        PlaceExit();
     }
 
     public void Cleanup()
@@ -138,6 +137,11 @@ public class LevelGenerator : MonoBehaviour
 
         _rooms.Clear();
         _exits.Clear();
+
+        while(transform.childCount > 0)
+        {
+            DestroyImmediate(transform.GetChild(0).gameObject);
+        }
     }
 
     public void RemoveConnectedExits()
@@ -160,5 +164,10 @@ public class LevelGenerator : MonoBehaviour
                 DestroyImmediate(component);
             }
         }
+    }
+
+    public void PlaceExit()
+    {
+        //todo
     }
 }
