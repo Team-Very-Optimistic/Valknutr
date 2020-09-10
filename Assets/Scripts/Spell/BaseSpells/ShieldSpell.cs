@@ -24,6 +24,7 @@ class ShieldSpell : SpellBaseType
             p.transform.RotateAround(player.position,Vector3.up, rotateBy);
             p.transform.SetParent(player);
             p.AddComponent<Shield>().SetSpeed(_speed);
+            _objectForSpell = p;
         }
     }
 }

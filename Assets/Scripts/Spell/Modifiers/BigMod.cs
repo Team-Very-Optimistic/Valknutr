@@ -12,8 +12,8 @@ class BigMod : SpellModifier
         Action spell = () =>
         {
             float sizeChange = Math.Max(1.5f, 3f * action._cooldown);
-            action._objectForSpell.transform.localScale *= sizeChange;
             oldBehavior.Invoke();
+            action._objectForSpell.transform.localScale *= sizeChange;
             GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, action._objectForSpell.transform.localScale / sizeChange));
 
         };
@@ -23,7 +23,11 @@ class BigMod : SpellModifier
 
     IEnumerator MakeSmall(GameObject obj, Vector3 size)
     {
-        if (obj.transform.localScale.magnitude > size.magnitude)
+        if (obj == null)
+        {
+            
+        }
+        else if (obj.transform.localScale.magnitude > size.magnitude)
         {
             obj.transform.localScale *= 0.95f;
             yield return new WaitForSeconds(0.15f);

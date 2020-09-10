@@ -32,6 +32,7 @@ class ProjectileSpell : SpellBaseType
                 _posDiff.y, (float) (_posDiff.x * Math.Sin(rotateBy) + _posDiff.z * Math.Cos(rotateBy)));
             
             p.AddComponent<Projectile>().Launch(newDirection, _speed);
+            _objectForSpell = p;
         }
         
     }
