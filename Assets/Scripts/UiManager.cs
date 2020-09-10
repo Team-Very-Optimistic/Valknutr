@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-public class UiManager : MonoBehaviour
+public class UiManager : Singleton<UiManager>
 {
     public int maxHealth = 100;
     public int currentHealth;
@@ -14,9 +14,6 @@ public class UiManager : MonoBehaviour
     public SkillCooldown skill2;
     public SkillCooldown skill3;
 
-    public KeyCode keyCodeSkill1;
-    public KeyCode keyCodeSkill2;
-    public KeyCode keyCodeSkill3;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +28,10 @@ public class UiManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-        }
-
         if (skill1.isCooldown == true)
         {
             skill1.UpdateSlider();
-        } 
+        }
 
         if (skill2.isCooldown == true)
         {
@@ -61,6 +53,7 @@ public class UiManager : MonoBehaviour
 
     public void SetSkillCooldown(int index, float time)
     {
+        Debug.Log(time);
         switch (index)
         {
             case 1:
