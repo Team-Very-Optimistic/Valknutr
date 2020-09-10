@@ -79,9 +79,10 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
                 if (!slot.IsSlotted())
                 {
                     var slotted = slot.Slot(this);
-                    if(slotted)
+                    if (slotted)
+                    {
                         break;
-                    
+                    }
                 }
             }
         }
