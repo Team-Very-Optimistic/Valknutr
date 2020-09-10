@@ -6,14 +6,5 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        print("trigger enter");
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        print("trigger stay");
-    }
+    public GameObject[] spawnZones;
 }
