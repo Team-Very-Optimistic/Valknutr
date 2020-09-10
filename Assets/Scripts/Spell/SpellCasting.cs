@@ -12,11 +12,14 @@ public class SpellCasting : MonoBehaviour
     private Transform mainCharPos;
     private Camera mainCam;
 
+    public UiManager uiManager;
+
     private void Start()
     {
         movementSpell = new Spell();
         spell = new Spell();
         shieldSpell = new Spell();
+        
         
         var mod = new SplitShotMod();
         var fire = new FireMod();
@@ -31,6 +34,7 @@ public class SpellCasting : MonoBehaviour
         movementSpell._spellBaseType = movementSpell1;
         movementSpell.AddModifier(fire);
         movementSpell.AddModifier(big);
+        
         var s = new ShieldSpell();
         s.Init();
         shieldSpell._spellBaseType = s;
@@ -48,6 +52,7 @@ public class SpellCasting : MonoBehaviour
 
 
         mainCam = Camera.main;
+        uiManager = UiManager.Instance;
     }
 
     void Update()
@@ -67,7 +72,8 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 spell.CastSpell(direction.normalized);
-
+                uiManager.SetSkillCooldown(1, spell._coolDown);
+                uiManager.skill1.isCooldown = true;
             }
         }
         
@@ -75,6 +81,8 @@ public class SpellCasting : MonoBehaviour
         {
            
             shieldSpell.CastSpell();
+            uiManager.SetSkillCooldown(2, spell._coolDown);
+            uiManager.skill2.isCooldown = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -92,6 +100,8 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 movementSpell.CastSpell(direction.normalized);
+                uiManager.SetSkillCooldown(3, spell._coolDown);
+                uiManager.skill3.isCooldown = true;
             }
         }
     }

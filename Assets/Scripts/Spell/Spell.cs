@@ -12,6 +12,7 @@ public class Spell
     public List<SpellModifier> _spellModifiers =  new List<SpellModifier>() ;
 
     private bool isCooldown;
+    public float _coolDown;
     
     public void CastSpell(Vector3 mouseDirection = new Vector3())
     {
@@ -33,6 +34,7 @@ public class Spell
 
         }
         _spellBaseType.Cast();
+        _coolDown = totalCooldown;
         GameManager.Instance.StartCoroutine(WaitCooldown(totalCooldown));
     }
 
