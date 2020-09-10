@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 1348619563701995208}
   - component: {fileID: 7942486447809957814}
   - component: {fileID: 8294569517920574570}
-  - component: {fileID: 1542096852631511375}
+  - component: {fileID: 8859429482449535587}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -272,8 +272,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1542096852631511375
-MeshCollider:
+--- !u!65 &8859429482449535587
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -282,10 +282,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2392440523128048349
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +598,7 @@ Transform:
   m_GameObject: {fileID: 5531430571349274628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1348619563701995208}
   - {fileID: 5075476141149643827}

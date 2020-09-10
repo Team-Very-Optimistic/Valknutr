@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5531430571349274628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4888101693438013617}
   - {fileID: 2617408929796833513}
@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 4888101693438013617}
   - component: {fileID: 4490577412585053663}
   - component: {fileID: 3032904721465862413}
+  - component: {fileID: 4336926509976834504}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -157,6 +158,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4336926509976834504
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7659056337149802126}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &9843118883709940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -616,14 +631,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2e45d0677b314b4dbef76998051682e, type: 3}
---- !u!1 &3651437502070174975 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6707649790549576536, guid: b2e45d0677b314b4dbef76998051682e, type: 3}
-  m_PrefabInstance: {fileID: 8050985869261209511}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8737233234228918072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1655701407110744223, guid: b2e45d0677b314b4dbef76998051682e, type: 3}
+  m_PrefabInstance: {fileID: 8050985869261209511}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3651437502070174975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6707649790549576536, guid: b2e45d0677b314b4dbef76998051682e, type: 3}
   m_PrefabInstance: {fileID: 8050985869261209511}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8574177012501971384
