@@ -8,9 +8,10 @@ using UnityEngine.Assertions;
 public class RoomExit : MonoBehaviour
 {
     public bool isConnected = false;
-    public bool isLocked = false;
+    public bool isLocked = true;
     public bool isOpen = false;
     private Vector3 _originalPosition;
+    [SerializeField]
     private RoomExit _connectedExit;
     private Collider _collider;
     private Renderer _renderer;
@@ -22,11 +23,6 @@ public class RoomExit : MonoBehaviour
         _collider = GetComponentInChildren<Collider>();
         _renderer = GetComponentInChildren<Renderer>();
         _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
-
-        if (isOpen)
-        {
-            Open();
-        }
     }
 
     private void OnDrawGizmos()
@@ -48,18 +44,21 @@ public class RoomExit : MonoBehaviour
         other.isConnected = true;
     }
 
-    public void Open(bool rebuildNavMesh = true)
+    public void Open()
     {
+        print("opening door " + gameObject.name);
         if (isLocked) return;
 
         isOpen = true;
         _renderer.enabled = false;
         _collider.enabled = false;
         _navMeshObstacle.enabled = false;
+        print("door unlocked");
 
         // Open other door
         if (!isConnected || _connectedExit == null || _connectedExit.isOpen) return;
-        _connectedExit.Open(false);
+        print("opening connected");
+        _connectedExit.Open();
     }
 
     public void Close()

@@ -12,7 +12,6 @@ public struct WeightedPrefab
     public GameObject prefab;
 }
 
-[ExecuteInEditMode]
 public class LevelGenerator : MonoBehaviour
 {
     public WeightedPrefab[] roomPrefabs;
@@ -22,18 +21,16 @@ public class LevelGenerator : MonoBehaviour
     private bool _isGenerating = false;
     [SerializeField] private NavMeshSurface _navMeshSurface;
 
-    // public void Update()
-    // {
-    //     if (_isGenerating && _rooms.Count < numberOfRooms)
-    //     {
-    //         GenerateRoom();
-    //     }
-    // }asd
+    private void Awake()
+    {
+        RebuildNavMesh();
+    }
 
     private GameObject GenerateRoom(GameObject roomPrefab, RoomExit sourceExit, Quaternion rotation)
     {
         var newRoomExits = roomPrefab.GetComponent<Room>().exits;
 
+        // Select an exit in the new room that faces our chosen exit
         var validExitCandidates = newRoomExits.Where(otherExit =>
             Vector3.Angle(sourceExit.transform.forward, rotation * -otherExit.transform.forward) < 15).ToList();
         if (validExitCandidates.Count == 0) return null;
@@ -42,7 +39,6 @@ public class LevelGenerator : MonoBehaviour
         var validExitName = validExit.name;
 
         var transform1 = sourceExit.transform;
-        // todo: account for scaling
         var offset = transform1.position -
                      Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
         var newRoom = GenerateRoom(roomPrefab, offset, rotation);
@@ -50,9 +46,8 @@ public class LevelGenerator : MonoBehaviour
 
         var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName)
             .GetComponent<RoomExit>();
+
         sourceExit.Connect(newRoomExit);
-        sourceExit.isOpen = true;
-        newRoomExit.isOpen = true;
         return newRoom;
     }
 
@@ -87,7 +82,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         GameObject newRoom = null;
-        int iterations = 100;
+        int iterations = 10;
 
         // select random room type
         var roomType = roomPrefabs[Random.Range(0, roomPrefabs.Length)].prefab;
@@ -123,9 +118,9 @@ public class LevelGenerator : MonoBehaviour
             GenerateRooms();
         }
 
-        RemoveRoomColliders();
+        // RemoveRoomColliders();
         PlaceExit();
-        _navMeshSurface.BuildNavMesh();
+        RebuildNavMesh();
     }
 
     public void Cleanup()

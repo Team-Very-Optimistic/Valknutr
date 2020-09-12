@@ -21,6 +21,7 @@ public class LevelExit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            print("level exit");
             // todo: level exit
         }
     }
