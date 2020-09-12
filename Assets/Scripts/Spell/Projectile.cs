@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        // Debug.Log(other.gameObject.tag + other.gameObject.name);
+
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);

@@ -53,7 +53,6 @@ public class UiManager : Singleton<UiManager>
 
     public void SetSkillCooldown(int index, float time)
     {
-        // Debug.Log(time);
         switch (index)
         {
             case 1:

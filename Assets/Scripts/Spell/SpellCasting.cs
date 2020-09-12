@@ -25,8 +25,6 @@ public class SpellCasting : MonoBehaviour
         var fire = new FireMod();
         var big = new BigMod();
 
-
-        
         var movementSpell1 = new MovementSpell();
         mainCharPos = GameManager.Instance._player.transform;
         movementSpell1.Init();
@@ -81,7 +79,7 @@ public class SpellCasting : MonoBehaviour
         {
            
             shieldSpell.CastSpell();
-            uiManager.SetSkillCooldown(2, spell._coolDown);
+            uiManager.SetSkillCooldown(2, shieldSpell._coolDown);
             uiManager.skill2.isCooldown = true;
         }
 
@@ -100,6 +98,31 @@ public class SpellCasting : MonoBehaviour
                 //relative to a gameObject other
                 Vector3 direction = position - mainCharPos.position;
                 movementSpell.CastSpell(direction.normalized);
+                uiManager.SetSkillCooldown(3, movementSpell._coolDown);
+                uiManager.skill3.isCooldown = true;
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            var spellsCount = Inventory.Instance._spells.Count;
+            if (spellsCount == 0)
+            {
+                return;
+            }
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int maskOfPlane = 1 << planeLayer;
+            if (Physics.Raycast(ray, out hit, 30000f, maskOfPlane))
+            {
+                //one of coordiantes being always zero for aligned plane
+
+                var position = hit.point; //this is relative to 0,0,0
+
+                var s = Inventory.Instance._spells[spellsCount - 1];
+                //relative to a gameObject other
+                Vector3 direction = position - mainCharPos.position;
+                s.CastSpell(direction.normalized);
                 uiManager.SetSkillCooldown(3, spell._coolDown);
                 uiManager.skill3.isCooldown = true;
             }
