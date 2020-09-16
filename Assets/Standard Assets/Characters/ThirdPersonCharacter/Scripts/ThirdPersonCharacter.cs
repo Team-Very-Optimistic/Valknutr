@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
@@ -15,6 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		[SerializeField] private AnimationCurve m_Curve;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -29,7 +31,27 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
+		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
+		{
+			StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
+		}
 
+		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
+		{
+			float t = 0;
+			float startTime = Time.time;
+			
+			while (t < dashTime)
+			{
+				t += Time.deltaTime;
+				Move(direction, true, false);
+				//position = Vector3.Lerp(position,position + direction * (dashSpeed * m_Curve.Evaluate(t/dashTime)), 0.5f);
+			}
+			Debug.Log(Time.time - startTime);
+			yield return null;
+		}
+
+		
 		void Start()
 		{
 			m_Animator = GetComponent<Animator>();
@@ -45,7 +67,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
-
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
