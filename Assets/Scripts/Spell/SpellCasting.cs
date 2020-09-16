@@ -31,7 +31,6 @@ public class SpellCasting : MonoBehaviour
         movementSpell._spellModifiers.Add(mod);
         movementSpell._spellBaseType = movementSpell1;
         movementSpell.AddModifier(fire);
-        movementSpell.AddModifier(big);
         
         var s = new ShieldSpell();
         s.Init();
