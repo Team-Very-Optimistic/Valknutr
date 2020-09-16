@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
+﻿using UnityStandardAssets.Characters.ThirdPerson;
 
 class MovementSpell : SpellBaseType
 {
