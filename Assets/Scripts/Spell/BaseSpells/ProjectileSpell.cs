@@ -13,7 +13,7 @@ class ProjectileSpell : SpellBaseType
     public override void Init()
     {
         _speed = 25f;
-        _cooldown = 0.05f;
+        _cooldown = 0.09f;
         offset = new Vector3(0f, 0.85f, 0f);
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;

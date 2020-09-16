@@ -8,7 +8,7 @@ class MovementSpell : SpellBaseType
     public override void Init()
     {
         _speed = 25f;
-        _cooldown = 0.5f;
+        _cooldown = 0.8f;
 
         _objectForSpell = GameManager.Instance._player;
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
