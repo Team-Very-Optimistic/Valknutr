@@ -31,6 +31,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 		private bool m_Dashing;
+		public Transform transformChild;
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -40,25 +41,28 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
 		{
+			Debug.Log("Dashing");
 			float t = 0;
-			float startTime = Time.time;
 			float timeInterval = 0.02f;
-			float rotateInterval = 360 / (dashTime / timeInterval);
 			m_Dashing = true;
-			var transformChild = GetComponentInChildren<Transform>();
+			Vector3 startRotation = transformChild.localEulerAngles;
+			Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
+			Debug.Log(direction);
+			transform.eulerAngles = new Vector3(0,direction.x * 90 + direction.z * 90,0);
 			while (t < dashTime)
 			{
 				t += timeInterval;
-				Move(direction, true, false, true);
-				var transformRotation = transformChild.rotation;
-				transformRotation.x += rotateInterval;
-				transformChild.rotation = transformRotation;
+				UpdateAnimator(direction);
+				
+				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
 				yield return new WaitForSeconds(timeInterval);
 				// var position = transform.position;
 				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				// transform.position = position;
 			}
 			m_Dashing = false;
+
 			yield return null;
 		}
 
