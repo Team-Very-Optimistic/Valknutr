@@ -5,9 +5,11 @@ public class Inventory : Singleton<Inventory>
 {
     public List<SpellItem> _spellItems;
     private CraftMenuManager _inventoryUI;
+    public List<Spell> _spells;
 
     public void Start()
     {
+        _spells = new List<Spell>();
         _inventoryUI = CraftMenuManager.Instance;
         if(_spellItems == null)
             _spellItems = new List<SpellItem>();
