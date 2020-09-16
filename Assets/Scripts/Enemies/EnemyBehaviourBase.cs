@@ -44,7 +44,6 @@ public class EnemyBehaviourBase : MonoBehaviour
 
             //Set rotation to player when fighting
             transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-
         }
     }
 }
