@@ -53,7 +53,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				t += timeInterval;
 				UpdateAnimator(direction);
-				
 				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
 				yield return new WaitForSeconds(timeInterval);
@@ -82,6 +81,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
+			Debug.Log(move);
 			if (!dashing && m_Dashing)
 			{
 				return;
