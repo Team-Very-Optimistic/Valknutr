@@ -13,7 +13,7 @@ public class UiManager : Singleton<UiManager>
     public SkillCooldown skill1;
     public SkillCooldown skill2;
     public SkillCooldown skill3;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class UiManager : Singleton<UiManager>
         if (skill1.isCooldown == true)
         {
             skill1.UpdateSlider();
-        } 
+        }
 
         if (skill2.isCooldown == true)
         {

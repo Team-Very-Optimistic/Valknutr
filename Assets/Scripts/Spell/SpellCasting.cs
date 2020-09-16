@@ -19,14 +19,14 @@ public class SpellCasting : MonoBehaviour
         movementSpell = new Spell();
         spell = new Spell();
         shieldSpell = new Spell();
-        
-        
+
+
         var mod = new SplitShotMod();
         var fire = new FireMod();
         var big = new BigMod();
 
 
-        
+
         var movementSpell1 = new MovementSpell();
         mainCharPos = GameManager.Instance._player.transform;
         movementSpell1.Init();
@@ -34,7 +34,7 @@ public class SpellCasting : MonoBehaviour
         movementSpell._spellBaseType = movementSpell1;
         movementSpell.AddModifier(fire);
         movementSpell.AddModifier(big);
-        
+
         var s = new ShieldSpell();
         s.Init();
         shieldSpell._spellBaseType = s;
@@ -46,7 +46,7 @@ public class SpellCasting : MonoBehaviour
         var projectile = new ProjectileSpell();
         projectile.Init();
         spell._spellBaseType = projectile;
-        spell._spellModifiers.Add(mod);       
+        spell._spellModifiers.Add(mod);
         spell.AddModifier(fire);
 
 
@@ -61,7 +61,7 @@ public class SpellCasting : MonoBehaviour
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             int maskOfPlane = 1 << planeLayer;
-            if (Physics.Raycast(ray, out hit,30000f, maskOfPlane))
+            if (Physics.Raycast(ray, out hit, 30000f, maskOfPlane))
             {
                 //one of coordiantes being always zero for aligned plane
 
@@ -75,10 +75,10 @@ public class SpellCasting : MonoBehaviour
                 uiManager.skill1.isCooldown = true;
             }
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
-           
+
             shieldSpell.CastSpell();
             uiManager.SetSkillCooldown(2, spell._coolDown);
             uiManager.skill2.isCooldown = true;
@@ -105,4 +105,3 @@ public class SpellCasting : MonoBehaviour
         }
     }
 }
-    
