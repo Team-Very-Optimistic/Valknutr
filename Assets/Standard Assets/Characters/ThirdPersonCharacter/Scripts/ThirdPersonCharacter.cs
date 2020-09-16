@@ -30,24 +30,35 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+		private bool m_Dashing;
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
-			StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
+			if(!m_Dashing)
+				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
 		}
 
 		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
 		{
 			float t = 0;
 			float startTime = Time.time;
-			
+			float timeInterval = 0.02f;
+			float rotateInterval = 360 / (dashTime / timeInterval);
+			m_Dashing = true;
+			var transformChild = GetComponentInChildren<Transform>();
 			while (t < dashTime)
 			{
-				t += Time.deltaTime;
-				Move(direction, true, false);
-				//position = Vector3.Lerp(position,position + direction * (dashSpeed * m_Curve.Evaluate(t/dashTime)), 0.5f);
+				t += timeInterval;
+				Move(direction, true, false, true);
+				var transformRotation = transformChild.rotation;
+				transformRotation.x += rotateInterval;
+				transformChild.rotation = transformRotation;
+				yield return new WaitForSeconds(timeInterval);
+				// var position = transform.position;
+				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				// transform.position = position;
 			}
-			Debug.Log(Time.time - startTime);
+			m_Dashing = false;
 			yield return null;
 		}
 
@@ -65,8 +76,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		public void Move(Vector3 move, bool crouch, bool jump)
+		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
+			if (!dashing && m_Dashing)
+			{
+				return;
+			}
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
