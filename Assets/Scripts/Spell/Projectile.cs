@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
         this.direction = direction;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        Destroy(gameObject, timeToExpire);    
+        Destroy(gameObject, timeToExpire);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -22,6 +22,7 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);
