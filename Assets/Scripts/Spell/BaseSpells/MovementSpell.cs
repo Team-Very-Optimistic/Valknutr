@@ -3,20 +3,21 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 class MovementSpell : SpellBaseType
 {
-    private Rigidbody _rb;
+    private ThirdPersonCharacter _controller;
+    private float _moveTime = 0.7f;
     public override void Init()
     {
-        _speed = 2500f;
+        _speed = .5f;
         _cooldown = 0.5f;
 
         _objectForSpell = GameManager.Instance._player;
-        _rb = _objectForSpell.GetComponent<Rigidbody>();
+        _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
     }
     public override void SpellBehaviour(Spell spell)
     {
         _posDiff.y = 0;
         //Todo: make dash better
         // _objectForSpell.GetComponent<ThirdPersonCharacter>().Move(_posDiff * _speed, false, false);
-        _rb.AddForce(_posDiff * _speed);
+        _controller.Dash(_moveTime, _speed, _posDiff);
     }
 }

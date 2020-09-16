@@ -28,20 +28,20 @@ public class UiManager : Singleton<UiManager>
     // Update is called once per frame
     void Update()
     {
-        if (skill1.isCooldown == true)
-        {
-            skill1.UpdateSlider();
-        } 
-
-        if (skill2.isCooldown == true)
-        {
-            skill2.UpdateSlider();
-        }
-
-        if (skill3.isCooldown == true)
-        {
-            skill3.UpdateSlider();
-        }
+        // if (skill1.isCooldown == true)
+        // {
+        //     skill1.UpdateSlider();
+        // } 
+        //
+        // if (skill2.isCooldown == true)
+        // {
+        //     skill2.UpdateSlider();
+        // }
+        //
+        // if (skill3.isCooldown == true)
+        // {
+        //     skill3.UpdateSlider();
+        // }
     }
 
     void TakeDamage(int damage)

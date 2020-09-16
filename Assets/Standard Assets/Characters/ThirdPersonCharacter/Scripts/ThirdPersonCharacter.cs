@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
@@ -15,6 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		[SerializeField] private AnimationCurve m_Curve;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -28,8 +30,42 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+		private bool m_Dashing;
+		public Transform transformChild;
 
+		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
+		{
+			if(!m_Dashing)
+				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
+		}
 
+		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
+		{
+			Debug.Log("Dashing");
+			float t = 0;
+			float timeInterval = 0.02f;
+			m_Dashing = true;
+			Vector3 startRotation = transformChild.localEulerAngles;
+			Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
+			Debug.Log(direction);
+			transform.eulerAngles = new Vector3(0,direction.x * 90 + direction.z * 90,0);
+			while (t < dashTime)
+			{
+				t += timeInterval;
+				UpdateAnimator(direction);
+				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
+				yield return new WaitForSeconds(timeInterval);
+				// var position = transform.position;
+				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				// transform.position = position;
+			}
+			m_Dashing = false;
+
+			yield return null;
+		}
+
+		
 		void Start()
 		{
 			m_Animator = GetComponent<Animator>();
@@ -43,9 +79,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		public void Move(Vector3 move, bool crouch, bool jump)
+		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
-
+			Debug.Log(move);
+			if (!dashing && m_Dashing)
+			{
+				return;
+			}
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
