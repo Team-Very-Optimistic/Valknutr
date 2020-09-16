@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -47,11 +48,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Dashing = true;
 			Vector3 startRotation = transformChild.localEulerAngles;
 			Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
-			Debug.Log(direction);
-			transform.eulerAngles = new Vector3(0,direction.x * 90 + direction.z * 90,0);
+			var atan2 = (float) ((180f / Math.PI * Math.Atan2(direction.x, direction.z)) % 360f);
+			transform.eulerAngles = new Vector3();
+			transform.RotateAround(transform.position, Vector3.up, atan2);
+			m_Crouching = true;
 			while (t < dashTime)
 			{
 				t += timeInterval;
+				m_Animator.applyRootMotion = false;
 				UpdateAnimator(direction);
 				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
@@ -61,6 +65,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// transform.position = position;
 			}
 			m_Dashing = false;
+			m_Crouching = false;
+
 
 			yield return null;
 		}
@@ -228,7 +234,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			// we implement this function to override the default root motion.
 			// this allows us to modify the positional speed before it's applied.
-			if (m_IsGrounded && Time.deltaTime > 0)
+			if (m_IsGrounded && !m_Dashing &&Time.deltaTime > 0)
 			{
 				Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
 
@@ -252,7 +258,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
-				m_Animator.applyRootMotion = true;
+				if (!m_Dashing)
+					m_Animator.applyRootMotion = true;
 			}
 			else
 			{

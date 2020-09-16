@@ -4,10 +4,10 @@ using UnityStandardAssets.Characters.ThirdPerson;
 class MovementSpell : SpellBaseType
 {
     private ThirdPersonCharacter _controller;
-    private float _moveTime = 0.7f;
+    private float _moveTime = 0.5f;
     public override void Init()
     {
-        _speed = .5f;
+        _speed = 25f;
         _cooldown = 0.5f;
 
         _objectForSpell = GameManager.Instance._player;
