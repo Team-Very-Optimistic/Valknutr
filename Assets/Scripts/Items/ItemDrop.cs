@@ -10,6 +10,5 @@ public class ItemDrop : MonoBehaviour
     {
         GameManager.Instance.SpawnItem(transform.position);
     }
-
-
+    
 }
