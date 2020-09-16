@@ -87,7 +87,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
-			Debug.Log(move);
 			if (!dashing && m_Dashing)
 			{
 				return;
