@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 285294324425765229}
   - component: {fileID: 285294324425765202}
-  - component: {fileID: 285294324425765203}
   - component: {fileID: 285294324425765200}
   m_Layer: 11
   m_Name: SpawnZone
@@ -41,47 +40,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285294324425765201}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &285294324425765203
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285294324425765201}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: ab27c4a4c283cac489ef589c67077626, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &285294324425765200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,5 +54,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnOnStart: 0
   enemies:
-  - {fileID: 4184574197088591591, guid: 8496404fac73a754da33a60907708915, type: 3}
-  - {fileID: 4184574197088591591, guid: 8496404fac73a754da33a60907708915, type: 3}
+  - {fileID: 4800595510172781587, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+  - {fileID: 7153985728597156502, guid: 8496404fac73a754da33a60907708915, type: 3}
+  hasSpawned: 0

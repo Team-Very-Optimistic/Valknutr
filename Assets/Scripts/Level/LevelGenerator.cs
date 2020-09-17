@@ -8,15 +8,19 @@ using Random = UnityEngine.Random;
 [Serializable]
 public struct RoomPrefabConfig
 {
-    [Range(1, 10)]
+    public GameObject prefab;
+
+    [Range(1, 100)]
     public int weight;
+
     [Range(0, 10)]
     public int min;
+
     [Range(0, 10)]
     public int max;
+
     // [HideInInspector]
     public int currentAmount;
-    public GameObject prefab;
 }
 
 public class LevelGenerator : MonoBehaviour
