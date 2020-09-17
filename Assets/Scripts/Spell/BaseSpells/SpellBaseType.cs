@@ -24,6 +24,8 @@ public abstract class SpellBaseType : SpellElement
     
     [HideInInspector]
     public float _speed;
+
+    [HideInInspector] public float _damage = 1;
     
     #endregion
 
