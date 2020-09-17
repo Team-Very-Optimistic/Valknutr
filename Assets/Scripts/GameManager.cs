@@ -17,9 +17,20 @@ public class GameManager : Singleton<GameManager>
         }
         Instantiate(_SpellItem._itemObject, position, _SpellItem._itemObject.transform.rotation);
     }
-    
+
+    public void SetGameWin()
+    {
+        //Display winning screen
+
+        //Disable controls?
+
+        Debug.Log("You are winner");
+
+    }
+
     public void GameOver()
     {
         
+
     }
 }
