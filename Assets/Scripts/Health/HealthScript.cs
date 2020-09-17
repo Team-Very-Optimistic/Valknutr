@@ -31,7 +31,6 @@ public class HealthScript : MonoBehaviour
         {
             // Perform death animation here
             Destroy(gameObject);
-            SceneManager.LoadScene("GameOverScreen");
         }
     }
 

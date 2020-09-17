@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1874944323883492133}
   - component: {fileID: 1874944323883492130}
   - component: {fileID: 8943782846217720202}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: StompRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874944323883492131}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27054c9c54ce7f498fd89ae4dda037a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expireTime: 1
+  expireTime: 0.5
 --- !u!114 &8943782846217720202
 MonoBehaviour:
   m_ObjectHideFlags: 0

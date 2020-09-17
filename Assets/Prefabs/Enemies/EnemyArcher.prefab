@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 4800595510172781588}
   - component: {fileID: 4800595510172781589}
   - component: {fileID: 4800595510172781586}
+  - component: {fileID: -3726109663000136118}
   m_Layer: 0
   m_Name: EnemyArcher
   m_TagString: Enemy
@@ -461,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 8122185559021458030, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
+  arrowSpeed: 15
 --- !u!114 &4800595510172781588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +512,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-3726109663000136118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4800595510172781587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12ca860f3384df79e3984f7071b2c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SpellItem: {fileID: 0}
 --- !u!1 &4800595510191352174
 GameObject:
   m_ObjectHideFlags: 0

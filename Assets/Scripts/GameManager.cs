@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -15,6 +17,7 @@ public class GameManager : Singleton<GameManager>
             var itemListSpellItems = GameManager.Instance._itemList._SpellItems;
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
+        Debug.Log(_SpellItem._itemObject);
         Instantiate(_SpellItem._itemObject, position, _SpellItem._itemObject.transform.rotation);
     }
 
@@ -24,13 +27,20 @@ public class GameManager : Singleton<GameManager>
 
         //Disable controls?
 
-        Debug.Log("You are winner");
+        GameObject.Find("UI").GetComponent<EndGameManagerScript>().DisplayGameWin();
+
+        //Kill all enemies
+        List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+        
+        foreach(GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
 
     }
 
     public void GameOver()
     {
-        
-
+        GameObject.Find("UI").GetComponent<EndGameManagerScript>().DisplayGameOver();
     }
 }
