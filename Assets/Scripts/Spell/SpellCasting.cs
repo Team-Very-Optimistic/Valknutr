@@ -35,9 +35,9 @@ public class SpellCasting : MonoBehaviour
         var s = new ShieldSpell();
         s.Init();
         shieldSpell._spellBaseType = s;
+        shieldSpell.AddModifier(big);
         shieldSpell._spellModifiers.Add(mod);
         shieldSpell._spellModifiers.Add(fire);
-        shieldSpell.AddModifier(big);
 
 
         var projectile = new ProjectileSpell();
@@ -45,9 +45,16 @@ public class SpellCasting : MonoBehaviour
         spell._spellBaseType = projectile;
         spell._spellModifiers.Add(mod);       
         spell.AddModifier(fire);
-        spell.AddModifier(big);
-
-
+        spell.AddModifier(ScriptableObject.CreateInstance<PhaseMod>());
+        
+        var explosionSpell = ScriptableObject.CreateInstance<ExplosionSpell>();
+        explosionSpell.Init();
+        var exploSpell = ScriptableObject.CreateInstance<Spell>();
+        exploSpell._spellBaseType = explosionSpell;
+        exploSpell._spellModifiers.Add(mod);       
+        exploSpell.AddModifier(fire);
+        exploSpell.AddModifier(ScriptableObject.CreateInstance<PhaseMod>());
+        Inventory.Instance._spells.Add(exploSpell);
         mainCam = Camera.main;
         uiManager = UiManager.Instance;
     }

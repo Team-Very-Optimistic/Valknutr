@@ -32,7 +32,7 @@ public class Explosive : MonoBehaviour {
         if (_explode) return;
         StopAllCoroutines();
         _explode = true;
-        StartCoroutine(Explode(3f));
+        StartCoroutine(Explode(1.8f));
     }
 
     IEnumerator Explode(float time)
@@ -50,7 +50,6 @@ public class Explosive : MonoBehaviour {
         {
             Collider hit = colliders[i];
             damageScript.DealDamage(hit);
-            Debug.Log(hit.name);
         }
         
         //ONly works for one prefab
