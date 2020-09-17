@@ -23,6 +23,10 @@ public class EnemyProjectile : MonoBehaviour
             var damageScript = GetComponent<Damage>();
             damageScript.SetDamage(_damage);
             damageScript.DealDamage(other);
+        }
+
+        if(!other.gameObject.tag.Equals("Enemy"))
+        {
             Destroy(gameObject);
         }
     }
