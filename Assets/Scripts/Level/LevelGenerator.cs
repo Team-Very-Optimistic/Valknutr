@@ -53,8 +53,11 @@ public class LevelGenerator : MonoBehaviour
         var validExitName = validExit.name;
 
         var transform1 = sourceExit.transform;
+        print(transform1.position);
+        print(validExit.transform.lossyScale);
+        print(rotation * validExit.transform.position);
         var offset = transform1.position -
-                     Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
+                     Vector3.Scale(rotation * validExit.transform.position,  Vector3.one);
         var newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
         if (newRoom == null) return null;
 
