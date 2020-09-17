@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthScript : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class HealthScript : MonoBehaviour
         {
             // Perform death animation here
             Destroy(gameObject);
+            SceneManager.LoadScene("GameOverScreen");
         }
     }
 
