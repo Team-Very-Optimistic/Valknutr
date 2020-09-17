@@ -54,7 +54,7 @@ class FireMod : SpellModifier
                 damageScript.SetDamage(1);   
                 damageScript.DealDamage(other);
             }
-            StartCoroutine(WaitCooldown(0.5f));
+            StartCoroutine(WaitCooldown(1.6f));
         }
         
         IEnumerator WaitCooldown(float cooldown)

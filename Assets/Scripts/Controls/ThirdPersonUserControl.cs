@@ -39,6 +39,12 @@ using UnityStandardAssets.Characters.ThirdPerson;
             {
                 CraftMenuManager.Instance.Display();
             }
+
+            if (Input.GetButtonDown("Craft") && CraftMenuManager.Instance.IsDisplayed())
+            {
+                CraftMenuManager.Instance.Craft();
+            }
+            
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
@@ -63,7 +69,6 @@ using UnityStandardAssets.Characters.ThirdPerson;
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.C);
 
             // calculate move direction to pass to character
             if (m_Cam != null)
@@ -83,7 +88,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 #endif
 
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, crouch, m_Jump);
+            m_Character.Move(m_Move, false, m_Jump);
             m_Jump = false;
         }
     }

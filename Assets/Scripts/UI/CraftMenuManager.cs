@@ -17,6 +17,11 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         craftMenu.SetActive(!craftMenu.activeSelf);
     }
 
+    public bool IsDisplayed()
+    {
+        return craftMenu.activeSelf;
+    }
+
     public void RemoveItem(SpellItem spellItem)
     {
         displaySpells.RemoveItem(spellItem);
