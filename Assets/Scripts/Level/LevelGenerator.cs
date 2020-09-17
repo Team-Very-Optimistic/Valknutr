@@ -132,21 +132,27 @@ public class LevelGenerator : MonoBehaviour
     /// <returns></returns>
     private ref RoomPrefabConfig ChooseRandomRoom()
     {
-        var validPrefabs = roomPrefabs.Where(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
-        var mask = roomPrefabs.Select(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
-        var totalWeight = validPrefabs.Sum(prefab => prefab.weight);
-        var randomIndex = Random.Range(0, totalWeight);
-        for (int i = 0; i < roomPrefabs.Length; i++)
+        var n = 10;
+        while (n-- > 0)
         {
-            if (!mask[i]) continue;
-            if (randomIndex <= 0)
+            var validPrefabs = roomPrefabs.Where(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
+            var mask = roomPrefabs.Select(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
+            var totalWeight = validPrefabs.Sum(prefab => prefab.weight);
+            var randomIndex = Random.Range(0, totalWeight);
+            for (var i = 0; i < roomPrefabs.Length; i++)
             {
-                return ref roomPrefabs[i];
+                if (!mask[i]) continue;
+                if (randomIndex <= 0)
+                {
+                    return ref roomPrefabs[i];
+                }
+                randomIndex -= roomPrefabs[i].weight;
             }
-            randomIndex -= roomPrefabs[i].weight;
+
+            if (mask[roomPrefabs.Length - 1]) return ref roomPrefabs[roomPrefabs.Length - 1];
         }
 
-        return ref roomPrefabs[roomPrefabs.Length - 1];
+        return ref roomPrefabs[0];
     }
 
     private bool CheckIntersect(GameObject newRoom)
@@ -158,19 +164,34 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
-        Cleanup();
-        for (var i = 0; i < numberOfRooms; i++)
+        var n = 10;
+        while (n-- > 0)
         {
-            GenerateRoom();
-        }
+            Cleanup();
+            for (var i = 0; i < numberOfRooms; i++)
+            {
+                GenerateRoom();
+            }
 
-        foreach (var prefab in roomPrefabs)
-        {
-            print(prefab.prefab.name + ": " + prefab.currentAmount);
-        }
+            var satisfiesRoomMinCounts = true;
+            foreach (var prefab in roomPrefabs)
+            {
+                print(prefab.prefab.name + ": " + prefab.currentAmount);
+                if (prefab.currentAmount < prefab.min)
+                {
+                    satisfiesRoomMinCounts = false;
+                }
+            }
 
-        PlaceExit();
-        RebuildNavMesh();
+            if (!satisfiesRoomMinCounts)
+            {
+                continue;
+            }
+
+            PlaceExit();
+            RebuildNavMesh();
+            break;
+        }
     }
 
     public void Cleanup()
