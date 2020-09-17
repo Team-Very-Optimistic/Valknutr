@@ -12,6 +12,7 @@ class ProjectileSpell : SpellBaseType
     
     public override void Init()
     {
+        _damage = 1;
         _speed = 25f;
         _cooldown = 0.09f;
         offset = new Vector3(0f, 0.85f, 0f);
@@ -32,6 +33,7 @@ class ProjectileSpell : SpellBaseType
                 _posDiff.y, (float) (_posDiff.x * Math.Sin(rotateBy) + _posDiff.z * Math.Cos(rotateBy)));
             
             p.AddComponent<Projectile>().Launch(newDirection, _speed);
+            p.GetComponent<Damage>().SetDamage(_damage);
             _objectForSpell = p;
         }
         

@@ -8,7 +8,6 @@ public class ExplosionSpell : SpellBaseType
     public float power = 10.0F;
     private Transform player;
     private Vector3 offset;
-    public float _damage;
 
     public override void Init()
     {
