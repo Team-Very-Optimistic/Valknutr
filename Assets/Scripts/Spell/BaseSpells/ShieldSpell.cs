@@ -7,7 +7,7 @@ class ShieldSpell : SpellBaseType
     private float offsetIncrement;
     public override void Init()
     {
-        _cooldown = 0.5f;
+        _cooldown = 5f;
         _speed = 50f;
         offsetIncrement = 45f;
         player = GameManager.Instance._player.transform;

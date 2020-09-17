@@ -9,5 +9,5 @@ public class SpellManager : Singleton<SpellManager>
     public GameObject projectileObject;
     public GameObject shieldObject;
     public GameObject fireObject;
-
+    public GameObject explosionObject;
 }
