@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ITrigger
 {
     public float _damage = 1;
     public Vector3 direction;
@@ -22,10 +22,17 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+        Trigger(other);
+    }
+
+
+    public void Trigger(Collider other)
+    {
 
         var damageScript = GetComponent<Damage>();
-        damageScript.SetDamage(_damage);   
+        damageScript.SetDamage(_damage);
         damageScript.DealDamage(other);
         Destroy(gameObject);
+        
     }
 }

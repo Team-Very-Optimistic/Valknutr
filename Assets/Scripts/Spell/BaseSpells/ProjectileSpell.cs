@@ -32,7 +32,7 @@ class ProjectileSpell : SpellBaseType
             Vector3 newDirection = new Vector3((float) (_posDiff.x * Math.Cos(rotateBy) - _posDiff.z * Math.Sin(rotateBy)), 
                 _posDiff.y, (float) (_posDiff.x * Math.Sin(rotateBy) + _posDiff.z * Math.Cos(rotateBy)));
             
-            p.AddComponent<Projectile>().Launch(newDirection, _speed);
+            p.GetComponent<Projectile>().Launch(newDirection, _speed);
             p.GetComponent<Damage>().SetDamage(_damage);
             _objectForSpell = p;
         }

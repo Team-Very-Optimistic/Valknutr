@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6989888037487065206}
   - component: {fileID: 6989888037487065201}
   - component: {fileID: 6845507097958051061}
+  - component: {fileID: -3357843311309863531}
   m_Layer: 11
   m_Name: Spell_Projectile
   m_TagString: Projectile
@@ -158,3 +159,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   isFriendly: 0
+--- !u!114 &-3357843311309863531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908457230315757119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132751d9e2414319892f8b9584bf15d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 1
+  direction: {x: 0, y: 0, z: 0}
+  speed: 0
+  timeToExpire: 20
