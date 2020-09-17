@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [System.Serializable]
     public class SoundEntry
