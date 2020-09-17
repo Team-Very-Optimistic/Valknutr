@@ -11,6 +11,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     public GameObject arrowPrefab;
 
+    public float arrowSpeed;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -32,9 +34,9 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     public void FireArrow()
     {
-        Vector3 fireDirection = new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z) - this.gameObject.transform.position;
+        Vector3 fireDirection = (new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z) - this.gameObject.transform.position).normalized;
         Vector3 verticalOffset = new Vector3(0.0f, 1.4f, 0.0f); //bow.transform.position.y returns 0 - Model issue?
         GameObject arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position + verticalOffset, Quaternion.LookRotation(fireDirection));
-        arrow.GetComponent<EnemyProjectile>().Launch(fireDirection, 1.75f);
+        arrow.GetComponent<EnemyProjectile>().Launch(fireDirection, arrowSpeed);
     }
 }
