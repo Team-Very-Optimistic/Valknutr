@@ -7,7 +7,7 @@ public class GameOverManager : MonoBehaviour
 {
     public void RestartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void BackToMenu()
@@ -17,6 +17,7 @@ public class GameOverManager : MonoBehaviour
 
     public void QuitGame()
     {
+        Debug.Log("quit");
         Application.Quit();
     }
 }

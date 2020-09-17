@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7817342624865759887}
   - component: {fileID: 7817342624865759886}
   - component: {fileID: 7817342624865759885}
+  - component: {fileID: -651262798164959966}
   m_Layer: 0
   m_Name: EnemyBoss
   m_TagString: Enemy
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7817342624865759884}
   m_LocalRotation: {x: -0, y: 0.99998903, z: -0, w: 0.0046940334}
   m_LocalPosition: {x: -9.324692, y: -0.0000009536743, z: -10.942738}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 7817342626614968038}
   - {fileID: 7817342624924163581}
@@ -104,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 1000
+  currentHealth: 300
 --- !u!114 &7817342624865759885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,13 +122,26 @@ MonoBehaviour:
   - 2
   - 1
   - 0.5
-  summonEnemiesNum: 2
+  summonEnemiesNum: 3
   summonTime: 3
   paladinPrefab: {fileID: 7153985728597156502, guid: 8496404fac73a754da33a60907708915, type: 3}
   archerPrefab: {fileID: 4800595510172781587, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
   stompPrefab: {fileID: 1874944323883492131, guid: a3309ac1ed9bfa349abddcb0f7b53e42, type: 3}
-  stompRadius: 15
+  stompRadius: 20
   rightFeet: {fileID: 7817342626178767449}
+--- !u!114 &-651262798164959966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7817342624865759884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12ca860f3384df79e3984f7071b2c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SpellItem: {fileID: 0}
 --- !u!1 &7817342624914558144
 GameObject:
   m_ObjectHideFlags: 0
