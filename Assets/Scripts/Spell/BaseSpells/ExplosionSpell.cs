@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ExplosionSpell : SpellBaseType
 {
-    public float radius = 5.0F;
+    public float radius = 7.0F;
     public float power = 10.0F;
     private Transform player;
     private Vector3 offset;
@@ -12,7 +12,7 @@ public class ExplosionSpell : SpellBaseType
 
     public override void Init()
     {
-        _damage = 5f;
+        _damage = 10f;
         _speed = 3f;
         _cooldown = 8f;
         player = GameManager.Instance._player.transform;
