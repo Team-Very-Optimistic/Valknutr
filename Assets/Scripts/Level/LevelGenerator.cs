@@ -26,10 +26,12 @@ public struct RoomPrefabConfig
 public class LevelGenerator : MonoBehaviour
 {
     public RoomPrefabConfig[] roomPrefabs;
+    public GameObject bossRoomPrefab;
     public int numberOfRooms = 5;
     [SerializeField] private List<GameObject> _rooms = new List<GameObject>();
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     [SerializeField] private NavMeshSurface _navMeshSurface;
+    
 
     private void Awake()
     {
@@ -71,6 +73,20 @@ public class LevelGenerator : MonoBehaviour
         sourceExit.Connect(newRoomExit);
         return newRoom;
     }
+    
+    private GameObject GenerateRoomConnectedTo(GameObject roomPrefab, Room targetRoom)
+    {
+        GameObject newRoom = null;
+        int n = 10;
+        while (newRoom == null && n-- > 0)
+        {
+            var sourceExit = Util.RandomItem(targetRoom.exits).GetComponent<RoomExit>();
+            newRoom = GenerateRoomAtExit(roomPrefab, sourceExit, Util.RandomRotationXZ());
+        }
+        
+        return newRoom;
+    }
+
 
     /// <summary>
     /// Attempts to generate the specified room at the specified position
@@ -100,6 +116,20 @@ public class LevelGenerator : MonoBehaviour
         return newRoom;
     }
 
+    private RoomExit[] GetExitsByDepth(int depth)
+    {
+        var exits = new List<RoomExit>();
+        _rooms
+            .Select(o => o.GetComponent<Room>())
+            .Where(room => room.depth == depth)
+            .Select(room => room.exits)
+            .ToList()
+            .ForEach(objects => 
+                exits.AddRange(
+                    objects.Select(o => o.GetComponent<RoomExit>())));
+        return exits.ToArray();
+    }
+
     public void GenerateRoom()
     {
         // Generate entrance
@@ -116,18 +146,25 @@ public class LevelGenerator : MonoBehaviour
         ref var roomTypeConfig = ref ChooseRandomRoom();
         print(roomTypeConfig.currentAmount);
         var roomType = roomTypeConfig.prefab;
+        GameObject targetRoom = null;
         while (newRoom == null && iterations-- > 0)
         {
-            var rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 4) * 90);
-            var validExits = _exits.Where(exit => !exit.isConnected);
-            var roomExits = validExits.ToList();
-            var index = Random.Range(0, roomExits.Count());
-            var targetExit = roomExits.ElementAt(index);
+            var rotation = Util.RandomRotationXZ();
+            
+            // rooms with at least 1 unconnected exit
+            var validRooms = _rooms.Where(room =>
+                room.GetComponent<Room>().exits.Any(exit => !exit.GetComponent<RoomExit>().isConnected));
+            
+            // choose a random room
+            targetRoom = Util.RandomItem(validRooms);
+            var validExits = targetRoom.GetComponent<Room>().exits.Where(exit => !exit.GetComponent<RoomExit>().isConnected);
+            var targetExit = Util.RandomItem(validExits).GetComponent<RoomExit>();
             newRoom = GenerateRoomAtExit(roomType, targetExit, rotation);
         }
 
         if (newRoom != null)
         {
+            newRoom.GetComponent<Room>().depth = targetRoom.GetComponent<Room>().depth + 1;
             print(roomTypeConfig.prefab.name + ": " + roomTypeConfig.currentAmount);
             roomTypeConfig.currentAmount += 1;
         }
@@ -195,7 +232,7 @@ public class LevelGenerator : MonoBehaviour
                 continue;
             }
 
-            PlaceExit();
+            PlaceBossRoom();
             RebuildNavMesh();
             break;
         }
@@ -246,8 +283,17 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public void PlaceExit()
+    private void PlaceBossRoom()
     {
+        var deepest = _rooms
+            .Select(room => room.GetComponent<Room>())
+            .Aggregate((_rooms[0].GetComponent<Room>()), (last, room) => last.depth > room.depth ? last : room);
+
+        var bossRoom = GenerateRoomConnectedTo(bossRoomPrefab, deepest);
+        if (bossRoom == null)
+        {
+            throw new GenerationException();
+        }
         //todo
     }
 
@@ -255,4 +301,8 @@ public class LevelGenerator : MonoBehaviour
     {
         _navMeshSurface.BuildNavMesh();
     }
+}
+
+public class GenerationException : Exception
+{
 }

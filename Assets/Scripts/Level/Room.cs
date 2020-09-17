@@ -24,6 +24,17 @@ public class Room : MonoBehaviour
     private List<GameObject> enemies = new List<GameObject>();
     public RoomType roomType;
     public int depth;
+    public int minDepth;
+    public GameObject[] lightingObjects;
+
+
+    private void Awake()
+    {
+        foreach (var lightingObject in lightingObjects)
+        {
+            lightingObject.GetComponent<Light>().enabled = false;
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -41,6 +52,11 @@ public class Room : MonoBehaviour
         foreach (var o in spawnZones)
         {
             o.GetComponent<SpawnZone>().SetActive();
+        }
+        
+        foreach (var lightingObject in lightingObjects)
+        {
+            lightingObject.GetComponent<Light>().enabled = true;
         }
     }
 
