@@ -14,7 +14,7 @@ public class LevelGeneratorInspector : Editor
         
         if (GUILayout.Button("Generate Single"))
         {
-            generator.GenerateRooms();
+            generator.GenerateRoom();
         }
         
         if (GUILayout.Button("Clear"))

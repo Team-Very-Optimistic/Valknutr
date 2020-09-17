@@ -4,6 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum RoomType
+{
+    Default,
+    Room,
+    Corridor,
+    Special,
+    Boss,
+    Treasure
+}
+
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
@@ -12,18 +22,49 @@ public class Room : MonoBehaviour
     public bool isCleared = false;
     private bool isPlayerInside = false;
     private List<GameObject> enemies = new List<GameObject>();
+    public RoomType roomType;
+    public int depth;
+    public int minDepth;
+    public GameObject[] lightingObjects;
+
+
+    private void Awake()
+    {
+        foreach (var lightingObject in lightingObjects)
+        {
+            lightingObject.GetComponent<Light>().enabled = false;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ActivateRoom();
+        }
+    }
+
+    private void ActivateRoom()
+    {
+        isActive = true;
+        isPlayerInside = true;
+
+        foreach (var o in spawnZones)
+        {
+            o.GetComponent<SpawnZone>().SetActive();
+        }
+        
+        foreach (var lightingObject in lightingObjects)
+        {
+            lightingObject.GetComponent<Light>().enabled = true;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isActive = true;
-            isPlayerInside = true;
-
-            foreach (var o in spawnZones)
-            {
-                o.GetComponent<SpawnZone>().SetActive();
-            }
+            ActivateRoom();
         }
     }
 

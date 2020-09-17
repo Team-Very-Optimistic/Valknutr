@@ -6,27 +6,47 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public struct WeightedPrefab
+public struct RoomPrefabConfig
 {
-    public int weight;
     public GameObject prefab;
+
+    [Range(1, 100)]
+    public int weight;
+
+    [Range(0, 10)]
+    public int min;
+
+    [Range(0, 10)]
+    public int max;
+
+    // [HideInInspector]
+    public int currentAmount;
 }
 
 public class LevelGenerator : MonoBehaviour
 {
-    public WeightedPrefab[] roomPrefabs;
+    public RoomPrefabConfig[] roomPrefabs;
+    public GameObject bossRoomPrefab;
     public int numberOfRooms = 5;
     [SerializeField] private List<GameObject> _rooms = new List<GameObject>();
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
-    private bool _isGenerating = false;
     [SerializeField] private NavMeshSurface _navMeshSurface;
+    
 
     private void Awake()
     {
+        // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
         RebuildNavMesh();
     }
 
-    private GameObject GenerateRoom(GameObject roomPrefab, RoomExit sourceExit, Quaternion rotation)
+    /// <summary>
+    /// Attempts to generate the specified room connected to the exit
+    /// </summary>
+    /// <param name="roomPrefab"></param>
+    /// <param name="sourceExit"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    private GameObject GenerateRoomAtExit(GameObject roomPrefab, RoomExit sourceExit, Quaternion rotation)
     {
         var newRoomExits = roomPrefab.GetComponent<Room>().exits;
 
@@ -39,10 +59,13 @@ public class LevelGenerator : MonoBehaviour
         var validExitName = validExit.name;
 
         var transform1 = sourceExit.transform;
-        var offset = transform1.position -
-                     Vector3.Scale(rotation * validExit.transform.localPosition, roomPrefab.transform.localScale);
-        var newRoom = GenerateRoom(roomPrefab, offset, rotation);
-        if (newRoom == null) return newRoom;
+        print(transform1.position);
+        print(validExit.transform.lossyScale);
+        print(rotation * validExit.transform.position);
+        var offset = transform1.position - Vector3.Scale(
+                                      Vector3.Scale(rotation * validExit.transform.position,  Vector3.one), transform.localScale);
+        var newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
+        if (newRoom == null) return null;
 
         var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName)
             .GetComponent<RoomExit>();
@@ -50,15 +73,36 @@ public class LevelGenerator : MonoBehaviour
         sourceExit.Connect(newRoomExit);
         return newRoom;
     }
+    
+    private GameObject GenerateRoomConnectedTo(GameObject roomPrefab, Room targetRoom)
+    {
+        GameObject newRoom = null;
+        int n = 10;
+        while (newRoom == null && n-- > 0)
+        {
+            var sourceExit = Util.RandomItem(targetRoom.exits).GetComponent<RoomExit>();
+            newRoom = GenerateRoomAtExit(roomPrefab, sourceExit, Util.RandomRotationXZ());
+        }
+        
+        return newRoom;
+    }
 
-    private GameObject GenerateRoom(GameObject roomPrefab, Vector3 position, Quaternion rotation)
+
+    /// <summary>
+    /// Attempts to generate the specified room at the specified position
+    /// Note: Use GenerateRoomAtExit instead
+    /// </summary>
+    /// <param name="roomPrefab"></param>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    private GameObject GenerateRoomAt(GameObject roomPrefab, Vector3 position, Quaternion rotation)
     {
         var newRoom = Instantiate(roomPrefab, position, rotation, transform);
 
         if (CheckIntersect(newRoom))
         {
             DestroyImmediate(newRoom);
-            print("failed");
             return null;
         }
 
@@ -72,12 +116,26 @@ public class LevelGenerator : MonoBehaviour
         return newRoom;
     }
 
-    public void GenerateRooms()
+    private RoomExit[] GetExitsByDepth(int depth)
+    {
+        var exits = new List<RoomExit>();
+        _rooms
+            .Select(o => o.GetComponent<Room>())
+            .Where(room => room.depth == depth)
+            .Select(room => room.exits)
+            .ToList()
+            .ForEach(objects => 
+                exits.AddRange(
+                    objects.Select(o => o.GetComponent<RoomExit>())));
+        return exits.ToArray();
+    }
+
+    public void GenerateRoom()
     {
         // Generate entrance
         if (_rooms.Count == 0)
         {
-            GenerateRoom(roomPrefabs[0].prefab, Vector3.zero, Quaternion.identity);
+            GenerateRoomAt(roomPrefabs[0].prefab, Vector3.zero, Quaternion.identity);
             return;
         }
 
@@ -85,21 +143,60 @@ public class LevelGenerator : MonoBehaviour
         int iterations = 10;
 
         // select random room type
-        var roomType = roomPrefabs[Random.Range(0, roomPrefabs.Length)].prefab;
+        ref var roomTypeConfig = ref ChooseRandomRoom();
+        print(roomTypeConfig.currentAmount);
+        var roomType = roomTypeConfig.prefab;
+        GameObject targetRoom = null;
         while (newRoom == null && iterations-- > 0)
         {
-            var rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 4) * 90);
-            // print(roomType);
-
-            var validExits = _exits.Where(exit => !exit.isConnected);
-            // print(validExits);
-            // var targetExit = validExits.[Random.Range(0, validExits.Length)];
-            var roomExits = validExits.ToList();
-            var index = Random.Range(0, roomExits.Count());
-            var targetExit = roomExits.ElementAt(index);
-            // print("generating room");
-            newRoom = GenerateRoom(roomType, targetExit, rotation);
+            var rotation = Util.RandomRotationXZ();
+            
+            // rooms with at least 1 unconnected exit
+            var validRooms = _rooms.Where(room =>
+                room.GetComponent<Room>().exits.Any(exit => !exit.GetComponent<RoomExit>().isConnected));
+            
+            // choose a random room
+            targetRoom = Util.RandomItem(validRooms);
+            var validExits = targetRoom.GetComponent<Room>().exits.Where(exit => !exit.GetComponent<RoomExit>().isConnected);
+            var targetExit = Util.RandomItem(validExits).GetComponent<RoomExit>();
+            newRoom = GenerateRoomAtExit(roomType, targetExit, rotation);
         }
+
+        if (newRoom != null)
+        {
+            newRoom.GetComponent<Room>().depth = targetRoom.GetComponent<Room>().depth + 1;
+            print(roomTypeConfig.prefab.name + ": " + roomTypeConfig.currentAmount);
+            roomTypeConfig.currentAmount += 1;
+        }
+    }
+
+    /// <summary>
+    /// Chooses a random room to generate, subject to weight and min/max considerations
+    /// </summary>
+    /// <returns></returns>
+    private ref RoomPrefabConfig ChooseRandomRoom()
+    {
+        var n = 10;
+        while (n-- > 0)
+        {
+            var validPrefabs = roomPrefabs.Where(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
+            var mask = roomPrefabs.Select(prefab => prefab.max == 0 || prefab.currentAmount < prefab.max).ToArray();
+            var totalWeight = validPrefabs.Sum(prefab => prefab.weight);
+            var randomIndex = Random.Range(0, totalWeight);
+            for (var i = 0; i < roomPrefabs.Length; i++)
+            {
+                if (!mask[i]) continue;
+                if (randomIndex <= 0)
+                {
+                    return ref roomPrefabs[i];
+                }
+                randomIndex -= roomPrefabs[i].weight;
+            }
+
+            if (mask[roomPrefabs.Length - 1]) return ref roomPrefabs[roomPrefabs.Length - 1];
+        }
+
+        return ref roomPrefabs[0];
     }
 
     private bool CheckIntersect(GameObject newRoom)
@@ -111,21 +208,44 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
-        Cleanup();
-        _isGenerating = true;
-        for (var i = 0; i < numberOfRooms; i++)
+        var n = 10;
+        while (n-- > 0)
         {
-            GenerateRooms();
-        }
+            Cleanup();
+            for (var i = 0; i < numberOfRooms; i++)
+            {
+                GenerateRoom();
+            }
 
-        // RemoveRoomColliders();
-        PlaceExit();
-        RebuildNavMesh();
+            var satisfiesRoomMinCounts = true;
+            foreach (var prefab in roomPrefabs)
+            {
+                print(prefab.prefab.name + ": " + prefab.currentAmount);
+                if (prefab.currentAmount < prefab.min)
+                {
+                    satisfiesRoomMinCounts = false;
+                }
+            }
+
+            if (!satisfiesRoomMinCounts)
+            {
+                continue;
+            }
+
+            PlaceBossRoom();
+            RebuildNavMesh();
+            break;
+        }
     }
 
     public void Cleanup()
     {
         print("cleaning up " + _rooms.Count + " rooms");
+        for (int i = 0; i < roomPrefabs.Length; i++)
+        {
+            roomPrefabs[i].currentAmount = 0;
+        }
+       
         foreach (var room in _rooms)
         {
             if (room != null)
@@ -163,8 +283,17 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public void PlaceExit()
+    private void PlaceBossRoom()
     {
+        var deepest = _rooms
+            .Select(room => room.GetComponent<Room>())
+            .Aggregate((_rooms[0].GetComponent<Room>()), (last, room) => last.depth > room.depth ? last : room);
+
+        var bossRoom = GenerateRoomConnectedTo(bossRoomPrefab, deepest);
+        if (bossRoom == null)
+        {
+            throw new GenerationException();
+        }
         //todo
     }
 
@@ -172,4 +301,8 @@ public class LevelGenerator : MonoBehaviour
     {
         _navMeshSurface.BuildNavMesh();
     }
+}
+
+public class GenerationException : Exception
+{
 }
