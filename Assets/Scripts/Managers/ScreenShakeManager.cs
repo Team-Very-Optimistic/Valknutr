@@ -17,6 +17,7 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
     public void Awake()
     {
         cam = Camera.main;
+        originalRot = cam.transform.eulerAngles;
     }
 
     /// <summary>
@@ -36,14 +37,15 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
         Debug.Log("screenshake");
         var transform1 = cam.transform;
         originalPos = transform1.position;
-        originalRot = transform1.rotation.eulerAngles;
         float t = 0;
         while (t < time)
         {
-            
             //Mathf.PerlinNoise(t / intensity, 0f) * curve.Eval(t);
-            t += Time.unscaledTime;
+            t += Time.unscaledDeltaTime;
+            yield return null;
+
             transform1.position += Random.insideUnitSphere * shakeAmount;
+
             shakeAngle = (shakeAngle + Mathf.PI * 0.7f) % (Mathf.PI * 2f);
             
             transform1.rotation *= Quaternion.Euler(
@@ -53,6 +55,5 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
 
         transform1.position = originalPos;
         transform1.eulerAngles = originalRot;
-        yield return null;
     }
 }
