@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
  
-public class OrthoSmoothFollow : MonoBehaviour {
+public class DeDeDeOrthoSmoothFollow : MonoBehaviour {
 
      public Transform target;
      public float smoothTime = 0.3f;
