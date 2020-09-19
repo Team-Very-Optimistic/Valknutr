@@ -2,10 +2,11 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-class MovementSpell : SpellBaseType
+class MovementBehavior : SpellBehavior
 {
     private ThirdPersonCharacter _controller;
     private float _moveTime = 0.3f;
+    
     public override void Init()
     {
         _speed = 25f;
@@ -24,7 +25,7 @@ class MovementSpell : SpellBaseType
     }
 }
 
-class TimeSlowSpell : SpellBaseType
+class TimeSlowSpell : SpellBehavior
 {
     public float _duration;
     public override void Init()

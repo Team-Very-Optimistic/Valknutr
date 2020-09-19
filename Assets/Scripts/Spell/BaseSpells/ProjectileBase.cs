@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 
 [Serializable]
-class ProjectileSpell : SpellBaseType
+class ProjectileBehavior : SpellBehavior
 {
     private Transform player;
     private Vector3 offset;

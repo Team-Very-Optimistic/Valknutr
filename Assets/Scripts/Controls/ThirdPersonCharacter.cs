@@ -43,8 +43,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
-			if(!m_Dashing)
+			if (!m_Dashing)
+			{
+				m_Animator.applyRootMotion = true;
 				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
+			}
 		}
 
 		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
@@ -52,20 +55,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			Debug.Log("Dashing");
 			float t = 0;
 			float timeInterval = 0.02f;
-			m_Dashing = true;
-			Vector3 startRotation = transformChild.localEulerAngles;
-			Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
-			var atan2 = (float) ((180f / Math.PI * Math.Atan2(direction.x, direction.z)) % 360f);
-			transform.eulerAngles = new Vector3();
-			transform.RotateAround(transform.position, Vector3.up, atan2);
-			m_Crouching = true;
+			// m_Dashing = true;
+			// Vector3 startRotation = transformChild.localEulerAngles;
+			// Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
+			// var atan2 = (float) ((180f / Math.PI * Math.Atan2(direction.x, direction.z)) % 360f);
+			// transform.eulerAngles = new Vector3();
+			// transform.RotateAround(transform.position, Vector3.up, atan2);
+			// m_Crouching = true;
 			while (t < dashTime)
 			{
 				t += timeInterval;
-				m_Animator.applyRootMotion = false;
-				UpdateAnimator(direction);
-				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
-				transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
+				// m_Animator.applyRootMotion = false;
+				// UpdateAnimator(direction);
+				// m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				// transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
 				yield return new WaitForSeconds(timeInterval);
 				// var position = transform.position;
 				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
@@ -264,8 +267,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
-				if (!m_Dashing)
-					m_Animator.applyRootMotion = true;
+				// if (!m_Dashing)
+				m_Animator.applyRootMotion = true;
 			}
 			else
 			{
@@ -287,6 +290,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void SetCastingAnimation(CastAnimation animationType)
 		{
+			m_Animator.applyRootMotion = false;
 			print(animationType);
 			switch (animationType)
 			{
@@ -313,6 +317,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void ClearCastingAnimation()
 		{
+			m_Animator.applyRootMotion = true;
 			m_CastingBomb = false;
 			m_CastingProjectile = false;
 			m_CastingShield = false;

@@ -2,10 +2,10 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-class SplitShotMod : SpellModifier
+class SplitSpellModifier : SpellModifier
 {
     private int n = 2;
-    public override SpellBaseType ModifyBehaviour(SpellBaseType action)
+    public override SpellBehavior ModifyBehaviour(SpellBehavior action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;

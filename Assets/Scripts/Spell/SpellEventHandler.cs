@@ -4,11 +4,11 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class SpellEventHandler : MonoBehaviour
 {
     public ThirdPersonCharacter character;
-    private SpellCastingControl spellCastingControl;
+    private SpellCaster spellCaster;
     
     public void CastPoint()
     {
         character.CastPoint();
-        spellCastingControl.CastPoint();
+        spellCaster.CastPoint();
     }
 }

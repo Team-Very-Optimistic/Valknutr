@@ -2,10 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
-class BigMod : SpellModifier
+class GrowSpellModifier : SpellModifier
 {
-    
-    public override SpellBaseType ModifyBehaviour(SpellBaseType action)
+    public override SpellBehavior ModifyBehaviour(SpellBehavior action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;

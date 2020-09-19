@@ -6,46 +6,47 @@ using UnityEngine;
 [System.Serializable]
 public class Spell : SpellItem
 {
-    [SerializeField]
-    public SpellBaseType _spellBaseType;
-
-    [HideInInspector] public CastAnimation animationType;
+    #region fields
     
-    [SerializeField]
-    public List<SpellModifier> _spellModifiers =  new List<SpellModifier>() ;
+    [SerializeField] protected SpellBehavior spellBehavior;
+    [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
+    [HideInInspector] public CastAnimation castAnimation;
 
     private bool isCooldown;
     public float _coolDown;
     
-    public void CastSpell(Vector3 mouseDirection = new Vector3())
+    #endregion
+    
+    public void CastSpell(SpellCastData data)
     {
-        if (isCooldown) return; //On cooldown
-        
-        float totalCooldown = _spellBaseType._cooldown;
-        _spellBaseType.Init();
-        _spellBaseType._posDiff = mouseDirection;
-        _spellBaseType.behaviour = () => _spellBaseType.SpellBehaviour(this);
-        
+        if (isCooldown) return;
+
+        float totalCooldown = spellBehavior._cooldown;
+        spellBehavior.Init();
+        spellBehavior._posDiff = data.castDirection;
+        spellBehavior.behaviour = () => spellBehavior.SpellBehaviour(this);
+
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(_spellBaseType);
-                _spellBaseType = modifier.ModifyBehaviour(_spellBaseType);
+                modifier.ModifySpell(spellBehavior);
+                spellBehavior = modifier.ModifyBehaviour(spellBehavior);
                 totalCooldown *= modifier._cooldownMultiplier;
             }
-
         }
-        _spellBaseType.Cast();
+
+        spellBehavior.Cast();
         _coolDown = totalCooldown;
         GameManager.Instance.StartCoroutine(WaitCooldown(totalCooldown));
     }
 
-    public void AddBaseType(SpellBaseType baseType)
+    public void AddBaseType(SpellBehavior behaviorType)
     {
-        _spellBaseType = baseType;
-        animationType = baseType.animationType;
+        spellBehavior = behaviorType;
+        castAnimation = behaviorType.animationType;
     }
+
     public void AddModifier(SpellModifier modifier)
     {
         _spellModifiers.Add(modifier);

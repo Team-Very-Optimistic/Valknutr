@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-class ShieldSpell : SpellBaseType
+class ShieldBehavior : SpellBehavior
 {
     private Transform player;
     private float offsetIncrement;

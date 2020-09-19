@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ExplosionSpell : SpellBaseType
+public class ExplosionBehavior : SpellBehavior
 {
     public float radius = 7.0F;
     public float power = 10.0F;
