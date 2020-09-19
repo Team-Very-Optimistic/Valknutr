@@ -16,6 +16,7 @@ public class ExplosionSpell : SpellBaseType
         _cooldown = 8f;
         player = GameManager.Instance._player.transform;
         _objectForSpell = SpellManager.Instance.explosionObject;
+        animationType = CastAnimation.Bomb;
     }
 
     public override void SpellBehaviour(Spell spell)

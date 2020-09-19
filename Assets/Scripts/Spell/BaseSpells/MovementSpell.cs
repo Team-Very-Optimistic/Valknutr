@@ -13,6 +13,7 @@ class MovementSpell : SpellBaseType
 
         _objectForSpell = GameManager.Instance._player;
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
+        animationType = CastAnimation.Movement;
     }
     public override void SpellBehaviour(Spell spell)
     {

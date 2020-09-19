@@ -41,4 +41,15 @@ public static class Util
     {
         return Quaternion.Euler(Vector3.up * Random.Range(0, 4) * 90);
     }
+    
+    public static Vector3 GetMousePositionOnWorldPlane(Camera camera=null)
+    {
+        if (camera == null)
+        {
+            camera = Camera.main;
+        }
+        var ray = camera.ScreenPointToRay(Input.mousePosition);
+        var d = -Vector3.Dot(ray.origin, Vector3.up) / Vector3.Dot(ray.direction, Vector3.up);
+        return ray.origin + ray.direction * d;
+    }
 }

@@ -32,7 +32,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 		private bool m_Dashing;
+		private bool m_CastingProjectile;
+		private bool m_CastingShield;
+		private bool m_CastingBomb;
 		public Transform transformChild;
+		private static readonly int CastingBomb = Animator.StringToHash("CastingBomb");
+		private static readonly int CastingProjectile = Animator.StringToHash("CastingProjectile");
+		private static readonly int CastingShield = Animator.StringToHash("CastingShield");
+		private static readonly int CastingDash = Animator.StringToHash("CastingDash");
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -87,7 +94,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
-			if (!dashing && m_Dashing)
+			if (IsDisabled())
 			{
 				return;
 			}
@@ -104,17 +111,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			// control and velocity handling is different when grounded and airborne:
-			if (m_IsGrounded)
-			{
-				
-			}
-			else
-			{
-				HandleAirborneMovement();
-			}
+			// if (m_IsGrounded)
+			// {
+			// 	
+			// }
+			// else
+			// {
+			// 	HandleAirborneMovement();
+			// }
 
-			ScaleCapsuleForCrouching(crouch);
-			PreventStandingInLowHeadroom();
+			// ScaleCapsuleForCrouching(crouch);
+			// PreventStandingInLowHeadroom();
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
@@ -266,6 +273,55 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GroundNormal = Vector3.up;
 				m_Animator.applyRootMotion = false;
 			}
+		}
+
+		public void CastPoint()
+		{
+			// ClearCastingAnimation();
+		}
+
+		public bool IsDisabled()
+		{
+			return m_CastingBomb || m_CastingProjectile || m_CastingShield || m_Dashing;
+		}
+
+		public void SetCastingAnimation(CastAnimation animationType)
+		{
+			print(animationType);
+			switch (animationType)
+			{
+				case CastAnimation.Bomb:
+					m_CastingBomb = true;
+					m_Animator.SetBool(CastingBomb, true);
+					break;
+				case CastAnimation.Projectile:
+					m_CastingProjectile = true;
+					m_Animator.SetBool(CastingProjectile, true);
+					break;
+				case CastAnimation.Shield:
+					m_CastingShield = true;
+					m_Animator.SetBool(CastingShield, true);
+					break;
+				case CastAnimation.Movement:
+					m_Dashing = true;
+					m_Animator.SetBool(CastingDash, true);
+					break;
+				default:
+					break;
+			}
+		}
+
+		public void ClearCastingAnimation()
+		{
+			m_CastingBomb = false;
+			m_CastingProjectile = false;
+			m_CastingShield = false;
+			m_Dashing = false;
+			
+			m_Animator.SetBool(CastingBomb, false);
+			m_Animator.SetBool(CastingProjectile, false);
+			m_Animator.SetBool(CastingShield, false);
+			m_Animator.SetBool(CastingDash, false);
 		}
 	}
 }

@@ -8,6 +8,9 @@ public class Spell : SpellItem
 {
     [SerializeField]
     public SpellBaseType _spellBaseType;
+
+    [HideInInspector] public CastAnimation animationType;
+    
     [SerializeField]
     public List<SpellModifier> _spellModifiers =  new List<SpellModifier>() ;
 
@@ -41,6 +44,7 @@ public class Spell : SpellItem
     public void AddBaseType(SpellBaseType baseType)
     {
         _spellBaseType = baseType;
+        animationType = baseType.animationType;
     }
     public void AddModifier(SpellModifier modifier)
     {

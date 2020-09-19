@@ -19,7 +19,7 @@ class ProjectileSpell : SpellBaseType
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
         player = GameManager.Instance._player.transform;
-
+        animationType = CastAnimation.Projectile;
     }
     public override void SpellBehaviour(Spell spell)
     {
