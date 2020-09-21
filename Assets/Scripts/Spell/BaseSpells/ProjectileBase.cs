@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 
 [Serializable]
-class ProjectileSpell : SpellBaseType
+class ProjectileBehavior : SpellBehavior
 {
     private Transform player;
     private Vector3 offset;
@@ -19,7 +19,7 @@ class ProjectileSpell : SpellBaseType
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
         player = GameManager.Instance._player.transform;
-
+        animationType = CastAnimation.Projectile;
     }
     public override void SpellBehaviour(Spell spell)
     {

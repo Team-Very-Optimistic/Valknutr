@@ -121,11 +121,11 @@ public class Room : MonoBehaviour
             var exit = o.GetComponent<RoomExit>();
             if (exit == null || !exit.isConnected)
             {
-                print("null exit or not connected");
+                // print("null exit or not connected");
             }
             else
             {
-                print("opening exit");
+                // print("opening exit");
                 exit.Open();
             }
         }

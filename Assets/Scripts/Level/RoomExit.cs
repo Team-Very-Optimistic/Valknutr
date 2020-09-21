@@ -46,18 +46,18 @@ public class RoomExit : MonoBehaviour
 
     public void Open()
     {
-        print("opening door " + gameObject.name);
+        // print("opening door " + gameObject.name);
         if (isLocked) return;
 
         isOpen = true;
         _renderer.enabled = false;
         _collider.enabled = false;
         _navMeshObstacle.enabled = false;
-        print("door unlocked");
+        // print("door unlocked");
 
         // Open other door
         if (!isConnected || _connectedExit == null || _connectedExit.isOpen) return;
-        print("opening connected");
+        // print("opening connected");
         _connectedExit.Open();
     }
 

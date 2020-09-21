@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-class FireMod : SpellModifier
+class FireSpellModifier : SpellModifier
 {
     class Fire : MonoBehaviour
     {
@@ -73,12 +73,12 @@ class FireMod : SpellModifier
         }
     }
 
-    public override void ModifySpell(SpellBaseType spell)
+    public override void ModifySpell(SpellBehavior spell)
     {
         spell._speed *= 1.2f;
     }
     
-    public override SpellBaseType ModifyBehaviour(SpellBaseType action)
+    public override SpellBehavior ModifyBehaviour(SpellBehavior action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;

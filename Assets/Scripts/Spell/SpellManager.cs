@@ -10,4 +10,30 @@ public class SpellManager : Singleton<SpellManager>
     public GameObject shieldObject;
     public GameObject fireObject;
     public GameObject explosionObject;
+
+    public static Spell[] GetDefaultSpells()
+    {
+        var movementSpell = ScriptableObject.CreateInstance<Spell>();
+        var projectileSpell = ScriptableObject.CreateInstance<Spell>();
+        var shieldSpell = ScriptableObject.CreateInstance<Spell>();
+        var bombSpell = ScriptableObject.CreateInstance<Spell>();
+
+        var movementBehavior = ScriptableObject.CreateInstance<MovementBehavior>();
+        movementBehavior.Init();
+        movementSpell.AddBaseType(movementBehavior);
+        
+        var shieldBehavior = ScriptableObject.CreateInstance<ShieldBehavior>();
+        shieldBehavior.Init();
+        shieldSpell.AddBaseType(shieldBehavior);
+
+        var projectileBehavior = ScriptableObject.CreateInstance<ProjectileBehavior>();
+        projectileBehavior.Init();
+        projectileSpell.AddBaseType(projectileBehavior);
+
+        var explosionBehavior = ScriptableObject.CreateInstance<ExplosionBehavior>();
+        explosionBehavior.Init();
+        bombSpell.AddBaseType(explosionBehavior);
+
+        return new [] {projectileSpell, movementSpell, shieldSpell, bombSpell};
+    }
 }
