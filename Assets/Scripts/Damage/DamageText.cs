@@ -1,43 +1,78 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageText : MonoBehaviour
 {
-    private GameObject parent;
-    private Vector3 lastKnownPos;
-    private Vector3 yOffset = new Vector3(0.0f, 1.0f, 0.0f);
+    private Vector3 worldLocationStart;
     private float timeElapsed = 0.0f;
+    private GameObject mainCamera;
+    private Canvas canvas;
+    private Boolean isMovingLeft;
+    private RectTransform rectTransform;
 
-    [SerializeField]
-    private float aliveTime;
+    public float aliveTime;
+    public float canvasXMax;
+    public float canvasYMax;
+    public float minScale;
+    public float maxScale;
 
     void Start()
     {
-        Destroy(gameObject, aliveTime);
+        mainCamera = GameObject.Find("MainCamera");
+        isMovingLeft = (UnityEngine.Random.value < 0.5);
+
+        //Set max scale
+        rectTransform = GetComponent<RectTransform>();
+        rectTransform.localScale = new Vector3(maxScale, maxScale, maxScale);
+
+        //Find and parent to canvas
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        transform.SetParent(canvas.transform, false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Set time elapsed
         timeElapsed += Time.deltaTime;
 
-        //0 - Mathf.Pi
-        float proportion = timeElapsed / aliveTime * Mathf.PI;
+        //Percent of time alive
+        float percentAlive = timeElapsed / aliveTime;
 
-        if(parent != null)
+        //World -> Canvas location
+        Vector2 canvasPos = mainCamera.GetComponent<Camera>().WorldToScreenPoint(worldLocationStart);
+
+        //Place along sin trajectory
+        canvasPos += new Vector2(
+            isMovingLeft ? -(percentAlive * (float)Math.PI) * canvasXMax : percentAlive * (float)Math.PI * canvasXMax,
+            (float)Math.Sin(percentAlive * Math.PI) * canvasYMax);
+
+        //Add vertical offset
+        canvasPos += new Vector2(0.0f, canvasYMax * 0.7f);
+
+        //Set position to new position
+        rectTransform.position = canvasPos;
+
+        //Initial scale down 
+        if(rectTransform.localScale.x >= minScale)
         {
-            lastKnownPos = parent.transform.position;
+            rectTransform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
         }
 
-        this.transform.position = lastKnownPos + yOffset + new Vector3(proportion / 2.0f, Mathf.Sin(proportion) * 1.5f, 0.0f);      
+        if (timeElapsed >= aliveTime)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void SetDamageTextProperties(float damage, Quaternion rotation, GameObject parent)
+    public void SetDamageTextProperties(float damage, Vector3 worldLocationStart, Color damageColor)
     {
-        this.GetComponent<TextMesh>().text = damage.ToString();
-        transform.rotation = rotation;
-        this.parent = parent;
-        lastKnownPos = parent.transform.position;
+        GetComponent<Text>().text = damage.ToString();
+        GetComponent<Text>().color = damageColor;
+        this.worldLocationStart = worldLocationStart;
     }
 }

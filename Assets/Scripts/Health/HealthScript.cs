@@ -9,6 +9,8 @@ public class HealthScript : MonoBehaviour
     private float currentHealth = 10;
     private GameObject damageTextPrefab;
 
+    public Color damageColor;
+
     void Start()
     {
         damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
@@ -21,9 +23,9 @@ public class HealthScript : MonoBehaviour
 
     public void ApplyDamage(float damage)
     {
-        Quaternion rotation = Quaternion.LookRotation(this.transform.position - GameObject.FindGameObjectWithTag("MainCamera").transform.position);
+        Vector3 worldPositionText = transform.position + new Vector3(0.0f, this.GetComponent<CapsuleCollider>().height / 2.0f, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, rotation, this.gameObject);
+        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
 
         currentHealth -= damage;
 
