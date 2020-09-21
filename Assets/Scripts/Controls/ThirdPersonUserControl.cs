@@ -58,7 +58,7 @@ public class ThirdPersonUserControl : MonoBehaviour
         }
         else if (!m_Jump)
         {
-            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            // m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
         }
     }
 
