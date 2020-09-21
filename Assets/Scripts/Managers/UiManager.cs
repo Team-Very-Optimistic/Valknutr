@@ -5,15 +5,12 @@ using UnityEngine.Assertions.Must;
 
 public class UiManager : Singleton<UiManager>
 {
-    public HealthBar healthBar;
-
-    public SkillCooldown skill1;
-    public SkillCooldown skill2;
-    public SkillCooldown skill3;
-    
     public GameObject player;
-    private HealthScript playerHealth;
+    public SpellDisplayScript[] spellSlots;
+    public HealthBar healthBar;
     
+    private HealthScript playerHealth;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +19,8 @@ public class UiManager : Singleton<UiManager>
         {
             player = GameManager.Instance._player;
         }
+        PopulateSpells();
+
 
         playerHealth = player.GetComponent<HealthScript>();
         
@@ -34,20 +33,13 @@ public class UiManager : Singleton<UiManager>
         if (playerHealth != null)
             healthBar.SetHealth(playerHealth.currentHealth);
     }
-    
-    public void SetSkillCooldown(int index, float time)
+
+    void PopulateSpells()
     {
-        switch (index)
+        var spells = player.GetComponent<SpellCaster>().spells;
+        for (var i = 0; i < spells.Length && i < spellSlots.Length; i++)
         {
-            case 1:
-                skill1.skillCooldown = time;
-                break;
-            case 2:
-                skill2.skillCooldown = time;
-                break;
-            case 3:
-                skill3.skillCooldown = time;
-                break;
+            spellSlots[i].SetSpell(spells[i]);
         }
     }
 }
