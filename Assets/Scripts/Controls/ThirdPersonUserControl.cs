@@ -42,14 +42,14 @@ public class ThirdPersonUserControl : MonoBehaviour
         {
             m_Caster.PrecastSpellAtIndex(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            m_Caster.PrecastSpellAtIndex(1);
-        }
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             print("dash");
-            m_Caster.CastSpellAtIndex(2);
+            m_Caster.CastSpellAtIndex(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            m_Caster.PrecastSpellAtIndex(2);
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {

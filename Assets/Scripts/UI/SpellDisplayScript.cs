@@ -19,7 +19,7 @@ public class SpellDisplayScript : MonoBehaviour
 
     private void Update()
     {
-        slider.value = spell.GetCooldownRemainingPercentage();
+        slider.value = 1 - spell.GetCooldownRemainingPercentage();
     }
 
     public void SetSpell(Spell newSpell)
