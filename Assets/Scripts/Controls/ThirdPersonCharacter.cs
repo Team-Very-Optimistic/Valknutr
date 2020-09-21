@@ -69,7 +69,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				
 				//make the 360 to turn before landing
-				if (t < dashTime / 1.3f)
+				if (t  <= dashTime / 1.2f)
 				{
 					transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / (dashTime/ 1.3f));
 				}

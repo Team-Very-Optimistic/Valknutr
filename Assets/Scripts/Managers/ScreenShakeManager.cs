@@ -32,7 +32,7 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
             intensityCurve = curve;
         }
         shakeAmount = Math.Min(intensity, 1);
-        shakeAngle = 45 * shakeAmount / 1;
+        shakeAngle = 2 * shakeAmount / 1;
         StartCoroutine(ScreenShake(time, intensityCurve));
     }
     
@@ -42,24 +42,24 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
         Debug.Log("screenshake");
         var transform1 = cam.transform;
         originalPos = transform1.position;
-        shakeAngle = (shakeAngle + Mathf.PI * 0.7f) % (Mathf.PI * 2f);
         float t = 0;
         while (t < time)
         {
-            var intensityValue = intensity.Evaluate(t/time);
+            var intensityValue = intensity.Evaluate(t/time) * shakeAmount;
 
             //Mathf.PerlinNoise(t / intensity, 0f) * curve.Eval(t);
             t += Time.unscaledDeltaTime;
-            
-            transform1.position += Random.insideUnitSphere * (shakeAmount * intensityValue);
-            
+            var random = Random.insideUnitSphere;
+
+            transform1.position += random * intensityValue;
+            intensityValue *= shakeAngle;
             transform1.rotation *= Quaternion.Euler(
-                Mathf.Cos(shakeAngle * intensityValue) * shakeAmount, Mathf.Sin(shakeAngle * intensityValue) * shakeAmount, 0f
+                random.x * intensityValue , random.y *  intensityValue, random.z * intensityValue
             );
             yield return null;
         }
 
-        transform1.position = originalPos;
-        transform1.eulerAngles = originalRot;
+        transform1.transform.position = originalPos;
+        transform1.transform.localEulerAngles = new Vector3();
     }
 }
