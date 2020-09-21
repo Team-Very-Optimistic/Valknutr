@@ -59,6 +59,7 @@ public class Explosive : MonoBehaviour {
             damageScript.DealDamage(hit);
         }
         
+        AudioManager.PlaySoundAtPosition("explosion", transform.position);
         ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
