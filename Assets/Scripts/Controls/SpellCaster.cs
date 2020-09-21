@@ -56,10 +56,12 @@ public class SpellCaster : MonoBehaviour
     
     private void Precast(Spell spell)
     {
-        storedDirection = Util.GetMousePositionOnWorldPlane(mainCam) - transform.position;
+        storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
+      
         castedSpell = spell;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
         character.SetCastingAnimation(spell.castAnimation);
+        CastPoint();
     }
 
     public void CastPoint()

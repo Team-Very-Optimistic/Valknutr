@@ -52,6 +52,7 @@ public class Explosive : MonoBehaviour {
             damageScript.DealDamage(hit);
         }
         
+        ScreenShakeManager.Instance.ScreenShake(0.3f, 0.8f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();

@@ -34,6 +34,6 @@ public class SpellManager : Singleton<SpellManager>
         explosionBehavior.Init();
         bombSpell.AddBaseType(explosionBehavior);
 
-        return new [] {projectileSpell, movementSpell, shieldSpell, bombSpell};
+        return new [] {projectileSpell,  shieldSpell, movementSpell, bombSpell};
     }
 }

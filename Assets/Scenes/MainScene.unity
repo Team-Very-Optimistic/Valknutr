@@ -3406,6 +3406,10 @@ PrefabInstance:
       propertyPath: m_Curve.m_Curve.Array.data[2].time
       value: 0.9921875
       objectReference: {fileID: 0}
+    - target: {fileID: 2125853154598462785, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_JumpPower
+      value: 6.07
+      objectReference: {fileID: 0}
     - target: {fileID: 2125853154598462786, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -20488,7 +20492,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0041656494
+      value: 0.99760056
+      inSlope: -1.0046614
+      outSlope: -1.0046614
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0041809
+      value: -0.0070762634
+      inSlope: -1.0046614
+      outSlope: -1.0046614
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

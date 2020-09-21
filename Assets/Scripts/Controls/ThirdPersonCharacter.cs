@@ -45,7 +45,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			if (!m_Dashing)
 			{
-				m_Animator.applyRootMotion = true;
+				m_Animator.applyRootMotion = false;
 				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
 			}
 		}
@@ -54,28 +54,33 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			float t = 0;
 			float timeInterval = 0.02f;
-			// m_Dashing = true;
-			// Vector3 startRotation = transformChild.localEulerAngles;
-			// Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
-			// var atan2 = (float) ((180f / Math.PI * Math.Atan2(direction.x, direction.z)) % 360f);
-			// transform.eulerAngles = new Vector3();
-			// transform.RotateAround(transform.position, Vector3.up, atan2);
-			// m_Crouching = true;
+			m_Dashing = true;
+			Vector3 startRotation = transformChild.localEulerAngles;
+			Vector3 endRotation = startRotation + new Vector3(360, 0, 0);
+			var atan2 = (float) ((180f / Math.PI * Math.Atan2(direction.x, direction.z)) % 360f);
+			transform.eulerAngles = new Vector3();
+			transform.RotateAround(transform.position, Vector3.up, atan2);
+			m_Crouching = true;
+			m_ForwardAmount = 1;
 			while (t < dashTime)
 			{
 				t += timeInterval;
-				// m_Animator.applyRootMotion = false;
-				// UpdateAnimator(direction);
-				// m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
-				// transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / dashTime);
+				UpdateAnimator(direction);
+				m_Rigidbody.velocity = direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
+				
+				//make the 360 to turn before landing
+				if (t < dashTime / 1.3f)
+				{
+					transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / (dashTime/ 1.3f));
+				}
+				
 				yield return new WaitForSeconds(timeInterval);
-				// var position = transform.position;
+				//var position = transform.position;
 				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				// transform.position = position;
 			}
 			m_Dashing = false;
 			m_Crouching = false;
-
 
 			yield return null;
 		}
@@ -266,8 +271,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
-				// if (!m_Dashing)
-				m_Animator.applyRootMotion = true;
+				m_IsGrounded = true;
+				if (!m_Dashing)
+					m_Animator.applyRootMotion = true;
 			}
 			else
 			{
@@ -279,7 +285,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void CastPoint()
 		{
-			// ClearCastingAnimation();
+			ClearCastingAnimation();
 		}
 
 		public bool IsDisabled()
