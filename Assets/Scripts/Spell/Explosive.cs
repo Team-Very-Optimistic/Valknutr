@@ -12,6 +12,8 @@ public class Explosive : MonoBehaviour {
     public float timeToExpire = 20f;
     public float radius = 7f;
     public float power = 10f;
+    public float fuseTime = 1.8f;
+    
     [SerializeField]
     private bool _explode;
 
@@ -29,10 +31,15 @@ public class Explosive : MonoBehaviour {
         // {
         //     return;
         // }
+        Detonate(fuseTime);
+    }
+
+    public void Detonate(float time = 0)
+    {
         if (_explode) return;
         StopAllCoroutines();
         _explode = true;
-        StartCoroutine(Explode(1.8f));
+        StartCoroutine(Explode(time));
     }
 
     IEnumerator Explode(float time)

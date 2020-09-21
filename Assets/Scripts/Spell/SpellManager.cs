@@ -30,9 +30,10 @@ public class SpellManager : Singleton<SpellManager>
         projectileBehavior.Init();
         projectileSpell.AddBaseType(projectileBehavior);
 
-        var explosionBehavior = ScriptableObject.CreateInstance<ExplosionBehavior>();
-        explosionBehavior.Init();
-        bombSpell.AddBaseType(explosionBehavior);
+        var novaBehavior = ScriptableObject.CreateInstance<NovaBehavior>();
+        novaBehavior.Init();
+        novaBehavior._objectForSpell = Instance.explosionObject;
+        bombSpell.AddBaseType(novaBehavior);
 
         return new [] {projectileSpell,  shieldSpell, movementSpell, bombSpell};
     }

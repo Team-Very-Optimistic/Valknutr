@@ -43,8 +43,12 @@ public class SpellCaster : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             print("dash");
-            Precast(spells[2]);
 
+            // temporary fix to use code controlled dash animation 
+            storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
+            spells[2].CastSpell(new SpellCastData(gameObject, transform.position, storedDirection));
+            // Precast(spells[2]);
         }
         
         if (Input.GetKeyDown(KeyCode.E))
@@ -61,7 +65,7 @@ public class SpellCaster : MonoBehaviour
         castedSpell = spell;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
         character.SetCastingAnimation(spell.castAnimation);
-        CastPoint();
+        // CastPoint();
     }
 
     public void CastPoint()

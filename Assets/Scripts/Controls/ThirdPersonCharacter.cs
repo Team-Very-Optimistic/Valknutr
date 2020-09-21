@@ -61,7 +61,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			transform.eulerAngles = new Vector3();
 			transform.RotateAround(transform.position, Vector3.up, atan2);
 			m_Crouching = true;
-			m_ForwardAmount = 1;
+			// m_ForwardAmount = 1;
 			while (t < dashTime)
 			{
 				t += timeInterval;
