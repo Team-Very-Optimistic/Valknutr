@@ -31,8 +31,10 @@ public class HealthScript : MonoBehaviour
 
         if (currentHealth <= 0.0f)
         {
-            // Perform death animation here
-            Destroy(gameObject);
+            if(gameObject.tag == "Enemy")
+            {
+                this.GetComponent<EnemyDeathSequence>().StartDeathSequence();
+            }
         }
     }
 
