@@ -37,6 +37,6 @@ public class SpellManager : Singleton<SpellManager>
         novaBehavior._objectForSpell = Instance.explosionObject;
         bombSpell.AddBaseType(novaBehavior);
 
-        return new[] {meleeSpell, movementSpell, shieldSpell, bombSpell};
+        return new[] {meleeSpell, movementSpell, shieldSpell, projectileSpell};
     }
 }
