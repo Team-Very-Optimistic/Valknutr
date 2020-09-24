@@ -14,6 +14,7 @@ public class ItemDrop : MonoBehaviour
 
     public void OnDestroy()
     {
-        GameManager.Instance.SpawnItem(pos);
+        if(GameManager.Instance!= null)
+            GameManager.Instance.SpawnItem(pos);
     }
 }

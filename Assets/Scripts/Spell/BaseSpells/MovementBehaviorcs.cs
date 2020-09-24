@@ -2,17 +2,19 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-class MovementSpell : SpellBaseType
+class MovementBehavior : SpellBehavior
 {
     private ThirdPersonCharacter _controller;
-    private float _moveTime = 0.3f;
+    private float _moveTime = 0.25f;
+    
     public override void Init()
     {
         _speed = 25f;
-        _cooldown = 0.8f;
+        _cooldown = 1f;
 
         _objectForSpell = GameManager.Instance._player;
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
+        animationType = CastAnimation.Movement;
     }
     public override void SpellBehaviour(Spell spell)
     {
@@ -23,7 +25,7 @@ class MovementSpell : SpellBaseType
     }
 }
 
-class TimeSlowSpell : SpellBaseType
+class TimeSlowBehavior : SpellBehavior
 {
     public float _duration;
     public override void Init()

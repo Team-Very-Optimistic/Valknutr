@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 2674764975012913394}
   - component: {fileID: 2674764975012913395}
   - component: {fileID: 2674764975012913393}
-  - component: {fileID: 2674764975012913392}
   - component: {fileID: 2674764975012913399}
   - component: {fileID: 2674764975012913398}
   m_Layer: 0
-  m_Name: GameManager 1
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
+  _itemList: {fileID: 0}
 --- !u!114 &2674764975012913393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,25 +63,7 @@ MonoBehaviour:
   projectileObject: {fileID: 7908457230315757119, guid: bb0994a64b1552c478f34ad6f50e15cc, type: 3}
   shieldObject: {fileID: 1082058612622460507, guid: f22f80e2857da3a4cb6596b0bd84a261, type: 3}
   fireObject: {fileID: 1259517371758144061, guid: b899f8874556bd3448b1ff3b9bf79718, type: 3}
---- !u!114 &2674764975012913392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2674764975012913404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e48ae2b8faf7c104d9e7b5dcf7156cff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spell: {fileID: 0}
-  movementSpell: {fileID: 0}
-  shieldSpell: {fileID: 0}
-  planeLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  uiManager: {fileID: 0}
+  explosionObject: {fileID: 0}
 --- !u!114 &2674764975012913399
 MonoBehaviour:
   m_ObjectHideFlags: 0

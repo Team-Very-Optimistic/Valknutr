@@ -12,7 +12,6 @@ using UnityStandardAssets.Characters.ThirdPerson;
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
-        public PauseMenu pauseMenu;
         
         private void Start()
         {
@@ -35,32 +34,11 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
         private void Update()
         {
-            if (Input.GetButtonDown("CraftMenu"))
-            {
-                CraftMenuManager.Instance.Display();
-            }
-
-            if (Input.GetButtonDown("Craft") && CraftMenuManager.Instance.IsDisplayed())
-            {
-                CraftMenuManager.Instance.Craft();
-            }
-            
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-            if (Input.GetButtonDown("PauseGame"))
-            {
-                if (PauseMenu.isPaused)
-                {
-                    pauseMenu.ResumeGame();
-                }
-                else
-                {
-                    pauseMenu.PauseGame();
-                }
-            }
-    }
+        }
 
 
         // Fixed update is called in sync with physics
