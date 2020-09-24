@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class HealthScript : MonoBehaviour
 {
     public float maxHealth = 10;
+    [HideInInspector]
     public float currentHealth = 10;
     public bool destroyOnDeath = true;
     public string hurtSound;
@@ -15,6 +16,7 @@ public class HealthScript : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxHealth;
         damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
     }
 
