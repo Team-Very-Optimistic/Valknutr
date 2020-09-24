@@ -12,7 +12,9 @@ public class HealthScript : MonoBehaviour
     public string hurtSound;
     public bool hurtSoundOnHit = true;
 
-    private GameObject damageTextPrefab;
+    public GameObject damageTextPrefab;
+
+    public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
     void Start()
     {
@@ -22,9 +24,9 @@ public class HealthScript : MonoBehaviour
 
     public void ApplyDamage(float damage)
     {
-        Quaternion rotation = Quaternion.LookRotation(this.transform.position - GameObject.FindGameObjectWithTag("MainCamera").transform.position);
+        Vector3 worldPositionText = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, rotation, this.gameObject);
+        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
 
         if (hurtSoundOnHit)
         {
@@ -36,9 +38,18 @@ public class HealthScript : MonoBehaviour
 
         if (currentHealth <= 0.0f)
         {
-            // Perform death animation here
-            if (destroyOnDeath)
+            if (gameObject.tag == "Enemy")
+            {
+                this.GetComponent<EnemyDeathSequence>().StartDeathSequence();
+            }
+            else if (gameObject.tag == "Player")
+            {
+                this.GetComponent<PlayerDeathSequence>().StartDeathSequence();
+            }
+            else
+            {
                 Destroy(gameObject);
+            }
         }
     }
 
