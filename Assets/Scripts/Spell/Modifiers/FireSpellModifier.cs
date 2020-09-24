@@ -76,6 +76,7 @@ class FireSpellModifier : SpellModifier
     public override void ModifySpell(SpellBehavior spell)
     {
         spell._speed *= 1.2f;
+        spell._cooldown *= 1.2f;
     }
     
     public override SpellBehavior ModifyBehaviour(SpellBehavior action)

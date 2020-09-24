@@ -1,7 +1,6 @@
 ﻿
 using UnityEngine;
 
-[CreateAssetMenu]
 public class GroundStrikeBehaviour : SpellBehavior
 {
     public float radius = 3.0F;

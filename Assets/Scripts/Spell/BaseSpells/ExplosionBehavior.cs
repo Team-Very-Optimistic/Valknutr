@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class ExplosionBehavior : SpellBehavior
 {
     public float radius = 7.0F;
