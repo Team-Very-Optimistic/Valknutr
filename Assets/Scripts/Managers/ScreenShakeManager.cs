@@ -39,7 +39,6 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
     
     IEnumerator ScreenShake(float time, AnimationCurve intensity)
     {
-        Debug.Log("screenshake");
         var transform1 = cam.transform;
         originalPos = transform1.position;
         float t = 0;
