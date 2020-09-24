@@ -5,65 +5,41 @@ using UnityEngine.Assertions.Must;
 
 public class UiManager : Singleton<UiManager>
 {
-    public int maxHealth = 100;
-    public int currentHealth;
-
+    public GameObject player;
+    public SpellDisplayScript[] spellSlots;
     public HealthBar healthBar;
-
-    public SkillCooldown skill1;
-    public SkillCooldown skill2;
-    public SkillCooldown skill3;
     
+    private HealthScript playerHealth;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        skill1.RestartSkill();
-        skill2.RestartSkill();
-        skill3.RestartSkill();
+        if (player == null)
+        {
+            player = GameManager.Instance._player;
+        }
+        PopulateSpells();
+
+
+        playerHealth = player.GetComponent<HealthScript>();
+        
+        healthBar.SetMaxHealth(playerHealth.maxHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (skill1.isCooldown == true)
-        // {
-        //     skill1.UpdateSlider();
-        // } 
-        //
-        // if (skill2.isCooldown == true)
-        // {
-        //     skill2.UpdateSlider();
-        // }
-        //
-        // if (skill3.isCooldown == true)
-        // {
-        //     skill3.UpdateSlider();
-        // }
+        if (playerHealth != null)
+            healthBar.SetHealth(playerHealth.currentHealth);
     }
 
-    void TakeDamage(int damage)
+    void PopulateSpells()
     {
-        currentHealth -= damage;
-
-        healthBar.SetHealth(currentHealth);
-    }
-
-    public void SetSkillCooldown(int index, float time)
-    {
-        switch (index)
+        var spells = player.GetComponent<SpellCaster>().spells;
+        for (var i = 0; i < spells.Length && i < spellSlots.Length; i++)
         {
-            case 1:
-                skill1.skillCooldown = time;
-                break;
-            case 2:
-                skill2.skillCooldown = time;
-                break;
-            case 3:
-                skill3.skillCooldown = time;
-                break;
+            spellSlots[i].SetSpell(spells[i]);
         }
     }
 }

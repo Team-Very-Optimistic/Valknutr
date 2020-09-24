@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,14 +10,15 @@ public class Spell : SpellItem
     [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
     [HideInInspector] public CastAnimation castAnimation;
 
-    private bool isCooldown;
-    public float _coolDown;
+    public float cooldownMax = 1;
+    public float cooldownRemaining = 1;
+    private Sprite sprite;
     
     #endregion
     
     public void CastSpell(SpellCastData data)
     {
-        if (isCooldown) return;
+        if (!IsReady()) return;
 
         float totalCooldown = spellBehavior._cooldown;
         spellBehavior.Init();
@@ -37,8 +36,8 @@ public class Spell : SpellItem
         }
 
         spellBehavior.Cast();
-        _coolDown = totalCooldown;
-        GameManager.Instance.StartCoroutine(WaitCooldown(totalCooldown));
+        cooldownMax = totalCooldown;
+        cooldownRemaining = totalCooldown;
     }
 
     public void AddBaseType(SpellBehavior behaviorType)
@@ -52,10 +51,28 @@ public class Spell : SpellItem
         _spellModifiers.Add(modifier);
     }
 
-    IEnumerator WaitCooldown(float cooldown)
+    public bool IsReady()
     {
-        isCooldown = true;
-        yield return new WaitForSeconds(cooldown);
-        isCooldown = false;
+        return cooldownRemaining == 0;
+    }
+
+    public void Tick(float t)
+    {
+        cooldownRemaining = Mathf.Clamp(cooldownRemaining - t, 0, cooldownMax);
+    }
+
+    /// <summary>
+    /// Returns fraction of cooldown left, i.e. 0 = off cd
+    /// </summary>
+    /// <returns></returns>
+    public float GetCooldownRemainingPercentage()
+    {
+        if (cooldownMax == 0) return 0;
+        return cooldownRemaining / cooldownMax;
+    }
+
+    public Sprite GetIcon()
+    {
+        return sprite;
     }
 }
