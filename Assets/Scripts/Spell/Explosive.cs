@@ -9,9 +9,11 @@ public class Explosive : MonoBehaviour {
     public float _damage = 10;
     public Vector3 direction;
     public float speed;
-    public float timeToExpire = 20f;
+    public float timeToExpire = 5f;
     public float radius = 7f;
     public float power = 10f;
+    public float fuseTime = 0f;
+    
     [SerializeField]
     private bool _explode;
 
@@ -20,7 +22,7 @@ public class Explosive : MonoBehaviour {
         this.direction = direction;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        Destroy(gameObject, timeToExpire);
+        StartCoroutine(Explode(timeToExpire));
     }
     
     public void OnTriggerEnter(Collider other)
@@ -29,10 +31,16 @@ public class Explosive : MonoBehaviour {
         // {
         //     return;
         // }
+        
+        Detonate(fuseTime);
+    }
+
+    public void Detonate(float time = 0)
+    {
         if (_explode) return;
         StopAllCoroutines();
         _explode = true;
-        StartCoroutine(Explode(1.8f));
+        StartCoroutine(Explode(time));
     }
 
     IEnumerator Explode(float time)
@@ -42,16 +50,15 @@ public class Explosive : MonoBehaviour {
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);   
         
-        Collider[] colliders = new Collider[10];
-        var size = Physics.OverlapSphereNonAlloc(explosionPos, radius, colliders);
-        Debug.Log(size);
+        var colliders = Physics.OverlapSphere(explosionPos, radius);
 
-        for (int i = 0; i < size; i++)
+        foreach (Collider hit in colliders)
         {
-            Collider hit = colliders[i];
             damageScript.DealDamage(hit);
         }
         
+        AudioManager.PlaySoundAtPosition("explosion", transform.position);
+        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
