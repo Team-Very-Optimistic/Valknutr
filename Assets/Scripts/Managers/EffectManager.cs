@@ -10,6 +10,7 @@ public class EffectManager : Singleton<EffectManager>
     {
         public string m_Identifier;
         public GameObject effect;
+        public float duration;
     }
     
     [SerializeField]
@@ -26,6 +27,6 @@ public class EffectManager : Singleton<EffectManager>
         }
 
         GameObject temp = Instantiate(s.effect, position, Quaternion.identity);
-      
+        Destroy(temp, s.duration); 
     }
 }

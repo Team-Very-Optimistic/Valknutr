@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &64389496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167201730117628982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9cea70e303d0c4dbba2b6a937befe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_VFXLibrary:
+  - m_Identifier: projectileHit
+    effect: {fileID: 8846962978078135933, guid: b245d7507cfe6244ba663fed90842ad0, type: 3}
+    duration: 1
+  - m_Identifier: groundStrike
+    effect: {fileID: 208414219291985017, guid: c5686df24b233b44d8a89a9998f4462a, type: 3}
+    duration: 1
 --- !u!1 &7211583252000807825
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 583d821c041556345b478e4189e46901, type: 3}
+--- !u!1 &3167201730117628982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 769991377531059209, guid: 583d821c041556345b478e4189e46901, type: 3}
+  m_PrefabInstance: {fileID: 2403697505829374015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3167201730117628980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 769991377531059211, guid: 583d821c041556345b478e4189e46901, type: 3}
