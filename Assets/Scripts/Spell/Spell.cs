@@ -1,56 +1,78 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class Spell : SpellItem
 {
-    [SerializeField]
-    public SpellBaseType _spellBaseType;
-    [SerializeField]
-    public List<SpellModifier> _spellModifiers =  new List<SpellModifier>() ;
-
-    private bool isCooldown;
-    public float _coolDown;
+    #region fields
     
-    public void CastSpell(Vector3 mouseDirection = new Vector3())
+    [SerializeField] protected SpellBehavior spellBehavior;
+    [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
+    [HideInInspector] public CastAnimation castAnimation;
+
+    public float cooldownMax = 1;
+    public float cooldownRemaining = 1;
+    private Sprite sprite;
+    
+    #endregion
+    
+    public void CastSpell(SpellCastData data)
     {
-        if (isCooldown) return; //On cooldown
-        
-        float totalCooldown = _spellBaseType._cooldown;
-        _spellBaseType.Init();
-        _spellBaseType._posDiff = mouseDirection;
-        _spellBaseType.behaviour = () => _spellBaseType.SpellBehaviour(this);
-        
+        if (!IsReady()) return;
+
+        float totalCooldown = spellBehavior._cooldown;
+        spellBehavior.Init();
+        spellBehavior._posDiff = data.castDirection;
+        spellBehavior.behaviour = () => spellBehavior.SpellBehaviour(this);
+
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(_spellBaseType);
-                _spellBaseType = modifier.ModifyBehaviour(_spellBaseType);
+                modifier.ModifySpell(spellBehavior);
+                spellBehavior = modifier.ModifyBehaviour(spellBehavior);
                 totalCooldown *= modifier._cooldownMultiplier;
             }
-
         }
-        _spellBaseType.Cast();
-        _coolDown = totalCooldown;
-        GameManager.Instance.StartCoroutine(WaitCooldown(totalCooldown));
+
+        spellBehavior.Cast();
+        cooldownMax = totalCooldown;
+        cooldownRemaining = totalCooldown;
     }
 
-    public void AddBaseType(SpellBaseType baseType)
+    public void AddBaseType(SpellBehavior behaviorType)
     {
-        _spellBaseType = baseType;
+        spellBehavior = behaviorType;
+        castAnimation = behaviorType.animationType;
     }
+
     public void AddModifier(SpellModifier modifier)
     {
         _spellModifiers.Add(modifier);
     }
 
-    IEnumerator WaitCooldown(float cooldown)
+    public bool IsReady()
     {
-        isCooldown = true;
-        yield return new WaitForSeconds(cooldown);
-        isCooldown = false;
+        return cooldownRemaining == 0;
+    }
+
+    public void Tick(float t)
+    {
+        cooldownRemaining = Mathf.Clamp(cooldownRemaining - t, 0, cooldownMax);
+    }
+
+    /// <summary>
+    /// Returns fraction of cooldown left, i.e. 0 = off cd
+    /// </summary>
+    /// <returns></returns>
+    public float GetCooldownRemainingPercentage()
+    {
+        if (cooldownMax == 0) return 0;
+        return cooldownRemaining / cooldownMax;
+    }
+
+    public Sprite GetIcon()
+    {
+        return sprite;
     }
 }

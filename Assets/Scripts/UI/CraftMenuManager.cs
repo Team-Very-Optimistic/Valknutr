@@ -50,7 +50,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         if (baseSpellItem != null)
         {
             Spell spell = ScriptableObject.CreateInstance<Spell>();
-            spell.AddBaseType(baseSpellItem._spellElement as SpellBaseType);
+            spell.AddBaseType(baseSpellItem._spellElement as SpellBehavior);
             foreach (var mod in mods)
             {
                 spell.AddModifier(mod._spellElement as SpellModifier);
