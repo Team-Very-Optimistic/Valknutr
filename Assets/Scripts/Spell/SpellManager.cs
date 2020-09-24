@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpellManager : Singleton<SpellManager>
 {
@@ -21,7 +20,7 @@ public class SpellManager : Singleton<SpellManager>
         var movementBehavior = ScriptableObject.CreateInstance<MovementBehavior>();
         movementBehavior.Init();
         movementSpell.AddBaseType(movementBehavior);
-        
+
         var shieldBehavior = ScriptableObject.CreateInstance<ShieldBehavior>();
         shieldBehavior.Init();
         shieldSpell.AddBaseType(shieldBehavior);
@@ -30,10 +29,11 @@ public class SpellManager : Singleton<SpellManager>
         projectileBehavior.Init();
         projectileSpell.AddBaseType(projectileBehavior);
 
-        var explosionBehavior = ScriptableObject.CreateInstance<ExplosionBehavior>();
-        explosionBehavior.Init();
-        bombSpell.AddBaseType(explosionBehavior);
+        var novaBehavior = ScriptableObject.CreateInstance<NovaBehavior>();
+        novaBehavior.Init();
+        novaBehavior._objectForSpell = Instance.explosionObject;
+        bombSpell.AddBaseType(novaBehavior);
 
-        return new [] {projectileSpell,  shieldSpell, movementSpell, bombSpell};
+        return new[] {projectileSpell, movementSpell, shieldSpell, bombSpell};
     }
 }

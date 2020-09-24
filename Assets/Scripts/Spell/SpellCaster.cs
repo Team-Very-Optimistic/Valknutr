@@ -7,9 +7,10 @@ using UnityStandardAssets.Characters.ThirdPerson;
 [RequireComponent(typeof(ThirdPersonCharacter))]
 public class SpellCaster : MonoBehaviour
 {
+    public float cooldownRate = 1f;
     public Spell[] spells;
-    public UiManager uiManager;
 
+    private UiManager uiManager;
     private ThirdPersonCharacter character;
     private Camera mainCam;
     private Spell castedSpell;
@@ -26,42 +27,46 @@ public class SpellCaster : MonoBehaviour
 
     void Update()
     {
-        if (character.IsDisabled()) return;
-        
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        foreach (var spell in spells)
         {
-            print("projectile");
-            Precast(spells[0]);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            print("shield");
-            Precast(spells[1]);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            print("dash");
-            Precast(spells[2]);
-
-        }
-        
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            print("bomb");
-            Precast(spells[3]);
+            spell.Tick(Time.deltaTime * cooldownRate);
         }
     }
-    
-    private void Precast(Spell spell)
+
+    public void CastSpellAtIndex(int index)
     {
+        if (index >= spells.Length)
+        {
+            Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        castedSpell = spells[index];
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
-      
+
+        transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
+        character.ClearCastingAnimation();
+        var data = new SpellCastData(gameObject, transform.position, storedDirection);
+        spells[index].CastSpell(data);
+    }
+
+    public void PrecastSpellAtIndex(int index)
+    {
+        if (index >= spells.Length)
+        {
+            Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        PrecastInternal(spells[index]);
+    }
+    
+    private void PrecastInternal(Spell spell)
+    {
+        if (!spell.IsReady()) return;
+        
         castedSpell = spell;
+        storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
         character.SetCastingAnimation(spell.castAnimation);
-        CastPoint();
     }
 
     public void CastPoint()

@@ -5,7 +5,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 class MovementBehavior : SpellBehavior
 {
     private ThirdPersonCharacter _controller;
-    private float _moveTime = 0.45f;
+    private float _moveTime = 0.25f;
     
     public override void Init()
     {
@@ -25,7 +25,7 @@ class MovementBehavior : SpellBehavior
     }
 }
 
-class TimeSlowSpell : SpellBehavior
+class TimeSlowBehavior : SpellBehavior
 {
     public float _duration;
     public override void Init()
