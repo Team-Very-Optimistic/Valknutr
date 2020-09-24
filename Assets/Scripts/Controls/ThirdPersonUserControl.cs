@@ -27,7 +27,6 @@ public class ThirdPersonUserControl : MonoBehaviour
                 gameObject);
             // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
         }
-
         // get the third person character ( this should never be null due to require component )
         m_Character = GetComponent<ThirdPersonCharacter>();
         m_Caster = GetComponent<SpellCaster>();
