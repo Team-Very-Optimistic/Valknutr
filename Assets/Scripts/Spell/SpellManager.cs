@@ -29,7 +29,7 @@ public class SpellManager : Singleton<SpellManager>
         projectileBehavior.Init();
         projectileSpell.AddBaseType(projectileBehavior);
 
-        var novaBehavior = ScriptableObject.CreateInstance<NovaBehavior>();
+        var novaBehavior = ScriptableObject.CreateInstance<ExplosiveBehaviour>();
         novaBehavior.Init();
         novaBehavior._objectForSpell = Instance.explosionObject;
         bombSpell.AddBaseType(novaBehavior);

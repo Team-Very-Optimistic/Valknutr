@@ -9,10 +9,10 @@ public class Explosive : MonoBehaviour {
     public float _damage = 10;
     public Vector3 direction;
     public float speed;
-    public float timeToExpire = 20f;
+    public float timeToExpire = 5f;
     public float radius = 7f;
     public float power = 10f;
-    public float fuseTime = 1.8f;
+    public float fuseTime = 0f;
     
     [SerializeField]
     private bool _explode;
@@ -22,7 +22,7 @@ public class Explosive : MonoBehaviour {
         this.direction = direction;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        Destroy(gameObject, timeToExpire);
+        Detonate(timeToExpire);
     }
     
     public void OnTriggerEnter(Collider other)
