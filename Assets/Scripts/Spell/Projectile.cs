@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour, ITrigger
         
         foreach (var col in cols)
         {
-            if (col.attachedRigidbody != null)
+            if (!col.CompareTag("Player") && col.attachedRigidbody != null )
             {
                 col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position, explosionRadius, 1, ForceMode.Impulse);
             }
