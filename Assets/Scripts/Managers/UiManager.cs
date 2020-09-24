@@ -5,6 +5,7 @@ using UnityEngine.Assertions.Must;
 
 public class UiManager : Singleton<UiManager>
 {
+    [HideInInspector]
     public GameObject player;
     public SpellDisplayScript[] spellSlots;
     public HealthBar healthBar;
