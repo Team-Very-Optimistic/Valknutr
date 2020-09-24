@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [System.Serializable]
     public class SoundEntry
@@ -47,9 +47,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundAtPosition(string identifier, Vector3 position, float volume = 1, float pitch = 1)
+    public static void PlaySoundAtPosition(string identifier, Vector3 position, float volume = 1, float pitch = 1)
     {
-        SoundEntry s = Array.Find(m_SfxLibrary, sound => sound.m_Identifier == identifier);
+        SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 
         if (s == null)
         {
@@ -67,9 +67,9 @@ public class AudioManager : MonoBehaviour
         Destroy(tempSoundPlayer, s.m_Clip.length);
     }
 
-    public void PlaySound(string identifier, float volume = 1, float pitch = 1)
+    public static void PlaySound(string identifier, float volume = 1, float pitch = 1)
     {
-        SoundEntry s = Array.Find(m_SfxLibrary, sound => sound.m_Identifier == identifier);
+        SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 
         if (s == null)
         {

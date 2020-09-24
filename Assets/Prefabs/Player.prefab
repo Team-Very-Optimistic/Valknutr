@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2125853154598462784}
   - component: {fileID: 2125853154598462785}
   - component: {fileID: 5512362124143117213}
+  - component: {fileID: 113275703}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -60,7 +61,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125853154598462786}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 59.6, y: 4.56, z: 6.9613676}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -143,8 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovingTurnSpeed: 1000
   m_StationaryTurnSpeed: 1000
-  m_JumpPower: 12
-  m_GravityMultiplier: 2
+  m_JumpPower: 0
+  m_GravityMultiplier: 4
   m_RunCycleLegOffset: 0.1
   m_MoveSpeedMultiplier: 1.35
   m_AnimSpeedMultiplier: 1.35
@@ -190,13 +191,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125853154598462786}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
---- !u!1 &5279400514957916278
+  maxHealth: 20
+  currentHealth: 20
+  destroyOnDeath: 0
+--- !u!114 &113275703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125853154598462786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6341f9643e3d4916bf5d56bba0631118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownRate: 1
+  spells: []
+--- !u!1 &7259032363129152731
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,8 +221,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5279400514957916277}
-  - component: {fileID: 5279400514957916276}
+  - component: {fileID: 4553153872845371750}
+  - component: {fileID: 5804101157087772662}
   m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
@@ -213,34 +230,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5279400514957916277
+--- !u!4 &4553153872845371750
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5279400514957916278}
+  m_GameObject: {fileID: 7259032363129152731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.35, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5678629772492587990}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &5279400514957916276
+--- !u!108 &5804101157087772662
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5279400514957916278}
+  m_GameObject: {fileID: 7259032363129152731}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.15566039, b: 0.15566039, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 6.97
+  m_Range: 2.78
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -276,9 +293,9 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 567
+    m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
