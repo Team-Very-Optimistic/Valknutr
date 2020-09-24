@@ -21,7 +21,7 @@ public class ExplosiveBehaviour : SpellBehavior
 
     public override void SpellBehaviour(Spell spell)
     {
-        var p = Instantiate(_objectForSpell, player.position + Vector3.up + player.forward * 0.7f,
+        var p = Instantiate(_objectForSpell, player.position + offset + player.forward * 0.7f,
             Quaternion.Euler(_posDiff));
 
         Explosive explosive = p.GetComponent<Explosive>();

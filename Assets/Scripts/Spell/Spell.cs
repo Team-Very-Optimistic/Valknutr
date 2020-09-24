@@ -42,6 +42,7 @@ public class Spell : SpellItem
 
     public void AddBaseType(SpellBehavior behaviorType)
     {
+        behaviorType.Init();
         spellBehavior = behaviorType;
         castAnimation = behaviorType.animationType;
     }
