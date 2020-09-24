@@ -50,12 +50,10 @@ public class Explosive : MonoBehaviour {
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);   
         
-        Collider[] colliders = new Collider[10];
-        var size = Physics.OverlapSphereNonAlloc(explosionPos, radius, colliders);
+        var colliders = Physics.OverlapSphere(explosionPos, radius);
 
-        for (int i = 0; i < size; i++)
+        foreach (Collider hit in colliders)
         {
-            Collider hit = colliders[i];
             damageScript.DealDamage(hit);
         }
         

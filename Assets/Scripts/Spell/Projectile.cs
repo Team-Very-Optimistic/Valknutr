@@ -44,6 +44,7 @@ public class Projectile : MonoBehaviour, ITrigger
             }
         }
 
+        EffectManager.PlayEffectAtPosition("projectileHit", transform.position);
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);
         damageScript.DealDamage(other);
