@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour, ITrigger
         this.direction = direction;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
+        AudioManager.PlaySoundAtPosition("projectileLaunch", transform.position);
         Destroy(gameObject, timeToExpire);
     }
 
@@ -28,6 +29,7 @@ public class Projectile : MonoBehaviour, ITrigger
 
     public void Trigger(Collider other)
     {
+        AudioManager.PlaySoundAtPosition("projectileHit", transform.position);
 
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);
