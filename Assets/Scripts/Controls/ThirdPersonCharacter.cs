@@ -73,6 +73,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / (dashTime/ 1.3f));
 				}
+				else
+				{
+					m_Dashing = false;
+					m_Crouching = false;
+
+				}
 				
 				yield return new WaitForSeconds(timeInterval);
 				//var position = transform.position;
@@ -117,18 +123,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
-			// control and velocity handling is different when grounded and airborne:
-			// if (m_IsGrounded)
-			// {
-			// 	
-			// }
-			// else
-			// {
-			// 	HandleAirborneMovement();
-			// }
+			//control and velocity handling is different when grounded and airborne:
+			if (m_IsGrounded)
+			{
+				
+			}
+			else
+			{
+				HandleAirborneMovement();
+			}
 
-			// ScaleCapsuleForCrouching(crouch);
-			// PreventStandingInLowHeadroom();
+			ScaleCapsuleForCrouching(crouch);
+			PreventStandingInLowHeadroom();
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);

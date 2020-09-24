@@ -79,7 +79,7 @@ public class SpellCaster : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(Util.GetMousePositionOnWorldPlane(mainCam), 0.5f);
+        //Gizmos.DrawSphere(Util.GetMousePositionOnWorldPlane(mainCam), 0.5f);
     }
 }
     

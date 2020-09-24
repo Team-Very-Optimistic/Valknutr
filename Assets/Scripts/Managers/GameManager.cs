@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
     public GameObject _player;
     public ItemList _itemList;
+    public GameObject _weapon;
+
 
 
     public void SpawnItem(Vector3 position, SpellItem _SpellItem = null)

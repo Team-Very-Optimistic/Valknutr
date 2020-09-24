@@ -28,8 +28,6 @@ public abstract class SpellBehavior : SpellElement
     [HideInInspector] public float _damage = 1;
 
     [HideInInspector] public CastAnimation animationType;
-
-    public Sprite icon;
     
     #endregion
 
