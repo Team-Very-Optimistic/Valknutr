@@ -1254,7 +1254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 300
+  maxHealth: 10
+  currentHealth: 10
+  hurtSound: 
+  hurtSoundOnHit: 1
+  damageTextPrefab: {fileID: 0}
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &530307904441627756
 MonoBehaviour:
@@ -1269,15 +1273,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windingUpTime:
+  - 3
   - 2
   - 1
-  - 0.5
-  summonEnemiesNum: 3
-  summonTime: 3
+  summonEnemiesNum: 2
+  summonTime: 5
   paladinPrefab: {fileID: 6849903267375896591, guid: 8496404fac73a754da33a60907708915, type: 3}
   archerPrefab: {fileID: 9149369294737461392, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
   stompPrefab: {fileID: 1874944323883492131, guid: a3309ac1ed9bfa349abddcb0f7b53e42, type: 3}
-  stompRadius: 20
+  stompRadius: 15
   rightFeet: {fileID: 530307904920908565}
 --- !u!114 &530307904441627755
 MonoBehaviour:

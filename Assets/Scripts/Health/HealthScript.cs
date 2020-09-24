@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class HealthScript : MonoBehaviour
 {
-    public float maxHealth = 10;
-    public float currentHealth = 10;
+    public float maxHealth;
+    public float currentHealth;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
 
@@ -35,9 +35,13 @@ public class HealthScript : MonoBehaviour
 
         if (currentHealth <= 0.0f)
         {
-            if(gameObject.tag == "Enemy")
+            if (gameObject.tag == "Enemy")
             {
                 this.GetComponent<EnemyDeathSequence>().StartDeathSequence();
+            }
+            else
+            {
+                this.GetComponent<PlayerDeathSequence>().StartDeathSequence();
             }
         }
     }

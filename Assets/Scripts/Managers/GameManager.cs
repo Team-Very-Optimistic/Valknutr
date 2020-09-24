@@ -21,6 +21,11 @@ public class GameManager : Singleton<GameManager>
         Instantiate(_SpellItem._itemObject, position, _SpellItem._itemObject.transform.rotation);
     }
 
+    internal static void FindGameObjectWithTag(string v)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void SetGameWin()
     {
         //Display winning screen
@@ -39,8 +44,8 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public void GameOver()
+    public void StartGameOverSequence()
     {
-        GameObject.Find("UI").GetComponent<EndGameManagerScript>().DisplayGameOver();
+        GameObject.Find("UI").GetComponent<EndGameManagerScript>().StartGameOverSequence();
     }
 }

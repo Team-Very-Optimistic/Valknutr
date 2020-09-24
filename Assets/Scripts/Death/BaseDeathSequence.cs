@@ -34,8 +34,6 @@ public class BaseDeathSequence : MonoBehaviour
         this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Animator>().enabled = false;
         GetComponent<Animator>().avatar = null;
-        Destroy(GetComponent("EnemyBehaviourBase"));
-        GetComponent<NavMeshAgent>().speed = 0.0f;
 
         //Turn on ragdoll
         foreach (Collider c in ragdollParts)

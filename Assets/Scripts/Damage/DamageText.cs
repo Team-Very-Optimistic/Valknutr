@@ -30,7 +30,7 @@ public class DamageText : MonoBehaviour
         rectTransform.localScale = new Vector3(maxScale, maxScale, maxScale);
 
         //Find and parent to canvas
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        canvas = GameObject.Find("UI").GetComponent<Canvas>();
         transform.SetParent(canvas.transform, false);
     }
 

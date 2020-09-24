@@ -2886,7 +2886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91756c55a29744d43ad5fad9fe8f0afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 3456033056211125254, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
+  arrowPrefab: {fileID: 212749010089997258, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
   arrowSpeed: 15
 --- !u!114 &9149369294737461397
 MonoBehaviour:
@@ -2914,7 +2914,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
+  maxHealth: 2
+  currentHealth: 2
+  hurtSound: 
+  hurtSoundOnHit: 1
+  damageTextPrefab: {fileID: 0}
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!195 &9149369294737461399
 NavMeshAgent:
