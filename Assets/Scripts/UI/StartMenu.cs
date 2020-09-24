@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverManager : MonoBehaviour
+public class StartMenu : MonoBehaviour
 {
-    public void RestartGame()
+    public void Play()
     {
         SceneManager.LoadScene(1);
     }
 
-    public void BackToMenu()
+    public void Quit()
     {
-        SceneManager.LoadScene(0);
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("quit");
         Application.Quit();
     }
 }
