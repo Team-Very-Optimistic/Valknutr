@@ -23,7 +23,6 @@ class ProjectileBehavior : SpellBehavior
     }
     public override void SpellBehaviour(Spell spell)
     {
-
         _posDiff.y = 0;
         for (int i = 0; i < _iterations; i++)
         {
@@ -33,6 +32,8 @@ class ProjectileBehavior : SpellBehavior
                 _posDiff.y, (float) (_posDiff.x * Math.Sin(rotateBy) + _posDiff.z * Math.Cos(rotateBy)));
             
             p.GetComponent<Projectile>().Launch(newDirection, _speed);
+            
+            ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
             p.GetComponent<Damage>().SetDamage(_damage);
             _objectForSpell = p;
         }

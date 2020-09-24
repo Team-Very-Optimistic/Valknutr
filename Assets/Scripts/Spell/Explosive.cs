@@ -22,7 +22,7 @@ public class Explosive : MonoBehaviour {
         this.direction = direction;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        Detonate(timeToExpire);
+        StartCoroutine(Explode(timeToExpire));
     }
     
     public void OnTriggerEnter(Collider other)
@@ -31,6 +31,7 @@ public class Explosive : MonoBehaviour {
         // {
         //     return;
         // }
+        
         Detonate(fuseTime);
     }
 
@@ -51,7 +52,6 @@ public class Explosive : MonoBehaviour {
         
         Collider[] colliders = new Collider[10];
         var size = Physics.OverlapSphereNonAlloc(explosionPos, radius, colliders);
-        Debug.Log(size);
 
         for (int i = 0; i < size; i++)
         {

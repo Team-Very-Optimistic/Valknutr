@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour, ITrigger
     public Vector3 direction;
     public float speed;
     public float timeToExpire = 20f;
+    private float explosionRadius = 2f;
+    private float explosionForce = 1f;
 
     public void Launch(Vector3 direction, float speed)
     {
@@ -30,6 +32,17 @@ public class Projectile : MonoBehaviour, ITrigger
     public void Trigger(Collider other)
     {
         AudioManager.PlaySoundAtPosition("projectileHit", transform.position);
+        
+        var cols = Physics.OverlapSphere(transform.position, explosionRadius);
+        
+        
+        foreach (var col in cols)
+        {
+            if (col.attachedRigidbody != null)
+            {
+                col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position, explosionRadius, 1, ForceMode.Impulse);
+            }
+        }
 
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);
