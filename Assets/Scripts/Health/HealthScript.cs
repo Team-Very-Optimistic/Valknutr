@@ -7,11 +7,10 @@ public class HealthScript : MonoBehaviour
 {
     public float maxHealth = 10;
     public float currentHealth = 10;
-    public bool destroyOnDeath = true;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
 
-    private GameObject damageTextPrefab;
+    public GameObject damageTextPrefab;
 
     public Color damageColor;
 

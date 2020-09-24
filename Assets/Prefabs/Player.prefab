@@ -130,7 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521b611700410be45810047f0a74e899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
 --- !u!114 &2125853154598462785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +198,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   currentHealth: 20
-  destroyOnDeath: 0
+  hurtSound: 
+  hurtSoundOnHit: 1
+  damageTextPrefab: {fileID: 0}
+  damageColor: {r: 0.9056604, g: 0, b: 0, a: 1}
 --- !u!114 &113275703
 MonoBehaviour:
   m_ObjectHideFlags: 0
