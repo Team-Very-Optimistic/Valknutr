@@ -10,7 +10,7 @@ public class GroundStrikeBehaviour : SpellBehavior
 
     public override void Init()
     {
-        _damage = 1f;
+        _damage = 4f;
         _speed = 2f;
         _cooldown = .2f;
         
