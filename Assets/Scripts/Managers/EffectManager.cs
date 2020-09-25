@@ -27,6 +27,7 @@ public class EffectManager : Singleton<EffectManager>
         }
 
         GameObject temp = Instantiate(s.effect, position, Quaternion.identity);
-        Destroy(temp, s.duration); 
+        if(temp)
+            Destroy(temp, s.duration); 
     }
 }

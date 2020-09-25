@@ -174,9 +174,17 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2674764975012913399, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
+      propertyPath: damageTextPrefab
+      value: 
+      objectReference: {fileID: 6145384048225691706, guid: 02cee1635a5729a439af3e0a6b850ea6, type: 3}
     - target: {fileID: 2674764975012913404, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674764975012913404, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 894522836, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
@@ -309,6 +317,62 @@ PrefabInstance:
     - target: {fileID: 4307076804482486278, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[0].m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[1].m_Identifier
+      value: projectileLaunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[1].m_Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9071b03152d8f634588f9ba85d78d593, type: 3}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[1].m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[1].m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[2].m_Identifier
+      value: projectileHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[2].m_Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3163d468a95ccf940a38463fe456af02, type: 3}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[2].m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[2].m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[3].m_Identifier
+      value: explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[3].m_Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 14dde69b4efc8d3409c01917f264e58f, type: 3}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[3].m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[3].m_Pitch
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
