@@ -32,7 +32,7 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
             intensityCurve = curve;
         }
         shakeAmount = Math.Min(intensity, 1);
-        shakeAngle = 2 * shakeAmount / 1;
+        shakeAngle =  2 * shakeAmount / 1;
         StartCoroutine(ScreenShake(time, intensityCurve));
     }
     
@@ -51,19 +51,22 @@ public class ScreenShakeManager : Singleton<ScreenShakeManager>
             //Mathf.PerlinNoise(t / intensity, 0f) * curve.Eval(t);
             t += Time.unscaledDeltaTime;
             
-            noise.x = Mathf.PerlinNoise(random.x + t, 0.0f);
-            noise.y = Mathf.PerlinNoise(random.y + t, 1.0f);
-            noise.z = Mathf.PerlinNoise(random.z + t, 2.0f);
+            noise.x =  Mathf.PerlinNoise( random.x + t, -10.0f) - 0.5f;
+            noise.y =  Mathf.PerlinNoise( random.y + t, 0.0f) - 0.5f;
+            noise.z = Mathf.PerlinNoise(random.z + t, 10.0f) - 0.5f;
+            noise *= 2f;
+            noise += Random.insideUnitSphere;
+    
             
-            transform1.localPosition = originalPos + noise * intensityValue;
+            transform1.localPosition = noise * intensityValue;
             intensityValue *= shakeAngle;
-            transform1.rotation = Quaternion.Euler(originalRot )* Quaternion.Euler(
+            transform1.localEulerAngles = new Vector3(
                 noise.x * intensityValue , noise.y *  intensityValue, noise.z * intensityValue
             );
             yield return null;
         }
 
-        transform1.transform.localPosition = originalPos;
+        transform1.transform.localPosition = new Vector3();
         transform1.transform.localEulerAngles = new Vector3();
     }
 }

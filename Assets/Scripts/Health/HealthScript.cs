@@ -8,10 +8,13 @@ public class HealthScript : MonoBehaviour
     public float maxHealth = 10;
     [HideInInspector]
     public float currentHealth = 10;
+    [HideInInspector]
     public bool destroyOnDeath = true;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
-
+    [HideInInspector]
+    public bool isPlayer;
+    [HideInInspector]
     public GameObject damageTextPrefab;
 
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -20,6 +23,11 @@ public class HealthScript : MonoBehaviour
     {
         currentHealth = maxHealth;
         damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
+        
+        if (gameObject == GameManager.Instance._player)
+        {
+            isPlayer = true;
+        }
     }
 
     public void ApplyDamage(float damage)
@@ -27,24 +35,30 @@ public class HealthScript : MonoBehaviour
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
         damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
-
+        if (damage <= 0)
+            return;
         if (hurtSoundOnHit)
         {
             PlayHurtSound(damage);
         }
-        
 
-        currentHealth -= damage;
+        if (isPlayer)
+        {
+            EffectManager.Instance.PlayerHurtEffect();
+            EffectManager.PlayEffectAtPosition("bloodExplosion", transform.position);
+        }
+
+        currentHealth -= damage;    
 
         if (currentHealth <= 0.0f)
         {
             if (gameObject.tag == "Enemy")
             {
-                this.GetComponent<EnemyDeathSequence>().StartDeathSequence();
+                GetComponent<EnemyDeathSequence>().StartDeathSequence();
             }
-            else if (gameObject.tag == "Player")
+            else if (isPlayer)
             {
-                this.GetComponent<PlayerDeathSequence>().StartDeathSequence();
+                GetComponent<PlayerDeathSequence>().StartDeathSequence();
             }
             else
             {
