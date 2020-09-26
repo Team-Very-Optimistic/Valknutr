@@ -1,4 +1,5 @@
-﻿using UnityStandardAssets.Characters.ThirdPerson;
+﻿using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 class MovementBehavior : SpellBehavior
 {
@@ -16,6 +17,7 @@ class MovementBehavior : SpellBehavior
     }
     public override void SpellBehaviour(Spell spell)
     {
+        AudioManager.PlaySoundAtPosition("dash", _controller.transform.position);
         _posDiff.y = 0;
         //Todo: make dash better
         // _objectForSpell.GetComponent<ThirdPersonCharacter>().Move(_posDiff * _speed, false, false);

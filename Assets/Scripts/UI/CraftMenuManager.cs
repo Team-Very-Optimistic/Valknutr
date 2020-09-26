@@ -14,6 +14,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     
     public void Display()
     {
+        AudioManager.PlaySound("uiCraftMenu");
         craftMenu.SetActive(!craftMenu.activeSelf);
     }
 
@@ -73,6 +74,8 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
                 slots.Clear();
             }
         }
+        
+        AudioManager.PlaySound("craftSuccess");
         
     }
 }

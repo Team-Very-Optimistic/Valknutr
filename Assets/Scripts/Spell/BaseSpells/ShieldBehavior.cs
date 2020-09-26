@@ -17,6 +17,7 @@ class ShieldBehavior : SpellBehavior
     
     public override void SpellBehaviour(Spell spell)
     {
+        AudioManager.PlaySoundAtPosition("castShield", player.position);
         for (int i = 0; i < _iterations; i++)
         {
             var p = GameObject.Instantiate(_objectForSpell, player.position + Vector3.up + player.forward * _speed /50f, player.localRotation);

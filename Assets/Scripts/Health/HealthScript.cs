@@ -11,7 +11,7 @@ public class HealthScript : MonoBehaviour
     [HideInInspector]
     public bool destroyOnDeath = true;
     public string hurtSound;
-    public bool hurtSoundOnHit = true;
+    public string deathSound;
     [HideInInspector]
     public bool isPlayer;
     [HideInInspector]
@@ -37,7 +37,7 @@ public class HealthScript : MonoBehaviour
         damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
         if (damage <= 0)
             return;
-        if (hurtSoundOnHit)
+        if (hurtSound != "")
         {
             PlayHurtSound(damage);
         }
@@ -52,6 +52,10 @@ public class HealthScript : MonoBehaviour
 
         if (currentHealth <= 0.0f)
         {
+            if (deathSound != "")
+            {
+                AudioManager.PlaySoundAtPosition(deathSound, transform.position);
+            }
             if (gameObject.tag == "Enemy")
             {
                 GetComponent<EnemyDeathSequence>().StartDeathSequence();
