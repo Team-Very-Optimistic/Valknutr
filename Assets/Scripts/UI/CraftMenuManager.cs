@@ -4,20 +4,23 @@ using UnityEngine;
 public class CraftMenuManager : Singleton<CraftMenuManager>
 {
     public GameObject craftMenu;
+    public GameObject quickCraftMenu;
+
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
     private const int BaseItemSlotIndex = 3;
+    
     public void AddItem(SpellItem spellItem)
     {
         displaySpells.AddItem(spellItem);
     }
     
-    public void Display()
+    public void DisplayCraftMenu()
     {
         craftMenu.SetActive(!craftMenu.activeSelf);
     }
 
-    public bool IsDisplayed()
+    public bool IsCraftMenuDisplayed()
     {
         return craftMenu.activeSelf;
     }

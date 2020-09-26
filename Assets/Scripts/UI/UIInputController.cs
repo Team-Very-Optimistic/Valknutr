@@ -10,10 +10,10 @@ namespace UI
         {
             if (Input.GetButtonDown("CraftMenu"))
             {
-                CraftMenuManager.Instance.Display();
+                CraftMenuManager.Instance.DisplayCraftMenu();
             }
 
-            if (Input.GetButtonDown("Craft") && CraftMenuManager.Instance.IsDisplayed())
+            if (Input.GetButtonDown("Craft") && CraftMenuManager.Instance.IsCraftMenuDisplayed())
             {
                 CraftMenuManager.Instance.Craft();
             }
