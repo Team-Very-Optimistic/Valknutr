@@ -2576,37 +2576,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: HideBehavior.Animation.Fade.Enabled
+    - target: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: HideBehavior.Animation.Move.Enabled
+    - target: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: HideBehavior.Animation.Fade.Duration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: ShowBehavior.Animation.Fade.Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: HideBehavior.PresetCategory
-      value: Organic
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: HideBehavior.PresetName
-      value: SmoothToLeft
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: ShowBehavior.PresetCategory
-      value: Organic
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644693565, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
-      propertyPath: ShowBehavior.PresetName
-      value: SmoothFromRight
       objectReference: {fileID: 0}
     - target: {fileID: 3675246780570356930, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2748,6 +2736,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8586046643999218093, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: pointerPivot
+      value: 
+      objectReference: {fileID: 1748753361}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
 --- !u!1 &58984634
@@ -43409,6 +43401,11 @@ Transform:
   m_Father: {fileID: 305978605}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1748753361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 777303868248222717, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+  m_PrefabInstance: {fileID: 57485419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1749061102
 PrefabInstance:
   m_ObjectHideFlags: 0

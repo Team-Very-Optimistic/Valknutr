@@ -14,7 +14,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     #region CraftMenu
     public void DisplayCraftMenu()
     {
-        if (craftMenu.IsHidden) craftMenu.Show();
+        if (craftMenu.IsHidden) SwapUI();
         else craftMenu.Hide();
     }
 
@@ -87,7 +87,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     #region QuickCraftMenu
     public void DisplayQuickCraftMenu()
     {
-        if (quickCraftMenu.IsHidden) quickCraftMenu.Show();
+        if (quickCraftMenu.IsHidden) SwapUI();
         else quickCraftMenu.Hide();
     }
 
