@@ -24,7 +24,7 @@ public class GroundStrikeBehaviour : SpellBehavior
     public override void SpellBehaviour(Spell spell)
     {
         var position = _objectForSpell.transform.position + _posDiff;
-        
+        position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
         AudioManager.PlaySoundAtPosition("groundStrike", position);
         EffectManager.PlayEffectAtPosition("groundStrike", position + offset);

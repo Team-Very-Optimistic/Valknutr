@@ -65,6 +65,7 @@ public class SpellCaster : MonoBehaviour
         
         castedSpell = spell;
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
+        storedDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
         character.SetCastingAnimation(spell.castAnimation);
     }
