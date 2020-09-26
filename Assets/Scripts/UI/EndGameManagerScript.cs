@@ -25,7 +25,6 @@ public class EndGameManagerScript : MonoBehaviour
         {
             if (child.gameObject.activeSelf)
             {
-                Debug.Log(child.gameObject);
                 gameUI.Add(child.gameObject);
             }
         }

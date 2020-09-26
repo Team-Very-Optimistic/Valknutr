@@ -1,30 +1,33 @@
 ﻿using System.Collections.Generic;
+using Doozy.Engine.UI;
 using UnityEngine;
 
 public class CraftMenuManager : Singleton<CraftMenuManager>
 {
-    public GameObject craftMenu;
-    public GameObject quickCraftMenu;
+    public UIView craftMenu;
+    public UIView quickCraftMenu;
 
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
     private const int BaseItemSlotIndex = 3;
+    
+    #region CraftMenu
+    public void DisplayCraftMenu()
+    {
+        if (craftMenu.IsHidden) craftMenu.Show();
+        else craftMenu.Hide();
+    }
+
+    public bool IsCraftMenuDisplayed()
+    {
+        return craftMenu.IsVisible;
+    }
     
     public void AddItem(SpellItem spellItem)
     {
         displaySpells.AddItem(spellItem);
     }
     
-    public void DisplayCraftMenu()
-    {
-        craftMenu.SetActive(!craftMenu.activeSelf);
-    }
-
-    public bool IsCraftMenuDisplayed()
-    {
-        return craftMenu.activeSelf;
-    }
-
     public void RemoveItem(SpellItem spellItem)
     {
         displaySpells.RemoveItem(spellItem);
@@ -77,5 +80,47 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             }
         }
         
+    }
+    
+    #endregion 
+    
+    #region QuickCraftMenu
+    public void DisplayQuickCraftMenu()
+    {
+        if (quickCraftMenu.IsHidden) quickCraftMenu.Show();
+        else quickCraftMenu.Hide();
+    }
+
+    public bool IsQuickCraftMenuDisplayed()
+    {
+        return quickCraftMenu.IsVisible;
+    }
+    
+    #endregion
+
+    public bool IsUIDisplayed()
+    {
+        return IsCraftMenuDisplayed() || IsQuickCraftMenuDisplayed();
+    }
+
+    public void SwapUI()
+    {
+        if (IsCraftMenuDisplayed())
+        {
+            UIButtonMessage.Send("Organic");
+            craftMenu.Hide();
+            quickCraftMenu.Show();
+        }
+        else
+        {
+            quickCraftMenu.Hide();
+            craftMenu.Show();
+        }
+    }
+
+    public void HideUI()
+    {
+        craftMenu.Hide();
+        quickCraftMenu.Hide();
     }
 }
