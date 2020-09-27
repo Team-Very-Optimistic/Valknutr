@@ -70,7 +70,7 @@ public class SelectMenu : MonoBehaviour
             index = 1;
         }
 
-        if (index <= 0) return;
+        if (index < 0) return;
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedItem());
     }
 
