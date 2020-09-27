@@ -2,6 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
+[CreateAssetMenu]
 public class Spell : SpellItem
 {
     #region fields

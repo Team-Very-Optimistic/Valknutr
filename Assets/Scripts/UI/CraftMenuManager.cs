@@ -41,7 +41,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         {
             if (slots.IsSlotted())
             {
-                var slottedItem = slots.GetSlottedItem();
+                var slottedItem = slots.GetSlottedSpellItem();
                 if (slots.isBaseSlot)
                 {
                     baseSpellItem = slottedItem;
@@ -78,7 +78,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         {
             if (slots.IsSlotted())
             {
-                var slottedItem = slots.GetSlottedItem();
+                var slottedItem = slots.GetSlottedSpellItem();
                 Inventory.Instance.Remove(slottedItem);
                 slots.Clear();
             }

@@ -18,7 +18,8 @@ public class SpellCaster : MonoBehaviour
     
     private void Start()
     {
-        spells = SpellManager.GetDefaultSpells();
+        spells = SpellManager.Instance.GetDefaultSpells();
+        Inventory.Instance._spells.AddRange(spells);
         
         character = GetComponent<ThirdPersonCharacter>();
         mainCam = Camera.main;
@@ -51,6 +52,7 @@ public class SpellCaster : MonoBehaviour
             return;
         }
         castedSpell = spells[index];
+        
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
@@ -64,6 +66,10 @@ public class SpellCaster : MonoBehaviour
         if (index >= spells.Length || index < 0)
         {
             Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        if (spells[index] == null)
+        {
             return;
         }
         PrecastInternal(spells[index]);

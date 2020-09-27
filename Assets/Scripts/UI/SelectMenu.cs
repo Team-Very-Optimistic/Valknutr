@@ -8,20 +8,25 @@ public class SelectMenu : MonoBehaviour
     public RectTransform pointerPivot;
 
     public UISlot[] UISlots;
+    private UISlot[] codedSlots;
     private UISlot currentlySelectedSlot;
     private int count;
     public GameObject prefab;
     private SpellCaster m_spellCaster;
     private HashSet<Spell> _addedSpells;
+    List<KeyCode> keyBindings;
     
     // Start is called before the first frame update
     void Start()
     {
+        keyBindings = new List<KeyCode>();
+        keyBindings.Add(KeyCode.Mouse0);
+        keyBindings.Add(KeyCode.Mouse1);
+        keyBindings.Add(KeyCode.Q);
+        keyBindings.Add(KeyCode.E);
+        codedSlots = new UISlot[4];
         _addedSpells = new HashSet<Spell>();
         count = 0;
-        foreach (var uiSlots in UISlots)
-        {
-        }
         InvokeRepeating( nameof(IntervalUpdate), 0f, 0.1f);
 
         m_spellCaster = GameManager.Instance._player.GetComponent<SpellCaster>();
@@ -46,13 +51,30 @@ public class SelectMenu : MonoBehaviour
             UISlots[count++].Slot(uiItem);
             _addedSpells.Add(spell);
         }
+
+        foreach (var slot in UISlots)
+        {
+            if (!slot.IsSlotted()) return;
+            var slottedSpellItem = slot.GetSlottedSpellItem();
+            int index = 0;
+            foreach(var spell in m_spellCaster.spells)
+            {
+                if (slottedSpellItem == spell)
+                {
+                    slot.GetSlottedUiItem().SetKeyCode(keyBindings[index]);
+                    codedSlots[index] = slot;
+                }
+                index++;
+            }
+        }
     }
 
-    //todo: keybindings
     public void Update()
     {
         if (!CraftMenuManager.Instance.IsQuickCraftMenuDisplayed()) return;
         var index = -1;
+        
+        
         if (Input.GetKey(KeyCode.Q))
         {
             index = 2;
@@ -73,7 +95,18 @@ public class SelectMenu : MonoBehaviour
 
         if (index < 0) return;
         if (currentlySelectedSlot == null) return;
-        m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedItem());
+
+        var slottedUiItem = currentlySelectedSlot.GetSlottedUiItem();
+        var key = keyBindings[index];
+        slottedUiItem.SetKeyCode(key);
+        m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
+        int i = 0;
+        foreach (var slot in codedSlots)
+        {
+            Debug.Log(slot.name + i++);
+
+        }
+        codedSlots[index].GetSlottedUiItem().SetKeyCode(KeyCode.Clear);
     }
 
     // Update is called once per 0.1s

@@ -14,6 +14,7 @@ public class UIItem : Selectable
     protected int _siblingIndex;
     public SpellItem _spellItem;
     protected bool selected;
+    private KeyCodeUI _keyCodeUi;
 
     private void Start()
     {
@@ -55,5 +56,14 @@ public class UIItem : Selectable
             transform.SetParent(_oriParent);
             transform.SetSiblingIndex(_siblingIndex);
         }
+    }
+
+    public void SetKeyCode(KeyCode key)
+    {
+        if (_keyCodeUi == null)
+        {
+            _keyCodeUi = GetComponentInChildren<KeyCodeUI>();
+        }
+        _keyCodeUi.SetKeyCode(key);
     }
 }

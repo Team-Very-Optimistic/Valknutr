@@ -7,6 +7,7 @@ public class UISlot : MonoBehaviour, IDropHandler
     private UIItem slottedItem;
     public bool isBaseSlot;
     public bool isSpellSlot;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData != null)
@@ -52,7 +53,11 @@ public class UISlot : MonoBehaviour, IDropHandler
         return true;
     }
 
-    public SpellItem GetSlottedItem()
+    public UIItem GetSlottedUiItem()
+    {
+        return slottedItem;
+    }
+    public SpellItem GetSlottedSpellItem()
     {
         return slottedItem._spellItem;
     }

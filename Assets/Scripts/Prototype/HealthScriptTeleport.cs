@@ -21,7 +21,6 @@ public class HealthScriptTeleport : HealthScript
         //todo: this shit
         var direc = (_player.position - transform.position).normalized;
         var localRotationNormalized = Mathf.PI *(_player.eulerAngles.y) / 180f  - Mathf.Acos(direc.z) - Mathf.Asin(direc.x);
-        Debug.Log(localRotationNormalized);
         if(localRotationNormalized > 0.1f)
             _enemy.Teleport();
         else

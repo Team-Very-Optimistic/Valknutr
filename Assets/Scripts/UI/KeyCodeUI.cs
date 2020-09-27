@@ -9,7 +9,7 @@ public class KeyCodeUI : MonoBehaviour
     public Sprite key;
     public TextMeshProUGUI text;
     private Image image;
-    private void Start()
+    private void Awake()
     {
         image = GetComponent<Image>();
     }
