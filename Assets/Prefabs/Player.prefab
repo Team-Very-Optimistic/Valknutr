@@ -1348,7 +1348,7 @@ GameObject:
   - component: {fileID: 2323728778622758097}
   - component: {fileID: 2323728778622758103}
   - component: {fileID: 2323728778622758102}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6192,9 +6192,9 @@ GameObject:
   - component: {fileID: 2323728778649895676}
   - component: {fileID: 2323728778649895679}
   - component: {fileID: 2323728778649895678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fantasy staff
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6756,7 +6756,7 @@ GameObject:
   - component: {fileID: 2323728778919655391}
   - component: {fileID: 2323728778919655389}
   - component: {fileID: 2323728778919655388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11784,7 +11784,7 @@ GameObject:
   - component: {fileID: 2323728779067453921}
   - component: {fileID: 2323728779067453927}
   - component: {fileID: 2323728779067453926}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SunSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17081,7 +17081,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323728779428590829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.31, y: 0.25, z: 7.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17219,10 +17219,10 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 20
   destroyOnDeath: 0
-  hurtSound: 
+  hurtSound: playerHurt
   hurtSoundOnHit: 1
   isPlayer: 0
-  damageTextPrefab: {fileID: 0}
+  damageTextPrefab: {fileID: 6145384048225691706, guid: 02cee1635a5729a439af3e0a6b850ea6, type: 3}
   damageColor: {r: 0.8584906, g: 0, b: 0, a: 1}
 --- !u!114 &2323728779428590802
 MonoBehaviour:
@@ -17679,7 +17679,7 @@ GameObject:
   - component: {fileID: 2323728779625690283}
   - component: {fileID: 2323728779625690281}
   - component: {fileID: 2323728779625690280}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9cea70e303d0c4dbba2b6a937befe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_postProcessVolume: {fileID: 0}
   m_VFXLibrary:
   - m_Identifier: projectileHit
     effect: {fileID: 8846962978078135933, guid: b245d7507cfe6244ba663fed90842ad0, type: 3}
@@ -19,6 +20,9 @@ MonoBehaviour:
   - m_Identifier: groundStrike
     effect: {fileID: 208414219291985017, guid: c5686df24b233b44d8a89a9998f4462a, type: 3}
     duration: 1
+  - m_Identifier: bloodExplosion
+    effect: {fileID: 4614555816260330581, guid: 3ead7e8e25cda0945841bfc4a34e3c00, type: 3}
+    duration: 3
 --- !u!1 &7211583252000807825
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,7 +37,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1366040741080232428
 Transform:
@@ -107,6 +111,10 @@ PrefabInstance:
     - target: {fileID: 5859112641622685971, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: m_Name
       value: SpellManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859112641622685971, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
@@ -186,6 +194,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2674764975012913404, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 894522836, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
     - {fileID: 2674764975012913393, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
@@ -206,6 +218,10 @@ PrefabInstance:
     - target: {fileID: 769991377531059209, guid: 583d821c041556345b478e4189e46901, type: 3}
       propertyPath: m_Name
       value: EffectsManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 769991377531059209, guid: 583d821c041556345b478e4189e46901, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 769991377531059211, guid: 583d821c041556345b478e4189e46901, type: 3}
       propertyPath: m_LocalPosition.x
@@ -274,6 +290,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 236517715766470907, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 4307076804482486278, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -320,11 +340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[0].m_Volume
-      value: 0.3
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[1].m_Identifier
@@ -372,6 +392,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[3].m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[4].m_Identifier
+      value: groundStrike
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[4].m_Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1bc0b0c6dd3a1be47ad6c0345568844b, type: 3}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[4].m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[4].m_Pitch
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
