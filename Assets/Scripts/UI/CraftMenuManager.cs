@@ -5,7 +5,7 @@ using UnityEngine;
 public class CraftMenuManager : Singleton<CraftMenuManager>
 {
     public UIView craftMenu;
-    public UIView quickCraftMenu;
+    public UIView selectMenu;
 
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
@@ -14,7 +14,18 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     #region CraftMenu
     public void DisplayCraftMenu()
     {
-        if (craftMenu.IsHidden) SwapUI();
+        if (craftMenu.IsHidden)
+        {
+            if (IsSelectMenuDisplayed())
+            {
+                craftMenu.Show();
+                selectMenu.Hide();
+            }
+            else
+            {
+                craftMenu.Show();
+            }
+        }
         else craftMenu.Hide();
     }
 
@@ -56,14 +67,18 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         if (baseSpellItem != null)
         {
             Spell spell = ScriptableObject.CreateInstance<Spell>();
+            
             spell.AddBaseType(baseSpellItem._spellElement as SpellBehavior);
             
             List<Sprite> modSprites = new List<Sprite>();
+            string modStr = "";
             foreach (var mod in mods)
             {
+                modStr += mod._spellElement.name + " ";
                 spell.AddModifier(mod._spellElement as SpellModifier);
                 modSprites.Add(mod._UIsprite);
             }
+            spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
             Inventory.Instance._spells.Add(spell); //crafted
             
@@ -88,36 +103,46 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     
     #endregion 
     
-    #region QuickCraftMenu
-    public void DisplayQuickCraftMenu()
+    #region SelectMenu
+    public void DisplaySelectMenu()
     {
-        if (quickCraftMenu.IsHidden) SwapUI();
-        else quickCraftMenu.Hide();
+        if (selectMenu.IsHidden)
+        {
+            if (IsCraftMenuDisplayed())
+            {
+                craftMenu.Hide();
+                selectMenu.Show();
+            }
+            else
+            {
+                selectMenu.Show();
+            }
+        }
+        else selectMenu.Hide();
     }
 
-    public bool IsQuickCraftMenuDisplayed()
+    public bool IsSelectMenuDisplayed()
     {
-        return quickCraftMenu.IsVisible;
+        return selectMenu.IsVisible;
     }
     
     #endregion
 
     public bool IsUIDisplayed()
     {
-        return IsCraftMenuDisplayed() || IsQuickCraftMenuDisplayed();
+        return IsCraftMenuDisplayed() || IsSelectMenuDisplayed();
     }
 
     public void SwapUI()
     {
         if (IsCraftMenuDisplayed())
         {
-            UIButtonMessage.Send("Organic");
             craftMenu.Hide();
-            quickCraftMenu.Show();
+            selectMenu.Show();
         }
         else
         {
-            quickCraftMenu.Hide();
+            selectMenu.Hide();
             craftMenu.Show();
         }
     }
@@ -125,6 +150,6 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     public void HideUI()
     {
         craftMenu.Hide();
-        quickCraftMenu.Hide();
+        selectMenu.Hide();
     }
 }

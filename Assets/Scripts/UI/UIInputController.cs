@@ -20,6 +20,11 @@ namespace UI
                 uiManager.DisplayCraftMenu();
             }
             
+            if (!uiManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
+            {
+                uiManager.DisplaySelectMenu();
+            } 
+            
             if (Input.GetButtonDown("PauseGame"))
             {
                 // todo make pausemenu a singleton?
@@ -51,10 +56,11 @@ namespace UI
                 if (Input.GetButtonDown("Back"))
                 {
                     uiManager.SwapUI();
+                    return;
                 }
             }
             
-            if (uiManager.IsQuickCraftMenuDisplayed())
+            if (uiManager.IsSelectMenuDisplayed())
             {
                 
                 if (Input.GetButtonDown("Next"))
@@ -62,6 +68,12 @@ namespace UI
                     uiManager.SwapUI();
 
                 }
+            }
+            
+            if (Input.GetButtonUp("SelectMenu"))
+            {
+                uiManager.HideUI();
+                return;
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,12 +14,13 @@ public class Spell : SpellItem
 
     public float cooldownMax = 1;
     public float cooldownRemaining = 1;
-    
+    private readonly int hashCode = DateTime.Now.GetHashCode();
     #endregion
 
     /// <summary>
     /// Use this method to create the sprite based on Base type and modifiers.
     /// Requires read/write enabled texture
+    /// Requires RGBA 32bit color
     /// </summary>
     public Sprite CreateProceduralSprite(Sprite baseType, List<Sprite> modifiers)
     {
@@ -63,6 +65,11 @@ public class Spell : SpellItem
         spellBehavior.Cast();
         cooldownMax = totalCooldown;
         cooldownRemaining = totalCooldown;
+    }
+    
+    public override int GetHashCode()
+    {
+        return hashCode;
     }
 
     public float GetAnimSpeed()

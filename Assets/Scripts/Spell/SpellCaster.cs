@@ -30,7 +30,8 @@ public class SpellCaster : MonoBehaviour
     {
         foreach (var spell in spells)
         {
-            spell.Tick(Time.deltaTime * cooldownRate);
+            if(spell != null)
+                spell.Tick(Time.deltaTime * cooldownRate);
         }
     }
     

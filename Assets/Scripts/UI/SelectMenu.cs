@@ -14,11 +14,13 @@ public class SelectMenu : MonoBehaviour
     public GameObject prefab;
     private SpellCaster m_spellCaster;
     private HashSet<Spell> _addedSpells;
+    private Inventory _inventory;
     List<KeyCode> keyBindings;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        _inventory = Inventory.Instance;
         keyBindings = new List<KeyCode>();
         keyBindings.Add(KeyCode.Mouse0);
         keyBindings.Add(KeyCode.Mouse1);
@@ -38,12 +40,14 @@ public class SelectMenu : MonoBehaviour
         {
             return;
         }
-        foreach (var spell in Inventory.Instance._spells)
+        foreach (var spell in _inventory._spells)
         {
+            Debug.Log("Spellname: " + spell.name + count + " / " + spell.GetHashCode() );
+            if (spell == null) continue;
             if (_addedSpells.Contains(spell))
             {
-                Debug.Log(spell.name);
-                return;
+                Debug.Log(spell.name + spell._spellModifiers.Count);
+                continue;
             }
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
@@ -72,7 +76,7 @@ public class SelectMenu : MonoBehaviour
 
     public void Update()
     {
-        if (!CraftMenuManager.Instance.IsQuickCraftMenuDisplayed()) return;
+        if (!CraftMenuManager.Instance.IsSelectMenuDisplayed()) return;
         var index = -1;
         
         
@@ -107,11 +111,11 @@ public class SelectMenu : MonoBehaviour
         m_spellCaster.ClearSpell((Spell) uiItem._spellItem);
         slottedUiItem.SetKeyCode(key);
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
-        int i = 0;
-        foreach (var slot in codedSlots)
-        {
-            Debug.Log(slot.name + i++);
-        }
+        //int i = 0;
+        // foreach (var slot in codedSlots)
+        // {
+        //     Debug.Log(slot.name + i++);
+        // }
         codedSlots[index] = currentlySelectedSlot;
     }
 
@@ -120,7 +124,7 @@ public class SelectMenu : MonoBehaviour
     {
         currentlySelectedSlot = GetClosest(UISlots, Input.mousePosition);
         var pointerDirection = currentlySelectedSlot.transform.position - pointerPivot.position;
-        float targetRotation = 180 / Mathf.PI * Mathf.Atan2(pointerDirection.y,pointerDirection.x) + 90f;
+        float targetRotation = 180 / Mathf.PI * Mathf.Atan2(pointerDirection.y, pointerDirection.x) + 90f;
         
         pointerPivot.eulerAngles = new Vector3(0,0, targetRotation);
         
