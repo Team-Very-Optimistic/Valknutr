@@ -51,6 +51,7 @@ public class SelectMenu : MonoBehaviour
     //todo: keybindings
     public void Update()
     {
+        if (!CraftMenuManager.Instance.IsQuickCraftMenuDisplayed()) return;
         var index = -1;
         if (Input.GetKey(KeyCode.Q))
         {
@@ -71,6 +72,7 @@ public class SelectMenu : MonoBehaviour
         }
 
         if (index < 0) return;
+        if (currentlySelectedSlot == null) return;
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedItem());
     }
 
