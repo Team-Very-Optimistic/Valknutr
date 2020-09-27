@@ -10,5 +10,4 @@ public class SpellItem : ScriptableObject
     public SpellElement _spellElement;
 
     public bool isBaseSpell;
-
 }

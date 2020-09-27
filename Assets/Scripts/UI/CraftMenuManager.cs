@@ -57,10 +57,14 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         {
             Spell spell = ScriptableObject.CreateInstance<Spell>();
             spell.AddBaseType(baseSpellItem._spellElement as SpellBehavior);
+            
+            List<Sprite> modSprites = new List<Sprite>();
             foreach (var mod in mods)
             {
                 spell.AddModifier(mod._spellElement as SpellModifier);
+                modSprites.Add(mod._UIsprite);
             }
+            spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
             Inventory.Instance._spells.Add(spell); //crafted
             
         }

@@ -9,23 +9,37 @@ public class SelectMenu : MonoBehaviour
 
     public UISlot[] UISlots;
     private UISlot currentlySelectedSlot;
+    private int count;
+    public GameObject prefab;
     
     // Start is called before the first frame update
     void Start()
     {
+        
         foreach (var uiSlots in UISlots)
         {
-            Debug.Log(uiSlots.transform.position);
         }
         InvokeRepeating( nameof(IntervalUpdate), 0.1f, 0.1f);
     }
 
+    public void UpdateMenu()
+    {
+        foreach (var spell in Inventory.Instance._spells)
+        {
+            var newObj = Instantiate(prefab, transform);
+            var uiItem = newObj.GetComponent<UIItem>();
+            uiItem._spellItem = spell;
+            UISlots[count++].Slot(uiItem);
+        }
+    }
+    
     // Update is called once per 0.1s
     void IntervalUpdate()
     {
         currentlySelectedSlot = GetClosest(UISlots, Input.mousePosition);
         var pointerDirection = currentlySelectedSlot.transform.position - pointerPivot.position;
-        float targetRotation = 180 / Mathf.PI * Mathf.Atan((pointerDirection.y)/(pointerDirection.x));
+        float targetRotation = 180 / Mathf.PI * Mathf.Atan2(pointerDirection.y,pointerDirection.x) + 90f;
+        
         pointerPivot.eulerAngles = new Vector3(0,0, targetRotation);
         
     }

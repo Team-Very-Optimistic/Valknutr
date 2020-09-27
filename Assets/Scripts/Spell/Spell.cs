@@ -12,9 +12,32 @@ public class Spell : SpellItem
 
     public float cooldownMax = 1;
     public float cooldownRemaining = 1;
-    private Sprite sprite;
     
     #endregion
+
+    /// <summary>
+    /// Use this method to create the sprite based on Base type and modifiers.
+    /// Requires read/write enabled texture
+    /// </summary>
+    public Sprite CreateProceduralSprite(Sprite baseType, List<Sprite> modifiers)
+    {
+        int SpriteHeight = 128;
+        var newTexture = Texture2D.Instantiate(baseType.texture);
+        Vector2Int offset = new Vector2Int(50,50); // use this to place the modifiers
+        
+        foreach (var modiSprite in modifiers)
+        {
+            var modiTex = modiSprite.texture;
+            for (int x = offset.x; x < modiTex.width; x++) {
+                for (int y = offset.y; y < modiTex.height; y++) {
+                    newTexture.SetPixel(x, y, modiTex.GetPixel(x, y));
+                }
+            }
+            
+        }
+        newTexture.Apply();
+        return Sprite.Create(newTexture, baseType.rect, Vector2.zero);
+    }
     
     public void CastSpell(SpellCastData data)
     {
@@ -54,7 +77,7 @@ public class Spell : SpellItem
 
     public bool IsReady()
     {
-        return cooldownRemaining == 0;
+        return cooldownRemaining <= 0;
     }
 
     public void Tick(float t)
@@ -68,12 +91,8 @@ public class Spell : SpellItem
     /// <returns></returns>
     public float GetCooldownRemainingPercentage()
     {
-        if (cooldownMax == 0) return 0;
+        if (cooldownMax <= 0) return 0;
         return cooldownRemaining / cooldownMax;
     }
-
-    public Sprite GetIcon()
-    {
-        return sprite;
-    }
+    
 }

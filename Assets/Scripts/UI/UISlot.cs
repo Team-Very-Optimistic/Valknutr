@@ -6,6 +6,7 @@ public class UISlot : MonoBehaviour, IDropHandler
 {
     private UIItem slottedItem;
     public bool isBaseSlot;
+    public bool isSpellSlot;
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData != null)
@@ -40,11 +41,11 @@ public class UISlot : MonoBehaviour, IDropHandler
         if (IsSlotted())
         {
             slottedItem.isSlotted = false;
-            slottedItem.OnEndDrag(null);
+            slottedItem.SetLoose();
         }
         slottedItem = uiItem;
         uiItem.isSlotted = true;
-        var rectTransform =uiItem.GetComponent<RectTransform>();
+        var rectTransform = uiItem.GetComponent<RectTransform>();
         rectTransform.SetParent(transform);
         rectTransform.position =
             GetComponent<RectTransform>().position;

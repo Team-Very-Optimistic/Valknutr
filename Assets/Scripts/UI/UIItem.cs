@@ -5,16 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent (typeof (Selectable))]
-public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class UIItem : Selectable
 {
-    private CanvasGroup _canvasGroup;
-    private Vector3 _oriPos;
-    private Transform _oriParent;
+    protected CanvasGroup _canvasGroup;
+    protected Vector3 _oriPos;
+    protected Transform _oriParent;
     public bool isSlotted;
-    private int _siblingIndex;
+    protected int _siblingIndex;
     public SpellItem _spellItem;
-    private bool selected;
+    protected bool selected;
 
     private void Start()
     {
@@ -26,32 +25,20 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
             GetComponent<Image>().sprite = _spellItem._UIsprite;
         }
     }
-
-
-    public void OnDrag(PointerEventData eventData)
+    public override void OnSelect(BaseEventData eventData)
     {
-        transform.position = Input.mousePosition;
-    }
-    
-    public void OnDrop(PointerEventData eventData)
-    {
-        RectTransform invPanel = transform as RectTransform;
-        if (!RectTransformUtility.RectangleContainsScreenPoint(invPanel, Input.mousePosition))
-        {
-            Debug.Log("Drop item");
-        }
-    }
-    
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        _siblingIndex = transform.GetSiblingIndex();
-        transform.SetParent(CraftMenuManager.Instance.transform);
-        _canvasGroup.blocksRaycasts = false;
-        isSlotted = false;
-        
+        base.OnSelect(eventData);
+        selected = true;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        base.OnDeselect(eventData);
+        selected = false;
+    }
+
+    public void SetLoose()
     {
         _canvasGroup.blocksRaycasts = true;
         if (!isSlotted)
@@ -59,38 +46,5 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
             transform.SetParent(_oriParent);
             transform.SetSiblingIndex(_siblingIndex);
         }
-    }
-
-    public override void OnSelect(BaseEventData eventData)
-    {
-        base.OnSelect(eventData);
-        selected = true;
-    }
-
-    public void Update()
-    {
-        if (selected && Input.GetButtonDown("Submit"))
-        {
-            Debug.Log("Submit");
-            var itemSlots = CraftMenuManager.Instance._itemSlots;
-
-            foreach (var slot in itemSlots)
-            {
-                if (!slot.IsSlotted())
-                {
-                    var slotted = slot.Slot(this);
-                    if (slotted)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    public override void OnDeselect(BaseEventData eventData)
-    {
-        base.OnDeselect(eventData);
-        selected = false;
     }
 }
