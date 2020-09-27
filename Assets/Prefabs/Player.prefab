@@ -1023,7 +1023,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2323728778468439362}
-  - {fileID: 2323728778649895677}
   m_Father: {fileID: 2323728779329580713}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6207,15 +6206,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323728778649895673}
-  m_LocalRotation: {x: 0.7499023, y: 0.1735172, z: 0.10927877, w: 0.62896466}
-  m_LocalPosition: {x: 0.048, y: -0.075, z: 0.258}
+  m_LocalRotation: {x: 0.74990326, y: 0.1735168, z: 0.1092742, w: 0.6289644}
+  m_LocalPosition: {x: 0.19297574, y: -0.08761912, z: 0.29321748}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2323728779067453921}
   - {fileID: 2323728779625690283}
   - {fileID: 2323728778919655391}
-  m_Father: {fileID: 2323728778378746318}
-  m_RootOrder: 1
+  m_Father: {fileID: 2323728779329580713}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 64.877, y: 115.821, z: 110.487}
 --- !u!33 &2323728778649895676
 MeshFilter:
@@ -17016,6 +17015,7 @@ Transform:
   - {fileID: 2323728778619028859}
   - {fileID: 2323728779746780479}
   - {fileID: 2323728778659338340}
+  - {fileID: 2323728778649895677}
   m_Father: {fileID: 2323728779808681418}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17221,6 +17221,7 @@ MonoBehaviour:
   destroyOnDeath: 0
   hurtSound: 
   hurtSoundOnHit: 1
+  isPlayer: 0
   damageTextPrefab: {fileID: 0}
   damageColor: {r: 0.8584906, g: 0, b: 0, a: 1}
 --- !u!114 &2323728779428590802
