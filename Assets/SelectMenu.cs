@@ -11,6 +11,7 @@ public class SelectMenu : MonoBehaviour
     private UISlot currentlySelectedSlot;
     private int count;
     public GameObject prefab;
+    private SpellCaster m_spellCaster;
     
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,8 @@ public class SelectMenu : MonoBehaviour
         {
         }
         InvokeRepeating( nameof(IntervalUpdate), 0f, 0.1f);
+
+        m_spellCaster = GameManager.Instance._player.GetComponent<SpellCaster>();
     }
 
     public void UpdateMenu()
@@ -38,24 +41,30 @@ public class SelectMenu : MonoBehaviour
         }
     }
 
+    //todo: keybindings
     public void Update()
     {
+        var index = -1;
         if (Input.GetKey(KeyCode.Q))
         {
-            
+            index = 2;
         }
         if (Input.GetKey(KeyCode.E))
         {
-            
+            index = 3;
+
         }
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            
+            index = 0;
         }
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            
+            index = 1;
         }
+
+        if (index <= 0) return;
+        m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedItem());
     }
 
     // Update is called once per 0.1s

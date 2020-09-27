@@ -33,6 +33,16 @@ public class SpellCaster : MonoBehaviour
         }
     }
 
+    public void SetSpell(int index, Spell spell)
+    {
+        if (index >= spells.Length || index < 0)
+        {
+            //Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        spells[index] = spell;
+    }
+
     public void CastSpellAtIndex(int index)
     {
         if (index >= spells.Length)
@@ -51,7 +61,7 @@ public class SpellCaster : MonoBehaviour
 
     public void PrecastSpellAtIndex(int index)
     {
-        if (index >= spells.Length)
+        if (index >= spells.Length || index < 0)
         {
             Debug.LogWarning("Spell index out of range");
             return;
