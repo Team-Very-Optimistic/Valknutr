@@ -23,7 +23,7 @@ public class Spell : SpellItem
     {
         int SpriteHeight = 128;
         var newTexture = Texture2D.Instantiate(baseType.texture);
-        Vector2Int offset = new Vector2Int(50,50); // use this to place the modifiers
+        Vector2Int offset = new Vector2Int(80,80); // use this to place the modifiers
         
         foreach (var modiSprite in modifiers)
         {
@@ -33,7 +33,8 @@ public class Spell : SpellItem
                     newTexture.SetPixel(x, y, modiTex.GetPixel(x, y));
                 }
             }
-            
+
+            offset.y += 10;
         }
         newTexture.Apply();
         return Sprite.Create(newTexture, baseType.rect, Vector2.zero);
@@ -61,6 +62,20 @@ public class Spell : SpellItem
         spellBehavior.Cast();
         cooldownMax = totalCooldown;
         cooldownRemaining = totalCooldown;
+    }
+
+    public float GetAnimSpeed()
+    {
+        spellBehavior.Init();
+        float oriSpeed = spellBehavior._speed;
+        if (_spellModifiers != null && _spellModifiers.Count != 0)
+        {
+            foreach (var modifier in _spellModifiers)
+            {
+                modifier.ModifySpell(spellBehavior);
+            }
+        }
+        return spellBehavior._speed / oriSpeed;
     }
 
     public void AddBaseType(SpellBehavior behaviorType)

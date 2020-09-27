@@ -15,24 +15,49 @@ public class SelectMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        count = 0;
         foreach (var uiSlots in UISlots)
         {
         }
-        InvokeRepeating( nameof(IntervalUpdate), 0.1f, 0.1f);
+        InvokeRepeating( nameof(IntervalUpdate), 0f, 0.1f);
     }
 
     public void UpdateMenu()
     {
+        if (count > 9)
+        {
+            return;
+        }
         foreach (var spell in Inventory.Instance._spells)
         {
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
             uiItem._spellItem = spell;
+            uiItem.SetImage();
             UISlots[count++].Slot(uiItem);
         }
     }
-    
+
+    public void Update()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            
+        }
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            
+        }
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            
+        }
+    }
+
     // Update is called once per 0.1s
     void IntervalUpdate()
     {

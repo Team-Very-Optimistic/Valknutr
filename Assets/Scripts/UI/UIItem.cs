@@ -25,6 +25,15 @@ public class UIItem : Selectable
             GetComponent<Image>().sprite = _spellItem._UIsprite;
         }
     }
+
+    public void SetImage()
+    {
+        if (_spellItem != null)
+        {
+            GetComponent<Image>().sprite = _spellItem._UIsprite;
+        }
+    }
+    
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
