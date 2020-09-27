@@ -68,6 +68,8 @@ public class Spell : SpellItem
     public float GetAnimSpeed()
     {
         spellBehavior.Init();
+        castAnimation = spellBehavior.animationType;
+
         float oriSpeed = spellBehavior._speed;
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {

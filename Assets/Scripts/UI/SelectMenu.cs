@@ -42,6 +42,7 @@ public class SelectMenu : MonoBehaviour
         {
             if (_addedSpells.Contains(spell))
             {
+                Debug.Log(spell.name);
                 return;
             }
             var newObj = Instantiate(prefab, transform);
@@ -94,19 +95,24 @@ public class SelectMenu : MonoBehaviour
         }
 
         if (index < 0) return;
-        if (currentlySelectedSlot == null) return;
 
         var slottedUiItem = currentlySelectedSlot.GetSlottedUiItem();
+        if (slottedUiItem == null) return;
+
         var key = keyBindings[index];
+        var uiItem = codedSlots[index].GetSlottedUiItem();
+        if (uiItem == slottedUiItem) return;
+        uiItem.SetKeyCode(KeyCode.Clear);
+
+        m_spellCaster.ClearSpell((Spell) uiItem._spellItem);
         slottedUiItem.SetKeyCode(key);
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
         int i = 0;
         foreach (var slot in codedSlots)
         {
             Debug.Log(slot.name + i++);
-
         }
-        codedSlots[index].GetSlottedUiItem().SetKeyCode(KeyCode.Clear);
+        codedSlots[index] = currentlySelectedSlot;
     }
 
     // Update is called once per 0.1s

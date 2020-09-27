@@ -16,14 +16,8 @@ public class KeyCodeUI : MonoBehaviour
 
     public void SetKeyCode(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Clear)
-        {
-            image.enabled = false;
-            text.text = "";
-            return;
-        }
+        
         image.enabled = true;
-
         if (keyCode == KeyCode.Mouse0)
         {
             image.sprite = mouse1;
@@ -44,7 +38,13 @@ public class KeyCodeUI : MonoBehaviour
         {
             image.sprite = key;
             text.text = "E";
-
+        }
+        
+        if (keyCode == KeyCode.Clear)
+        {
+            image.enabled = false;
+            text.text = "";
+            return;
         }
     }
 }

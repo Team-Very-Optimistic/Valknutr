@@ -33,7 +33,7 @@ public class SpellCaster : MonoBehaviour
             spell.Tick(Time.deltaTime * cooldownRate);
         }
     }
-
+    
     public void SetSpell(int index, Spell spell)
     {
         if (index >= spells.Length || index < 0)
@@ -83,7 +83,8 @@ public class SpellCaster : MonoBehaviour
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
         storedDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
-        character.SetCastingAnimation(spell.castAnimation, spell.GetAnimSpeed());
+        var animSpeed = spell.GetAnimSpeed();
+        character.SetCastingAnimation(spell.castAnimation, animSpeed);
     }
 
     public void CastPoint()
@@ -97,6 +98,17 @@ public class SpellCaster : MonoBehaviour
     private void OnDrawGizmos()
     {
         //Gizmos.DrawSphere(Util.GetMousePositionOnWorldPlane(mainCam), 0.5f);
+    }
+
+    public void ClearSpell(Spell spell)
+    {
+        for(int i = 0; i < 4; i ++)
+        {
+            if (spell == spells[i])
+            {
+                spells[i] = null;
+            }
+        }
     }
 }
     
