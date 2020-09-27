@@ -44,7 +44,7 @@ public class ThirdPersonUserControl : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             print("dash");
-            m_Caster.CastSpellAtIndex(1);
+            m_Caster.PrecastSpellAtIndex(1);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {

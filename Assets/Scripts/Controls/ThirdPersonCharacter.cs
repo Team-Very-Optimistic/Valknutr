@@ -40,7 +40,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private static readonly int CastingProjectile = Animator.StringToHash("CastingProjectile");
 		private static readonly int CastingShield = Animator.StringToHash("CastingShield");
 		private static readonly int CastingDash = Animator.StringToHash("CastingDash");
-		private static readonly int AnimationSpeed = Animator.StringToHash("AnimatorSpeed");
+		private static readonly int AnimationSpeed = Animator.StringToHash("AnimationSpeed");
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -321,10 +321,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					m_Animator.SetBool(CastingShield, true);
 					break;
 				case CastAnimation.Movement:
-					m_Dashing = true;
-					m_Animator.SetBool(CastingDash, true);
+					//m_Dashing = true;
+					//m_Animator.SetBool(CastingDash, true);
+					m_Animator.Play("Post");
 					break;
 				default:
+					m_Animator.Play("Post");
 					break;
 			}
 		}
