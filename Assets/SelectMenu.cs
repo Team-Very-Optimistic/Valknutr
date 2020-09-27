@@ -12,10 +12,12 @@ public class SelectMenu : MonoBehaviour
     private int count;
     public GameObject prefab;
     private SpellCaster m_spellCaster;
+    private HashSet<Spell> _addedSpells;
     
     // Start is called before the first frame update
     void Start()
     {
+        _addedSpells = new HashSet<Spell>();
         count = 0;
         foreach (var uiSlots in UISlots)
         {
@@ -33,11 +35,16 @@ public class SelectMenu : MonoBehaviour
         }
         foreach (var spell in Inventory.Instance._spells)
         {
+            if (_addedSpells.Contains(spell))
+            {
+                return;
+            }
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
             uiItem._spellItem = spell;
             uiItem.SetImage();
             UISlots[count++].Slot(uiItem);
+            _addedSpells.Add(spell);
         }
     }
 
