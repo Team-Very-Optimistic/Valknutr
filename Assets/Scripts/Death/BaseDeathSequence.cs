@@ -13,6 +13,11 @@ public class BaseDeathSequence : MonoBehaviour
     public virtual void Start()
     {
         GetRagdollParts();
+
+        foreach (Collider c in ragdollParts)
+        {
+            c.enabled = false;
+        }
     }
 
     private void GetRagdollParts()
@@ -38,6 +43,7 @@ public class BaseDeathSequence : MonoBehaviour
         //Turn on ragdoll
         foreach (Collider c in ragdollParts)
         {
+            c.enabled = true;
             c.isTrigger = false;
         }
     }
