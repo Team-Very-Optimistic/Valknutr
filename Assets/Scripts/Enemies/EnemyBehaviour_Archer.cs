@@ -6,7 +6,6 @@ using UnityEngine.Experimental.AI;
 
 public class EnemyBehaviour_Archer : EnemyBehaviourBase
 {
-    private Vector3 firingPosOffset = new Vector3(0.0f, 90.0f, 0.0f);
     private GameObject bow;
 
     public GameObject arrowPrefab;
@@ -24,12 +23,6 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
     public override void Update()
     {
         base.Update();
-
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
-        {
-            //Offset rotation to properly face player when attacking
-            transform.Rotate(firingPosOffset);
-        }
     }
 
     public void FireArrow()
