@@ -6,6 +6,7 @@ namespace UI
     public class UIInputController : MonoBehaviour
     {
         public PauseMenu pauseMenu;
+        public GameObject minimap;
         private void Update()
         {
             if (Input.GetButtonDown("CraftMenu"))
@@ -29,6 +30,11 @@ namespace UI
                 {
                     pauseMenu.PauseGame();
                 }
+            }
+            
+            if (Input.GetButtonDown("MinimapToggle"))
+            {
+                minimap.SetActive(!minimap.activeSelf);
             }
         }
     }
