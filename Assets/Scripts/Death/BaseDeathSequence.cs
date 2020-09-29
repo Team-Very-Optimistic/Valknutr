@@ -8,6 +8,7 @@ public class BaseDeathSequence : MonoBehaviour
 {
     //Ragdoll colliders
     public List<Collider> ragdollParts;
+    public float RagdollKnockbackForce = 5000.0f;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -45,6 +46,17 @@ public class BaseDeathSequence : MonoBehaviour
         {
             c.enabled = true;
             c.isTrigger = false;
+        }
+    }
+
+    public void KnockbackRagdoll()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 forceDirection = (transform.position - player.transform.position).normalized;
+        forceDirection.y = 0.1f;
+        foreach (Collider c in ragdollParts)
+        {
+            c.attachedRigidbody.AddForce(forceDirection * RagdollKnockbackForce);
         }
     }
 

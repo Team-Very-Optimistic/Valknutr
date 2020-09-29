@@ -55,7 +55,7 @@ public class EnemyDeathSequence : BaseDeathSequence
                         mat.DisableKeyword("_ALPHATEST_ON");
                         mat.EnableKeyword("_ALPHABLEND_ON");
                         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                        mat.renderQueue = 3000;
+                        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
                     }
                 }
 
@@ -76,6 +76,7 @@ public class EnemyDeathSequence : BaseDeathSequence
     public void StartDeathSequence()
     {
         base.TriggerRagdoll();
+        base.KnockbackRagdoll();
         base.CallDestroy(timeToDestroy);
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
