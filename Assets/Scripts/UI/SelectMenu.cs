@@ -104,16 +104,24 @@ public class SelectMenu : MonoBehaviour
         var key = keyBindings[index];
         var uiItem = codedSlots[index].GetSlottedUiItem();
         if (uiItem == slottedUiItem) return;
+        
         uiItem.SetKeyCode(KeyCode.Clear);
-
-        m_spellCaster.ClearSpell((Spell) uiItem._spellItem);
+        //m_spellCaster.ClearSpell(index);
+        int i = 0;
+        foreach (var slot in codedSlots)
+        {
+            //spell already existed
+            if (i != index && currentlySelectedSlot == slot)
+            {
+                m_spellCaster.ClearSpell(i);
+                codedSlots[i] = null;
+            }
+            i++;
+        }
+        
         slottedUiItem.SetKeyCode(key);
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
-        //int i = 0;
-        // foreach (var slot in codedSlots)
-        // {
-        //     Debug.Log(slot.name + i++);
-        // }
+
         codedSlots[index] = currentlySelectedSlot;
     }
 
@@ -125,7 +133,19 @@ public class SelectMenu : MonoBehaviour
         float targetRotation = 180 / Mathf.PI * Mathf.Atan2(pointerDirection.y, pointerDirection.x) + 90f;
         
         pointerPivot.eulerAngles = new Vector3(0,0, targetRotation);
+        int index = 0;
         
+        foreach (var v in UISlots)
+        {
+            if(v.IsSlotted())
+                v.GetSlottedUiItem().SetTooltipString("No index");
+        }
+        foreach (var v in codedSlots)
+        {
+            if(v.IsSlotted())
+                v.GetSlottedUiItem().SetTooltipString(" " + index++);
+        }
+
     }
 
     private UISlot GetClosest(UISlot[] allSlots, Vector3 pos)

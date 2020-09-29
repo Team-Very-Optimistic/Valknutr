@@ -111,5 +111,9 @@ public class SpellCaster : MonoBehaviour
             }
         }
     }
+    public void ClearSpell(int spell)
+    {
+        spells[spell] = null;
+    }
 }
     

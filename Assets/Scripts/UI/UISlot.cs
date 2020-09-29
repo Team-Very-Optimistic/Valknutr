@@ -32,7 +32,6 @@ public class UISlot : MonoBehaviour, IDropHandler
             {
                 if (slot != this && uiItem == slot.slottedItem)
                 {
-                    Debug.Log("dup");
                     slot.slottedItem = null;
                     break;
                     
