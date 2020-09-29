@@ -42,11 +42,9 @@ public class SelectMenu : MonoBehaviour
         }
         foreach (var spell in _inventory._spells)
         {
-            Debug.Log("Spellname: " + spell.name + count + " / " + spell.GetHashCode() );
             if (spell == null) continue;
             if (_addedSpells.Contains(spell))
             {
-                Debug.Log(spell.name + spell._spellModifiers.Count);
                 continue;
             }
             var newObj = Instantiate(prefab, transform);

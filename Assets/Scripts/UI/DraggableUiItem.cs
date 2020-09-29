@@ -7,24 +7,34 @@ class DraggableUiItem : UIItem,  IDragHandler, IBeginDragHandler, IEndDragHandle
     {
         if (selected && Input.GetButtonDown("Submit"))
         {
-            Debug.Log("Submit");
-            var itemSlots = CraftMenuManager.Instance._itemSlots;
+            Slot();
+        }
+    }
 
-            foreach (var slot in itemSlots)
+    public void Slot()
+    {
+        var itemSlots = CraftMenuManager.Instance._itemSlots;
+
+        foreach (var slot in itemSlots)
+        {
+            if (!slot.IsSlotted())
             {
-                if (!slot.IsSlotted())
+                var slotted = slot.Slot(this);
+                if (slotted)
                 {
-                    var slotted = slot.Slot(this);
-                    if (slotted)
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
     }
-    
-    
+
+    public override void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount >= 2) {
+            Slot();
+        }
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;

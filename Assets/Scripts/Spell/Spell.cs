@@ -44,11 +44,9 @@ public class Spell : SpellItem
     }
     
     /// <summary>
-    /// Use this method to create the sprite based on Base type and modifiers.
-    /// Requires read/write enabled texture
-    /// Requires RGBA 32bit color
+    /// Use this method to create the tooltip
     /// </summary>
-    public string CreateTooltip(string behav, List<string> modifiers)
+    public void CreateTooltip(string behav, List<string> modifiers)
     {
         string tooltip = behav;
         
@@ -56,8 +54,8 @@ public class Spell : SpellItem
         {
             tooltip += " " + modiTooltip;
         }
-
-        return tooltip;
+        Debug.Log(tooltip);
+        _tooltipMessage = tooltip;
     }
     
     public void CastSpell(SpellCastData data)

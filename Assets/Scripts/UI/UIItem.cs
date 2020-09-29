@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIItem : Selectable
+public class UIItem : Selectable, IPointerClickHandler
 {
     protected CanvasGroup _canvasGroup;
     protected Vector3 _oriPos;
@@ -67,6 +67,13 @@ public class UIItem : Selectable
         base.OnSelect(eventData);
         selected = true;
     }
+    
+    public virtual void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount == 2) {
+            Debug.Log ("double click");
+        }
+    }
 
 
     public override void OnDeselect(BaseEventData eventData)
@@ -101,6 +108,7 @@ public class UIItem : Selectable
         float textPaddingSize = 4f;
         Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
         _tooltipRectTransform.sizeDelta = backgoundSize;
+        //_tooltipRectTransform.localPosition = backgoundSize / 2;
     }
 
     public void HideTooltip()

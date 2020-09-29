@@ -71,17 +71,19 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             spell.AddBaseType(baseSpellItem._spellElement as SpellBehavior);
             
             List<Sprite> modSprites = new List<Sprite>();
+            List<string> modStrings = new List<string>();
             string modStr = "";
             foreach (var mod in mods)
             {
                 modStr += mod._spellElement.name + " ";
                 spell.AddModifier(mod._spellElement as SpellModifier);
                 modSprites.Add(mod._UIsprite);
+                modStrings.Add(mod._tooltipMessage);
             }
             spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
+            spell.CreateTooltip(baseSpellItem._tooltipMessage, modStrings);
             Inventory.Instance._spells.Add(spell); //crafted
-            
         }
         else
         {
