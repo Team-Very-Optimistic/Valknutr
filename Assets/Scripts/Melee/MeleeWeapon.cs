@@ -25,6 +25,9 @@ public class MeleeWeapon : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
+        if(!other.gameObject.CompareTag("Enemy"))
+        {
+            this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
+        }
     }
 }
