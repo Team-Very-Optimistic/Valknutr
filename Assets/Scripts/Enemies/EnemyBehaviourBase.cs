@@ -1,5 +1,4 @@
-﻿using Unity.IO.LowLevel.Unsafe;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBehaviourBase : MonoBehaviour
@@ -21,11 +20,13 @@ public class EnemyBehaviourBase : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
+        navMeshAgent.SetDestination(player.transform.position);
+        isAttacking = false;
     }
 
     public virtual void Update()
     {
-        if(navMeshAgent.enabled)
+        if (navMeshAgent.enabled)
         {
             //Animation
             if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
