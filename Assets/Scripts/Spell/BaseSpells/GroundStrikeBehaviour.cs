@@ -7,6 +7,7 @@ public class GroundStrikeBehaviour : SpellBehavior
     public float power = 50.0F;
     private Damage damageScript;
     public Vector3 offset;
+    public float knockbackForce = 1500.0f;
 
     public override void Init()
     {

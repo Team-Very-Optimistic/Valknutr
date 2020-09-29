@@ -29,8 +29,6 @@ public abstract class SpellBehavior : SpellElement
 
     [HideInInspector] public CastAnimation animationType;
 
-    [HideInInspector] public float knockbackForce = 1500.0f;
-
     #endregion
 
     public void Cast()
