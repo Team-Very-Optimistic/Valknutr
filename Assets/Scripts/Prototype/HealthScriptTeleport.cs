@@ -4,6 +4,9 @@ public class HealthScriptTeleport : HealthScript
 {
     private TeleportEnemy _enemy;
     private Transform _player;
+    private Vector3 targetPoint;
+    [SerializeField]
+    protected float visionCone = 45f;
 
     public override void Start()
     {
@@ -19,9 +22,10 @@ public class HealthScriptTeleport : HealthScript
         //-x = looking right -- y = 90
         //+x = looking left -- y = -90
         //todo: this shit
-        var direc = (_player.position - transform.position).normalized;
-        var localRotationNormalized = Mathf.PI *(_player.eulerAngles.y) / 180f  - Mathf.Acos(direc.z) - Mathf.Asin(direc.x);
-        if(localRotationNormalized > 0.1f)
+        // var direc = (_player.position - transform.position).normalized;
+        // var localRotationNormalized = Mathf.PI *(_player.eulerAngles.y) / 180f  - Mathf.Acos(direc.z) - Mathf.Asin(direc.x);
+        var localRotationNormalized = (_enemy.transform.rotation.eulerAngles - _enemy.targetRotation.eulerAngles).magnitude;
+        if(localRotationNormalized < visionCone)
             _enemy.Teleport();
         else
         {
