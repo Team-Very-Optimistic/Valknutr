@@ -25,6 +25,7 @@ public class EnemyBehaviour_Paladin : EnemyBehaviourBase
 
     public void EnableMeleeWeaponCollider(int value)
     {
+        Debug.Log("Enabled :" + value);
         meleeWeapon.GetComponent<BoxCollider>().enabled = Convert.ToBoolean(value);
     }
 }

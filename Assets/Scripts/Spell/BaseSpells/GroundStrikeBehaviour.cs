@@ -45,8 +45,7 @@ public class GroundStrikeBehaviour : SpellBehavior
 
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
-                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce);
-                
+                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce); 
             }
 
             if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
