@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent (typeof (Selectable))]
-public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class UIItem : Selectable, IPointerClickHandler
 {
-    private CanvasGroup _canvasGroup;
-    private Vector3 _oriPos;
-    private Transform _oriParent;
+    protected CanvasGroup _canvasGroup;
+    protected Vector3 _oriPos;
+    protected Transform _oriParent;
     public bool isSlotted;
-    private int _siblingIndex;
+    protected int _siblingIndex;
     public SpellItem _spellItem;
-    private bool selected;
+    protected bool selected;
+    protected KeyCodeUI _keyCodeUi;
+    protected TextMeshProUGUI _tooltipText;
+    protected GameObject _tooltipObject;
+    protected RectTransform _tooltipRectTransform;
+    protected string _tooltipString;
 
     private void Start()
     {
@@ -24,34 +29,60 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
         if (_spellItem != null)
         {
             GetComponent<Image>().sprite = _spellItem._UIsprite;
+            _tooltipString = _spellItem._tooltipMessage;
         }
+        _tooltipObject = transform.Find("Tooltip").gameObject;
+        _tooltipRectTransform = _tooltipObject.GetComponent<RectTransform>();
+        _tooltipText = _tooltipObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-
-    public void OnDrag(PointerEventData eventData)
+    public void SetTooltipString(string tooltipString)
     {
-        transform.position = Input.mousePosition;
+        _tooltipString = tooltipString;
     }
     
-    public void OnDrop(PointerEventData eventData)
+    //Detect if the Cursor starts to pass over the GameObject
+    public override void OnPointerEnter(PointerEventData pointerEventData)
     {
-        RectTransform invPanel = transform as RectTransform;
-        if (!RectTransformUtility.RectangleContainsScreenPoint(invPanel, Input.mousePosition))
+        ShowTooltip(_tooltipString);
+    }
+
+    //Detect when Cursor leaves the GameObject
+    public override void OnPointerExit(PointerEventData pointerEventData)
+    {
+        HideTooltip();
+    }
+
+    public void Init()
+    {
+        if (_spellItem != null)
         {
-            Debug.Log("Drop item");
+            GetComponent<Image>().sprite = _spellItem._UIsprite;
+            _tooltipString = _spellItem._tooltipMessage;
         }
     }
     
-    public void OnBeginDrag(PointerEventData eventData)
+    public override void OnSelect(BaseEventData eventData)
     {
-        _siblingIndex = transform.GetSiblingIndex();
-        transform.SetParent(CraftMenuManager.Instance.transform);
-        _canvasGroup.blocksRaycasts = false;
-        isSlotted = false;
-        
+        base.OnSelect(eventData);
+        selected = true;
+    }
+    
+    public virtual void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount == 2) {
+            Debug.Log ("double click");
+        }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        base.OnDeselect(eventData);
+        selected = false;
+    }
+
+    public void SetLoose()
     {
         _canvasGroup.blocksRaycasts = true;
         if (!isSlotted)
@@ -61,36 +92,27 @@ public class UIItem : Selectable, IDragHandler, IBeginDragHandler, IEndDragHandl
         }
     }
 
-    public override void OnSelect(BaseEventData eventData)
+    public void SetKeyCode(KeyCode key)
     {
-        base.OnSelect(eventData);
-        selected = true;
-    }
-
-    public void Update()
-    {
-        if (selected && Input.GetButtonDown("Submit"))
+        if (_keyCodeUi == null)
         {
-            Debug.Log("Submit");
-            var itemSlots = CraftMenuManager.Instance._itemSlots;
-
-            foreach (var slot in itemSlots)
-            {
-                if (!slot.IsSlotted())
-                {
-                    var slotted = slot.Slot(this);
-                    if (slotted)
-                    {
-                        break;
-                    }
-                }
-            }
+            _keyCodeUi = GetComponentInChildren<KeyCodeUI>();
         }
+        _keyCodeUi.SetKeyCode(key);
     }
 
-    public override void OnDeselect(BaseEventData eventData)
+    public void ShowTooltip(string tooltipString)
     {
-        base.OnDeselect(eventData);
-        selected = false;
+        _tooltipObject.SetActive(true);
+        _tooltipText.text = tooltipString;
+        float textPaddingSize = 4f;
+        Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
+        _tooltipRectTransform.sizeDelta = backgoundSize;
+        //_tooltipRectTransform.localPosition = backgoundSize / 2;
+    }
+
+    public void HideTooltip()
+    {
+        _tooltipObject.SetActive(false);
     }
 }

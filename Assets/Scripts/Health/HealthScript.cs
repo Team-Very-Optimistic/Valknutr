@@ -19,7 +19,7 @@ public class HealthScript : MonoBehaviour
 
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
-    void Start()
+    public virtual void Start()
     {
         currentHealth = maxHealth;
         damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
@@ -30,7 +30,7 @@ public class HealthScript : MonoBehaviour
         }
     }
 
-    public void ApplyDamage(float damage)
+    public virtual void ApplyDamage(float damage)
     {
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+[CreateAssetMenu]
 public class Spell : SpellItem
 {
     #region fields
@@ -12,9 +14,48 @@ public class Spell : SpellItem
 
     public float cooldownMax = 1;
     public float cooldownRemaining = 1;
-    private Sprite sprite;
-    
+    private readonly int hashCode = DateTime.Now.GetHashCode();
     #endregion
+
+    /// <summary>
+    /// Use this method to create the sprite based on Base type and modifiers.
+    /// Requires read/write enabled texture
+    /// Requires RGBA 32bit color
+    /// </summary>
+    public Sprite CreateProceduralSprite(Sprite baseType, List<Sprite> modifiers)
+    {
+        int SpriteHeight = 128;
+        var newTexture = Texture2D.Instantiate(baseType.texture);
+        Vector2Int offset = new Vector2Int(80,80); // use this to place the modifiers
+        
+        foreach (var modiSprite in modifiers)
+        {
+            var modiTex = modiSprite.texture;
+            for (int x = offset.x; x < modiTex.width; x++) {
+                for (int y = offset.y; y < modiTex.height; y++) {
+                    newTexture.SetPixel(x, y, modiTex.GetPixel(x, y));
+                }
+            }
+
+            offset.y += 10;
+        }
+        newTexture.Apply();
+        return Sprite.Create(newTexture, baseType.rect, Vector2.zero);
+    }
+    
+    /// <summary>
+    /// Use this method to create the tooltip
+    /// </summary>
+    public void CreateTooltip(string behav, List<string> modifiers)
+    {
+        string tooltip = behav;
+        
+        foreach (var modiTooltip in modifiers)
+        {
+            tooltip += " " + modiTooltip;
+        }
+        _tooltipMessage = tooltip;
+    }
     
     public void CastSpell(SpellCastData data)
     {
@@ -39,6 +80,27 @@ public class Spell : SpellItem
         cooldownMax = totalCooldown;
         cooldownRemaining = totalCooldown;
     }
+    
+    public override int GetHashCode()
+    {
+        return hashCode;
+    }
+
+    public float GetAnimSpeed()
+    {
+        spellBehavior.Init();
+        castAnimation = spellBehavior.animationType;
+
+        float oriSpeed = spellBehavior._speed;
+        if (_spellModifiers != null && _spellModifiers.Count != 0)
+        {
+            foreach (var modifier in _spellModifiers)
+            {
+                modifier.ModifySpell(spellBehavior);
+            }
+        }
+        return spellBehavior._speed / oriSpeed;
+    }
 
     public void AddBaseType(SpellBehavior behaviorType)
     {
@@ -54,7 +116,7 @@ public class Spell : SpellItem
 
     public bool IsReady()
     {
-        return cooldownRemaining == 0;
+        return cooldownRemaining <= 0;
     }
 
     public void Tick(float t)
@@ -68,12 +130,8 @@ public class Spell : SpellItem
     /// <returns></returns>
     public float GetCooldownRemainingPercentage()
     {
-        if (cooldownMax == 0) return 0;
+        if (cooldownMax <= 0) return 0;
         return cooldownRemaining / cooldownMax;
     }
-
-    public Sprite GetIcon()
-    {
-        return sprite;
-    }
+    
 }

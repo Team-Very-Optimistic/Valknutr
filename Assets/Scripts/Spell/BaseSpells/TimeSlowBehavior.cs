@@ -16,14 +16,13 @@ class TimeSlowBehavior : SpellBehavior
     }
     public override void SpellBehaviour(Spell spell)
     {
-        var _durationScaled = _duration * _speed/0.2f;
-        Time.timeScale = _durationScaled;
-        TimeSlow(_durationScaled * _duration);
+        var timeScale = _speed * (_speed/ 0.2f) * (_speed/ 0.2f);
+        Time.timeScale = timeScale;
+        GameManager.Instance.StartCoroutine(TimeSlow(timeScale * _duration));
     }
     
     IEnumerator TimeSlow(float duration)
     {
-        
         yield return new WaitForSeconds(duration);
         Time.timeScale = 1;
     }
