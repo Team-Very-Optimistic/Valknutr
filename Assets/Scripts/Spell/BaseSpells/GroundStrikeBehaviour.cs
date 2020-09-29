@@ -35,9 +35,15 @@ public class GroundStrikeBehaviour : SpellBehavior
         
         foreach (var col in cols)
         {
+            if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
+            {
+                damageScript.SetDamage(_damage);
+                damageScript.DealDamage(col);
+            }
+
             if (!col.CompareTag("Player") && col.attachedRigidbody != null)
             {
-                if(col.gameObject.GetComponent<EnemyBehaviourBase>() != null)
+                if (col.gameObject.GetComponent<EnemyBehaviourBase>() != null)
                 {
                     //Enable knockback on enemies
                     col.gameObject.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
@@ -45,15 +51,10 @@ public class GroundStrikeBehaviour : SpellBehavior
 
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
-                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce); 
+                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce);
             }
 
-            if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
-            {
-                damageScript.SetDamage(_damage);
-                damageScript.DealDamage(col);
-            }
         }
-        
+
     }
 }

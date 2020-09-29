@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour, ITrigger
     public float speed;
     public float timeToExpire = 20f;
     private float explosionRadius = 2f;
-    private float explosionForce = 2000f;
+    private float explosionForce = 1000f;
 
     public void Launch(Vector3 direction, float speed)
     {
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour, ITrigger
                     col.gameObject.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
                 }
 
-                col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position - direction, explosionRadius);
+                col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position - direction, explosionRadius, -2.0f);
             }
         }
 

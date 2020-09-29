@@ -80,5 +80,6 @@ public class EnemyBehaviourBase : MonoBehaviour
         navMeshAgent.enabled = !isEnabled;
         GetComponent<Rigidbody>().isKinematic = !isEnabled;
         GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        isInKnockback = false;
     }
 }
