@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour, ITrigger
                     col.gameObject.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
                 }
 
-                col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position, explosionRadius);
+                col.attachedRigidbody.AddExplosionForce(explosionForce * _damage, transform.position - direction, explosionRadius);
             }
         }
 
