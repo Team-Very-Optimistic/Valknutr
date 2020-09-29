@@ -30,12 +30,22 @@ public class GroundStrikeBehaviour : SpellBehavior
         EffectManager.PlayEffectAtPosition("groundStrike", position + offset);
 
         var cols = Physics.OverlapSphere(position, radius);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         
         foreach (var col in cols)
         {
             if (!col.CompareTag("Player") && col.attachedRigidbody != null)
             {
-                col.attachedRigidbody.AddExplosionForce(power * _damage, position, radius, 0, ForceMode.Impulse);
+                if(col.gameObject.GetComponent<EnemyBehaviourBase>() != null)
+                {
+                    //Enable knockback on enemies
+                    col.gameObject.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
+                }
+
+                //Add knockback direction based on player position
+                Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
+                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce);
+                
             }
 
             if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
@@ -43,7 +53,6 @@ public class GroundStrikeBehaviour : SpellBehavior
                 damageScript.SetDamage(_damage);
                 damageScript.DealDamage(col);
             }
-             
         }
         
     }

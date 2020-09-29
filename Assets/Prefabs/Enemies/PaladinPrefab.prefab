@@ -2094,6 +2094,7 @@ GameObject:
   - component: {fileID: 1110327215755334053}
   - component: {fileID: 1110327215755334058}
   - component: {fileID: 1110327215755334059}
+  - component: {fileID: -3009068952420176252}
   m_Layer: 0
   m_Name: PaladinPrefab
   m_TagString: Enemy
@@ -2221,6 +2222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b001693745040c64ead43b7a2642305a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldKnockback: 1
+  knockbackVelStoppingThreshold: 0.05
 --- !u!114 &1110327215755334058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2253,6 +2256,22 @@ MonoBehaviour:
   timeToDestroy: 5
   triggeredParticle: 0
   triggeredDeathSequence: 0
+--- !u!54 &-3009068952420176252
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110327215755334056}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 15
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1110327215765133577
 GameObject:
   m_ObjectHideFlags: 0
