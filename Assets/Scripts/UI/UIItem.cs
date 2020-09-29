@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,7 +15,11 @@ public class UIItem : Selectable
     protected int _siblingIndex;
     public SpellItem _spellItem;
     protected bool selected;
-    private KeyCodeUI _keyCodeUi;
+    protected KeyCodeUI _keyCodeUi;
+    protected TextMeshProUGUI _tooltipText;
+    protected GameObject _tooltipObject;
+    protected RectTransform _tooltipRectTransform;
+    protected string _tooltipString;
 
     private void Start()
     {
@@ -24,14 +29,36 @@ public class UIItem : Selectable
         if (_spellItem != null)
         {
             GetComponent<Image>().sprite = _spellItem._UIsprite;
+            _tooltipString = _spellItem._tooltipMessage;
         }
+        _tooltipObject = transform.Find("Tooltip").gameObject;
+        _tooltipRectTransform = _tooltipObject.GetComponent<RectTransform>();
+        _tooltipText = _tooltipObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void SetImage()
+    public void SetTooltipString(string tooltipString)
+    {
+        _tooltipString = tooltipString;
+    }
+    
+    //Detect if the Cursor starts to pass over the GameObject
+    public override void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        ShowTooltip(_tooltipString);
+    }
+
+    //Detect when Cursor leaves the GameObject
+    public override void OnPointerExit(PointerEventData pointerEventData)
+    {
+        HideTooltip();
+    }
+
+    public void Init()
     {
         if (_spellItem != null)
         {
             GetComponent<Image>().sprite = _spellItem._UIsprite;
+            _tooltipString = _spellItem._tooltipMessage;
         }
     }
     
@@ -65,5 +92,19 @@ public class UIItem : Selectable
             _keyCodeUi = GetComponentInChildren<KeyCodeUI>();
         }
         _keyCodeUi.SetKeyCode(key);
+    }
+
+    public void ShowTooltip(string tooltipString)
+    {
+        _tooltipObject.SetActive(true);
+        _tooltipText.text = tooltipString;
+        float textPaddingSize = 4f;
+        Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
+        _tooltipRectTransform.sizeDelta = backgoundSize;
+    }
+
+    public void HideTooltip()
+    {
+        _tooltipObject.SetActive(false);
     }
 }

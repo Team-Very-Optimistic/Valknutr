@@ -52,7 +52,7 @@ public class SelectMenu : MonoBehaviour
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
             uiItem._spellItem = spell;
-            uiItem.SetImage();
+            uiItem.Init();
             UISlots[count++].Slot(uiItem);
             _addedSpells.Add(spell);
         }
