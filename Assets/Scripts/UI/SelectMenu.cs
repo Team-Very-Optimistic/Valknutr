@@ -15,7 +15,7 @@ public class SelectMenu : MonoBehaviour
     private SpellCaster m_spellCaster;
     private HashSet<Spell> _addedSpells;
     private Inventory _inventory;
-    List<KeyCode> keyBindings;
+    List<KeyCode> keyBindings; //make can make everything use this keybinding
     
     // Start is called before the first frame update
     void Awake()
@@ -99,15 +99,22 @@ public class SelectMenu : MonoBehaviour
         if (index < 0) return;
 
         var slottedUiItem = currentlySelectedSlot.GetSlottedUiItem();
-        if (slottedUiItem == null) return;
+        if (slottedUiItem == null) return; // empty slot
 
-        var key = keyBindings[index];
-        var uiItem = codedSlots[index].GetSlottedUiItem();
-        if (uiItem == slottedUiItem) return;
+        var key = keyBindings[index]; //keybinding
         
-        uiItem.SetKeyCode(KeyCode.Clear);
+        //if the slot already set
+        if (codedSlots[index] != null)
+        {
+            var uiItem = codedSlots[index].GetSlottedUiItem();
+            if (uiItem == slottedUiItem) return; //already set properly
+            uiItem.SetKeyCode(KeyCode.Clear); //clear the old slot
+        }
+
+      
         //m_spellCaster.ClearSpell(index);
         int i = 0;
+        
         foreach (var slot in codedSlots)
         {
             //spell already existed
@@ -119,9 +126,9 @@ public class SelectMenu : MonoBehaviour
             i++;
         }
         
+        //set the new key
         slottedUiItem.SetKeyCode(key);
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
-
         codedSlots[index] = currentlySelectedSlot;
     }
 
@@ -135,16 +142,18 @@ public class SelectMenu : MonoBehaviour
         pointerPivot.eulerAngles = new Vector3(0,0, targetRotation);
         int index = 0;
         
-        foreach (var v in UISlots)
-        {
-            if(v.IsSlotted())
-                v.GetSlottedUiItem().SetTooltipString("No index");
-        }
-        foreach (var v in codedSlots)
-        {
-            if(v.IsSlotted())
-                v.GetSlottedUiItem().SetTooltipString(" " + index++);
-        }
+        //DEBUGGING
+        // foreach (var v in UISlots)
+        // {
+        //     if(v.IsSlotted())
+        //         v.GetSlottedUiItem().SetTooltipString("No index");
+        // }
+        // for(int i = 0; i < 4; i++)
+        // {
+        //     var v = codedSlots[i];
+        //     if(v != null && v.IsSlotted())
+        //         v.GetSlottedUiItem().SetTooltipString(" " + index++);
+        // }
 
     }
 
