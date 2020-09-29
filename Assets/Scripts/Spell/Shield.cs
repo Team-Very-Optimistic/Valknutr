@@ -5,6 +5,7 @@ public class Shield : MonoBehaviour
 {
     private Transform parent;
     private float angularSpeed = 50f;
+    private Quaternion rotation;
 
     private void Start()
     {
@@ -14,7 +15,12 @@ public class Shield : MonoBehaviour
     private void Update()
     {
         transform.RotateAround(parent.position, Vector3.up, angularSpeed * Time.deltaTime);
-        
+        rotation = transform.rotation;
+    }
+
+    void LateUpdate()
+    {
+        transform.rotation = rotation;
     }
 
     public void SetSpeed(float speed)

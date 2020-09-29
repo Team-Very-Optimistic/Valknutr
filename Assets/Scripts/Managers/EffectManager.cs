@@ -27,7 +27,7 @@ public class EffectManager : Singleton<EffectManager>
 
     }
 
-    public static void PlayEffectAtPosition(string identifier, Vector3 position)
+    public static void PlayEffectAtPosition(string identifier, Vector3 position, Vector3 scale = new Vector3())
     {
         EffectEntry s = Array.Find(Instance.m_VFXLibrary, effect => effect.m_Identifier == identifier);
 
@@ -38,6 +38,8 @@ public class EffectManager : Singleton<EffectManager>
         }
 
         GameObject temp = Instantiate(s.effect, position, Quaternion.identity);
+        if (scale != Vector3.zero)
+            temp.transform.localScale = scale;
         if(temp)
             Destroy(temp, s.duration); 
     }

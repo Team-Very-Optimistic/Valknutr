@@ -54,7 +54,6 @@ public class Spell : SpellItem
         {
             tooltip += " " + modiTooltip;
         }
-        Debug.Log(tooltip);
         _tooltipMessage = tooltip;
     }
     
