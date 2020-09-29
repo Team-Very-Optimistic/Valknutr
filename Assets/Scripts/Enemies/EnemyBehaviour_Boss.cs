@@ -7,7 +7,8 @@ enum BossBehaviourStates
     Walking,
     WindingUp,
     Stomping,
-    Summoning
+    Summoning,
+    Death
 }
 
 public class EnemyBehaviour_Boss : MonoBehaviour
@@ -185,10 +186,12 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                         }
 
                         summonTimeElapsed = 0.0f;
-
-                        CancelInvoke("SummonEnemy");
                     }
 
+                    break;
+                }
+            case BossBehaviourStates.Death:
+                {
                     break;
                 }
         }
@@ -235,6 +238,12 @@ public class EnemyBehaviour_Boss : MonoBehaviour
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    public void SetDeathState()
+    {
+        bossState = BossBehaviourStates.Death;
+        CancelInvoke("SummonEnemy");
     }
 
     private void OnDestroy()
