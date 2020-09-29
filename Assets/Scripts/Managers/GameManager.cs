@@ -36,7 +36,7 @@ public class GameManager : Singleton<GameManager>
 
         //Disable controls?
 
-        GameObject.Find("UI").GetComponent<EndGameManagerScript>().DisplayGameWin();
+        EndGameManager.Instance.DisplayGameWin();
 
         //Kill all enemies
         List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
@@ -50,6 +50,6 @@ public class GameManager : Singleton<GameManager>
 
     public void StartGameOverSequence()
     {
-        GameObject.Find("UI").GetComponent<EndGameManagerScript>().StartGameOverSequence();
+        EndGameManager.Instance.StartGameOverSequence();
     }
 }

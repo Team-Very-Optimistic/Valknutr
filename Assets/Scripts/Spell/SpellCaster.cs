@@ -16,7 +16,7 @@ public class SpellCaster : MonoBehaviour
     private Spell castedSpell;
     private Vector3 storedDirection;
     
-    private void Start()
+    private void Awake()
     {
         spells = SpellManager.Instance.GetDefaultSpells();
         Inventory.Instance._spells.AddRange(spells);

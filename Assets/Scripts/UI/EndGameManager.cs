@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameManagerScript : MonoBehaviour
+public class EndGameManager : Singleton<EndGameManager>
 {
     public GameObject gameOverObjects;
     public GameObject gameWinObjects;

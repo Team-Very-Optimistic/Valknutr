@@ -303,7 +303,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
 		{
 			m_Animator.applyRootMotion = false;
-			Debug.Log(animationType);
 			switch (animationType)
 			{
 				case CastAnimation.Bomb:

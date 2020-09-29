@@ -14,8 +14,8 @@ public class GroundStrikeBehaviour : SpellBehavior
         _damage = 4f;
         _speed = 2f;
         _cooldown = .2f;
-        scale = _objectForSpell.transform.localScale.x;
         _objectForSpell = GameManager.Instance._weapon;
+        scale = _objectForSpell.transform.localScale.x;
         radius = scale * 1.5f;
         animationType = CastAnimation.Projectile;
         damageScript = _objectForSpell.GetComponent<Damage>();
