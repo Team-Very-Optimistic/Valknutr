@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour, ITrigger
     public float speed;
     public float timeToExpire = 20f;
     private float explosionRadius = 2f;
-    private float explosionForce = 1000f;
+    private float explosionForce = 500f;
 
     public void Launch(Vector3 direction, float speed)
     {

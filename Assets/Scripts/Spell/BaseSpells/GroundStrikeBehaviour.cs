@@ -7,7 +7,7 @@ public class GroundStrikeBehaviour : SpellBehavior
     public float power = 50.0F;
     private Damage damageScript;
     public Vector3 offset;
-    public float knockbackForce = 1500.0f;
+    public float knockbackForce = 1000.0f;
 
     public override void Init()
     {
@@ -51,6 +51,7 @@ public class GroundStrikeBehaviour : SpellBehavior
 
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
+                knockbackDirection.y = 0.0f;
                 col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce);
             }
 
