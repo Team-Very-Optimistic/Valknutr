@@ -2096,7 +2096,7 @@ GameObject:
   - component: {fileID: 1110327215755334059}
   - component: {fileID: -3009068952420176252}
   m_Layer: 0
-  m_Name: PaladinPrefab
+  m_Name: EnemyPaladin
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 12
   currentHealth: 2
   destroyOnDeath: 1
   hurtSound: enemyPaladinHurt
@@ -2208,7 +2208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 2
   isFriendly: 0
 --- !u!114 &1110327215755334053
 MonoBehaviour:
