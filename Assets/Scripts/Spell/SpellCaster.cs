@@ -16,9 +16,10 @@ public class SpellCaster : MonoBehaviour
     private Spell castedSpell;
     private Vector3 storedDirection;
     
-    private void Start()
+    private void Awake()
     {
-        spells = SpellManager.GetDefaultSpells();
+        spells = SpellManager.Instance.GetDefaultSpells();
+        Inventory.Instance._spells.AddRange(spells);
         
         character = GetComponent<ThirdPersonCharacter>();
         mainCam = Camera.main;
@@ -29,8 +30,19 @@ public class SpellCaster : MonoBehaviour
     {
         foreach (var spell in spells)
         {
-            spell.Tick(Time.deltaTime * cooldownRate);
+            if(spell != null)
+                spell.Tick(Time.deltaTime * cooldownRate);
         }
+    }
+    
+    public void SetSpell(int index, Spell spell)
+    {
+        if (index >= spells.Length || index < 0)
+        {
+            //Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        spells[index] = spell;
     }
 
     public void CastSpellAtIndex(int index)
@@ -41,6 +53,7 @@ public class SpellCaster : MonoBehaviour
             return;
         }
         castedSpell = spells[index];
+        
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
@@ -51,9 +64,13 @@ public class SpellCaster : MonoBehaviour
 
     public void PrecastSpellAtIndex(int index)
     {
-        if (index >= spells.Length)
+        if (index >= spells.Length || index < 0)
         {
             Debug.LogWarning("Spell index out of range");
+            return;
+        }
+        if (spells[index] == null)
+        {
             return;
         }
         PrecastInternal(spells[index]);
@@ -65,8 +82,10 @@ public class SpellCaster : MonoBehaviour
         
         castedSpell = spell;
         storedDirection = (Util.GetMousePositionOnWorldPlane(mainCam) - transform.position).normalized;
+        storedDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
-        character.SetCastingAnimation(spell.castAnimation);
+        var animSpeed = spell.GetAnimSpeed();
+        character.SetCastingAnimation(spell.castAnimation, animSpeed);
     }
 
     public void CastPoint()
@@ -80,6 +99,21 @@ public class SpellCaster : MonoBehaviour
     private void OnDrawGizmos()
     {
         //Gizmos.DrawSphere(Util.GetMousePositionOnWorldPlane(mainCam), 0.5f);
+    }
+
+    public void ClearSpell(Spell spell)
+    {
+        for(int i = 0; i < 4; i ++)
+        {
+            if (spell == spells[i])
+            {
+                spells[i] = null;
+            }
+        }
+    }
+    public void ClearSpell(int spell)
+    {
+        spells[spell] = null;
     }
 }
     

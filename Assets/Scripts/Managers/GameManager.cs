@@ -8,11 +8,29 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    [HideInInspector]
     public GameObject _player;
     public ItemList _itemList;
+    [HideInInspector]
     public GameObject _weapon;
 
+    public void Awake()
+    {
+        _player = GameObject.Find("Player");
+        if (_player == null)
+        {
+            Debug.LogError("No player in this scene for GameManager");
+            return;
+        }
 
+        //extension method (fluent)
+        _weapon = _player.transform.FindDescendentTransform("Weapon").gameObject;
+        if (_weapon == null)
+        {
+            Debug.LogError("No weapon in player in this scene for GameManager");
+            return;
+        }
+    }
 
     public void SpawnItem(Vector3 position, SpellItem _SpellItem = null)
     {
@@ -36,7 +54,7 @@ public class GameManager : Singleton<GameManager>
 
         //Disable controls?
 
-        GameObject.Find("UI").GetComponent<EndGameManagerScript>().DisplayGameWin();
+        EndGameManager.Instance.DisplayGameWin();
 
         //Kill all enemies
         List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
@@ -50,6 +68,6 @@ public class GameManager : Singleton<GameManager>
 
     public void StartGameOverSequence()
     {
-        GameObject.Find("UI").GetComponent<EndGameManagerScript>().StartGameOverSequence();
+        EndGameManager.Instance.StartGameOverSequence();
     }
 }

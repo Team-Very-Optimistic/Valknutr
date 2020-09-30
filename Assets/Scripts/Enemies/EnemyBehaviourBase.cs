@@ -19,7 +19,7 @@ public class EnemyBehaviourBase : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.Instance._player;
         navMeshAgent.SetDestination(player.transform.position);
         isAttacking = false;
     }
@@ -50,7 +50,7 @@ public class EnemyBehaviourBase : MonoBehaviour
             {
                 if (!navMeshAgent.isStopped) navMeshAgent.isStopped = true;
 
-                //Set rotation to player when fighting
+                //Set rotation to player when fighting (use enemy y to prevent rotation)
                 transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
             }
         }
@@ -84,3 +84,4 @@ public class EnemyBehaviourBase : MonoBehaviour
         isInKnockback = false;
     }
 }
+
