@@ -19,7 +19,7 @@ class ShieldBehavior : SpellBehavior
     {
         for (int i = 0; i < _iterations; i++)
         {
-            var p = GameObject.Instantiate(_objectForSpell, player.position + Vector3.up + player.forward * 0.7f, player.localRotation);
+            var p = GameObject.Instantiate(_objectForSpell, player.position + Vector3.up + player.forward * _speed /50f, player.localRotation);
             float rotateBy = (float) Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement;
             rotateBy += _posDiff.x * 90 + _posDiff.z * 90;
             p.transform.RotateAround(player.position,Vector3.up, rotateBy);

@@ -29,8 +29,6 @@ public abstract class SpellBehavior : SpellElement
 
     [HideInInspector] public CastAnimation animationType;
 
-    public Sprite icon;
-    
     #endregion
 
     public void Cast()

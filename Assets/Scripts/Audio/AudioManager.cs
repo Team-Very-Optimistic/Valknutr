@@ -25,16 +25,10 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField]
     private SoundEntry[] m_SfxLibrary;
 
-    // Singleton
-    public static AudioManager m_Instance;
+    
 
     void Awake()
     {
-        if (m_Instance != null)
-            Destroy(gameObject);
-
-        m_Instance = this;
-
         foreach(SoundEntry s in m_SfxLibrary)
         {
             GameObject soundObject = new GameObject(s.m_Identifier + " source");

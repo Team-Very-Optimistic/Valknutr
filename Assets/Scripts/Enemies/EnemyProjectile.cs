@@ -25,8 +25,9 @@ public class EnemyProjectile : MonoBehaviour
             damageScript.DealDamage(other);
         }
 
-        if(!other.gameObject.tag.Equals("Enemy"))
+        if(!other.gameObject.tag.Equals("Enemy") && !other.gameObject.tag.Equals("Projectile"))
         {
+            Debug.Log(other.gameObject);
             Destroy(gameObject);
         }
     }

@@ -14,7 +14,6 @@ public class DisplaySpells : MonoBehaviour
         Populate();
     }
     
-    
     void Populate()
     {
         GameObject newObj; // Create GameObject instance

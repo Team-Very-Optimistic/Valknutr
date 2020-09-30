@@ -6,6 +6,8 @@ public class UISlot : MonoBehaviour, IDropHandler
 {
     private UIItem slottedItem;
     public bool isBaseSlot;
+    public bool isSpellSlot;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData != null)
@@ -30,7 +32,6 @@ public class UISlot : MonoBehaviour, IDropHandler
             {
                 if (slot != this && uiItem == slot.slottedItem)
                 {
-                    Debug.Log("dup");
                     slot.slottedItem = null;
                     break;
                     
@@ -40,18 +41,22 @@ public class UISlot : MonoBehaviour, IDropHandler
         if (IsSlotted())
         {
             slottedItem.isSlotted = false;
-            slottedItem.OnEndDrag(null);
+            slottedItem.SetLoose();
         }
         slottedItem = uiItem;
         uiItem.isSlotted = true;
-        var rectTransform =uiItem.GetComponent<RectTransform>();
+        var rectTransform = uiItem.GetComponent<RectTransform>();
         rectTransform.SetParent(transform);
         rectTransform.position =
             GetComponent<RectTransform>().position;
         return true;
     }
 
-    public SpellItem GetSlottedItem()
+    public UIItem GetSlottedUiItem()
+    {
+        return slottedItem;
+    }
+    public SpellItem GetSlottedSpellItem()
     {
         return slottedItem._spellItem;
     }

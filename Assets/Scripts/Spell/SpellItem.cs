@@ -11,4 +11,5 @@ public class SpellItem : ScriptableObject
 
     public bool isBaseSpell;
 
+    public string _tooltipMessage;
 }

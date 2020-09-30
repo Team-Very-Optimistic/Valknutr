@@ -14,17 +14,15 @@ public class MeleeWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.GetComponent<BoxCollider>().transform.position = GetComponent<SkinnedMeshRenderer>().rootBone.transform.position;
-        this.GetComponent<BoxCollider>().transform.rotation = GetComponent<SkinnedMeshRenderer>().rootBone.transform.rotation;
-    }
-
-    public void EnableCollider(bool value)
-    {
-        this.GetComponent<BoxCollider>().enabled = value;
+        //Box collision to follow skinnedMeshRenderer still buggy
+        GetComponent<BoxCollider>().transform.position = GetComponent<SkinnedMeshRenderer>().rootBone.transform.position;
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
+        if(!other.gameObject.CompareTag("Enemy"))
+        {
+            this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
+        }
     }
 }
