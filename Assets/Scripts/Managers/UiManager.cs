@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions.Must;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiManager : Singleton<UiManager>
 {
@@ -9,7 +7,10 @@ public class UiManager : Singleton<UiManager>
     public GameObject player;
     public SpellDisplayScript[] spellSlots;
     public HealthBar healthBar;
-    
+    public GameObject minimap;
+    public GameObject pauseMenu;
+
+    private bool isPaused = false;
     private HealthScript playerHealth;
 
 
@@ -41,6 +42,50 @@ public class UiManager : Singleton<UiManager>
         for (var i = 0; i < spells.Length && i < spellSlots.Length; i++)
         {
             spellSlots[i].SetSpell(spells[i]);
+        }
+    }
+
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Time.timeScale = 1f;
+        Application.Quit();
+    }
+
+    public void ToggleMinimap()
+    {
+        minimap.SetActive(!minimap.activeSelf);
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
         }
     }
 }

@@ -5,82 +5,52 @@ namespace UI
 {
     public class UIInputController : MonoBehaviour
     {
-        public PauseMenu pauseMenu;
-        public GameObject minimap;
-        
-        private CraftMenuManager uiManager;
+        private CraftMenuManager craftMenuManager;
+        private UiManager uiManager;
 
         private void Start()
         {
-            uiManager = CraftMenuManager.Instance;
+            craftMenuManager = CraftMenuManager.Instance;
+            uiManager = UiManager.Instance;
         }
 
         private void Update()
         {
-            if (Input.GetButtonDown("CraftMenu"))
-            {
-                uiManager.DisplayCraftMenu();
-            }
+            if (Input.GetButtonDown("CraftMenu")) craftMenuManager.DisplayCraftMenu();
+
+            if (!craftMenuManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
+                craftMenuManager.DisplaySelectMenu();
+
+            if (Input.GetButtonDown("PauseGame")) uiManager.TogglePause();
             
-            if (!uiManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
-            {
-                uiManager.DisplaySelectMenu();
-            } 
-            
-            if (Input.GetButtonDown("PauseGame"))
-            {
-                // todo make pausemenu a singleton?
-                if (PauseMenu.isPaused)
-                {
-                    pauseMenu.ResumeGame();
-                }
-                else
-                {
-                    pauseMenu.PauseGame();
-                }
-            }
+            if (Input.GetButtonDown("MinimapToggle")) uiManager.ToggleMinimap();
 
             //UI Specific controls follow
-            if (!uiManager.IsUIDisplayed()) return;
+            if (!craftMenuManager.IsUIDisplayed()) return;
             
-            if (Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel")) craftMenuManager.HideUI();
+
+            if (craftMenuManager.IsCraftMenuDisplayed())
             {
-                uiManager.HideUI();
-            }
-            
-            if (uiManager.IsCraftMenuDisplayed())
-            {
-                if (Input.GetButtonDown("Craft"))
-                {
-                    uiManager.Craft();
-                }
+                if (Input.GetButtonDown("Craft")) craftMenuManager.Craft();
 
                 if (Input.GetButtonDown("Back"))
                 {
-                    uiManager.SwapUI();
+                    craftMenuManager.SwapUI();
                     return;
                 }
             }
             
-            if (uiManager.IsSelectMenuDisplayed())
+            if (craftMenuManager.IsSelectMenuDisplayed())
             {
                 
-                if (Input.GetButtonDown("Next"))
-                {
-                    uiManager.SwapUI();
-
-                }
+                if (Input.GetButtonDown("Next")) craftMenuManager.SwapUI();
             }
             
             if (Input.GetButtonUp("SelectMenu"))
             {
-                uiManager.HideUI();
+                craftMenuManager.HideUI();
                 return;
-            }
-
-            if (Input.GetButtonDown("MinimapToggle"))
-            {
-                minimap.SetActive(!minimap.activeSelf);
             }
         }
     }
