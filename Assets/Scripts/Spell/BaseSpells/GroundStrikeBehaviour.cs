@@ -7,6 +7,7 @@ public class GroundStrikeBehaviour : SpellBehavior
     public float power = 50.0F;
     private Damage damageScript;
     public Vector3 offset;
+    public float knockbackForce = 1000.0f;
     public float scale = 1f;
     
     public override void Init()
@@ -32,21 +33,31 @@ public class GroundStrikeBehaviour : SpellBehavior
             new Vector3(scale,scale,scale));
 
         var cols = Physics.OverlapSphere(position, radius);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         
         foreach (var col in cols)
         {
-            if (!col.CompareTag("Player") && col.attachedRigidbody != null)
-            {
-                col.attachedRigidbody.AddExplosionForce(power * _damage, position, radius, 0, ForceMode.Impulse);
-            }
-
             if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
             {
                 damageScript.SetDamage(_damage);
                 damageScript.DealDamage(col);
             }
-             
+
+            if (!col.CompareTag("Player") && col.attachedRigidbody != null)
+            {
+                if (col.gameObject.GetComponent<EnemyBehaviourBase>() != null)
+                {
+                    //Enable knockback on enemies
+                    col.gameObject.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
+                }
+
+                //Add knockback direction based on player position
+                Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
+                knockbackDirection.y = 0.0f;
+                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce);
+            }
+
         }
-        
+
     }
 }
