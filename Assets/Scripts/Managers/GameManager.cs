@@ -8,11 +8,29 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    [HideInInspector]
     public GameObject _player;
     public ItemList _itemList;
+    [HideInInspector]
     public GameObject _weapon;
 
+    public void Awake()
+    {
+        _player = GameObject.Find("Player");
+        if (_player == null)
+        {
+            Debug.LogError("No player in this scene for GameManager");
+            return;
+        }
 
+        //extension method (fluent)
+        _weapon = _player.transform.FindDescendentTransform("Weapon").gameObject;
+        if (_weapon == null)
+        {
+            Debug.LogError("No weapon in player in this scene for GameManager");
+            return;
+        }
+    }
 
     public void SpawnItem(Vector3 position, SpellItem _SpellItem = null)
     {
