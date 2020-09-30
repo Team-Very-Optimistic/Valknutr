@@ -208,7 +208,6 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     public void SetStomp()
     {
         GameObject go = GameObject.Instantiate(stompPrefab, rightFeet.transform.position, Quaternion.identity);
-        go.GetComponent<EnemyBossStomp>().SetMaxScale(stompRadius);
     }
 
     public void SummonEnemy()
