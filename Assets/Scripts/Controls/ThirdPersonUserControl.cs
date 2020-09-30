@@ -32,6 +32,11 @@ public class ThirdPersonUserControl : MonoBehaviour
         m_Caster = GetComponent<SpellCaster>();
     }
 
+    //todo: Make controls use key bindings.
+    public int KeyBinding(KeyCode keyCode)
+    {
+        return 0;
+    }
 
     private void Update()
     {
@@ -43,8 +48,7 @@ public class ThirdPersonUserControl : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            print("dash");
-            m_Caster.CastSpellAtIndex(1);
+            m_Caster.PrecastSpellAtIndex(1);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -52,7 +56,6 @@ public class ThirdPersonUserControl : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            print("bomb");
             m_Caster.PrecastSpellAtIndex(3);
         }
         else if (!m_Jump)

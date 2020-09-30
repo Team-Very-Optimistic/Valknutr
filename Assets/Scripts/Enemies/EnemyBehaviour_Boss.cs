@@ -7,7 +7,8 @@ enum BossBehaviourStates
     Walking,
     WindingUp,
     Stomping,
-    Summoning
+    Summoning,
+    Death
 }
 
 public class EnemyBehaviour_Boss : MonoBehaviour
@@ -184,11 +185,14 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                             bossState = BossBehaviourStates.Walking;
                         }
 
-                        summonTimeElapsed = 0.0f;
-
                         CancelInvoke("SummonEnemy");
+                        summonTimeElapsed = 0.0f;
                     }
 
+                    break;
+                }
+            case BossBehaviourStates.Death:
+                {
                     break;
                 }
         }
@@ -205,7 +209,6 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     public void SetStomp()
     {
         GameObject go = GameObject.Instantiate(stompPrefab, rightFeet.transform.position, Quaternion.identity);
-        go.GetComponent<EnemyBossStomp>().SetMaxScale(stompRadius);
     }
 
     public void SummonEnemy()
@@ -235,6 +238,12 @@ public class EnemyBehaviour_Boss : MonoBehaviour
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    public void SetDeathState()
+    {
+        bossState = BossBehaviourStates.Death;
+        CancelInvoke("SummonEnemy");
     }
 
     private void OnDestroy()

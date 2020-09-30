@@ -40,6 +40,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private static readonly int CastingProjectile = Animator.StringToHash("CastingProjectile");
 		private static readonly int CastingShield = Animator.StringToHash("CastingShield");
 		private static readonly int CastingDash = Animator.StringToHash("CastingDash");
+		private static readonly int AnimationSpeed = Animator.StringToHash("AnimationSpeed");
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -72,6 +73,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				if (t  <= dashTime / 1.2f)
 				{
 					transformChild.localEulerAngles = Vector3.Lerp(startRotation, endRotation, t / (dashTime/ 1.3f));
+				}
+				else
+				{
+					m_Dashing = false;
+					m_Crouching = false;
+
 				}
 				
 				yield return new WaitForSeconds(timeInterval);
@@ -117,18 +124,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
-			// control and velocity handling is different when grounded and airborne:
-			// if (m_IsGrounded)
-			// {
-			// 	
-			// }
-			// else
-			// {
-			// 	HandleAirborneMovement();
-			// }
+			//control and velocity handling is different when grounded and airborne:
+			if (m_IsGrounded)
+			{
+				
+			}
+			else
+			{
+				HandleAirborneMovement();
+			}
 
-			// ScaleCapsuleForCrouching(crouch);
-			// PreventStandingInLowHeadroom();
+			ScaleCapsuleForCrouching(crouch);
+			PreventStandingInLowHeadroom();
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
@@ -293,10 +300,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			return m_CastingBomb || m_CastingProjectile || m_CastingShield || m_Dashing;
 		}
 
-		public void SetCastingAnimation(CastAnimation animationType)
+		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
 		{
 			m_Animator.applyRootMotion = false;
-			print(animationType);
 			switch (animationType)
 			{
 				case CastAnimation.Bomb:
@@ -305,17 +311,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					break;
 				case CastAnimation.Projectile:
 					m_CastingProjectile = true;
-					m_Animator.SetBool(CastingProjectile, true);
+					//m_Animator.SetBool(CastingProjectile, true);
+					m_Animator.SetFloat(AnimationSpeed, speed);
+					m_Animator.Play("Projectile");
 					break;
 				case CastAnimation.Shield:
 					m_CastingShield = true;
 					m_Animator.SetBool(CastingShield, true);
 					break;
 				case CastAnimation.Movement:
-					m_Dashing = true;
-					m_Animator.SetBool(CastingDash, true);
+					//m_Dashing = true;
+					//m_Animator.SetBool(CastingDash, true);
+					m_Animator.Play("Post");
 					break;
 				default:
+					m_Animator.Play("Post");
 					break;
 			}
 		}
@@ -327,7 +337,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CastingProjectile = false;
 			m_CastingShield = false;
 			m_Dashing = false;
-			
+			m_Animator.SetFloat(AnimationSpeed, 1f);
 			m_Animator.SetBool(CastingBomb, false);
 			m_Animator.SetBool(CastingProjectile, false);
 			m_Animator.SetBool(CastingShield, false);
