@@ -185,6 +185,7 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                             bossState = BossBehaviourStates.Walking;
                         }
 
+                        CancelInvoke("SummonEnemy");
                         summonTimeElapsed = 0.0f;
                     }
 
