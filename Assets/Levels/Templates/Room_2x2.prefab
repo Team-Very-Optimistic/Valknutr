@@ -51,8 +51,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 18, y: 5, z: 18}
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Size: {x: 23.329437, y: 5, z: 23.787924}
+  m_Center: {x: 0.2071991, y: 2.5, z: 0.02788639}
 --- !u!114 &2634722784757055734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,8 +479,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 285294324425765200, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: enemies.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 285294324425765200, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+    - target: {fileID: 285294324425765200, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1110327215755334056, guid: 8496404fac73a754da33a60907708915, type: 3}
     - target: {fileID: 285294324425765201, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_Name
       value: SpawnZone (1)
@@ -764,6 +772,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3917317486614832434}
     m_Modifications:
+    - target: {fileID: 285294324425765200, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1110327215755334056, guid: 8496404fac73a754da33a60907708915, type: 3}
+    - target: {fileID: 285294324425765200, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
     - target: {fileID: 285294324425765201, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_Name
       value: SpawnZone
