@@ -7,7 +7,8 @@ enum BossBehaviourStates
     Walking,
     WindingUp,
     Stomping,
-    Summoning
+    Summoning,
+    Death
 }
 
 public class EnemyBehaviour_Boss : MonoBehaviour
@@ -66,17 +67,21 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                     //Navigation
                     navMeshAgent.SetDestination(player.transform.position);
 
+                    //Wait frames to ensure navMeshAgent destination set properly
                     if (--waitMore > 0) return;
 
-                    //Animator triggers
+                    //If boss close enough to player, start winding up
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
-                        //Setup winding up
+                        //Set Animator booleans
                         ResetAllAnimatorBool();
                         animator.SetBool("isWindingUp", true);
 
-                        //Set winding up time
+                        //Set winding up time (increasing)
                         windingUpTimeRemaining = windingUpTime[windingUpTimeIndex];
+
+                        //Stop navMeshAgent
+                        gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
                         //Set internal state
                         bossState = BossBehaviourStates.WindingUp;
@@ -89,11 +94,13 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                 }
             case BossBehaviourStates.WindingUp:
                 {
+                    //Tick down winding up time
                     windingUpTimeRemaining -= Time.deltaTime;
 
+                    //Start stomp on 0 time remaining
                     if(windingUpTimeRemaining <= 0.0f)
                     {
-                        //Setup stomp
+                        //Set Animator booleans
                         ResetAllAnimatorBool();
                         animator.SetBool("isStomping", true);
 
@@ -109,21 +116,21 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                 }
             case BossBehaviourStates.Stomping:
                 {
+                    //After animation ends, change state
                     if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
                     {
                         bool shouldSummon = UnityEngine.Random.Range(0.0f, 1.0f) > 0.5f;
-                        Debug.Log(shouldSummon);
 
                         if (shouldSummon)
                         {
-                            //Setup summon
+                            //Set Animator booleans
                             ResetAllAnimatorBool();
                             animator.SetBool("isSummoning", true);
 
                             //Set internal state
                             bossState = BossBehaviourStates.Summoning;
 
-                            //Invoke repeating summon
+                            //Invoke repeating summon with delay + interval
                             InvokeRepeating("SummonEnemy", summonInterval, summonInterval);
                         }
                         else
@@ -131,7 +138,7 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                             //If player is close enough, wind up again
                             if (Vector3.Distance(player.transform.position, transform.position) < navMeshAgent.stoppingDistance)
                             {
-                                //Setup winding up
+                                //Set Animator booleans
                                 ResetAllAnimatorBool();
                                 animator.SetBool("isWindingUp", true);
 
@@ -143,12 +150,17 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                             }
                             else
                             {
-                                //Setup summon
+                                //Start walking again
+
+                                //Set Animator booleans
                                 ResetAllAnimatorBool();
                                 animator.SetBool("isWalking", true);
 
                                 //Set internal state
                                 bossState = BossBehaviourStates.Walking;
+
+                                //Enable NavMeshAgent
+                                gameObject.GetComponent<NavMeshAgent>().isStopped = false;
                             } 
                         }
                     }
@@ -159,12 +171,13 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                 {
                     summonTimeElapsed += Time.deltaTime;
 
+                    //After summoning
                     if(summonTimeElapsed >= summonTime)
                     {
                         //If player is close enough, wind up again
                         if (Vector3.Distance(player.transform.position, transform.position) < navMeshAgent.stoppingDistance)
                         {
-                            //Setup winding up
+                            //Set Animator booleans
                             ResetAllAnimatorBool();
                             animator.SetBool("isWindingUp", true);
 
@@ -176,19 +189,28 @@ public class EnemyBehaviour_Boss : MonoBehaviour
                         }
                         else
                         {
-                            //Setup summon
+                            //Set Animator booleans
                             ResetAllAnimatorBool();
                             animator.SetBool("isWalking", true);
 
                             //Set internal state
                             bossState = BossBehaviourStates.Walking;
+
+                            //Enable NavMeshAgent
+                            gameObject.GetComponent<NavMeshAgent>().isStopped = false;
                         }
 
-                        summonTimeElapsed = 0.0f;
-
+                        //Cancel SummonEnemy invoke
                         CancelInvoke("SummonEnemy");
+
+                        //Reset time
+                        summonTimeElapsed = 0.0f;
                     }
 
+                    break;
+                }
+            case BossBehaviourStates.Death:
+                {
                     break;
                 }
         }
@@ -205,15 +227,14 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     public void SetStomp()
     {
         GameObject go = GameObject.Instantiate(stompPrefab, rightFeet.transform.position, Quaternion.identity);
-        go.GetComponent<EnemyBossStomp>().SetMaxScale(stompRadius);
     }
 
     public void SummonEnemy()
     {
         Vector3 randNavMeshLocation = RandomNavmeshLocation(7.0f);
 
+        //Randomly summon paladin or arche 
         bool shouldSummonPaladin = UnityEngine.Random.Range(0.0f, 1.0f) > 0.5f;
-
         if (shouldSummonPaladin)
         {
             GameObject.Instantiate(paladinPrefab, randNavMeshLocation, Quaternion.identity);
@@ -235,6 +256,12 @@ public class EnemyBehaviour_Boss : MonoBehaviour
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    public void SetDeathState()
+    {
+        bossState = BossBehaviourStates.Death;
+        CancelInvoke("SummonEnemy");
     }
 
     private void OnDestroy()

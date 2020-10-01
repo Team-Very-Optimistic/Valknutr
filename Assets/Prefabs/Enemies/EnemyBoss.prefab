@@ -73,14 +73,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411179568339962}
   serializedVersion: 2
-  m_Mass: 140
+  m_Mass: 14
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411179568339965
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -243,14 +243,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411179843477315}
   serializedVersion: 2
-  m_Mass: 234
+  m_Mass: 23.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!65 &747411179843477319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -300,7 +300,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -382,14 +382,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411179854441527}
   serializedVersion: 2
-  m_Mass: 140
+  m_Mass: 14
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411179854441530
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -566,7 +566,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 1200
-  m_StoppingDistance: 3
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -589,7 +589,7 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 10
   destroyOnDeath: 1
-  hurtSound: 
+  hurtSound: enemyBossHurt
   hurtSoundOnHit: 1
   isPlayer: 0
   damageTextPrefab: {fileID: 0}
@@ -612,9 +612,9 @@ MonoBehaviour:
   - 1
   summonEnemiesNum: 2
   summonTime: 5
-  paladinPrefab: {fileID: 4905093262579651667, guid: 8496404fac73a754da33a60907708915, type: 3}
-  archerPrefab: {fileID: 5752532102350744212, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
-  stompPrefab: {fileID: 1874944323883492131, guid: a3309ac1ed9bfa349abddcb0f7b53e42, type: 3}
+  paladinPrefab: {fileID: 1110327215755334056, guid: 8496404fac73a754da33a60907708915, type: 3}
+  archerPrefab: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+  stompPrefab: {fileID: 3142609151624912496, guid: 5727a20c7a0953b46bee5fba8f913175, type: 3}
   stompRadius: 15
   rightFeet: {fileID: 747411180124346999}
 --- !u!114 &747411179884346152
@@ -643,6 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollParts: []
+  RagdollKnockbackForce: 3000
   deathParticleSystemPrefab: {fileID: 2148595126400666907, guid: c67bf2c60c434674ca4a56f8d78b46d1, type: 3}
   ragdollMaterials: []
   delayBeforeFade: 5
@@ -876,14 +877,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180011670211}
   serializedVersion: 2
-  m_Mass: 94
+  m_Mass: 9.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411180011670214
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -934,7 +935,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -985,14 +986,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180022784544}
   serializedVersion: 2
-  m_Mass: 94
+  m_Mass: 9.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!135 &747411180022784547
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1042,7 +1043,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -1248,7 +1249,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180173257369}
   serializedVersion: 2
-  m_Mass: 234
+  m_Mass: 23.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1652,14 +1653,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180608558934}
   serializedVersion: 2
-  m_Mass: 140
+  m_Mass: 14
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411180608558937
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1710,7 +1711,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -1853,14 +1854,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180669336677}
   serializedVersion: 2
-  m_Mass: 94
+  m_Mass: 9.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411180669336680
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1911,7 +1912,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2053,14 +2054,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411180787463175}
   serializedVersion: 2
-  m_Mass: 94
+  m_Mass: 9.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411180787463179
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2111,7 +2112,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2346,14 +2347,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411181023155795}
   serializedVersion: 2
-  m_Mass: 94
+  m_Mass: 9.4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411181023155799
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2404,7 +2405,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2943,14 +2944,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747411181314107864}
   serializedVersion: 2
-  m_Mass: 140
+  m_Mass: 14
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &747411181314107868
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3001,7 +3002,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity

@@ -5,77 +5,70 @@ namespace UI
 {
     public class UIInputController : MonoBehaviour
     {
-        public PauseMenu pauseMenu;
-        private CraftMenuManager uiManager;
+        private CraftMenuManager craftMenuManager;
+        private UiManager uiManager;
+        private ThirdPersonUserControl _controls;
 
         private void Start()
         {
-            uiManager = CraftMenuManager.Instance;
+            craftMenuManager = CraftMenuManager.Instance;
+            uiManager = UiManager.Instance;
+            _controls = GameManager.Instance._player.GetComponent<ThirdPersonUserControl>();
         }
 
         private void Update()
         {
-            if (Input.GetButtonDown("CraftMenu"))
-            {
-                uiManager.DisplayCraftMenu();
-            }
+            if (Input.GetButtonDown("CraftMenu")) craftMenuManager.DisplayCraftMenu();
+
+            if (!craftMenuManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
+                craftMenuManager.DisplaySelectMenu();
+
+            if (Input.GetButtonDown("PauseGame")) uiManager.TogglePause();
             
-            if (!uiManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
+            if (Input.GetButtonDown("MinimapToggle")) uiManager.ToggleMinimap();
+
+            //UI Specific controls follow
+            if (!craftMenuManager.IsUIDisplayed())
             {
-                uiManager.DisplaySelectMenu();
-            } 
-            
-            if (Input.GetButtonDown("PauseGame"))
-            {
-                // todo make pausemenu a singleton?
-                if (PauseMenu.isPaused)
+                //Enable player controls;
+                if (!_controls.enabled)
                 {
-                    pauseMenu.ResumeGame();
+                    _controls.enabled = true;
                 }
-                else
+            }
+            else
+            {
+                //Disable player controls;
+                if (_controls.enabled)
                 {
-                    pauseMenu.PauseGame();
+                    _controls.enabled = false;
                 }
             }
 
-            //UI Specific controls follow
-            if (!uiManager.IsUIDisplayed()) return;
-            
-            if (Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel")) craftMenuManager.HideUI();
+
+            if (craftMenuManager.IsCraftMenuDisplayed())
             {
-                uiManager.HideUI();
-            }
-            
-            if (uiManager.IsCraftMenuDisplayed())
-            {
-                if (Input.GetButtonDown("Craft"))
-                {
-                    uiManager.Craft();
-                }
+                if (Input.GetButtonDown("Craft")) craftMenuManager.Craft();
 
                 if (Input.GetButtonDown("Back"))
                 {
-                    uiManager.SwapUI();
+                    craftMenuManager.SwapUI();
                     return;
                 }
             }
             
-            if (uiManager.IsSelectMenuDisplayed())
+            if (craftMenuManager.IsSelectMenuDisplayed())
             {
                 
-                if (Input.GetButtonDown("Next"))
-                {
-                    uiManager.SwapUI();
-
-                }
+                if (Input.GetButtonDown("Next")) craftMenuManager.SwapUI();
             }
             
             if (Input.GetButtonUp("SelectMenu"))
             {
-                uiManager.HideUI();
+                craftMenuManager.HideUI();
                 return;
             }
-
         }
     }
 }

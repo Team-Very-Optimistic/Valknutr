@@ -3,13 +3,13 @@
 class MovementBehavior : SpellBehavior
 {
     private ThirdPersonCharacter _controller;
-    private float _moveTime = 0.395f;
+    private float _moveTime = 0.3f;
     
     public override void Init()
     {
         _speed = 30f;
         _cooldown = 1f;
-
+        _moveTime = 0.3f;
         _objectForSpell = GameManager.Instance._player;
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
         animationType = CastAnimation.Movement;

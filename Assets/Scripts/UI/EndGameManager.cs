@@ -28,10 +28,6 @@ public class EndGameManager : Singleton<EndGameManager>
                 gameUI.Add(child.gameObject);
             }
         }
-
-        gameOverObjects = transform.Find("GameOverObjects").gameObject;
-        gameWinObjects = transform.Find("GameWinObjects").gameObject;
-        fadeBackground = transform.Find("FadeBackground").gameObject;
     }
 
     private void Update()

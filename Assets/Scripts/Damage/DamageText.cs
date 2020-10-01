@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +18,7 @@ public class DamageText : MonoBehaviour
     public float canvasYMax;
     public float minScale;
     public float maxScale;
+    public float horizontalScaleMultiplier;
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class DamageText : MonoBehaviour
 
         //Set max scale
         rectTransform = GetComponent<RectTransform>();
-        rectTransform.localScale = new Vector3(maxScale, maxScale, maxScale);
+        rectTransform.localScale = new Vector3(maxScale * horizontalScaleMultiplier, maxScale, maxScale);
 
         //Find and parent to canvas
         canvas = GameObject.Find("UI").GetComponent<Canvas>();
@@ -58,9 +58,9 @@ public class DamageText : MonoBehaviour
         rectTransform.position = canvasPos;
 
         //Initial scale down 
-        if(rectTransform.localScale.x >= minScale)
+        if(rectTransform.localScale.y >= minScale)
         {
-            rectTransform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
+            rectTransform.localScale -= new Vector3(0.05f * horizontalScaleMultiplier, 0.05f, 0.05f);
         }
 
         if (timeElapsed >= aliveTime)
