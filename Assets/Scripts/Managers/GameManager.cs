@@ -58,7 +58,7 @@ public class GameManager : Singleton<GameManager>
 
         //Kill all enemies
         List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
-        
+        //This code is scary
         foreach(GameObject enemy in enemies)
         {
             Destroy(enemy);

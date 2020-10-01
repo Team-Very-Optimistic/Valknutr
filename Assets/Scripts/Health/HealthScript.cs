@@ -44,8 +44,7 @@ public class HealthScript : MonoBehaviour
 
         if (isPlayer)
         {
-            EffectManager.Instance.PlayerHurtEffect();
-            EffectManager.PlayEffectAtPosition("bloodExplosion", transform.position);
+            EffectManager.Instance.PlayerHurtEffect(transform.position, damage);
         }
 
         currentHealth -= damage;    
