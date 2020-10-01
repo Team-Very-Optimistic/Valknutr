@@ -8,6 +8,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	[RequireComponent(typeof(CapsuleCollider))]
 	[RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
+	
 	{
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
@@ -53,6 +54,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
 		{
+			print(dashTime);
 			float t = 0;
 			float timeInterval = 0.02f;
 			m_Dashing = true;

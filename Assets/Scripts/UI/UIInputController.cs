@@ -7,11 +7,13 @@ namespace UI
     {
         private CraftMenuManager craftMenuManager;
         private UiManager uiManager;
+        private ThirdPersonUserControl _controls;
 
         private void Start()
         {
             craftMenuManager = CraftMenuManager.Instance;
             uiManager = UiManager.Instance;
+            _controls = GameManager.Instance._player.GetComponent<ThirdPersonUserControl>();
         }
 
         private void Update()
@@ -26,8 +28,23 @@ namespace UI
             if (Input.GetButtonDown("MinimapToggle")) uiManager.ToggleMinimap();
 
             //UI Specific controls follow
-            if (!craftMenuManager.IsUIDisplayed()) return;
-            
+            if (!craftMenuManager.IsUIDisplayed())
+            {
+                //Enable player controls;
+                if (!_controls.enabled)
+                {
+                    _controls.enabled = true;
+                }
+            }
+            else
+            {
+                //Disable player controls;
+                if (_controls.enabled)
+                {
+                    _controls.enabled = false;
+                }
+            }
+
             if (Input.GetButtonDown("Cancel")) craftMenuManager.HideUI();
 
             if (craftMenuManager.IsCraftMenuDisplayed())
