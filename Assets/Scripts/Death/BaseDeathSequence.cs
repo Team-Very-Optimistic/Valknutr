@@ -36,8 +36,13 @@ public class BaseDeathSequence : MonoBehaviour
 
     public void TriggerRagdoll()
     {
-        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Animator>().enabled = false;
+
+        if(GetComponent<Rigidbody>() != null)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
 
         //Turn on ragdoll
         foreach (Collider c in ragdollParts)
