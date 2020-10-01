@@ -10,6 +10,8 @@ public class EffectManager : Singleton<EffectManager>
     private Vignette m_Vignette;
     private ColorGrading m_ColorGrading;
     private float playerHurtIntensity;
+    private float ori; 
+    private float mixerRedOutRedIn;
     [System.Serializable]
     public class EffectEntry
     {
@@ -25,7 +27,8 @@ public class EffectManager : Singleton<EffectManager>
     {
         m_Vignette = m_postProcessVolume.profile.GetSetting<Vignette>();
         m_ColorGrading = m_postProcessVolume.profile.GetSetting<ColorGrading>();
-
+        ori = m_Vignette.intensity.value;
+        mixerRedOutRedIn = m_ColorGrading.mixerRedOutRedIn.value;
     }
 
     public static GameObject PlayEffectAtPosition(string identifier, Vector3 position, Vector3 scale = new Vector3())
@@ -55,9 +58,8 @@ public class EffectManager : Singleton<EffectManager>
 
     IEnumerator PlayerHurt()
     {
-        float ori = m_Vignette.intensity.value;
+        
         m_Vignette.intensity.value =  ori +  0.45f * playerHurtIntensity;
-        var mixerRedOutRedIn = m_ColorGrading.mixerRedOutRedIn.value;
         m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn + 50f * playerHurtIntensity ;
         Time.timeScale = 0.1f;
         ScreenShakeManager.Instance.ScreenShake(0.3f * playerHurtIntensity, 0.9f * playerHurtIntensity);
