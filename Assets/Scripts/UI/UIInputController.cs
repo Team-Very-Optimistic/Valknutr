@@ -35,6 +35,7 @@ namespace UI
                 {
                     _controls.enabled = true;
                 }
+                return;
             }
             else
             {

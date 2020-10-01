@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,20 +11,30 @@ class SplitSpellModifier : SpellModifier
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;
-        
+        Action temp = () =>
+        {
+            Vector3 originalPosDiff = action._posDiff;
+            action._posDiff += new Vector3(Random.Range(-randomMax, randomMax), 0,
+                Random.Range(-randomMax, randomMax));
+            action._posDiff.Normalize();
+            oldBehavior.Invoke();
+            action._posDiff = originalPosDiff; //reset
+        };
+            
         Action spell = () =>
         {
             for (int i = 0; i < n; i++)
             {
-                Vector3 originalPosDiff = action._posDiff;
-                action._posDiff += new Vector3(Random.Range(-randomMax, randomMax), 0, Random.Range(-randomMax, randomMax));
-                action._posDiff.Normalize();
-                oldBehavior.Invoke();
-                action._posDiff = originalPosDiff; //reset
+                GameManager.Instance.StartCoroutine(DelayInvoke(temp, i / 10f));
             }
         };
         action.behaviour = spell;
         return action;
     }
-    
+
+    IEnumerator DelayInvoke(Action invoke, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        invoke.Invoke();
+    }
 }

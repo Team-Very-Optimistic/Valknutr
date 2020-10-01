@@ -27,6 +27,10 @@ public class UiManager : Singleton<UiManager>
         playerHealth = player.GetComponent<HealthScript>();
         
         healthBar.SetMaxHealth(playerHealth.maxHealth);
+        
+        transform.Find("QuickAssignMenu").gameObject.SetActive(true);
+        transform.Find("SpellCrafting").gameObject.SetActive(true);
+
     }
 
     // Update is called once per frame
