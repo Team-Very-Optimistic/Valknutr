@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _itemList: {fileID: 11400000, guid: 731b4b4aeef3a77488eab93373276f94, type: 2}
+  _weapon: {fileID: 0}
 --- !u!114 &2674764975012913393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+  ui: {fileID: 0}
 --- !u!114 &894522836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +137,21 @@ MonoBehaviour:
   m_SfxLibrary:
   - m_Identifier: playerHurt
     m_Clip: {fileID: 8300000, guid: ef6e15b3e78db5247a8d489278e0b2e4, type: 3}
+    m_Volume: 0.3
+    m_Pitch: 1
+    m_Source: {fileID: 0}
+  - m_Identifier: projectileLaunch
+    m_Clip: {fileID: 8300000, guid: 9071b03152d8f634588f9ba85d78d593, type: 3}
+    m_Volume: 0.5
+    m_Pitch: 1
+    m_Source: {fileID: 0}
+  - m_Identifier: projectileHit
+    m_Clip: {fileID: 8300000, guid: 3163d468a95ccf940a38463fe456af02, type: 3}
+    m_Volume: 0.5
+    m_Pitch: 1
+    m_Source: {fileID: 0}
+  - m_Identifier: explosion
+    m_Clip: {fileID: 8300000, guid: 14dde69b4efc8d3409c01917f264e58f, type: 3}
     m_Volume: 0.5
     m_Pitch: 1
     m_Source: {fileID: 0}

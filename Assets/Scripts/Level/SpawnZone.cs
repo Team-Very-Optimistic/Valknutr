@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Level;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnZone : MonoBehaviour
 {
@@ -57,5 +59,11 @@ public class SpawnZone : MonoBehaviour
     {
         if (IsDone()) return;
         Spawn();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position, 1f);
     }
 }

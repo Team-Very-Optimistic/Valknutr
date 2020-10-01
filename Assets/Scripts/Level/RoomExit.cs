@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 public class RoomExit : MonoBehaviour
 {
     public bool isConnected = false;
-    public bool isLocked = true;
+    public bool isLocked = false;
     public bool isOpen = false;
     private Vector3 _originalPosition;
     [SerializeField]
