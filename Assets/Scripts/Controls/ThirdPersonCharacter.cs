@@ -54,7 +54,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		private IEnumerator Dashing(float dashTime, float dashSpeed, Vector3 direction)
 		{
-			print(dashTime);
 			float t = 0;
 			float timeInterval = 0.02f;
 			m_Dashing = true;
