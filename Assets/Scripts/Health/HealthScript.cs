@@ -70,7 +70,7 @@ public class HealthScript : MonoBehaviour
     private void PlayHurtSound(float damage)
     {
         var percent = damage / maxHealth;
-        var volume = Mathf.Sqrt(percent) + 0.2f;
+        var volume = Mathf.Sqrt(percent);
         var pitch = Random.Range(0.8f, 1.2f);
 
         AudioManager.PlaySoundAtPosition(hurtSound, transform.position, volume, pitch);
