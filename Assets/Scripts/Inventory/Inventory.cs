@@ -9,7 +9,6 @@ public class Inventory : Singleton<Inventory>
 
     public void Start()
     {
-        _spells = new List<Spell>();
         _inventoryUI = CraftMenuManager.Instance;
         if(_spellItems == null)
             _spellItems = new List<SpellItem>();

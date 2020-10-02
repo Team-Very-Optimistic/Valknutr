@@ -18,12 +18,17 @@ public class SpellCaster : MonoBehaviour
     
     private void Awake()
     {
-        spells = SpellManager.Instance.GetDefaultSpells();
-        Inventory.Instance._spells.AddRange(spells);
-        
+        InitSpellsWorkflow();
         character = GetComponent<ThirdPersonCharacter>();
         mainCam = Camera.main;
         uiManager = UiManager.Instance;
+    }
+
+    private void InitSpellsWorkflow()
+    {
+        spells = SpellManager.Instance.GetDefaultSpells();
+        Inventory.Instance._spells = new List<Spell>();
+        Inventory.Instance._spells.AddRange(spells);
     }
 
     void Update()
