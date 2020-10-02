@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider), typeof(Damage))]
-public class Phasing : MonoBehaviour, ITrigger
+public class Phasing : EventSystem, ITrigger
 {
     public float _damage;
     public int _phaseNum = 2;

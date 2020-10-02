@@ -11,8 +11,9 @@ public class Spell : SpellItem
     [SerializeField] protected SpellBehavior spellBehavior;
     [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
     [HideInInspector] public CastAnimation castAnimation;
-
+    
     public float cooldownMax = 1;
+    [HideInInspector]
     public float cooldownRemaining = 1;
     private readonly int hashCode = DateTime.Now.GetHashCode();
     #endregion
