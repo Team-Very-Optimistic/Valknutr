@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public abstract class SpellBehavior : SpellElement 
+public abstract class SpellBase : SpellElement 
 {
     #region Properties
     [HideInInspector]

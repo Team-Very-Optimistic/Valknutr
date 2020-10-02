@@ -2,7 +2,7 @@
 
 class SpeedSpellModifier : SpellModifier
 {
-    public override void ModifySpell(SpellBehavior spell)
+    public override void ModifySpell(SpellBase spell)
     {
         spell._speed += 1f;
         spell._speed *= 2;

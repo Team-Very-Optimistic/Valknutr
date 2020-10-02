@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-class TimeSlowBehavior : SpellBehavior
+class TimeSlowBase : SpellBase
 {
     public float _duration;
     public override void Init()

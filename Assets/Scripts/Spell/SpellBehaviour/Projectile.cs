@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Projectile : MonoBehaviour, ITrigger
+public class Projectile : TriggerEventHandler
 {
     public float _damage = 3;
     public Vector3 direction;
@@ -19,18 +19,18 @@ public class Projectile : MonoBehaviour, ITrigger
         Destroy(gameObject, timeToExpire);
     }
 
-    public void OnTriggerEnter(Collider other)
+    // public void OnTriggerEnter(Collider other)
+    // {
+    //     
+    //     TriggerEvent(other);
+    // }
+    
+    public override void TriggerEvent(Collider other)
     {
         if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile"))
         {
             return;
         }
-        Trigger(other);
-    }
-
-
-    public void Trigger(Collider other)
-    {
         AudioManager.PlaySoundAtPosition("projectileHit", transform.position);
         
         var cols = Physics.OverlapSphere(transform.position, explosionRadius);

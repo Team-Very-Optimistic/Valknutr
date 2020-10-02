@@ -1,6 +1,6 @@
 ﻿using UnityStandardAssets.Characters.ThirdPerson;
 
-class MovementBehavior : SpellBehavior
+class MovementBase : SpellBase
 {
     private ThirdPersonCharacter _controller;
     private float _moveTime = 0.3f;

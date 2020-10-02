@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class GroundStrikeBehaviour : SpellBehavior
+public class GroundStrikeBase : SpellBase
 {
     public float radius = 2F;
     public float power = 1000.0F;

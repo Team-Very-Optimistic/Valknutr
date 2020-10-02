@@ -68,7 +68,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         {
             Spell spell = ScriptableObject.CreateInstance<Spell>();
             
-            spell.AddBaseType(baseSpellItem._spellElement as SpellBehavior);
+            spell.AddBaseType(baseSpellItem._spellElement as SpellBase);
             
             List<Sprite> modSprites = new List<Sprite>();
             List<string> modStrings = new List<string>();

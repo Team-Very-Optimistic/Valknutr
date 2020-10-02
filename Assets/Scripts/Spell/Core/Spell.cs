@@ -8,7 +8,7 @@ public class Spell : SpellItem
 {
     #region fields
     
-    [SerializeField] protected SpellBehavior spellBehavior;
+    [SerializeField] protected SpellBase spellBase;
     [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
     [HideInInspector] public CastAnimation castAnimation;
     
@@ -62,22 +62,22 @@ public class Spell : SpellItem
     {
         if (!IsReady()) return;
 
-        float totalCooldown = spellBehavior._cooldown;
-        spellBehavior.Init();
-        spellBehavior._posDiff = data.castDirection;
-        spellBehavior.behaviour = () => spellBehavior.SpellBehaviour(this);
+        float totalCooldown = spellBase._cooldown;
+        spellBase.Init();
+        spellBase._posDiff = data.castDirection;
+        spellBase.behaviour = () => spellBase.SpellBehaviour(this);
 
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(spellBehavior);
-                spellBehavior = modifier.ModifyBehaviour(spellBehavior);
+                modifier.ModifySpell(spellBase);
+                spellBase = modifier.ModifyBehaviour(spellBase);
                 totalCooldown *= modifier._cooldownMultiplier;
             }
         }
 
-        spellBehavior.Cast();
+        spellBase.Cast();
         cooldownMax = totalCooldown;
         cooldownRemaining = totalCooldown;
     }
@@ -89,25 +89,25 @@ public class Spell : SpellItem
 
     public float GetAnimSpeed()
     {
-        spellBehavior.Init();
-        castAnimation = spellBehavior.animationType;
+        spellBase.Init();
+        castAnimation = spellBase.animationType;
 
-        float oriSpeed = spellBehavior._speed;
+        float oriSpeed = spellBase._speed;
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(spellBehavior);
+                modifier.ModifySpell(spellBase);
             }
         }
-        return spellBehavior._speed / oriSpeed;
+        return spellBase._speed / oriSpeed;
     }
 
-    public void AddBaseType(SpellBehavior behaviorType)
+    public void AddBaseType(SpellBase baseType)
     {
-        behaviorType.Init();
-        spellBehavior = behaviorType;
-        castAnimation = behaviorType.animationType;
+        baseType.Init();
+        spellBase = baseType;
+        castAnimation = baseType.animationType;
     }
 
     public void AddModifier(SpellModifier modifier)

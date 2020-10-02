@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityStandardAssets.Effects;
 
 [RequireComponent(typeof(Damage))]
-public class Explosive : MonoBehaviour {
+public class Explosive : TriggerEventHandler {
     public float _damage = 10;
     public Vector3 direction;
     public float speed;
@@ -24,17 +24,12 @@ public class Explosive : MonoBehaviour {
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
         StartCoroutine(Explode(timeToExpire));
     }
-    
-    public void OnTriggerEnter(Collider other)
+
+    public override void TriggerEvent(Collider other)
     {
-        // if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile"))
-        // {
-        //     return;
-        // }
-        
         Detonate(fuseTime);
     }
-
+    
     public void Detonate(float time = 0)
     {
         if (_explode) return;

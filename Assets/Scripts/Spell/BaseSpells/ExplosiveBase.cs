@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class ExplosiveBehaviour : SpellBehavior
+public class ExplosiveBase : SpellBase
 {
     public float radius = 7.0F;
     public float power = 10.0F;

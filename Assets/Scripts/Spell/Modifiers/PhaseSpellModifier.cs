@@ -4,7 +4,7 @@ using UnityEngine;
 class PhaseSpellModifier : SpellModifier
 {
     
-    public override SpellBehavior ModifyBehaviour(SpellBehavior action)
+    public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;
