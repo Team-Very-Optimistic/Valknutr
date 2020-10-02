@@ -12,7 +12,13 @@ class PhaseSpellModifier : SpellModifier
         Action spell = () =>
         {
             oldBehavior.Invoke();
-            action._objectForSpell.AddComponent<Phasing>()._damage = action._damage;
+            var existingPhase = action._objectForSpell.GetComponent<Phasing>();
+            if(existingPhase == null)
+                action._objectForSpell.AddComponent<Phasing>()._damage = action._damage;
+            else
+            {
+                existingPhase._phaseNum += 3;
+            }
         };
         
         action.behaviour = spell;

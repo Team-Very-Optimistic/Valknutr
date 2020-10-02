@@ -26,6 +26,7 @@ public class Phasing : MonoBehaviour
         damageScript.DealDamage(other);
         _phaseNum--;
         EffectManager.PlayEffectAtPosition("RainbowEffect", transform.position, transform.lossyScale/2f);
+        AudioManager.PlaySoundAtPosition("lightBuff", transform.position);
         if (_phaseNum < 0)
         {
             foreach (var t in triggers)

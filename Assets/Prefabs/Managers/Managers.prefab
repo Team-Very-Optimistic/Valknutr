@@ -23,6 +23,9 @@ MonoBehaviour:
   - m_Identifier: bloodExplosion
     effect: {fileID: 4614555816260330581, guid: 3ead7e8e25cda0945841bfc4a34e3c00, type: 3}
     duration: 3
+  - m_Identifier: RainbowEffect
+    effect: {fileID: 2235728542608219228, guid: efc3fc7c202718b48be08feed9ed7545, type: 3}
+    duration: 3
 --- !u!1 &7211583252000807825
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +362,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[1].m_Identifier
       value: projectileLaunch
       objectReference: {fileID: 0}
@@ -368,7 +375,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 9071b03152d8f634588f9ba85d78d593, type: 3}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[1].m_Volume
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[1].m_Pitch
@@ -400,10 +407,34 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 14dde69b4efc8d3409c01917f264e58f, type: 3}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[3].m_Volume
-      value: 0.5
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
       propertyPath: m_SfxLibrary.Array.data[3].m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[0].m_Volume
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[4].m_Volume
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[5].m_Identifier
+      value: lightBuff
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[5].m_Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: fedb8a273c092ee4ebcca0345b094473, type: 3}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[5].m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: m_SfxLibrary.Array.data[5].m_Pitch
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

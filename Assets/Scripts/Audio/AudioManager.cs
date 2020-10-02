@@ -41,7 +41,7 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public static void PlaySoundAtPosition(string identifier, Vector3 position, float volume = 1, float pitch = 1)
+    public static void PlaySoundAtPosition(string identifier, Vector3 position, float volume = 0, float pitch = 0)
     {
         SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 
@@ -54,8 +54,10 @@ public class AudioManager : Singleton<AudioManager>
         GameObject tempSoundPlayer = Instantiate(s.m_Source.gameObject);
         tempSoundPlayer.transform.position = position;
         AudioSource audioSource = tempSoundPlayer.GetComponent<AudioSource>();
-        audioSource.volume *= volume;
-        audioSource.pitch *= pitch;
+        if(volume > 0)
+            audioSource.volume = volume;
+        if(pitch > 0)
+            audioSource.pitch = pitch;
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);
