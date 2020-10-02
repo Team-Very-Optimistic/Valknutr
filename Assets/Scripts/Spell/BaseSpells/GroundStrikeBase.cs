@@ -6,7 +6,6 @@ public class GroundStrikeBase : SpellBase
     public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
-    public Vector3 offset;
     public float scale = 1f;
     
     public override void Init()
@@ -19,16 +18,16 @@ public class GroundStrikeBase : SpellBase
         radius = scale * 1.5f;
         animationType = CastAnimation.Projectile;
         damageScript = _objectForSpell.GetComponent<Damage>();
-        offset = Vector3.down;
+        _offset = Vector3.down;
     }
 
     public override void SpellBehaviour(Spell spell)
     {
-        var position = _objectForSpell.transform.position + _posDiff * scale;
+        var position = _objectForSpell.transform.position + _direction * scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
         AudioManager.PlaySoundAtPosition("groundStrike", position);
-        EffectManager.PlayEffectAtPosition("groundStrike", position + offset, 
+        EffectManager.PlayEffectAtPosition("groundStrike", position + _offset, 
             new Vector3(scale,scale,scale));
 
         

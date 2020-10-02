@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Building block of spells, Behavior + Modifiers inherit from this
+/// Building block of spells, Behavior and Modifiers. They all inherit from this
 /// </summary>
 [Serializable]
 public class SpellElement : ScriptableObject

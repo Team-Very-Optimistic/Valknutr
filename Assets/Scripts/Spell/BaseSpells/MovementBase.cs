@@ -16,9 +16,8 @@ class MovementBase : SpellBase
     }
     public override void SpellBehaviour(Spell spell)
     {
-        _posDiff.y = 0;
-        //Todo: make dash better
+        _direction.y = 0;
         // _objectForSpell.GetComponent<ThirdPersonCharacter>().Move(_posDiff * _speed, false, false);
-        _controller.Dash(_moveTime, _speed, _posDiff);
+        _controller.Dash(_moveTime * 30f / _speed, _speed, _direction);
     }
 }

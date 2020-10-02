@@ -91,6 +91,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// position +=  direction * (dashSpeed * m_Curve.Evaluate(t / dashTime));
 				// transform.position = position;
 			}
+
+			transformChild.localEulerAngles = startRotation;
 			m_Dashing = false;
 			m_Crouching = false;
 

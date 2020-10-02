@@ -13,12 +13,12 @@ class SplitSpellModifier : SpellModifier
         Action oldBehavior = action.behaviour;
         Action temp = () =>
         {
-            Vector3 originalPosDiff = action._posDiff;
-            action._posDiff += new Vector3(Random.Range(-randomMax, randomMax), 0,
+            Vector3 originalPosDiff = action._direction;
+            action._direction += new Vector3(Random.Range(-randomMax, randomMax), 0,
                 Random.Range(-randomMax, randomMax));
-            action._posDiff.Normalize();
+            action._direction.Normalize();
             oldBehavior.Invoke();
-            action._posDiff = originalPosDiff; //reset
+            action._direction = originalPosDiff; //reset
         };
             
         Action spell = () =>

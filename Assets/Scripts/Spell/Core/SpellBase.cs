@@ -1,34 +1,43 @@
 ﻿using System;
 using UnityEngine;
 
-[System.Serializable]
+/// <summary>
+/// Each base spell will be required to use each property as the modifiers will assume that each spell base has use each property.
+/// While some spells will not make sense with using all these properties, they could have multiple interactions of sorts with the normal base spell
+/// using some of the properties, and the other properties could be controlled by modifiers.
+/// </summary>
+[Serializable]
 public abstract class SpellBase : SpellElement 
 {
     #region Properties
     [HideInInspector]
-    public GameObject _objectForSpell; //can be anything
+    public GameObject _objectForSpell; //spell cast in reference to this object
     
     [HideInInspector]
-    public GameObject _objectCollided; // can use this to make other people big
+    public Collider[] _objectsCollided; //colliders that have interacted with object for spell
     
     [HideInInspector]
-    public Vector3 _posDiff;
+    public Vector3 _direction; //The vector direction
     
-    public Action behaviour;
+    [HideInInspector]
+    public Vector3 _offset; //The vector offset for any behaviour
+    
+    [HideInInspector] public float _damage = 1;
+    
+    [HideInInspector]
+    public float _speed;
     
     [HideInInspector]
     public float _cooldown;
     
-    [HideInInspector]
-    public int _iterations = 1;
+    [HideInInspector] public CastAnimation animationType; //will be mostly ignored by modifiers
     
     [HideInInspector]
-    public float _speed;
-
-    [HideInInspector] public float _damage = 1;
-
-    [HideInInspector] public CastAnimation animationType;
-
+    public int _iterations = 1; //Not used yet
+    
+    [HideInInspector]
+    public Action behaviour; //The behaviour is the one being invoked when spell is cast.
+    
     #endregion
 
     public void Cast()
@@ -40,5 +49,4 @@ public abstract class SpellBase : SpellElement
 
     public abstract void SpellBehaviour(Spell spell);
     
-
 }
