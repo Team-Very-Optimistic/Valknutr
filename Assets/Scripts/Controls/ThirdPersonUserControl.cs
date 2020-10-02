@@ -64,6 +64,10 @@ public class ThirdPersonUserControl : MonoBehaviour
         }
     }
 
+    public void OnDisable()
+    {
+        m_Character.StopMovement();
+    }
 
     // Fixed update is called in sync with physics
     private void FixedUpdate()

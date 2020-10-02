@@ -26,7 +26,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		float m_OrigGroundCheckDistance;
 		const float k_Half = 0.5f;
 		float m_TurnAmount;
-		[SerializeField]
 		float m_ForwardAmount;
 		Vector3 m_GroundNormal;
 		float m_CapsuleHeight;
@@ -270,8 +269,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				v.y = m_Rigidbody.velocity.y;
 				m_Rigidbody.velocity = v;
 			}
-			m_Animator.SetFloat(Forward, m_ForwardAmount, 0.0f, Time.deltaTime);
-			m_ForwardAmount = 0;
+			
 		}
 
 
@@ -351,6 +349,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetBool(CastingProjectile, false);
 			m_Animator.SetBool(CastingShield, false);
 			m_Animator.SetBool(CastingDash, false);
+		}
+
+		public void StopMovement()
+		{
+			m_ForwardAmount = 0;
+			m_Animator.SetFloat(Forward, m_ForwardAmount, 0.0f, Time.deltaTime);
 		}
 	}
 }
