@@ -1,24 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class PlayerDeathSequence : BaseDeathSequence
 {
+    [SerializeField]
+    private OrthoSmoothFollow _orthoSmoothFollow;
     public void StartDeathSequence()
     {
-        base.TriggerRagdoll();
+        TriggerRagdoll();
         StartGameOverSequence();
         SetCameraFocusRagdoll();
-        Destroy(GetComponent("ThirdPersonUserControl"));
+        GetComponent<ThirdPersonUserControl>().enabled = false;
+        UIInputController.Instance.enabled = false;
     }
 
     private void StartGameOverSequence()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().StartGameOverSequence();
+        //use this instead
+        EndGameManager.Instance.StartGameOverSequence();
     }
 
     private void SetCameraFocusRagdoll()
     {
-       GameObject.FindGameObjectWithTag("MainCamera").GetComponent<OrthoSmoothFollow>().target = ragdollParts[0].transform;
+       _orthoSmoothFollow.target = ragdollParts[0].transform;
     }
 }

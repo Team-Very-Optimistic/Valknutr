@@ -75,9 +75,9 @@ public class EnemyDeathSequence : BaseDeathSequence
 
     public void StartDeathSequence()
     {
-        base.TriggerRagdoll();
-        base.KnockbackRagdoll();
-        base.CallDestroy(timeToDestroy);
+        TriggerRagdoll();
+        KnockbackRagdoll();
+        CallDestroy(timeToDestroy);
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
         Destroy(GetComponent("EnemyBehaviourBase"));

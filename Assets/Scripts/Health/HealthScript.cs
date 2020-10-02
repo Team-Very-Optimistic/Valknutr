@@ -58,6 +58,7 @@ public class HealthScript : MonoBehaviour
             else if (isPlayer)
             {
                 GetComponent<PlayerDeathSequence>().StartDeathSequence();
+                Destroy(this);
             }
             else
             {
@@ -69,7 +70,7 @@ public class HealthScript : MonoBehaviour
     private void PlayHurtSound(float damage)
     {
         var percent = damage / maxHealth;
-        var volume = Mathf.Sqrt(percent) * 1.8f + 0.2f;
+        var volume = Mathf.Sqrt(percent) + 0.2f;
         var pitch = Random.Range(0.8f, 1.2f);
 
         AudioManager.PlaySoundAtPosition(hurtSound, transform.position, volume, pitch);

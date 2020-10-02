@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIInputController : MonoBehaviour
+    public class UIInputController : Singleton<UIInputController>
     {
         private CraftMenuManager craftMenuManager;
         private UiManager uiManager;
