@@ -3,7 +3,6 @@ using UnityEngine;
 
 class ShieldBase : SpellBase
 {
-    private Transform player;
     private float offsetIncrement;
     
     public override void Init()
@@ -12,7 +11,6 @@ class ShieldBase : SpellBase
         _speed = 50f;
         _offset = Vector3.up; 
         offsetIncrement = 45f;
-        player = GameManager.Instance._player.transform;
         _objectForSpell = SpellManager.Instance.shieldObject;
         animationType = CastAnimation.Shield;
     }
@@ -21,11 +19,11 @@ class ShieldBase : SpellBase
     {
         for (int i = 0; i < _iterations; i++)
         {
-            var p = GameObject.Instantiate(_objectForSpell, player.position + _offset + player.forward * _speed / 50f, player.localRotation);
+            var p = GameObject.Instantiate(_objectForSpell, _player.position + _offset + _player.forward * _speed / 50f, _player.localRotation);
             float rotateBy = (float) Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement;
             rotateBy += _direction.x * 90 + _direction.z * 90;
-            p.transform.RotateAround(player.position,Vector3.up, rotateBy);
-            p.transform.SetParent(player);
+            p.transform.RotateAround(_player.position,Vector3.up, rotateBy);
+            p.transform.SetParent(_player);
             p.AddComponent<Shield>().SetSpeed(_speed);
             _objectForSpell = p;
         }

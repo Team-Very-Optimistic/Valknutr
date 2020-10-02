@@ -25,7 +25,7 @@ public class Phasing : MonoBehaviour
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);
         _phaseNum--;
-
+        EffectManager.PlayEffectAtPosition("RainbowEffect", transform.position, transform.lossyScale/2f);
         if (_phaseNum < 0)
         {
             foreach (var t in triggers)

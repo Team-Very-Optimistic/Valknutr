@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 class ProjectileBase : SpellBase
 {
-    private Transform player;
     private float offsetIncrement;
     
     public override void Init()
@@ -16,9 +15,9 @@ class ProjectileBase : SpellBase
         _offset = new Vector3(0f, 0.85f, 0f);
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
-        player = GameManager.Instance._player.transform;
         animationType = CastAnimation.Projectile;
     }
+    
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes
@@ -34,7 +33,7 @@ class ProjectileBase : SpellBase
         _direction.y = 0;
         for (int i = 0; i < _iterations; i++)
         {
-            var p = Instantiate(_objectForSpell, player.position + _offset, Quaternion.Euler(_direction));
+            var p = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.Euler(_direction));
             double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
             Vector3 newDirection = new Vector3((float) (_direction.x * Math.Cos(rotateBy) - _direction.z * Math.Sin(rotateBy)), 
                 _direction.y, (float) (_direction.x * Math.Sin(rotateBy) + _direction.z * Math.Cos(rotateBy)));

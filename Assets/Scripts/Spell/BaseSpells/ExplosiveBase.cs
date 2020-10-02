@@ -4,30 +4,39 @@ using UnityEngine;
 public class ExplosiveBase : SpellBase
 {
     public float radius = 7.0F;
-    public float power = 10.0F;
-    private Transform player;
+    public float power = 1000.0F;
 
     public override void Init()
     {
         _damage = 10f;
         _speed = 3f;
         _cooldown = 8f;
-        player = GameManager.Instance._player.transform;
-        _offset = Vector3.up  + player.forward * 0.7f;
+        _offset = Vector3.up  + _player.forward * 0.7f;
         _objectForSpell = SpellManager.Instance.explosionObject;
         animationType = CastAnimation.Bomb;
     }
 
+    /// <summary>
+    /// todo: use the following properties:
+    /// _direction: yes
+    /// _objectForSpell: yes
+    /// _speed: yes
+    /// _damage: yes
+    /// _offset: yes
+    /// _objectsCollided: 
+    /// _trigger: yes
+    /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
-        var p = Instantiate(_objectForSpell, player.position + _offset,
+        var p = Instantiate(_objectForSpell, _player.position + _offset,
             Quaternion.Euler(_direction));
 
         Explosive explosive = p.GetComponent<Explosive>();
+        radius *= _objectForSpell.transform.localScale.x;
         explosive.radius = radius;
         explosive.speed = _speed;
         explosive._damage = _damage;
-        explosive.power = power;
+        explosive.power = power * _damage / 10f + power * radius;
         explosive.Launch(_direction + _offset , _speed);
         _objectForSpell = p;
     }

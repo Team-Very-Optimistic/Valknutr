@@ -1,13 +1,28 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+public class Fire : TriggerEventHandler
 {
     private GameObject fire;
     private bool canSpread;
     public bool isInitializer;
     private Vector3 _origPosition;
-        
+
+    public override void TriggerEvent(Collider other)
+    {
+        if (!canSpread) return;
+
+        if (!gameObject.CompareTag(other.gameObject.tag))
+        {
+            var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
+            other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
+            var damageScript = GetComponent<Damage>();
+            damageScript.SetDamage(1);   
+            damageScript.DealDamage(other);
+        }
+        StartCoroutine(WaitCooldown(1.6f));
+    }
+
     private void Start()
     {
         if (isInitializer)
@@ -36,23 +51,21 @@ public class Fire : MonoBehaviour
         return this;
     }
 
-    /*
-         * This doesn't work for now because the collider only chekcs the current game object, need to create new gameobject for this.
-         */
-    public void OnTriggerEnter(Collider other)
-    {
-        if (!canSpread) return;
 
-        if (!gameObject.CompareTag(other.gameObject.tag))
-        {
-            var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
-            other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
-            var damageScript = GetComponent<Damage>();
-            damageScript.SetDamage(1);   
-            damageScript.DealDamage(other);
-        }
-        StartCoroutine(WaitCooldown(1.6f));
-    }
+    // public void OnTriggerEnter(Collider other)
+    // {
+    //     if (!canSpread) return;
+    //
+    //     if (!gameObject.CompareTag(other.gameObject.tag))
+    //     {
+    //         var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
+    //         other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
+    //         var damageScript = GetComponent<Damage>();
+    //         damageScript.SetDamage(1);   
+    //         damageScript.DealDamage(other);
+    //     }
+    //     StartCoroutine(WaitCooldown(1.6f));
+    // }
         
     IEnumerator WaitCooldown(float cooldown)
     {

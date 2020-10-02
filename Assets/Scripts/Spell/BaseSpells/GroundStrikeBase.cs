@@ -10,7 +10,7 @@ public class GroundStrikeBase : SpellBase
     
     public override void Init()
     {
-        _damage = 4f;
+        _damage = 2f;
         _speed = 2f;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
@@ -21,6 +21,16 @@ public class GroundStrikeBase : SpellBase
         _offset = Vector3.down;
     }
 
+    /// <summary>
+    /// todo: use the following properties:
+    /// _direction: yes
+    /// _objectForSpell: yes
+    /// _speed: yes
+    /// _damage: yes
+    /// _offset: yes
+    /// _objectsCollided: 
+    /// _trigger: yes
+    /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
         var position = _objectForSpell.transform.position + _direction * scale;
@@ -32,7 +42,6 @@ public class GroundStrikeBase : SpellBase
 
         
         var cols = Physics.OverlapSphere(position, radius);
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
         
         foreach (var col in cols)
         {
@@ -51,9 +60,9 @@ public class GroundStrikeBase : SpellBase
                 }
 
                 //Add knockback direction based on player position
-                Vector3 knockbackDirection = (col.transform.position - player.transform.position).normalized;
+                Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 4f);
+                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f);
             }
 
         }

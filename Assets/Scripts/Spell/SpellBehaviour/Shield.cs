@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+public class Shield : NoTrigger
 {
     private Transform parent;
-    private float angularSpeed = 50f;
+    private float angularSpeed = 100f;
     private Quaternion rotation;
     private Vector3 orgPosition;
     private Transform newParent;
@@ -22,14 +22,8 @@ public class Shield : MonoBehaviour
     {
         newParent.position = parent.position;   
         transform.RotateAround(parent.position, Vector3.up, angularSpeed * Time.deltaTime);
-        //rotation = transform.rotation;
     }
-
-    void LateUpdate()
-    {
-        //transform.rotation = rotation;
-    }
-
+    
     public void SetSpeed(float speed)
     {
         angularSpeed = speed;

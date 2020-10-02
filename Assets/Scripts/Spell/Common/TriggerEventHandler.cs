@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public abstract class TriggerEventHandler : MonoBehaviour
 {
@@ -10,15 +9,9 @@ public abstract class TriggerEventHandler : MonoBehaviour
     public event EventHandler<Collider> OnTriggerEnterEvent = other => {};
     //List<EventHandler<Collider>> delegates = new List<EventHandler<Collider>>();
     private EventHandler<Collider> savedDelegate;
+
+    private Collider[] _collidersInteractedWith;
     
-    public void RemoveAllEvents()
-    {
-        // foreach(var eh in delegates)
-        // {
-        //     OnTriggerEnterEvent -= eh;
-        // }
-        // delegates.Clear();
-    }
     public abstract void TriggerEvent(Collider other);
 
     public void Start()

@@ -7,8 +7,10 @@ using UnityEngine;
 /// using some of the properties, and the other properties could be controlled by modifiers.
 /// </summary>
 [Serializable]
-public abstract class SpellBase : SpellElement 
+public abstract class SpellBase : SpellElement
 {
+    public static Transform _player; //allows all spell element to have easy reference to player
+    
     #region Properties
     [HideInInspector]
     public GameObject _objectForSpell; //spell cast in reference to this object
@@ -22,7 +24,8 @@ public abstract class SpellBase : SpellElement
     [HideInInspector]
     public Vector3 _offset; //The vector offset for any behaviour
     
-    [HideInInspector] public float _damage = 1;
+    [HideInInspector] 
+    public float _damage = 1;
     
     [HideInInspector]
     public float _speed;
@@ -30,7 +33,8 @@ public abstract class SpellBase : SpellElement
     [HideInInspector]
     public float _cooldown;
     
-    [HideInInspector] public CastAnimation animationType; //will be mostly ignored by modifiers
+    [HideInInspector] 
+    public CastAnimation animationType; //will be mostly ignored by modifiers
     
     [HideInInspector]
     public int _iterations = 1; //Not used yet

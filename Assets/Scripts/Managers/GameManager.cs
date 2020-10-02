@@ -23,6 +23,8 @@ public class GameManager : Singleton<GameManager>
             return;
         }
 
+        SpellBase._player = _player.transform;
+
         //extension method (fluent)
         _weapon = _player.transform.FindDescendentTransform("Weapon").gameObject;
         if (_weapon == null)
