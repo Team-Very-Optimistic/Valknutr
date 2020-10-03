@@ -2996,13 +2996,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1384006061, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Radius
+      value: 1.0769114
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384006061, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Center.y
+      value: -0.0003399849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384006061, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0435791
+      objectReference: {fileID: 0}
     - target: {fileID: 3151215489835600192, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.31
       objectReference: {fileID: 0}
     - target: {fileID: 3151215489835600192, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3151215489835600192, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3040,6 +3052,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3151215489835600197, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_GroundCheckDistance
+      value: -3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151215489835600198, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151215489835600198, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151215489835600199, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Height
+      value: 2.0297818
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151215489835600199, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+      propertyPath: m_Center.y
+      value: 0.13111281
+      objectReference: {fileID: 0}
     - target: {fileID: 3151215489835600200, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: _orthoSmoothFollow
       value: 
@@ -3048,8 +3080,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3151215489835600202, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
 --- !u!1 &68674314
 GameObject:
@@ -36020,25 +36051,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3151215489835600201, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
   m_PrefabInstance: {fileID: 68036337}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1384006057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384006051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e55fc2451a6541bbb3fcde4aaa0b462d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 50
-  currentHealth: 10
-  destroyOnDeath: 1
-  hurtSound: playerHurt
-  hurtSoundOnHit: 1
-  damageTextPrefab: {fileID: 0}
-  damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1387736073
 GameObject:
   m_ObjectHideFlags: 0

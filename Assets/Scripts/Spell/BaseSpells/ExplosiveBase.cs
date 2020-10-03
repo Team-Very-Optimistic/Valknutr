@@ -9,7 +9,7 @@ public class ExplosiveBase : SpellBase
     public override void Init()
     {
         _damage = 10f;
-        _speed = 3f;
+        _speed = 5f;
         _cooldown = 8f;
         _offset = Vector3.up  + _player.forward * 0.7f;
         _objectForSpell = SpellManager.Instance.explosionObject;

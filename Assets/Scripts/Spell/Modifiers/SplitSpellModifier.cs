@@ -16,6 +16,8 @@ class SplitSpellModifier : SpellModifier
             Vector3 originalPosDiff = action._direction;
             action._direction += new Vector3(Random.Range(-randomMax, randomMax), 0,
                 Random.Range(-randomMax, randomMax));
+            action._offset += new Vector3(Random.Range(-randomMax, randomMax), 0,
+                Random.Range(-randomMax, randomMax));
             action._direction.Normalize();
             oldBehavior.Invoke();
             action._direction = originalPosDiff; //reset

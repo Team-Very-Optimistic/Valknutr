@@ -7,12 +7,12 @@ public class Fire : TriggerEventHandler
     private bool canSpread;
     public bool isInitializer;
     private Vector3 _origPosition;
-
+    private Transform parent;
     public override void TriggerEvent(Collider other)
     {
         if (!canSpread) return;
 
-        if (!gameObject.CompareTag(other.gameObject.tag))
+        if (!parent.CompareTag(other.tag) && !other.CompareTag("Fire"))
         {
             var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
             other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
@@ -34,12 +34,15 @@ public class Fire : TriggerEventHandler
                 _origPosition = gameObject.transform.position;
             }
             fire = Instantiate(fire, _origPosition, gameObject.transform.rotation);
+            fire.transform.localScale = gameObject.transform.lossyScale;
             AudioManager.PlaySoundAtPosition("fire", transform.position).transform.SetParent(fire.transform);
             fire.AddComponent<Fire>();
             fire.transform.SetParent(gameObject.transform);
             Destroy(this);
         }
-        else{
+        else
+        {
+            parent = gameObject.transform.parent;
             StartCoroutine(WaitCooldown(0.01f));
             // Destroy(fire, 10f);
             // Destroy(this, 1.5f);
@@ -52,23 +55,8 @@ public class Fire : TriggerEventHandler
         isInitializer = true;
         return this;
     }
-
-
-    // public void OnTriggerEnter(Collider other)
-    // {
-    //     if (!canSpread) return;
-    //
-    //     if (!gameObject.CompareTag(other.gameObject.tag))
-    //     {
-    //         var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
-    //         other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
-    //         var damageScript = GetComponent<Damage>();
-    //         damageScript.SetDamage(1);   
-    //         damageScript.DealDamage(other);
-    //     }
-    //     StartCoroutine(WaitCooldown(1.6f));
-    // }
-        
+    
+    
     IEnumerator WaitCooldown(float cooldown)
     {
         canSpread = false;

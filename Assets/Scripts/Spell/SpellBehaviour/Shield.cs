@@ -20,7 +20,7 @@ public class Shield : NoTrigger
         newParent.transform.position = parent.position;
         transform.SetParent(newParent);
         _healthScript = gameObject.AddComponent<HealthScript>();
-        _healthScript.maxHealth = 10f;
+        _healthScript.maxHealth = parent.lossyScale.x * 10f;
         _healthScript.hurtSound = "shieldHit";
         playerHealth = parent.GetComponent<PlayerHealth>();
         playerHealth.AddBuffer(this);
