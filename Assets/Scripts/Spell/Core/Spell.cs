@@ -71,8 +71,7 @@ public class Spell : SpellItem
         {
             foreach (var modifier in _spellModifiers)
             {
-                modifier.ModifySpell(spellBase);
-                spellBase = modifier.ModifyBehaviour(spellBase);
+                spellBase = modifier.Modify(spellBase);
                 totalCooldown *= modifier._cooldownMultiplier;
             }
         }

@@ -8,7 +8,7 @@ public class Shield : NoTrigger
     private Quaternion rotation;
     private Vector3 orgPosition;
     private Transform newParent;
-
+    private HealthScript playerHealth;
     private void Start()
     {
         base.Start();

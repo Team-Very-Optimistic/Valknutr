@@ -20,10 +20,10 @@ public class Fire : TriggerEventHandler
             damageScript.SetDamage(1);   
             damageScript.DealDamage(other);
         }
-        StartCoroutine(WaitCooldown(1.6f));
+        StartCoroutine(WaitCooldown(3f));
     }
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         if (isInitializer)
@@ -34,6 +34,7 @@ public class Fire : TriggerEventHandler
                 _origPosition = gameObject.transform.position;
             }
             fire = Instantiate(fire, _origPosition, gameObject.transform.rotation);
+            AudioManager.PlaySoundAtPosition("fire", transform.position).transform.SetParent(fire.transform);
             fire.AddComponent<Fire>();
             fire.transform.SetParent(gameObject.transform);
             Destroy(this);

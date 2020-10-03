@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class HealthScript : MonoBehaviour
 {
@@ -12,27 +9,23 @@ public class HealthScript : MonoBehaviour
     public bool destroyOnDeath = true;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
-    [HideInInspector]
-    public bool isPlayer;
+  
     [HideInInspector]
     public GameObject damageTextPrefab;
 
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-
+    protected float height;
     public virtual void Start()
     {
         currentHealth = maxHealth;
         damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
         
-        if (gameObject == GameManager.Instance._player)
-        {
-            isPlayer = true;
-        }
+        height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
 
     public virtual void ApplyDamage(float damage)
     {
-        Vector3 worldPositionText = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f, 0.0f);
+        Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
         damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
         if (damage <= 0)
@@ -41,24 +34,14 @@ public class HealthScript : MonoBehaviour
         {
             PlayHurtSound(damage);
         }
-
-        if (isPlayer)
-        {
-            EffectManager.Instance.PlayerHurtEffect(transform.position, damage);
-        }
-
-        currentHealth -= damage;    
-
+        
+        currentHealth -= damage;
         if (currentHealth <= 0.0f)
         {
+            //todo: Derive from enemy instead
             if (gameObject.tag == "Enemy")
             {
                 GetComponent<EnemyDeathSequence>().StartDeathSequence();
-            }
-            else if (isPlayer)
-            {
-                GetComponent<PlayerDeathSequence>().StartDeathSequence();
-                Destroy(this);
             }
             else
             {
@@ -67,7 +50,7 @@ public class HealthScript : MonoBehaviour
         }
     }
 
-    private void PlayHurtSound(float damage)
+    protected void PlayHurtSound(float damage)
     {
         var percent = damage / maxHealth;
         var volume = Mathf.Sqrt(percent);
@@ -91,4 +74,27 @@ public class HealthScript : MonoBehaviour
     {
         currentHealth += health;
     }
+}
+
+class PlayerHealth : HealthScript
+{
+    public override void ApplyDamage(float damage)
+    {
+        Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
+        GameObject damageText = Instantiate(damageTextPrefab);
+        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
+        if (damage <= 0)
+            return;
+        PlayHurtSound(damage);
+        EffectManager.Instance.PlayerHurtEffect(transform.position, damage);
+        
+        currentHealth -= damage;    
+
+        if (currentHealth <= 0.0f)
+        {
+            GetComponent<PlayerDeathSequence>().StartDeathSequence();
+            Destroy(this);
+        }
+    }
+    
 }
