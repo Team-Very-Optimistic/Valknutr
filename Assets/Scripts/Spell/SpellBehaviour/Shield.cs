@@ -17,6 +17,9 @@ public class Shield : NoTrigger
         playerHealth = parent.GetComponent<PlayerHealth>();
         orgPosition = parent.position - transform.position;
         newParent = new GameObject("shield").transform;
+        var o = newParent.gameObject;
+        o.tag = "Player";
+        o.layer = parent.gameObject.layer;
         newParent.transform.position = parent.position;
         transform.SetParent(newParent);
         _healthScript = gameObject.AddComponent<HealthScript>();

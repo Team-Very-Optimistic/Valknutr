@@ -26,7 +26,12 @@ public class SpellCaster : MonoBehaviour
 
     private void InitSpellsWorkflow()
     {
-        spells = SpellManager.Instance.GetDefaultSpells();
+        spells = new Spell[4];
+        int i = 0;
+        foreach (var spell in  SpellManager.Instance.GetDefaultSpells())
+        {
+            spells[i++] = Instantiate(spell);
+        }
         Inventory.Instance._spells = new List<Spell>();
         Inventory.Instance._spells.AddRange(spells);
     }
@@ -119,6 +124,11 @@ public class SpellCaster : MonoBehaviour
     public void ClearSpell(int spell)
     {
         spells[spell] = null;
+    }
+
+    public bool IsDisabled()
+    {
+        return !isActiveAndEnabled;
     }
 }
     

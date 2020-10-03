@@ -10,7 +10,7 @@ class ShieldBase : SpellBase
     {
         _cooldown = 5f;
         _speed = 50f;
-        _offset = Vector3.up; 
+        _offset = Vector3.zero; 
         offsetIncrement = 45f;
         _objectForSpell = SpellManager.Instance.shieldObject;
         animationType = CastAnimation.Shield;

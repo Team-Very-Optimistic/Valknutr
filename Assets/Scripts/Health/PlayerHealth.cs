@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerHealth : HealthScript
 {
     private Queue<Shield> shields;
-
     protected void Awake()
     {
         shields = new Queue<Shield>();
@@ -37,7 +36,7 @@ public class PlayerHealth : HealthScript
         }
         currentHealth -= damage;    
         PlayHurtSound(damage);
-        EffectManager.Instance.PlayerHurtEffect(transform.position, damage);
+        EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damage);
         if (currentHealth <= 0.0f)
         {
             GetComponent<PlayerDeathSequence>().StartDeathSequence();

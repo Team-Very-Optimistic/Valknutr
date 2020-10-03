@@ -40,8 +40,9 @@ public class ThirdPersonUserControl : MonoBehaviour
 
     private void Update()
     {
-        if (m_Character.IsDisabled()) return;
-
+        if (m_Character.IsDisabled() || m_Caster.IsDisabled()) return;
+        
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             m_Caster.PrecastSpellAtIndex(0);

@@ -12,7 +12,7 @@ class ProjectileBase : SpellBase
         _damage = 1;
         _speed = 25f;
         _cooldown = 0.09f;
-        _offset = new Vector3(0f, 0.85f, 0f);
+        _offset = new Vector3(0f, 0f, 0f);
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
         animationType = CastAnimation.Projectile;

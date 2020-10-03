@@ -32,7 +32,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
-		private bool m_Dashing;
+		public bool m_Dashing;
 		private bool m_CastingProjectile;
 		private bool m_CastingShield;
 		private bool m_CastingBomb;
@@ -51,6 +51,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			if (!m_Dashing)
 			{
+				if(m_Animator == null)
+					print("nul");
 				m_Animator.applyRootMotion = false;
 				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
 			}
@@ -142,6 +144,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 			else
 			{
+				
 				HandleAirborneMovement();
 			}
 

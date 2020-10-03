@@ -18,7 +18,7 @@ public class GroundStrikeBase : SpellBase
         radius = scale * 1.5f;
         animationType = CastAnimation.Projectile;
         damageScript = _objectForSpell.GetComponent<Damage>();
-        _offset = Vector3.down;
+        _offset = Vector3.down * 1.5f;
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f);
+                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f * scale);
             }
 
         }
