@@ -11,6 +11,7 @@ public class Shield : NoTrigger
 
     private void Start()
     {
+        base.Start();
         parent = transform.parent;
         orgPosition = parent.position - transform.position;
         newParent = new GameObject("shield").transform;

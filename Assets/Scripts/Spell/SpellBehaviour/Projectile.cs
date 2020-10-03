@@ -31,7 +31,7 @@ public class Projectile : TriggerEventHandler
         {
             return;
         }
-        AudioManager.PlaySoundAtPosition("projectileHit", transform.position);
+        AudioManager.PlaySoundAtPosition("projectileHit", transform.position, _damage * 0.05f, Random.Range(0.8f, 1.2f) * speed / 25);
         
         var cols = Physics.OverlapSphere(transform.position, explosionRadius);
         

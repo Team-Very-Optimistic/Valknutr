@@ -25,6 +25,7 @@ public class Fire : TriggerEventHandler
 
     private void Start()
     {
+        base.Start();
         if (isInitializer)
         {
             fire = SpellManager.Instance.fireObject;

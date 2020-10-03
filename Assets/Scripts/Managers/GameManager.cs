@@ -38,10 +38,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (_SpellItem == null)
         {
-            var itemListSpellItems = GameManager.Instance._itemList._SpellItems;
+            var itemListSpellItems = _itemList._SpellItems;
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
-        Debug.Log(_SpellItem._itemObject);
+        //Debug.Log(_SpellItem._itemObject);
         Instantiate(_SpellItem._itemObject, position, _SpellItem._itemObject.transform.rotation);
     }
 
