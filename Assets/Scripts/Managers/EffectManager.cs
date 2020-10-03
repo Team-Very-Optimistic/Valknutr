@@ -6,6 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class EffectManager : Singleton<EffectManager>
 {
+    [HideInInspector]
     public PostProcessVolume m_postProcessVolume;
     private Vignette m_Vignette;
     private ColorGrading m_ColorGrading;
@@ -25,6 +26,7 @@ public class EffectManager : Singleton<EffectManager>
 
     public void Start()
     {
+        m_postProcessVolume = GameObject.Find("PostProcess").GetComponent<PostProcessVolume>();
         m_Vignette = m_postProcessVolume.profile.GetSetting<Vignette>();
         m_ColorGrading = m_postProcessVolume.profile.GetSetting<ColorGrading>();
         ori = m_Vignette.intensity.value;
