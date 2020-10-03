@@ -14,7 +14,7 @@ public abstract class TriggerEventHandler : MonoBehaviour
     
     public abstract void TriggerEvent(Collider other);
 
-    public void Start()
+    protected virtual void Start()
     {
         savedDelegate = TriggerEvent;
         //delegates.Add(TriggerEvent);

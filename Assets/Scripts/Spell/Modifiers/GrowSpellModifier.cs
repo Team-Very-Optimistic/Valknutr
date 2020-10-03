@@ -28,7 +28,7 @@ class GrowSpellModifier : SpellModifier
         }
         else if (obj.transform.localScale.magnitude > size.magnitude)
         {
-            obj.transform.localScale *= 0.95f;
+            obj.transform.localScale *= 0.99f;
             yield return new WaitForSeconds(0.15f);
             GameManager.Instance.StartCoroutine(MakeSmall(obj, size));
         }

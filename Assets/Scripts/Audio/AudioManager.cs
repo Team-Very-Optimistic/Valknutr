@@ -41,14 +41,14 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public static void PlaySoundAtPosition(string identifier, Vector3 position, float volume = 0, float pitch = 0)
+    public static GameObject PlaySoundAtPosition(string identifier, Vector3 position, float volume = 0, float pitch = 0)
     {
         SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 
         if (s == null)
         {
             Debug.LogWarning("The requested sound \"" + identifier + "\" does not exist!");
-            return;
+            return null;
         }
 
         GameObject tempSoundPlayer = Instantiate(s.m_Source.gameObject);
@@ -61,6 +61,7 @@ public class AudioManager : Singleton<AudioManager>
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);
+        return tempSoundPlayer;
     }
 
     public static void PlaySound(string identifier, float volume = 1, float pitch = 1)

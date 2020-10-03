@@ -15,6 +15,13 @@ public abstract class SpellModifier : SpellElement
 
     public virtual SpellBase ModifyBehaviour(SpellBase action)
     {
+        //ModifySpell(action);
         return action; // No change
+    }
+
+    public SpellBase Modify(SpellBase spell)
+    {
+        ModifySpell(spell);
+        return ModifyBehaviour(spell);
     }
 }

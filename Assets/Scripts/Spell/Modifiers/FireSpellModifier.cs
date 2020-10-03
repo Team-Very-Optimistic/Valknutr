@@ -4,8 +4,10 @@ class FireSpellModifier : SpellModifier
 {
     public override void ModifySpell(SpellBase spell)
     {
+        //base.ModifySpell(spell);
+        _cooldownMultiplier = 1.2f;
         spell._speed *= 1.2f;
-        spell._cooldown *= 1.2f;
+        spell._cooldown *= _cooldownMultiplier;
     }
     
     public override SpellBase ModifyBehaviour(SpellBase action)

@@ -32,7 +32,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
-		private bool m_Dashing;
+		public bool m_Dashing;
 		private bool m_CastingProjectile;
 		private bool m_CastingShield;
 		private bool m_CastingBomb;
@@ -51,6 +51,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			if (!m_Dashing)
 			{
+				if(m_Animator == null)
+					print("nul");
 				m_Animator.applyRootMotion = false;
 				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
 			}
@@ -110,6 +112,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+			m_GroundNormal = Vector3.up;
+			m_IsGrounded = true;
+
 		}
 
 
@@ -125,7 +130,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// direction.
 			if (move.magnitude > 1f) move.Normalize();
 			move = transform.InverseTransformDirection(move);
-			CheckGroundStatus();
+			//CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
@@ -139,6 +144,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 			else
 			{
+				
 				HandleAirborneMovement();
 			}
 
