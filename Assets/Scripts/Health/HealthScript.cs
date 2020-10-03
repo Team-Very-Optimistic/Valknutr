@@ -23,31 +23,31 @@ public class HealthScript : MonoBehaviour
         height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
 
-    public virtual void ApplyDamage(float damage)
+    public virtual bool ApplyDamage(float damage)
     {
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
         damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
         if (damage <= 0)
-            return;
+            return false;
         if (hurtSoundOnHit)
         {
             PlayHurtSound(damage);
         }
         
         currentHealth -= damage;
-        if (currentHealth <= 0.0f)
+        if (currentHealth > 0.0f) return false;
+
+        //todo: Derive from enemy instead
+        if (gameObject.tag == "Enemy")
         {
-            //todo: Derive from enemy instead
-            if (gameObject.tag == "Enemy")
-            {
-                GetComponent<EnemyDeathSequence>().StartDeathSequence();
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            GetComponent<EnemyDeathSequence>().StartDeathSequence();
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+        return true;
     }
 
     protected void PlayHurtSound(float damage)
@@ -74,27 +74,4 @@ public class HealthScript : MonoBehaviour
     {
         currentHealth += health;
     }
-}
-
-class PlayerHealth : HealthScript
-{
-    public override void ApplyDamage(float damage)
-    {
-        Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
-        if (damage <= 0)
-            return;
-        PlayHurtSound(damage);
-        EffectManager.Instance.PlayerHurtEffect(transform.position, damage);
-        
-        currentHealth -= damage;    
-
-        if (currentHealth <= 0.0f)
-        {
-            GetComponent<PlayerDeathSequence>().StartDeathSequence();
-            Destroy(this);
-        }
-    }
-    
 }

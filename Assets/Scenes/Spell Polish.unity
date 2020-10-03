@@ -3048,7 +3048,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3151215489835600202, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
 --- !u!1 &68674314
 GameObject:
@@ -18713,6 +18714,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264226205917627552, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.000065824155
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226205917627552, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.008555836
+      objectReference: {fileID: 0}
     - target: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
       propertyPath: m_Name
       value: EnemyArcher (1)
@@ -18760,6 +18769,14 @@ PrefabInstance:
     - target: {fileID: 264226206149513938, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226206431006963, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.000065809145
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226206431006963, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.008544954
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
@@ -36003,6 +36020,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3151215489835600201, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
   m_PrefabInstance: {fileID: 68036337}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1384006057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384006051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55fc2451a6541bbb3fcde4aaa0b462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 10
+  destroyOnDeath: 1
+  hurtSound: playerHurt
+  hurtSoundOnHit: 1
+  damageTextPrefab: {fileID: 0}
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1387736073
 GameObject:
   m_ObjectHideFlags: 0
@@ -36425,6 +36461,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264226205917627552, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.000065824155
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226205917627552, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.008555836
+      objectReference: {fileID: 0}
     - target: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
       propertyPath: m_Name
       value: EnemyArcher
@@ -36472,6 +36516,14 @@ PrefabInstance:
     - target: {fileID: 264226206149513938, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226206431006963, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.000065809145
+      objectReference: {fileID: 0}
+    - target: {fileID: 264226206431006963, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.008544954
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
@@ -38045,6 +38097,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1110327214665187626, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.18437779
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327214665187626, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.044291683
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215112407919, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.2555784
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215112407919, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.003974066
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215112407919, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.008270532
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215155558406, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.18475066
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215155558406, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.04429166
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215161522703, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.0021924048
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215161522703, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.0070128352
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215367682410, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.00017375524
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327215367682410, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.011172049
+      objectReference: {fileID: 0}
     - target: {fileID: 1110327215755334051, guid: 8496404fac73a754da33a60907708915, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.5527
@@ -38092,6 +38188,22 @@ PrefabInstance:
     - target: {fileID: 1110327215755334056, guid: 8496404fac73a754da33a60907708915, type: 3}
       propertyPath: m_Name
       value: EnemyPaladin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327216095002643, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.097890995
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327216095002643, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.005837059
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327216554817575, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.09857637
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110327216554817575, guid: 8496404fac73a754da33a60907708915, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.005149326
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8496404fac73a754da33a60907708915, type: 3}
@@ -56466,25 +56578,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
-      propertyPath: m_VFXLibrary.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
       propertyPath: m_postProcessVolume
       value: 
       objectReference: {fileID: 260359204}
-    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
-      propertyPath: m_VFXLibrary.Array.data[4].m_Identifier
-      value: speedTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
-      propertyPath: m_VFXLibrary.Array.data[4].effect
-      value: 
-      objectReference: {fileID: 1406412963616399484, guid: f49128ffd17b8464d915aa1276bc7326, type: 3}
-    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
-      propertyPath: m_VFXLibrary.Array.data[4].duration
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1366040741080232428, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.279426

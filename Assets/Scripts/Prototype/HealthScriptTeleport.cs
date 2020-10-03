@@ -15,7 +15,7 @@ public class HealthScriptTeleport : HealthScript
         _enemy = GetComponent<TeleportEnemy>();
     }
 
-    public override void ApplyDamage(float damage)
+    public override bool ApplyDamage(float damage)
     {
         //+z = looking up -- y = 0
         //-z = looking down -- y = 180
@@ -29,9 +29,9 @@ public class HealthScriptTeleport : HealthScript
             _enemy.Teleport();
         else
         {
-            base.ApplyDamage(damage);
+            return base.ApplyDamage(damage);
         }
 
-       
+        return false;
     }
 }
