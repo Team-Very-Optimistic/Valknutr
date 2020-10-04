@@ -7,8 +7,7 @@ using UnityStandardAssets.Effects;
 [RequireComponent(typeof(Damage))]
 public class Explosive : TriggerEventHandler {
     public float _damage = 10;
-    public Vector3 direction;
-    public float speed;
+
     public float timeToExpire = 5f;
     public float radius = 7f;
     public float power = 10f;
@@ -16,11 +15,8 @@ public class Explosive : TriggerEventHandler {
     
     [SerializeField]
     private bool _explode;
-
     public void Launch(Vector3 direction, float speed)
     {
-        this.direction = direction;
-        this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
         StartCoroutine(Explode(timeToExpire));
     }
@@ -53,13 +49,13 @@ public class Explosive : TriggerEventHandler {
         }
         
         AudioManager.PlaySoundAtPosition("explosion", transform.position);
-        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f);
+        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f * power / 2000f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
-        o.transform.localScale = Vector3.one * radius / 7f;
+        o.transform.localScale *= radius / 10f;
         o.SetActive(true);
         o.transform.SetParent(null);
         Destroy(gameObject);
