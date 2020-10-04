@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Experimental.AI;
-
+﻿using UnityEngine;
 
 enum ArcherBehaviourStates
 {
@@ -24,7 +19,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     //Red indicator prefab
     public GameObject redIndicatorPrefab;
-    private float redIndicatorYOffset = 1.5f;
+    private readonly float redIndicatorYOffset = 1.5f;
 
     //Behavior state
     ArcherBehaviourStates archerState;
@@ -63,6 +58,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                             //Animation
                             if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                             {
+                                ResetAllAnimationTriggers();
                                 animator.SetTrigger("ToDraw");
                                 archerState = ArcherBehaviourStates.DrawBow;
 
@@ -80,8 +76,9 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                         //Set rotation to player when fighting (use enemy y to prevent rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
-                        if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
                         {
+                            ResetAllAnimationTriggers();
                             animator.SetTrigger("ToRun");
                             archerState = ArcherBehaviourStates.Running;
                             navMeshAgent.isStopped = false;
@@ -99,8 +96,9 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                         //Set rotation to player when fighting (use enemy y to prevent rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
-                        if (navMeshAgent.remainingDistance > (navMeshAgent.stoppingDistance * 1.25f))
+                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > (navMeshAgent.stoppingDistance * 1.25f))
                         {
+                            ResetAllAnimationTriggers();
                             animator.SetTrigger("ToRun");
                             archerState = ArcherBehaviourStates.Running;
                             navMeshAgent.isStopped = false;
@@ -114,6 +112,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
                             if (holdBowTimeElapsed >= holdBowDuration)
                             {
+                                ResetAllAnimationTriggers();
                                 animator.SetTrigger("ToRelease");
                                 archerState = ArcherBehaviourStates.ReleaseBow;
                                 holdBowTimeElapsed = 0.0f;
@@ -126,6 +125,9 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                 case ArcherBehaviourStates.ReleaseBow:
                     {
                         if (--wait > 0) return;
+
+                        //Set rotation to player when fighting (use enemy y to prevent rotation)
+                        transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
                         //Transition done to DrawBow/Running by DrawBowOrRun() called by animation event
 
@@ -152,7 +154,6 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                 }
             }
         }
-
     }
 
     public void FireArrow()
@@ -165,6 +166,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     public void HoldBow()
     {
+        ResetAllAnimationTriggers();
         animator.SetTrigger("ToHold");
         archerState = ArcherBehaviourStates.HoldBow;
         wait = 0;
@@ -173,13 +175,15 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     public void DrawBowOrRun()
     {
-        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
+            ResetAllAnimationTriggers();
             animator.SetTrigger("ToDraw");
             archerState = ArcherBehaviourStates.DrawBow;
         }
         else
         {
+            ResetAllAnimationTriggers();
             animator.SetTrigger("ToRun");
             navMeshAgent.isStopped = false;
             archerState = ArcherBehaviourStates.Running;
@@ -190,11 +194,18 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
     public void ShowRedIndicator()
     {
-        Debug.Log("showing");
         Vector3 redIndicatorPos = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f + redIndicatorYOffset, 0.0f);
         GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, redIndicatorPos, Quaternion.identity);
         Destroy(redIndicator, holdBowDuration - (holdBowDuration / 1.5f) + 0.5f);
         redIndicator.transform.parent = gameObject.transform;
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToRun");
+        animator.ResetTrigger("ToDraw");
+        animator.ResetTrigger("ToHold");
+        animator.ResetTrigger("ToRelease");
     }
 
 }
