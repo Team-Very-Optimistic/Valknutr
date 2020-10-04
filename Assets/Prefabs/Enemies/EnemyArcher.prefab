@@ -679,7 +679,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockbackVelStoppingThreshold: 0.05
   arrowPrefab: {fileID: 212749010089997258, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
-  arrowSpeed: 15
+  arrowSpeed: 25
+  redIndicatorPrefab: {fileID: 7019146377508676751, guid: 06167636be445e24783a2b7d69ef1c39, type: 3}
+  holdBowDuration: 1.5
 --- !u!114 &264226206149513950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,7 +713,6 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: enemyArcherHurt
   hurtSoundOnHit: 1
-  isPlayer: 0
   damageTextPrefab: {fileID: 0}
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!195 &264226206149513944

@@ -7,6 +7,7 @@ public class GroundStrikeBase : SpellBase
     public float power = 1000.0F;
     private Damage damageScript;
     public float scale = 1f;
+    public float knockbackForce = 500.0f;
     
     public override void Init()
     {
@@ -62,7 +63,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f * scale);
+                col.attachedRigidbody.AddForce(knockbackDirection * knockbackForce * _damage / 2f * scale);
             }
 
         }
