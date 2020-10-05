@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Doozy.Engine.Extensions;
+using UnityEngine;
 
 enum ArcherBehaviourStates
 {
@@ -12,14 +13,16 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 {
     //Bow reference
     private GameObject bow;
+    private Vector3 bowVerticalOffset = new Vector3(0.0f, 1.4f, 0.0f);
 
     //Arrow variables
     public GameObject arrowPrefab;
     public float arrowSpeed;
 
     //Red indicator prefab
-    public GameObject redIndicatorPrefab;
+    public Material redIndicatorMat;
     private readonly float redIndicatorYOffset = 1.5f;
+    private GameObject redIndicatorInstance;
 
     //Behavior state
     ArcherBehaviourStates archerState;
@@ -28,14 +31,15 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
     public float holdBowDuration;
     private float holdBowTimeElapsed = 0.0f;
 
-    //Prevent transition states interrupting one another
-    int wait = 0, waitTix = 1;
+    //Wait frames between states - NavMeshAgent SetDestination bug: remaining distance always starts off at zero
+    int wait = 0, waitTicks = 1;
 
     // Start is called before the first frame update
     public override void Start()
     {
         bow = this.gameObject.transform.Find("Erika_Archer_Meshes").Find("Bow").gameObject;
         archerState = ArcherBehaviourStates.Running;
+        ResetWaitTicks();
         base.Start(); 
     }
 
@@ -45,7 +49,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
         //Navigation
         navMeshAgent.SetDestination(player.transform.position);
 
-        if (navMeshAgent.enabled)
+        if (navMeshAgent.enabled) // Not in knockback
         {
             switch (archerState)
             {
@@ -53,36 +57,45 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                     {
                         if (--wait > 0) return;
 
-                        if (navMeshAgent.enabled)
+                        //If close enough to player and animator not in transition, switch to draw bow
+                        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance && animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
                         {
-                            //Animation
-                            if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
-                            {
-                                ResetAllAnimationTriggers();
-                                animator.SetTrigger("ToDraw");
-                                archerState = ArcherBehaviourStates.DrawBow;
+                            //Trigger anim state
+                            ResetAllAnimationTriggers();
+                            animator.SetTrigger("ToDraw");
 
-                                //Stop navMeshAgent
-                                navMeshAgent.isStopped = true;
-                                wait = 0;
-                            }
+                            //Change enum state
+                            archerState = ArcherBehaviourStates.DrawBow;
+
+                            //Stop navMeshAgent
+                            navMeshAgent.isStopped = true;
+
+                            ResetWaitTicks();
                         }
+                    
                         break;
                     }
                 case ArcherBehaviourStates.DrawBow:
                     {
                         if (--wait > 0) return;
 
-                        //Set rotation to player when fighting (use enemy y to prevent rotation)
+                        //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
-                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+                        //If player gets out of range, and animator not transitioning, set back to running state
+                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance && animator.GetCurrentAnimatorStateInfo(0).IsName("DrawBow"))
                         {
+                            //Trigger anim state
                             ResetAllAnimationTriggers();
                             animator.SetTrigger("ToRun");
+
+                            //Change enum state
                             archerState = ArcherBehaviourStates.Running;
+
+                            //Start navMeshAgent
                             navMeshAgent.isStopped = false;
-                            wait = 0;
+
+                            ResetWaitTicks();
                         }
 
                         //Transition to HoldBow done by HoldBow() called by animation event
@@ -93,30 +106,48 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                     {
                         if (--wait > 0) return;
 
-                        //Set rotation to player when fighting (use enemy y to prevent rotation)
+                        //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
-                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > (navMeshAgent.stoppingDistance * 1.25f))
+                        //If player gets out of extended range, and animator not transitioning, set back to running state
+                        if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance > (navMeshAgent.stoppingDistance * 1.25f) && animator.GetCurrentAnimatorStateInfo(0).IsName("HoldBow"))
                         {
+                            //Trigger anim state
                             ResetAllAnimationTriggers();
                             animator.SetTrigger("ToRun");
+
+                            //Change enum state
                             archerState = ArcherBehaviourStates.Running;
+
+                            //Start navMeshAgent
                             navMeshAgent.isStopped = false;
+
+                            //Reset holdbow timer
                             holdBowTimeElapsed = 0.0f;
-                            wait = 0;
+
+                            //Cancel invoke of red indicator function
                             CancelInvoke("ShowRedIndicator");
+
+                            ResetWaitTicks();
                         }
                         else
                         {
                             holdBowTimeElapsed += Time.deltaTime;
 
-                            if (holdBowTimeElapsed >= holdBowDuration)
+                            //If hold bow timer reached, change to ReleaseBow state
+                            if (holdBowTimeElapsed >= holdBowDuration && animator.GetCurrentAnimatorStateInfo(0).IsName("HoldBow"))
                             {
+                                //Trigger anim state
                                 ResetAllAnimationTriggers();
                                 animator.SetTrigger("ToRelease");
+
+                                //Change enum state
                                 archerState = ArcherBehaviourStates.ReleaseBow;
+
+                                //Reset holdbow timer
                                 holdBowTimeElapsed = 0.0f;
-                                wait = 0;
+
+                                ResetWaitTicks();
                             }
                         }
 
@@ -126,7 +157,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                     {
                         if (--wait > 0) return;
 
-                        //Set rotation to player when fighting (use enemy y to prevent rotation)
+                        //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
                         //Transition done to DrawBow/Running by DrawBowOrRun() called by animation event
@@ -154,50 +185,80 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                 }
             }
         }
+
+        if(redIndicatorInstance != null)
+        {
+            redIndicatorInstance.GetComponent<LineRenderer>().SetPosition(0, bow.transform.position + bowVerticalOffset);
+            redIndicatorInstance.GetComponent<LineRenderer>().SetPosition(1, player.transform.position);
+        }
     }
 
     public void FireArrow()
     {
         Vector3 fireDirection = (new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z) - this.gameObject.transform.position).normalized;
-        Vector3 verticalOffset = new Vector3(0.0f, 1.4f, 0.0f); //bow.transform.position.y returns 0 - Model issue?
-        GameObject arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position + verticalOffset, Quaternion.LookRotation(fireDirection));
+
+        GameObject arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position + bowVerticalOffset, Quaternion.LookRotation(fireDirection));
         arrow.GetComponent<EnemyProjectile>().Launch(fireDirection, arrowSpeed);
+
+        HideRedIndicator();
     }
 
     public void HoldBow()
     {
+        //Trigger anim state
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToHold");
+
+        //Change enum state
         archerState = ArcherBehaviourStates.HoldBow;
-        wait = 0;
+
+        //ShowRedIndicator after duration
         Invoke("ShowRedIndicator", holdBowDuration / 1.5f);
     }
 
+    //Called by animation event
     public void DrawBowOrRun()
     {
+        ResetAllAnimationTriggers();
+
         if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
-            ResetAllAnimationTriggers();
+            //Trigger anim state
             animator.SetTrigger("ToDraw");
+
+            //Change enum state
             archerState = ArcherBehaviourStates.DrawBow;
         }
         else
         {
-            ResetAllAnimationTriggers();
+            //Trigger anim state
             animator.SetTrigger("ToRun");
-            navMeshAgent.isStopped = false;
-            archerState = ArcherBehaviourStates.Running;
-        }
 
-        wait = 0;
+            //Change enum state
+            archerState = ArcherBehaviourStates.Running;
+
+            //Start navMeshAgent
+            navMeshAgent.isStopped = false;
+        }
     }
 
-    public void ShowRedIndicator()
+    private void ShowRedIndicator()
     {
-        Vector3 redIndicatorPos = transform.position + new Vector3(0.0f, this.GetComponent<Collider>().bounds.size.y / 2.0f + redIndicatorYOffset, 0.0f);
-        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, redIndicatorPos, Quaternion.identity);
-        Destroy(redIndicator, holdBowDuration - (holdBowDuration / 1.5f) + 0.5f);
-        redIndicator.transform.parent = gameObject.transform;
+        redIndicatorInstance = new GameObject("RedIndicator");
+        LineRenderer lRend = redIndicatorInstance.AddComponent<LineRenderer>();
+
+        lRend.startColor = Color.red;
+        lRend.endColor = Color.red;
+        lRend.material = redIndicatorMat;
+        lRend.startWidth = 0.02f;
+        lRend.endWidth = 0.02f;
+        lRend.SetPosition(0, bow.transform.position + bowVerticalOffset);
+        lRend.SetPosition(1, player.transform.position);
+    }
+
+    private void HideRedIndicator()
+    {
+        Destroy(redIndicatorInstance);
     }
 
     private void ResetAllAnimationTriggers()
@@ -208,4 +269,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
         animator.ResetTrigger("ToRelease");
     }
 
+    private void ResetWaitTicks()
+    {
+        wait = waitTicks;
+    }
 }
