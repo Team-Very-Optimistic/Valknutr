@@ -127,6 +127,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
                             //Cancel invoke of red indicator function
                             CancelInvoke("ShowRedIndicator");
+                            HideRedIndicator();
 
                             ResetWaitTicks();
                         }
