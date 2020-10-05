@@ -14,12 +14,16 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
     public float linkDamageMultiplier;
 
+    public GameObject player;
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
         Invoke(nameof(FindAllEnemies), 0.1f);
+
+        player = GameManager.Instance._player;
     }
 
     // Update is called once per frame
@@ -30,7 +34,29 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
             //Update list
             enemies = enemies.Where(enemy => enemy != null).ToList();
 
-            navMeshAgent.SetDestination(FindOptimalPosition());
+            if (navMeshAgent.enabled)
+            {
+                navMeshAgent.SetDestination(FindOptimalPosition());
+            }
+            else
+            {
+                //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
+                if (!isInKnockback)
+                {
+                    if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                    {
+                        isInKnockback = true;
+                    }
+                }
+                else
+                {
+                    if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                    {
+                        EnableKnockback(false);
+                        isInKnockback = false;
+                    }
+                }
+            }
 
             foreach(GameObject enemy in enemies)
             {
@@ -44,8 +70,6 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
                 }
             }
         }
-
-
     }
 
     private void FindAllEnemies()
@@ -75,14 +99,20 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
         optimalPosition /= enemies.Count;
 
-        Vector3 directionalPosition = new Vector3(0.0f, 0.0f, 0.0f);
-
-        //Get position in direction of shielder
-        foreach (GameObject enemy in enemies)
-        {
-            directionalPosition += (optimalPosition - enemy.transform.position).normalized * (shieldRadius * 0.5f);
-        }
+        //Get a vector away from the player
+        Vector3 directionalPosition = (transform.position - player.transform.position).normalized * (0.25f * shieldRadius);
 
         return optimalPosition + directionalPosition;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.GetComponent<EnemyShielder_Link>() != null)
+            {
+                Destroy(enemy.GetComponent<EnemyShielder_Link>());
+            }
+        }
     }
 }

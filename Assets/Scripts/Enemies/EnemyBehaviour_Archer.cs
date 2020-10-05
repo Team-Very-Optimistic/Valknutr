@@ -46,11 +46,11 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
     // Update is called once per frame
     public override void Update()
     {
-        //Navigation
-        navMeshAgent.SetDestination(player.transform.position);
-
         if (navMeshAgent.enabled) // Not in knockback
         {
+            //Navigation
+            navMeshAgent.SetDestination(player.transform.position);
+
             switch (archerState)
             {
                 case ArcherBehaviourStates.Running:
