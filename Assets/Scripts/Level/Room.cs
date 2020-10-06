@@ -137,10 +137,6 @@ public class Room : MonoBehaviour
     public void GenerateMinimapSprite()
     {
         var minimaps = FindObjectsOfType<SpriteRenderer>();
-        foreach (var minimap in minimaps)
-        {
-            minimap
-        }
         
         var bounds = GetComponent<Collider>().bounds;
         print(bounds);
