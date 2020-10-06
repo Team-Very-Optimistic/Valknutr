@@ -8,8 +8,8 @@ using UnityStandardAssets.Effects;
 public class Explosive : TriggerEventHandler {
     public float _damage = 10;
 
-    public float timeToExpire = 5f;
-    public float radius = 7f;
+    public float timeToExpire = 8f;
+    public float radius = 5f;
     public float power = 10f;
     public float fuseTime = 0f;
     
@@ -17,8 +17,9 @@ public class Explosive : TriggerEventHandler {
     private bool _explode;
     public void Launch(Vector3 direction, float speed)
     {
-        gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        StartCoroutine(Explode(timeToExpire));
+        gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
+        //StartCoroutine(Explode(timeToExpire));
+        Destroy(gameObject, timeToExpire);
     }
 
     public override void TriggerEvent(Collider other)
@@ -29,8 +30,8 @@ public class Explosive : TriggerEventHandler {
     public void Detonate(float time = 0)
     {
         if (_explode) return;
-        StopAllCoroutines();
         _explode = true;
+        StopAllCoroutines();
         StartCoroutine(Explode(time));
     }
 
@@ -55,7 +56,7 @@ public class Explosive : TriggerEventHandler {
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
-        o.transform.localScale *= radius / 10f;
+        o.transform.localScale *= radius / 5f;
         o.SetActive(true);
         o.transform.SetParent(null);
         Destroy(gameObject);

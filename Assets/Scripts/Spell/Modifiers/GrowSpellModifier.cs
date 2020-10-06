@@ -4,13 +4,14 @@ using UnityEngine;
 
 class GrowSpellModifier : SpellModifier
 {
+    float sizeChange = 1.5f;
+
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;
         Action spell = () =>
         {
-            float sizeChange = 1.5f;
             oldBehavior.Invoke();
             var transformLocalScale = action._objectForSpell.transform.localScale;
             action._objectForSpell.transform.localScale = transformLocalScale * sizeChange;
@@ -18,6 +19,12 @@ class GrowSpellModifier : SpellModifier
         };
         action.behaviour = spell;
         return action;
+    }
+
+    public override void ModifySpell(SpellBase spell)
+    {
+        base.ModifySpell(spell);
+        spell._scale *= sizeChange;
     }
 
     IEnumerator MakeSmall(GameObject obj, Vector3 size)

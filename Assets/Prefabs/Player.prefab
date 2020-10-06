@@ -2378,6 +2378,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_Dashing: 0
   transformChild: {fileID: 3151215489025379004}
 --- !u!114 &3151215489835600203
 MonoBehaviour:
@@ -2445,7 +2446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55fc2451a6541bbb3fcde4aaa0b462d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 500
   currentHealth: 10
   destroyOnDeath: 1
   hurtSound: playerHurt
@@ -3574,6 +3575,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3151215489111116284}
     m_Modifications:
+    - target: {fileID: 4347153569445679949, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347153569476556030, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347153569831122326, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4347153569894098892, guid: 5aab033c552deb0438e66920c0424115, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.19297622
@@ -3621,6 +3634,18 @@ PrefabInstance:
     - target: {fileID: 4347153569894098893, guid: 5aab033c552deb0438e66920c0424115, type: 3}
       propertyPath: m_Name
       value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347153569894098893, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347153569894098893, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347153570163566722, guid: 5aab033c552deb0438e66920c0424115, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5685904849460710351, guid: 5aab033c552deb0438e66920c0424115, type: 3}
       propertyPath: m_IsTrigger

@@ -40,7 +40,7 @@ class ProjectileBase : SpellBase
             
             p.GetComponent<Projectile>().Launch(newDirection, _speed);
             
-            ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
+            ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f * _scale);
             p.GetComponent<Damage>().SetDamage(_damage);
             _objectForSpell = p;
         }
