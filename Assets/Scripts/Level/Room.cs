@@ -49,6 +49,9 @@ public class Room : MonoBehaviour
 
     private void ActivateRoom()
     {
+        var currActiveRoom = GameManager.Instance.activeRoom;
+        if (currActiveRoom && !currActiveRoom.isCleared) return;
+        GameManager.Instance.activeRoom = this;
         isActive = true;
         isPlayerInside = true;
 

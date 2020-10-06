@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public GameObject _weapon;
 
+    public Room activeRoom;
+
     public void Awake()
     {
         _player = GameObject.Find("Player");

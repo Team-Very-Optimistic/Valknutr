@@ -27,11 +27,14 @@ public class RoomExit : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = isConnected ? Color.white : Color.gray;
+        // Gizmos.DrawSphere(transform.position, 1f);
         Gizmos.DrawLine(transform.position, transform.position + transform.forward);
         if (isConnected)
         {
             Gizmos.color = isOpen ? Color.green : Color.red;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * 2);
+            Gizmos.DrawLine(transform.position, _connectedExit.transform.position);
         }
     }
 

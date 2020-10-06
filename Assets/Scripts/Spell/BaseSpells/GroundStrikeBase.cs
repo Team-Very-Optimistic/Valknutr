@@ -6,10 +6,12 @@ public class GroundStrikeBase : SpellBase
     public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
+    public float scale = 1f;
+    public float damage = 2f;
     
     public override void Init()
     {
-        _damage = 2f;
+        _damage = damage;
         _speed = 2f;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;

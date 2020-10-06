@@ -40,7 +40,7 @@ public class UiManager : Singleton<UiManager>
             healthBar.SetHealth(playerHealth.currentHealth);
     }
 
-    void PopulateSpells()
+    public void PopulateSpells()
     {
         var spells = player.GetComponent<SpellCaster>().spells;
         for (var i = 0; i < spells.Length && i < spellSlots.Length; i++)

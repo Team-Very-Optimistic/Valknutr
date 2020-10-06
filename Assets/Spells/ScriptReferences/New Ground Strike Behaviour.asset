@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: New Ground Strike Behaviour
   m_EditorClassIdentifier: 
   _objectForSpell: {fileID: 0}
-  _objectCollided: {fileID: 0}
-  _posDiff: {x: 0, y: 0, z: 0}
-  _cooldown: 0
+  _objectsCollided: []
+  _direction: {x: 0.34039167, y: 0, z: 0.90069926}
+  _offset: {x: 0, y: -1.5, z: 0}
+  _damage: 100
+  _speed: 2
+  _cooldown: 0.2
+  animationType: 1
   _iterations: 1
-  _speed: 0
-  _damage: 1
-  animationType: 0
-  radius: 3
+  radius: 1.5
   power: 50
+  scale: 1
+  damage: 100
