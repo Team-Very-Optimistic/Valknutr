@@ -54,7 +54,7 @@ public abstract class SpellBase : SpellElement
     
     public virtual void Init(){}
     
-    public virtual void AfterModified(){}
+    //public virtual void AfterModified(){}
 
     public abstract void SpellBehaviour(Spell spell);
     
