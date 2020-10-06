@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody), typeof(BoxCollider), typeof(NavMeshObstacle))]
+[RequireComponent(typeof(Rigidbody), typeof(Collider), typeof(NavMeshObstacle))]
 public class Destroyable : HealthScript
 {
     

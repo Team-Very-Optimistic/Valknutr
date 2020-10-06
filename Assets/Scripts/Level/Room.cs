@@ -16,6 +16,7 @@ public enum RoomType
 }
 
 [Serializable]
+[RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
@@ -30,6 +31,7 @@ public class Room : MonoBehaviour
     public GameObject[] lightingObjects;
 
     public GameObject minimapPrefab;
+    private Collider roomCollider;
 
     private void Start()
     {
@@ -37,13 +39,17 @@ public class Room : MonoBehaviour
         {
             lightingObject.GetComponent<Light>().enabled = false;
         }
+
+        roomCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            ActivateRoom();
+            var bounds = other.bounds;
+            if (roomCollider.bounds.Contains(bounds.min) && roomCollider.bounds.Contains(bounds.max))
+                ActivateRoom();
         }
     }
 
@@ -64,14 +70,19 @@ public class Room : MonoBehaviour
         {
             lightingObject.GetComponent<Light>().enabled = true;
         }
+        
+        CheckCleared();
+        
+        if (!isCleared)
+            CloseAllDoors();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            ActivateRoom();
-        }
+        // if (other.CompareTag("Player"))
+        // {
+        //     ActivateRoom();
+        // }
     }
 
     private void OnTriggerExit(Collider other)
@@ -133,6 +144,23 @@ public class Room : MonoBehaviour
             {
                 // print("opening exit");
                 exit.Open();
+            }
+        }
+    }
+
+    public void CloseAllDoors()
+    {
+        foreach (var o in exits)
+        {
+            var exit = o.GetComponent<RoomExit>();
+            if (exit == null || !exit.isConnected)
+            {
+                // print("null exit or not connected");
+            }
+            else
+            {
+                // print("opening exit");
+                exit.Close();
             }
         }
     }
