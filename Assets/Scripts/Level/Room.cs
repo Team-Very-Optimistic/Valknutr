@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum RoomType
 {
@@ -14,6 +15,7 @@ public enum RoomType
     Treasure
 }
 
+[Serializable]
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
@@ -27,8 +29,9 @@ public class Room : MonoBehaviour
     public int minDepth;
     public GameObject[] lightingObjects;
 
+    public GameObject minimapPrefab;
 
-    private void Awake()
+    private void Start()
     {
         foreach (var lightingObject in lightingObjects)
         {
@@ -53,7 +56,7 @@ public class Room : MonoBehaviour
         {
             o.GetComponent<SpawnZone>().SetActive();
         }
-        
+
         foreach (var lightingObject in lightingObjects)
         {
             lightingObject.GetComponent<Light>().enabled = true;
@@ -129,5 +132,27 @@ public class Room : MonoBehaviour
                 exit.Open();
             }
         }
+    }
+
+    public void GenerateMinimapSprite()
+    {
+        var minimaps = FindObjectsOfType<SpriteRenderer>();
+        foreach (var minimap in minimaps)
+        {
+            minimap
+        }
+        
+        var bounds = GetComponent<Collider>().bounds;
+        print(bounds);
+        var minimapIcon = Instantiate(minimapPrefab, transform);
+        var spriteRenderer = minimapIcon.GetComponent<SpriteRenderer>();
+        var spriteWidth = spriteRenderer.bounds.size.x;
+        var spriteHeight = spriteRenderer.bounds.size.z;
+
+        var roomWidth = bounds.size.x;
+        var roomHeight = bounds.size.z;
+
+        minimapIcon.transform.localScale = new Vector3(roomWidth / spriteWidth, roomHeight / spriteHeight, 1);
+        minimapIcon.transform.position = bounds.center + Vector3.up;
     }
 }
