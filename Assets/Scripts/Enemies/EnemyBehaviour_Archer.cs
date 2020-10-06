@@ -1,16 +1,18 @@
 ﻿using Doozy.Engine.Extensions;
 using UnityEngine;
 
-enum ArcherBehaviourStates
-{
-    Running,
-    DrawBow,
-    HoldBow,
-    ReleaseBow
-}
+
 
 public class EnemyBehaviour_Archer : EnemyBehaviourBase
 {
+    enum ArcherBehaviourStates
+    {
+        Running,
+        DrawBow,
+        HoldBow,
+        ReleaseBow
+    }
+
     //Bow reference
     private GameObject bow;
     private Vector3 bowVerticalOffset = new Vector3(0.0f, 1.4f, 0.0f);

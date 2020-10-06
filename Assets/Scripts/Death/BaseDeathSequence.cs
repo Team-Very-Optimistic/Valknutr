@@ -36,7 +36,7 @@ public class BaseDeathSequence : MonoBehaviour
 
     public void TriggerRagdoll()
     {
-        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        gameObject.GetComponent<Collider>().enabled = false;
         GetComponent<Animator>().enabled = false;
 
         if(GetComponent<Rigidbody>() != null)

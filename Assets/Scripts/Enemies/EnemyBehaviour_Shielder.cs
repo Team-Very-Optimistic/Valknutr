@@ -14,19 +14,13 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
     public float linkDamageMultiplier;
 
-    public GameObject player;
-
-    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
         Invoke(nameof(FindAllEnemies), 0.1f);
-
-        player = GameManager.Instance._player;
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         if(enemiesFound)
