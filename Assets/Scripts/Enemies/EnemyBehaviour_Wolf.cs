@@ -27,8 +27,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private float originalStoppingDistance;
     private float originalSpeed;
 
-    //Collider 
-    public Collider wolfCollider;
+    //Collider for dash
+    private Collider wolfCollider;
+
+    public GameObject redIndicatorPrefab;
+    private Vector3 redIndicatorPosOffset;
     
     public override void Start()
     {
@@ -43,6 +46,8 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         //Set collider
         wolfCollider = GetComponent<Collider>();
+
+        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y, 0.0f);
     }
 
     public override void Update()
@@ -140,6 +145,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private void ShowRedIndicator()
     {
         float timeToDestroy = dashWindupTime * 0.5f;
+
+        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset, Quaternion.identity);
+        Destroy(redIndicator, timeToDestroy);
     }
 
     private void StartDash()
