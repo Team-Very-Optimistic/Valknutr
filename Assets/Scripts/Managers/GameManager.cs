@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject _weapon;
 
     public Room activeRoom;
+    public GameObject itemDropPrefab;
 
     public void Awake()
     {
@@ -44,7 +45,8 @@ public class GameManager : Singleton<GameManager>
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
         //Debug.Log(_SpellItem._itemObject);
-        Instantiate(_SpellItem._itemObject, position, _SpellItem._itemObject.transform.rotation);
+        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity);
+        itemDrop.GetComponent<ItemDrop>()._spellItem = _SpellItem;
     }
 
     public void SetGameWin()

@@ -52,6 +52,8 @@ MonoBehaviour:
   _player: {fileID: 0}
   _itemList: {fileID: 11400000, guid: 731b4b4aeef3a77488eab93373276f94, type: 2}
   _weapon: {fileID: 0}
+  activeRoom: {fileID: 0}
+  itemDropPrefab: {fileID: 3498559886049984015, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
 --- !u!114 &2674764975012913393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +70,8 @@ MonoBehaviour:
   shieldObject: {fileID: 1082058612622460507, guid: f22f80e2857da3a4cb6596b0bd84a261, type: 3}
   fireObject: {fileID: 1259517371758144061, guid: b899f8874556bd3448b1ff3b9bf79718, type: 3}
   explosionObject: {fileID: 6847475854198797690, guid: 0d08ff7a5f4a5414890a67e8b581f998, type: 3}
+  _defaultSpells: []
+  maxShields: 10
 --- !u!114 &2674764975012913399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8d923c03e77cb48991df207c2a6094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  ui: {fileID: 0}
 --- !u!114 &894522836
 MonoBehaviour:
   m_ObjectHideFlags: 0
