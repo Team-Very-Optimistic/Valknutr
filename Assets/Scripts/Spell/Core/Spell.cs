@@ -63,7 +63,7 @@ public class Spell : SpellItem
         if (!IsReady()) return;
 
         float totalCooldown = spellBase._cooldown;
-        spellBase.Init();
+        spellBase.InitializeValues();
         spellBase._direction = data.castDirection;
         spellBase.behaviour = () => spellBase.SpellBehaviour(this);
 
@@ -88,7 +88,7 @@ public class Spell : SpellItem
 
     public float GetAnimSpeed()
     {
-        spellBase.Init();
+        spellBase.InitializeValues();
         castAnimation = spellBase.animationType;
 
         float oriSpeed = spellBase._speed;
@@ -104,7 +104,7 @@ public class Spell : SpellItem
 
     public void AddBaseType(SpellBase baseType)
     {
-        baseType.Init();
+        baseType.InitializeValues();
         spellBase = baseType;
         castAnimation = baseType.animationType;
     }

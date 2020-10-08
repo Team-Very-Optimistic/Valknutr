@@ -8,7 +8,7 @@ class MovementBase : SpellBase
     private ThirdPersonCharacter _controller;
     private float _moveTime = 0.3f;
     
-    public override void Init()
+    protected override void SetValues()
     {
         _speed = 30f;
         _cooldown = 1f;

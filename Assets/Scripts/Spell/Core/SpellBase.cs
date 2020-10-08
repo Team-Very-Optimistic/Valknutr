@@ -51,9 +51,13 @@ public abstract class SpellBase : SpellElement
     {
         behaviour.Invoke();
     }
-    
-    public virtual void Init(){}
-    
+
+    public void InitializeValues()
+    {
+        SetValues();
+    }
+
+    protected abstract void SetValues();
     //public virtual void AfterModified(){}
 
     public abstract void SpellBehaviour(Spell spell);

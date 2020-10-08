@@ -6,7 +6,7 @@ class ShieldBase : SpellBase
 {
     private float offsetIncrement;
     
-    public override void Init()
+    protected override void SetValues()
     {
         _cooldown = 5f;
         _speed = 50f;

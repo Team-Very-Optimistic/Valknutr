@@ -5,7 +5,7 @@ using UnityEngine;
 class TimeSlowBase : SpellBase
 {
     public float _duration;
-    public override void Init()
+    protected override void SetValues()
     {
         _speed = 0.2f;
         _cooldown = 8f;

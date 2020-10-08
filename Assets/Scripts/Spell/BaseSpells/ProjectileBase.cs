@@ -7,7 +7,7 @@ class ProjectileBase : SpellBase
 {
     private float offsetIncrement;
     
-    public override void Init()
+    protected override void SetValues()
     {
         _damage = 1;
         _speed = 25f;

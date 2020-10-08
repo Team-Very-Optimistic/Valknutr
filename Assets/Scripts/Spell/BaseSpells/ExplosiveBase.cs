@@ -6,7 +6,7 @@ public class ExplosiveBase : SpellBase
     public float radius = 5.0F;
     public float power = 100.0F;
 
-    public override void Init()
+    protected override void SetValues()
     {
         _damage = 10f;
         radius = 5.0F;

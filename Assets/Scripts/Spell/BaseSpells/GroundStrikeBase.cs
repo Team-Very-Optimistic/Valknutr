@@ -3,14 +3,19 @@ using UnityEngine;
 
 public class GroundStrikeBase : SpellBase
 {
+    [HideInInspector]
     public float radius = 2F;
+    [HideInInspector]
     public float power = 1000.0F;
     private Damage damageScript;
     
-    public override void Init()
+    protected override void SetValues()
     {
+        _scale = 1;
         _damage = 2f;
         _speed = 2f;
+        radius = 2F;
+        power = 1000.0F;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
         animationType = CastAnimation.Projectile;
@@ -30,6 +35,7 @@ public class GroundStrikeBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
+        _scale = _objectForSpell.transform.lossyScale.x;
         radius = _scale * 1.5f;
 
         var position = _objectForSpell.transform.position + _direction * _scale;
