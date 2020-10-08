@@ -49,6 +49,7 @@ public class PlayerHealth : HealthScript
 
     public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
     {
+        Debug.Log(this.gameObject);
         Debug.Log("called coroutine");
         //Ticks starts after timeInterval and ends on last frame(?)
         float timeInterval = totalDuration / (float)numTicks;

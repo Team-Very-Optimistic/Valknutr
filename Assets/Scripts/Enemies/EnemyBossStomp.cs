@@ -31,8 +31,11 @@ public class EnemyBossStomp : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            var damageScript = GetComponent<Damage>();
-            damageScript.DealDamage(other);
+            if(other.gameObject.GetComponent<PlayerHealth>() != null && other.GetType() == typeof(CapsuleCollider))
+            {
+                var damageScript = GetComponent<Damage>();
+                damageScript.DealDamage(other);
+            }
         }
     }
 }

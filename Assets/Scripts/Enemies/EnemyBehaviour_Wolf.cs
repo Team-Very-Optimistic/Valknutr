@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class EnemyBehaviour_Wolf : EnemyBehaviourBase
@@ -190,7 +191,8 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Only trigger when charging - Cannot toggle boxcollider + isTrigger
         if(wolfState == WolfBehaviourStates.Charging)
         {
-            if (!other.gameObject.CompareTag("Enemy"))
+            //Check only player's capsule collider
+            if (!other.gameObject.CompareTag("Enemy") && other.GetType() == typeof(CapsuleCollider))
             {
                 this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
             }
