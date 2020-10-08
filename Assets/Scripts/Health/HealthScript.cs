@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class HealthScript : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class HealthScript : MonoBehaviour
     [HideInInspector]
     public GameObject damageTextPrefab;
 
+    //Damage protection multipliers
+    private float damageMultiplier = 1.0f;
+
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     protected float height;
     public virtual void Start()
@@ -25,17 +29,19 @@ public class HealthScript : MonoBehaviour
 
     public virtual bool ApplyDamage(float damage)
     {
+        float finalDamage = damage * damageMultiplier;
+
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
+        damageText.GetComponent<DamageText>().SetDamageTextProperties(finalDamage, worldPositionText, damageColor);
         if (damage <= 0)
             return false;
         if (hurtSoundOnHit)
         {
-            PlayHurtSound(damage);
+            PlayHurtSound(finalDamage);
         }
         
-        currentHealth -= damage;
+        currentHealth -= finalDamage;
         if (currentHealth > 0.0f) return false;
 
         //todo: Derive from enemy instead
@@ -73,5 +79,19 @@ public class HealthScript : MonoBehaviour
     public void AddHealth(float health)
     {
         currentHealth += health;
+    }
+
+    public void SetDamageMultiplier(float damageMultiplier)
+    {
+        //If not original value, dont overlap multipliers
+        if(this.damageMultiplier == 1.0f)
+        {
+            this.damageMultiplier = damageMultiplier;
+        }
+    }
+
+    public void ResetDamageMultiplier()
+    {
+        damageMultiplier = 1.0f;
     }
 }

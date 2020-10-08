@@ -11,7 +11,7 @@ public class EnemyBehaviourBase : MonoBehaviour
     protected Animator animator;
     protected bool isAttacking = false;
 
-    //Knockback paramters
+    //Knockback parameters
     protected bool isInKnockback = false;
     public float knockbackVelStoppingThreshold;
 

@@ -18,9 +18,11 @@ public class MeleeWeapon : MonoBehaviour
         GetComponent<BoxCollider>().transform.position = GetComponent<SkinnedMeshRenderer>().rootBone.transform.position;
     }
 
+    //Only used against player
     public void OnTriggerEnter(Collider other)
     {
-        if(!other.gameObject.CompareTag("Enemy"))
+        //Only apply damage one via capsule collider
+        if(other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider))
         {
             this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
         }
