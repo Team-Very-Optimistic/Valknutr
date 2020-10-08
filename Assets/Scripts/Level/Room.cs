@@ -133,6 +133,7 @@ public class Room : MonoBehaviour
 
     public void OpenAllDoors()
     {
+        var hasOpened = false;
         foreach (var o in exits)
         {
             var exit = o.GetComponent<RoomExit>();
@@ -143,9 +144,11 @@ public class Room : MonoBehaviour
             else
             {
                 // print("opening exit");
-                exit.Open();
+                hasOpened = exit.Open() || hasOpened;
             }
         }
+        
+        if (hasOpened) AudioManager.PlaySound("doorOpen");
     }
 
     public void CloseAllDoors()
