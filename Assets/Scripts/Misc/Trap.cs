@@ -38,11 +38,14 @@ public class Trap : MonoBehaviour
             other.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
         }
 
-        var direction = (other.ClosestPoint(transformPosition) - transformPosition);
-        direction.y = 0;
-        direction = direction.normalized * knockbackForce * damage;
-        other.attachedRigidbody.AddForce(direction);
-        
+        if (other.attachedRigidbody != null)
+        {
+            var direction = (other.ClosestPoint(transformPosition) - transformPosition);
+            direction.y = 0;
+            direction = direction.normalized * knockbackForce * damage;
+            other.attachedRigidbody.AddForce(direction);
+        }
+
         EffectManager.PlayEffectAtPosition(trapEffect, transformPosition);
         _damage.SetDamage(damage);
         _damage.DealDamage(other);
