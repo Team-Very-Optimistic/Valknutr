@@ -18,9 +18,14 @@ class ShieldBase : SpellBase
     
     public override void SpellBehaviour(Spell spell)
     {
+        if (SpellManager.Instance.ShieldFull())
+        {
+            return;
+        }
         for (int i = 0; i < _iterations; i++)
         {
-            var p = Instantiate(_objectForSpell, _player.position + _offset + _player.forward * _speed / 50f * Random.Range(0.6f, 1.4f), _player.localRotation);
+            var p = Instantiate(_objectForSpell, _player.position + 
+                                                 _offset + _player.forward * _speed / 50f * Random.Range(0.6f, 1.4f) * _scale, _player.localRotation);
             float rotateBy = (float) Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement;
             rotateBy += _direction.x * 90 + _direction.z * 90;
             p.transform.RotateAround(_player.position,Vector3.up, rotateBy);

@@ -6,7 +6,6 @@ public class GroundStrikeBase : SpellBase
     public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
-    public float scale = 1f;
     
     public override void Init()
     {
@@ -14,8 +13,6 @@ public class GroundStrikeBase : SpellBase
         _speed = 2f;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
-        scale = _objectForSpell.transform.localScale.x;
-        radius = scale * 1.5f;
         animationType = CastAnimation.Projectile;
         damageScript = _objectForSpell.GetComponent<Damage>();
         _offset = Vector3.down * 1.5f;
@@ -33,12 +30,14 @@ public class GroundStrikeBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
-        var position = _objectForSpell.transform.position + _direction * scale;
+        radius = _scale * 1.5f;
+
+        var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
         AudioManager.PlaySoundAtPosition("groundStrike", position);
         EffectManager.PlayEffectAtPosition("groundStrike", position + _offset, 
-            new Vector3(scale,scale,scale));
+            new Vector3(_scale,_scale,_scale));
 
         
         var cols = Physics.OverlapSphere(position, radius);
@@ -62,7 +61,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f * scale);
+                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f * _scale);
             }
 
         }

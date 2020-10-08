@@ -13,15 +13,10 @@ public class EnemyBehaviour_Paladin : EnemyBehaviourBase
     {
         base.Start();
 
-        meleeWeapon = this.gameObject.transform.Find("MeleeWeapon").gameObject;
+        meleeWeapon = gameObject.transform.Find("MeleeWeapon").gameObject;
         meleeWeapon.GetComponent<BoxCollider>().enabled = false;
     }
-
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
+    
 
     public void EnableMeleeWeaponCollider(int value)
     {

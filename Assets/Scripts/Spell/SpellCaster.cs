@@ -32,8 +32,12 @@ public class SpellCaster : MonoBehaviour
         {
             spells[i++] = Instantiate(spell);
         }
-        Inventory.Instance._spells = new List<Spell>();
-        Inventory.Instance._spells.AddRange(spells);
+
+        if (Inventory.Instance._spells.Count == 0)
+        {
+            Inventory.Instance._spells = new List<Spell>();
+            Inventory.Instance._spells.AddRange(spells);
+        }
     }
 
     void Update()

@@ -20,6 +20,8 @@ public class UIItem : Selectable, IPointerClickHandler
     protected GameObject _tooltipObject;
     protected RectTransform _tooltipRectTransform;
     protected string _tooltipString;
+    public RectTransform _tooltipPosition;
+    
 
     private void Start()
     {
@@ -108,6 +110,13 @@ public class UIItem : Selectable, IPointerClickHandler
         float textPaddingSize = 4f;
         Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
         _tooltipRectTransform.sizeDelta = backgoundSize;
+
+        if (_tooltipPosition != null)
+        {
+            Debug.Log("not null");
+            _tooltipObject.transform.SetParent(_tooltipPosition);
+            _tooltipRectTransform.position = _tooltipPosition.position;
+        }
         //_tooltipRectTransform.localPosition = backgoundSize / 2;
     }
 

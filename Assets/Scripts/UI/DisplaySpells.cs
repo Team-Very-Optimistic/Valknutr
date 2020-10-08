@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DisplaySpells : MonoBehaviour
 {
     public GameObject prefab; // This is our prefab object that will be exposed in the inspector
-    
+    public RectTransform tooltipPos;
     public List<SpellItem> _spellItems;
 
     void Start()
@@ -21,8 +21,10 @@ public class DisplaySpells : MonoBehaviour
         foreach (var spellItem in _spellItems)
         {
             // Create new instances of our prefab until we've created as many as we specified
-            newObj = (GameObject)Instantiate(prefab, transform);
-            newObj.GetComponent<UIItem>()._spellItem = spellItem;
+            newObj = Instantiate(prefab, transform);
+            var uiItem = newObj.GetComponent<UIItem>();
+            uiItem._tooltipPosition = tooltipPos;
+            uiItem._spellItem = spellItem;
         }
 
     }
@@ -36,6 +38,8 @@ public class DisplaySpells : MonoBehaviour
     {
         _spellItems.Add(spellItem);
         GameObject newObj = Instantiate(prefab, transform);
-        newObj.GetComponent<UIItem>()._spellItem = spellItem;
+        var uiItem = newObj.GetComponent<UIItem>();
+        uiItem._tooltipPosition = tooltipPos;
+        uiItem._spellItem = spellItem;
     }
 }

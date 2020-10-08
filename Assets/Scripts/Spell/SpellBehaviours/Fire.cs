@@ -6,20 +6,22 @@ public class Fire : TriggerEventHandler
     private GameObject fire;
     private bool canSpread;
     public bool isInitializer;
-    private Vector3 _origPosition;
+    public Vector3 _origPosition;
     private Transform parent;
+    private int maxFires = 10;
     public override void TriggerEvent(Collider other)
     {
+        if(maxFires < 0) return;
         if (!canSpread) return;
-
-        if (!parent.CompareTag(other.tag) && !other.CompareTag("Fire"))
-        {
-            var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
-            other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
-            var damageScript = GetComponent<Damage>();
-            damageScript.SetDamage(1);   
-            damageScript.DealDamage(other);
-        }
+        if (parent.CompareTag(other.tag) || gameObject.CompareTag(other.tag) || other.CompareTag("Fire")) return;
+        maxFires--;
+        
+        var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
+        other.gameObject.AddComponent<Fire>().SetInitializer(maxFires)._origPosition = closestPointOnBounds;
+        var damageScript = GetComponent<Damage>();
+        damageScript.SetDamage(1);   
+        damageScript.DealDamage(other);
+        
         StartCoroutine(WaitCooldown(3f));
     }
 
@@ -35,8 +37,11 @@ public class Fire : TriggerEventHandler
             }
             fire = Instantiate(fire, _origPosition, gameObject.transform.rotation);
             fire.transform.localScale = gameObject.transform.lossyScale;
-            AudioManager.PlaySoundAtPosition("fire", transform.position).transform.SetParent(fire.transform);
-            fire.AddComponent<Fire>();
+            var sound = AudioManager.PlaySoundAtPosition("fire", transform.position);
+            sound.tag = "Fire";
+            sound.layer = fire.layer;
+            sound.transform.SetParent(fire.transform);
+            fire.AddComponent<Fire>().maxFires = maxFires;
             fire.transform.SetParent(gameObject.transform);
             Destroy(this);
         }
@@ -50,8 +55,9 @@ public class Fire : TriggerEventHandler
         }
     }
 
-    public Fire SetInitializer()
+    public Fire SetInitializer(int maxFires = 10)
     {
+        this.maxFires = maxFires;
         isInitializer = true;
         return this;
     }

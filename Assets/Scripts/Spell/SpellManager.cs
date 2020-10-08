@@ -10,7 +10,8 @@ public class SpellManager : Singleton<SpellManager>
     public GameObject fireObject;
     public GameObject explosionObject;
     public Spell[] _defaultSpells;
-    
+    public int maxShields = 10;
+    private int currShields = 0;
     public Spell[] GetDefaultSpells()
     {
         // var movementSpell = ScriptableObject.CreateInstance<Spell>();
@@ -40,5 +41,19 @@ public class SpellManager : Singleton<SpellManager>
         //
         // return new[] {meleeSpell, movementSpell, shieldSpell, projectileSpell};
         return _defaultSpells;
+    }
+
+    public bool ShieldFull()
+    {
+        return currShields >= maxShields;
+    }
+
+    public void AddShield()
+    {
+        currShields++;
+    }
+    public void RemoveShield()
+    {
+        currShields--;
     }
 }

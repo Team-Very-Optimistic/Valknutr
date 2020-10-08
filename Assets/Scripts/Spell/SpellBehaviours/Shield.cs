@@ -10,9 +10,10 @@ public class Shield : NoTrigger
     private Transform newParent;
     private PlayerHealth playerHealth;
     private HealthScript _healthScript;
-    private void Start()
+    protected override void Start()
     {
         base.Start();
+        SpellManager.Instance.AddShield();
         parent = transform.parent;
         playerHealth = parent.GetComponent<PlayerHealth>();
         orgPosition = parent.position - transform.position;
@@ -32,8 +33,8 @@ public class Shield : NoTrigger
 
     private void Update()
     {
-        newParent.position = parent.position;   
-        transform.RotateAround(parent.position, Vector3.up, angularSpeed * Time.deltaTime);
+        newParent.position = Vector3.Lerp(newParent.position, parent.position, 0.1f);   
+        transform.RotateAround(newParent.position, Vector3.up, angularSpeed * Time.deltaTime);
     }
     
     public void SetSpeed(float speed)
@@ -43,6 +44,12 @@ public class Shield : NoTrigger
 
     public bool Damage(float damage)
     {
-        return _healthScript.ApplyDamage(damage);
+        var dead = _healthScript.ApplyDamage(damage);
+        return dead;
+    }
+
+    private void OnDestroy()
+    {
+        SpellManager.Instance.RemoveShield();
     }
 }

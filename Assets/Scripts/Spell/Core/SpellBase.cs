@@ -31,6 +31,9 @@ public abstract class SpellBase : SpellElement
     public float _speed;
     
     [HideInInspector]
+    public float _scale = 1;
+    
+    [HideInInspector]
     public float _cooldown;
     
     [HideInInspector] 
@@ -50,6 +53,8 @@ public abstract class SpellBase : SpellElement
     }
     
     public virtual void Init(){}
+    
+    //public virtual void AfterModified(){}
 
     public abstract void SpellBehaviour(Spell spell);
     
