@@ -50,6 +50,7 @@ public class Shield : NoTrigger
 
     private void OnDestroy()
     {
-        SpellManager.Instance.RemoveShield();
+        if(SpellManager.Instance)
+            SpellManager.Instance.RemoveShield();
     }
 }
