@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,8 @@ using Random = UnityEngine.Random;
 public class Trap : MonoBehaviour
 {
     public float damage = 1.5f;
+    [Range(0.05f, 10f)]
+    public float damageInterval = 0.3f;
     public float knockbackForce = 500f;
 
     [Header("Trap Effects")]
@@ -17,12 +20,13 @@ public class Trap : MonoBehaviour
     public string trapEffect;
     private float radius;
     private Damage _damage;
+    private float time = 0;
     protected virtual void Start()
     {
         _damage = GetComponent<Damage>();
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void TriggerEvent(Collider other)
     {
         var transformPosition = transform.position;
         AudioManager.PlaySoundAtPosition(trapSound, transformPosition, damage * 0.05f, Random.Range(0.8f, 1.2f));
@@ -34,11 +38,40 @@ public class Trap : MonoBehaviour
             other.GetComponent<EnemyBehaviourBase>().EnableKnockback(true);
         }
 
-        var direction = (transformPosition - other.ClosestPoint(transformPosition)).normalized * knockbackForce * damage;
+        var direction = (other.ClosestPoint(transformPosition) - transformPosition);
+        direction.y = 0;
+        direction = direction.normalized * knockbackForce * damage;
         other.attachedRigidbody.AddForce(direction);
         
         EffectManager.PlayEffectAtPosition(trapEffect, transformPosition);
         _damage.SetDamage(damage);
         _damage.DealDamage(other);
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Untagged") || other.CompareTag("Fire")) return;
+        float diff = Time.timeSinceLevelLoad - time;
+        if (damageInterval < diff)
+        {
+            TriggerEvent(other);
+            time = Time.timeSinceLevelLoad;
+            return;
+        }
+        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Untagged") || other.CompareTag("Fire")) return;
+        float diff = Time.timeSinceLevelLoad - time;
+
+        if (damageInterval< diff)
+        {
+            TriggerEvent(other);
+            time = Time.timeSinceLevelLoad;
+            return;
+        }
+        
     }
 }

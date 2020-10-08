@@ -37206,7 +37206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2560874441787514378, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.271755
+      value: 21.77
       objectReference: {fileID: 0}
     - target: {fileID: 2560874441787514378, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
       propertyPath: m_LocalPosition.y
@@ -37214,7 +37214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2560874441787514378, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.922101
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 2560874441787514378, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
       propertyPath: m_LocalRotation.x
@@ -37250,6 +37250,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
+--- !u!1 &1431904428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2560874441787081258, guid: 3e9a7444ba5ebab4690e26140ffb6369, type: 3}
+  m_PrefabInstance: {fileID: 1431904427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1431904429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431904428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c46884774f0d4aee95e7ba67aebcc9ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1.5
+  damageInterval: 4.6
+  knockbackForce: 500
+  trapSound: 
+  trapEffect: 
+--- !u!114 &1431904430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431904428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  isFriendly: 0
 --- !u!1 &1432772510
 GameObject:
   m_ObjectHideFlags: 0
