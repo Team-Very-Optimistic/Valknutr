@@ -13,7 +13,7 @@ public class EnemyBehaviour_Paladin : EnemyBehaviourBase
     {
         base.Start();
 
-        meleeWeapon = this.gameObject.transform.Find("MeleeWeapon").gameObject;
+        meleeWeapon = gameObject.transform.Find("MeleeWeapon").gameObject;
         meleeWeapon.GetComponent<BoxCollider>().enabled = false;
     }
 

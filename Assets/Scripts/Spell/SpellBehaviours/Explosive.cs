@@ -7,22 +7,19 @@ using UnityStandardAssets.Effects;
 [RequireComponent(typeof(Damage))]
 public class Explosive : TriggerEventHandler {
     public float _damage = 10;
-    public Vector3 direction;
-    public float speed;
-    public float timeToExpire = 5f;
-    public float radius = 7f;
+
+    public float timeToExpire = 8f;
+    public float radius = 5f;
     public float power = 10f;
     public float fuseTime = 0f;
     
     [SerializeField]
     private bool _explode;
-
     public void Launch(Vector3 direction, float speed)
     {
-        this.direction = direction;
-        this.speed = speed;
-        gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-        StartCoroutine(Explode(timeToExpire));
+        gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
+        //StartCoroutine(Explode(timeToExpire));
+        Destroy(gameObject, timeToExpire);
     }
 
     public override void TriggerEvent(Collider other)
@@ -33,8 +30,8 @@ public class Explosive : TriggerEventHandler {
     public void Detonate(float time = 0)
     {
         if (_explode) return;
-        StopAllCoroutines();
         _explode = true;
+        StopAllCoroutines();
         StartCoroutine(Explode(time));
     }
 
@@ -53,13 +50,13 @@ public class Explosive : TriggerEventHandler {
         }
         
         AudioManager.PlaySoundAtPosition("explosion", transform.position);
-        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f);
+        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f * power / 2000f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
-        o.transform.localScale = Vector3.one * radius / 7f;
+        o.transform.localScale *= radius / 5f;
         o.SetActive(true);
         o.transform.SetParent(null);
         Destroy(gameObject);
