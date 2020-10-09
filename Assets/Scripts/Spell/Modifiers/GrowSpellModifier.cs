@@ -5,6 +5,7 @@ using UnityEngine;
 class GrowSpellModifier : SpellModifier
 {
     protected float sizeChange = 1.5f;
+    protected float cap = 1f;
 
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
@@ -14,7 +15,7 @@ class GrowSpellModifier : SpellModifier
         {
             oldBehavior.Invoke();
             var transformLocalScale = action._objectForSpell.transform.localScale;
-            if (transformLocalScale.x > 15f) return;
+            if (transformLocalScale.x > cap) return;
             action._objectForSpell.transform.localScale = transformLocalScale * sizeChange;
             GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, transformLocalScale));
         };
@@ -25,9 +26,10 @@ class GrowSpellModifier : SpellModifier
     public override void ModifySpell(SpellBase spell)
     {
         var varSize = Math.Log(spell._cooldown, 1000) + 1.7f;
-        sizeChange = (float) varSize;
+        sizeChange = (float) Math.Max(1.01f, varSize);;
         base.ModifySpell(spell);
         spell._scale *= sizeChange;
+        cap = spell._scale * 2;
     }
 
     IEnumerator MakeSmall(GameObject obj, Vector3 size)

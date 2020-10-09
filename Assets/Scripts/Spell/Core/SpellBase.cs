@@ -55,6 +55,13 @@ public abstract class SpellBase : SpellElement
     public void InitializeValues()
     {
         SetValues();
+        // CopyValues();
+        // ResetValues();
+    }
+
+    private void CopyValues()
+    {
+        //var f = CreateInstance(Class);
     }
 
     protected abstract void SetValues();

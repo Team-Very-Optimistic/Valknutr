@@ -8,6 +8,7 @@ class ShieldBase : SpellBase
     
     protected override void SetValues()
     {
+        _scale = 1;
         _cooldown = 5f;
         _speed = 50f;
         _offset = Vector3.zero; 
