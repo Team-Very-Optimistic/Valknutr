@@ -1,21 +1,42 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 public class ItemDrop : MonoBehaviour
 {
-    public SpellItem _SpellItem;
-    private Vector3 pos;
-    public void Start()
+    public SpellItem _spellItem;
+
+    private bool isMouseOver = false;
+    public void OnTriggerEnter(Collider other)
     {
-        pos = transform.position;
+        if (other.CompareTag("Player"))
+        {
+            PickUp();
+        }
     }
 
-    public void OnDestroy()
+    public void PickUp()
     {
-        pos = transform.position;
-        if(GameManager.Instance!= null)
-            GameManager.Instance.SpawnItem(pos);
+        AudioManager.PlaySoundAtPosition("itemPickup", transform.position);
+        Inventory.Instance.Add(_spellItem);
+        Destroy(gameObject);
+    }
+
+    private void OnMouseEnter()
+    {
+        print("mouse over");
+        isMouseOver = true;
+    }
+
+    private void OnMouseExit()
+    {
+        isMouseOver = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isMouseOver)
+            Gizmos.DrawSphere(transform.position, 1f);
     }
 }

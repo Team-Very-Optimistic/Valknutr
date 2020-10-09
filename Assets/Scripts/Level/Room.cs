@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum RoomType
 {
@@ -14,6 +15,8 @@ public enum RoomType
     Treasure
 }
 
+[Serializable]
+[RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
@@ -27,25 +30,34 @@ public class Room : MonoBehaviour
     public int minDepth;
     public GameObject[] lightingObjects;
 
+    public GameObject minimapPrefab;
+    private Collider roomCollider;
 
-    private void Awake()
+    private void Start()
     {
         foreach (var lightingObject in lightingObjects)
         {
             lightingObject.GetComponent<Light>().enabled = false;
         }
+
+        roomCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            ActivateRoom();
+            var bounds = other.bounds;
+            if (roomCollider.bounds.Contains(bounds.min) && roomCollider.bounds.Contains(bounds.max))
+                ActivateRoom();
         }
     }
 
     private void ActivateRoom()
     {
+        var currActiveRoom = GameManager.Instance.activeRoom;
+        if (currActiveRoom && !currActiveRoom.isCleared) return;
+        GameManager.Instance.activeRoom = this;
         isActive = true;
         isPlayerInside = true;
 
@@ -53,19 +65,24 @@ public class Room : MonoBehaviour
         {
             o.GetComponent<SpawnZone>().SetActive();
         }
-        
+
         foreach (var lightingObject in lightingObjects)
         {
             lightingObject.GetComponent<Light>().enabled = true;
         }
+        
+        CheckCleared();
+        
+        if (!isCleared)
+            CloseAllDoors();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            ActivateRoom();
-        }
+        // if (other.CompareTag("Player"))
+        // {
+        //     ActivateRoom();
+        // }
     }
 
     private void OnTriggerExit(Collider other)
@@ -116,6 +133,7 @@ public class Room : MonoBehaviour
 
     public void OpenAllDoors()
     {
+        var hasOpened = false;
         foreach (var o in exits)
         {
             var exit = o.GetComponent<RoomExit>();
@@ -126,8 +144,45 @@ public class Room : MonoBehaviour
             else
             {
                 // print("opening exit");
-                exit.Open();
+                hasOpened = exit.Open() || hasOpened;
             }
         }
+        
+        if (hasOpened) AudioManager.PlaySound("doorOpen");
+    }
+
+    public void CloseAllDoors()
+    {
+        foreach (var o in exits)
+        {
+            var exit = o.GetComponent<RoomExit>();
+            if (exit == null || !exit.isConnected)
+            {
+                // print("null exit or not connected");
+            }
+            else
+            {
+                // print("opening exit");
+                exit.Close();
+            }
+        }
+    }
+
+    public void GenerateMinimapSprite()
+    {
+        var minimaps = FindObjectsOfType<SpriteRenderer>();
+        
+        var bounds = GetComponent<Collider>().bounds;
+        print(bounds);
+        var minimapIcon = Instantiate(minimapPrefab, transform);
+        var spriteRenderer = minimapIcon.GetComponent<SpriteRenderer>();
+        var spriteWidth = spriteRenderer.bounds.size.x;
+        var spriteHeight = spriteRenderer.bounds.size.z;
+
+        var roomWidth = bounds.size.x;
+        var roomHeight = bounds.size.z;
+
+        minimapIcon.transform.localScale = new Vector3(roomWidth / spriteWidth, roomHeight / spriteHeight, 1);
+        minimapIcon.transform.position = bounds.center + Vector3.up;
     }
 }

@@ -30,7 +30,7 @@ public class EnemyProjectile : MonoBehaviour
         }
         else if (!other.gameObject.tag.Equals("Enemy") && !other.gameObject.tag.Equals("Projectile"))
         {
-            Debug.Log(other.gameObject);
+            // Debug.Log(other.gameObject);
             Destroy(gameObject);
         }
 
