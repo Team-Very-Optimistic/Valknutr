@@ -10,7 +10,6 @@ class SpeedSpellModifier : SpellModifier
         spell._speed += 1f;
         spell._speed *= 2;
         spell._cooldown *= _cooldownMultiplier;
-        
     }
     
     public override SpellBase ModifyBehaviour(SpellBase action)

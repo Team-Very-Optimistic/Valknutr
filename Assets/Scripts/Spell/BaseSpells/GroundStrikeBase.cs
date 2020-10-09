@@ -9,6 +9,7 @@ public class GroundStrikeBase : SpellBase
     public float power = 1000.0F;
     private Damage damageScript;
     
+    
     protected override void SetValues()
     {
         _scale = 1;
@@ -35,7 +36,7 @@ public class GroundStrikeBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
-        _scale = _objectForSpell.transform.lossyScale.x;
+        _scale = _objectForSpell.transform.lossyScale.x; //overriding 
         radius = _scale * 1.5f;
 
         var position = _objectForSpell.transform.position + _direction * _scale;
