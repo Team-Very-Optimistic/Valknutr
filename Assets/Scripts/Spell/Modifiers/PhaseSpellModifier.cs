@@ -3,7 +3,7 @@ using UnityEngine;
 
 class PhaseSpellModifier : SpellModifier
 {
-    
+    private int phaseAmount = 3;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
@@ -17,7 +17,7 @@ class PhaseSpellModifier : SpellModifier
                 action._objectForSpell.AddComponent<Phasing>()._damage = action._damage;
             else
             {
-                existingPhase._phaseNum += 3;
+                existingPhase.AddPhaseAmount(phaseAmount);
             }
         };
         

@@ -7,6 +7,7 @@ public class Phasing : MonoBehaviour
     public float _damage;
     public int _phaseNum = 2;
     public List<TriggerEventHandler> triggers;
+    
     public void Start()
     {
         var trig = GetComponents<TriggerEventHandler>();
@@ -16,6 +17,18 @@ public class Phasing : MonoBehaviour
             t.OverrideEvent(Trigger);
             triggers.Add(t);
         }
+    }
+
+    public void AddPhaseAmount(int phaseAmount)
+    {
+        if (_phaseNum < 0)
+        {
+            foreach (var t in triggers)
+            {
+                t.OverrideEvent(Trigger);
+            }
+        }
+        _phaseNum += phaseAmount;
     }
     
     //public bool CanTrigger { get; set; }
