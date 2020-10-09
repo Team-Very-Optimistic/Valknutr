@@ -55,9 +55,9 @@ public class AudioManager : Singleton<AudioManager>
         tempSoundPlayer.transform.position = position;
         AudioSource audioSource = tempSoundPlayer.GetComponent<AudioSource>();
         if(volume > 0)
-            audioSource.volume = volume;
+            audioSource.volume *= volume;
         if(pitch > 0)
-            audioSource.pitch = pitch;
+            audioSource.pitch *= pitch;
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);

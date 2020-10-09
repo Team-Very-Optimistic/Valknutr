@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4307076804482486278
 Transform:
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_SfxLibrary:
   - m_Identifier: playerHurt
     m_Clip: {fileID: 8300000, guid: ef6e15b3e78db5247a8d489278e0b2e4, type: 3}
-    m_Volume: 0.07
+    m_Volume: 0.658
     m_Pitch: 1
     m_Source: {fileID: 0}
   - m_Identifier: projectileLaunch
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Volume: 0.3
     m_Pitch: 1
     m_Source: {fileID: 0}
-  - m_Identifier: 
+  - m_Identifier: projectileHit2
     m_Clip: {fileID: 8300000, guid: 3163d468a95ccf940a38463fe456af02, type: 3}
     m_Volume: 0.5
     m_Pitch: 1
@@ -91,8 +91,8 @@ MonoBehaviour:
     m_Pitch: 1
     m_Source: {fileID: 0}
   - m_Identifier: enemyPaladinHurt
-    m_Clip: {fileID: 8300000, guid: 1dbb011336ea16b44932cb88c4765971, type: 3}
-    m_Volume: 0.04
+    m_Clip: {fileID: 8300000, guid: 61249b821df6dac488505f7b1aaabb80, type: 3}
+    m_Volume: 0.02
     m_Pitch: 1
     m_Source: {fileID: 0}
   - m_Identifier: projectileHit
@@ -100,8 +100,18 @@ MonoBehaviour:
     m_Volume: 0.05
     m_Pitch: 1
     m_Source: {fileID: 0}
+  - m_Identifier: enemyArcherHurt
+    m_Clip: {fileID: 8300000, guid: 91022fd3e0d2a924d8811607c52d6a48, type: 3}
+    m_Volume: 0.17
+    m_Pitch: 1
+    m_Source: {fileID: 0}
+  - m_Identifier: enemyBossHurt
+    m_Clip: {fileID: 8300000, guid: c44f9d262ff119946a340762375715ab, type: 3}
+    m_Volume: 0.05
+    m_Pitch: 1
+    m_Source: {fileID: 0}
   - m_Identifier: itemPickup
-    m_Clip: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
-    m_Volume: 1
+    m_Clip: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+    m_Volume: 0.39
     m_Pitch: 1
     m_Source: {fileID: 0}
