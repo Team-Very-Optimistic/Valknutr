@@ -42,7 +42,8 @@ public abstract class SpellBase : SpellElement
     protected SpellProperty properties;
     #endregion
 
-    #region SavedProperties
+    #region PropertyManagement
+    
     private bool _copied;
     public struct SpellProperty {
         public GameObject _objectForSpell; //spell cast in reference to this object
@@ -66,21 +67,7 @@ public abstract class SpellBase : SpellElement
     
         public Action behaviour; //The behaviour is the one being invoked when spell is cast.
     }
-    #endregion
-
-    public void Cast()
-    {
-        behaviour.Invoke();
-    }
-
-    public void InitializeValues()
-    {
-        SetValues();
-        if(!_copied)
-            CopyValues();
-        ResetValues();
-    }
-
+    
     private void ResetValues()
     {
         _offset = properties._offset;
@@ -106,10 +93,36 @@ public abstract class SpellBase : SpellElement
         
         properties.animationType = animationType;
     }
-
+    
+    /*
+     * Required or else the data would be modified
+     */
+    public void OnDestroy()
+    {
+        ResetValues();
+    }
+    
+    #endregion
+    
+    public void Cast()
+    {
+        behaviour.Invoke();
+    }
+    
+    public void InitializeValues()
+    {
+        SetValues();
+        if (!_copied)
+        {
+            _copied = true;
+            CopyValues();
+        }
+        ResetValues();
+    }
     protected abstract void SetValues();
     //public virtual void AfterModified(){}
 
     public abstract void SpellBehaviour(Spell spell);
-    
+
+
 }

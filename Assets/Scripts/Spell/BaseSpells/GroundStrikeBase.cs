@@ -9,12 +9,8 @@ public class GroundStrikeBase : SpellBase
     
     protected override void SetValues()
     {
-        _speed = 2f;
-        _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
-        animationType = CastAnimation.Projectile;
         damageScript = _objectForSpell.GetComponent<Damage>();
-        _offset = Vector3.down * 1.5f;
     }
 
     /// <summary>
