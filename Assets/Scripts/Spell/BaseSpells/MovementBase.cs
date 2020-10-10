@@ -10,12 +10,9 @@ class MovementBase : SpellBase
     
     protected override void SetValues()
     {
-        _speed = 30f;
-        _cooldown = 1f;
         _moveTime = 0.3f;
         _objectForSpell = _player.gameObject;
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
-        animationType = CastAnimation.Movement;
         _offset = 2 * (Random.value < 0.5f ? Vector3.left : Vector3.right);
     }
     

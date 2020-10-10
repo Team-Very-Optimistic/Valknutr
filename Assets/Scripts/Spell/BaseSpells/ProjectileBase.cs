@@ -11,7 +11,6 @@ class ProjectileBase : SpellBase
     {
         offsetIncrement = 7f;
         _objectForSpell = SpellManager.Instance.projectileObject;
-        animationType = CastAnimation.Projectile;
     }
     
     /// <summary>
