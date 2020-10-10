@@ -3,20 +3,17 @@ using UnityEngine;
 
 public class GroundStrikeBase : SpellBase
 {
-    [HideInInspector]
     public float radius = 2F;
-    [HideInInspector]
     public float power = 1000.0F;
     private Damage damageScript;
+    private float knockbackScale = 20.0f;
+    public float scale = 1f;
+    public float damage = 2f;
     
-    
-    protected override void SetValues()
+    public override void Init()
     {
-        _scale = 1;
-        _damage = 2f;
+        _damage = damage;
         _speed = 2f;
-        radius = 2F;
-        power = 1000.0F;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
         animationType = CastAnimation.Projectile;
@@ -36,7 +33,6 @@ public class GroundStrikeBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
-        _scale = _objectForSpell.transform.lossyScale.x; //overriding 
         radius = _scale * 1.5f;
 
         var position = _objectForSpell.transform.position + _direction * _scale;
@@ -68,7 +64,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * _damage / 2f * _scale);
+                col.attachedRigidbody.AddForce(knockbackDirection * power * knockbackScale * _damage / 2f * _scale);
             }
 
         }

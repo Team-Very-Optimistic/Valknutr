@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,5 +46,45 @@ public class PlayerHealth : HealthScript
 
         return true;
     }
-    
+
+    public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
+    {
+        Debug.Log(this.gameObject);
+        Debug.Log("called coroutine");
+        //Ticks starts after timeInterval and ends on last frame(?)
+        float timeInterval = totalDuration / (float)numTicks;
+        Debug.Log(timeInterval);
+
+        for (int i = 0; i < numTicks; i++)
+        {
+            Debug.Log("before wait for tick " + i);
+            yield return new WaitForSeconds(timeInterval);
+            Debug.Log("after wait for tick " + i);
+
+            Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
+            GameObject damageText = Instantiate(damageTextPrefab);
+            damageText.GetComponent<DamageText>().SetDamageTextProperties(damagePerTick, worldPositionText, damageColor);
+
+            if (shields.Count > 0)
+            {
+                var shield = shields.Dequeue();
+                bool isDestroyed = shield.Damage(damagePerTick);
+                if (!isDestroyed)
+                {
+                    shields.Enqueue(shield);
+                }
+            }
+            else
+            {
+                currentHealth -= damagePerTick;
+                PlayHurtSound(damagePerTick);
+                EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damagePerTick);
+                if (currentHealth <= 0.0f)
+                {
+                    GetComponent<PlayerDeathSequence>().StartDeathSequence();
+                    Destroy(this);
+                }
+            }
+        }
+    }
 }

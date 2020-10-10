@@ -20,15 +20,20 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            var damageScript = GetComponent<Damage>();
-            damageScript.SetDamage(_damage);
-            damageScript.DealDamage(other);
+            if (other.gameObject.GetComponent<PlayerHealth>() != null && other.GetType() == typeof(CapsuleCollider))
+            {
+                var damageScript = GetComponent<Damage>();
+                damageScript.SetDamage(_damage);
+                damageScript.DealDamage(other);
+                Destroy(gameObject);
+            }
         }
-
-        if(!other.gameObject.tag.Equals("Enemy") && !other.gameObject.tag.Equals("Projectile"))
+        else if (!other.gameObject.tag.Equals("Enemy") && !other.gameObject.tag.Equals("Projectile"))
         {
-            Debug.Log(other.gameObject);
+            // Debug.Log(other.gameObject);
             Destroy(gameObject);
         }
+
+
     }
 }

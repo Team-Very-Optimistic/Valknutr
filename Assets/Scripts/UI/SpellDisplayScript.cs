@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Image = UnityEngine.UIElements.Image;
+using Image = UnityEngine.UI.Image;
 
 public class SpellDisplayScript : MonoBehaviour
 {
     public Spell spell;
 
     public Slider slider;
-    public Image[] renderers;
+    public Image[] displays;
 
     private void Start()
     {
@@ -19,11 +19,17 @@ public class SpellDisplayScript : MonoBehaviour
 
     private void Update()
     {
-        slider.value = 1 - spell.GetCooldownRemainingPercentage();
+        if (spell)
+            slider.value = spell.GetCooldownRemainingPercentage();
     }
 
     public void SetSpell(Spell newSpell)
     {
         spell = newSpell;
+        var newSprite = spell ? spell._UIsprite : null;
+        foreach (var display in displays)
+        {
+            display.sprite = newSprite;
+        }
     }
 }

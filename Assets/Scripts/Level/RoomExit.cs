@@ -27,11 +27,14 @@ public class RoomExit : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = isConnected ? Color.white : Color.gray;
+        // Gizmos.DrawSphere(transform.position, 1f);
         Gizmos.DrawLine(transform.position, transform.position + transform.forward);
         if (isConnected)
         {
             Gizmos.color = isOpen ? Color.green : Color.red;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * 2);
+            Gizmos.DrawLine(transform.position, _connectedExit.transform.position);
         }
     }
 
@@ -44,21 +47,23 @@ public class RoomExit : MonoBehaviour
         other.isConnected = true;
     }
 
-    public void Open()
+    public bool Open()
     {
-        // print("opening door " + gameObject.name);
-        if (isLocked) return;
+        if (isLocked) return false;
+        var didOpen = !isOpen;
+        _Open();
+        
+        if (!isConnected || _connectedExit == null || _connectedExit.isOpen) return false;
+        didOpen = _connectedExit.Open() || didOpen;
+        return didOpen;
+    }
 
+    private void _Open()
+    {
         isOpen = true;
         _renderer.enabled = false;
         _collider.enabled = false;
         _navMeshObstacle.enabled = false;
-        // print("door unlocked");
-
-        // Open other door
-        if (!isConnected || _connectedExit == null || _connectedExit.isOpen) return;
-        // print("opening connected");
-        _connectedExit.Open();
     }
 
     public void Close()

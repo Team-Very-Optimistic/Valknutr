@@ -30,7 +30,7 @@ public abstract class SpellBase : SpellElement
     [HideInInspector]
     public float _speed;
     
-    [HideInInspector]
+    // [HideInInspector]
     public float _scale = 1;
     
     [HideInInspector]

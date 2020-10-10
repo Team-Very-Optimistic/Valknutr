@@ -57,6 +57,7 @@ public class SpellCaster : MonoBehaviour
             return;
         }
         spells[index] = spell;
+        uiManager.PopulateSpells();
     }
 
     public void CastSpellAtIndex(int index)

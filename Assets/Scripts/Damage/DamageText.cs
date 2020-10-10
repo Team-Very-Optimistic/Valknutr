@@ -19,6 +19,7 @@ public class DamageText : MonoBehaviour
     public float minScale;
     public float maxScale;
     public float horizontalScaleMultiplier;
+    public float scaleReductionRate;
 
     void Start()
     {
@@ -52,7 +53,7 @@ public class DamageText : MonoBehaviour
             (float)Math.Sin(percentAlive * Math.PI) * canvasYMax);
 
         //Add vertical offset
-        canvasPos += new Vector2(0.0f, canvasYMax * 0.7f);
+        canvasPos += new Vector2(0.0f, canvasYMax * 0.3f);
 
         //Set position to new position
         rectTransform.position = canvasPos;
@@ -60,7 +61,7 @@ public class DamageText : MonoBehaviour
         //Initial scale down 
         if(rectTransform.localScale.y >= minScale)
         {
-            rectTransform.localScale -= new Vector3(0.05f * horizontalScaleMultiplier, 0.05f, 0.05f);
+            rectTransform.localScale -= new Vector3(scaleReductionRate * horizontalScaleMultiplier, scaleReductionRate, scaleReductionRate);
         }
 
         if (timeElapsed >= aliveTime)
