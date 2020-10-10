@@ -29,7 +29,7 @@ namespace UnityStandardAssets.Effects
             }
             foreach (var rb in rigidbodies)
             {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 1, ForceMode.Impulse);
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
             Destroy(gameObject, 4f);
         }

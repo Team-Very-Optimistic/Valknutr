@@ -33,7 +33,7 @@ public class Shield : NoTrigger
 
     private void Update()
     {
-        newParent.position = Vector3.Lerp(newParent.position, parent.position, 0.1f);   
+        newParent.position = Vector3.Lerp(newParent.position, parent.position, 0.2f);   
         transform.RotateAround(newParent.position, Vector3.up, angularSpeed * Time.deltaTime);
     }
     

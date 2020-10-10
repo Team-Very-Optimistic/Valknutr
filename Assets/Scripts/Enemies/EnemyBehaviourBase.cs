@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBehaviourBase : MonoBehaviour
@@ -12,16 +13,22 @@ public class EnemyBehaviourBase : MonoBehaviour
     protected bool isAttacking = false;
 
     //Knockback parameters
+    protected Rigidbody rigidbody;
     protected bool isInKnockback = false;
     public float knockbackVelStoppingThreshold;
+    
+    //For events
+    public static Action<EnemyBehaviourBase> OnEnemyStart;
 
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        rigidbody = GetComponent<Rigidbody>();
         player = GameManager.Instance._player;
         navMeshAgent.SetDestination(player.transform.position);
         isAttacking = false;
+        OnEnemyStart(this);
     }
 
     public virtual void Update()
@@ -59,14 +66,14 @@ public class EnemyBehaviourBase : MonoBehaviour
             //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
             if(!isInKnockback)
             {
-                if(GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                if(rigidbody.velocity.magnitude > 0.0f)
                 {
                     isInKnockback = true;
                 }
             }
             else
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                if (rigidbody.velocity.magnitude <= knockbackVelStoppingThreshold)
                 {
                     EnableKnockback(false);
                     isInKnockback = false;
@@ -79,8 +86,8 @@ public class EnemyBehaviourBase : MonoBehaviour
     {
         //Temporarily enable/disable navMeshAgent and isKinematic
         navMeshAgent.enabled = !isEnabled;
-        GetComponent<Rigidbody>().isKinematic = !isEnabled;
-        GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        rigidbody.isKinematic = !isEnabled;
+        rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isInKnockback = false;
     }
 }

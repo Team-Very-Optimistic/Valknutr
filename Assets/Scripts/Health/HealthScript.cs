@@ -73,6 +73,10 @@ public class HealthScript : MonoBehaviour
 
     public void SetHealth(float health)
     {
+        if (health > maxHealth)
+        {
+            maxHealth = health;
+        }
         currentHealth = health;
     }
 
