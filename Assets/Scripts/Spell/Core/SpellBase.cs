@@ -21,22 +21,16 @@ public abstract class SpellBase : SpellElement
     [HideInInspector]
     public Vector3 _direction; //The vector direction
     
-    [HideInInspector]
     public Vector3 _offset; //The vector offset for any behaviour
     
-    [HideInInspector] 
     public float _damage = 1;
     
-    [HideInInspector]
     public float _speed;
     
-    // [HideInInspector]
     public float _scale = 1;
     
-    [HideInInspector]
     public float _cooldown;
     
-    [HideInInspector] 
     public CastAnimation animationType; //will be mostly ignored by modifiers
     
     [HideInInspector]
@@ -44,7 +38,34 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action behaviour; //The behaviour is the one being invoked when spell is cast.
+
+    protected SpellProperty properties;
+    #endregion
+
+    #region SavedProperties
+    private bool _copied;
+    public struct SpellProperty {
+        public GameObject _objectForSpell; //spell cast in reference to this object
     
+        public Collider[] _objectsCollided; //colliders that have interacted with object for spell
+        public Vector3 _direction; //The vector direction
+    
+        public Vector3 _offset; //The vector offset for any behaviour
+    
+        public float _damage;
+    
+        public float _speed;
+    
+        public float _scale;
+    
+        public float _cooldown;
+    
+        public CastAnimation animationType; //will be mostly ignored by modifiers
+    
+        public int _iterations; //Not used yet
+    
+        public Action behaviour; //The behaviour is the one being invoked when spell is cast.
+    }
     #endregion
 
     public void Cast()
@@ -55,13 +76,35 @@ public abstract class SpellBase : SpellElement
     public void InitializeValues()
     {
         SetValues();
-        // CopyValues();
-        // ResetValues();
+        if(!_copied)
+            CopyValues();
+        ResetValues();
+    }
+
+    private void ResetValues()
+    {
+        _offset = properties._offset;
+        
+        _damage = properties._damage;
+        
+        _speed = properties._speed;
+        
+        _scale = properties._scale;
+        
+        _cooldown = properties._cooldown;
+        
+        animationType = properties.animationType; //will be mostly ignored by modifiers
     }
 
     private void CopyValues()
     {
-        //var f = CreateInstance(Class);
+        properties = new SpellProperty {_offset = _offset, _damage = _damage, _speed = _speed};
+        
+        properties._scale =_scale;
+
+        properties._cooldown = _cooldown;
+        
+        properties.animationType = animationType;
     }
 
     protected abstract void SetValues();

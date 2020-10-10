@@ -6,13 +6,9 @@ public class GroundStrikeBase : SpellBase
     public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
-    private float knockbackScale = 20.0f;
-    public float scale = 1f;
-    public float damage = 2f;
     
     protected override void SetValues()
     {
-        _damage = damage;
         _speed = 2f;
         _cooldown = .2f;
         _objectForSpell = GameManager.Instance._weapon;
@@ -34,7 +30,6 @@ public class GroundStrikeBase : SpellBase
     public override void SpellBehaviour(Spell spell)
     {
         radius = _scale * 1.5f;
-
         var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
@@ -64,7 +59,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * knockbackScale * _damage / 2f * _scale);
+                col.attachedRigidbody.AddForce(knockbackDirection * power * (_damage / 2f) * _scale);
             }
 
         }
