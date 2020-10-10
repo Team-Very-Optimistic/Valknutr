@@ -22,13 +22,14 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField]
     private AudioMixer m_MasterMixer;
 
-    [SerializeField]
     private SoundEntry[] m_SfxLibrary;
-
+    [SerializeField]
+    private SFXLibrary _library;
     
-
+   
     void Awake()
     {
+        m_SfxLibrary = _library.m_SfxLibrary;
         foreach(SoundEntry s in m_SfxLibrary)
         {
             GameObject soundObject = new GameObject(s.m_Identifier + " source");

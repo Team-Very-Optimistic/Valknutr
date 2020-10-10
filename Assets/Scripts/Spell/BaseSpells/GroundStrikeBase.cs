@@ -10,7 +10,7 @@ public class GroundStrikeBase : SpellBase
     public float scale = 1f;
     public float damage = 2f;
     
-    public override void Init()
+    protected override void SetValues()
     {
         _damage = damage;
         _speed = 2f;
