@@ -512,7 +512,7 @@ Transform:
   m_GameObject: {fileID: 747411179884346150}
   m_LocalRotation: {x: -0, y: 0.99998903, z: -0, w: 0.0046940334}
   m_LocalPosition: {x: 15.94035, y: 0.00000011920929, z: 7.933674}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children:
   - {fileID: 747411181209231399}
   - {fileID: 747411180173257370}
@@ -586,14 +586,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5d5369887833a41aaeaf3ee777bfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 50
   currentHealth: 10
   destroyOnDeath: 1
   hurtSound: enemyBossHurt
   hurtSoundOnHit: 1
-  isPlayer: 0
   damageTextPrefab: {fileID: 0}
-  damageColor: {r: 1, g: 1, b: 1, a: 1}
+  damageColor: {r: 0, g: 0.27662468, b: 1, a: 1}
 --- !u!114 &747411179884346153
 MonoBehaviour:
   m_ObjectHideFlags: 0

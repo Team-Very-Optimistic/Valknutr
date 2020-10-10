@@ -38,6 +38,9 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     public GameObject stompPrefab;
     public float stompRadius;
     public GameObject rightFeet;
+    public delegate void EventHandler();
+    public static event EventHandler OnBossStart = () => { };
+    public static event EventHandler OnBossDeath = () => { };
 
     //NavMeshAgent SetDestination bug: remaining distance always starts off at zero
     int wait = 0, waitTix = 1;
@@ -47,7 +50,8 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.Instance._player;
+        OnBossStart();
         bossState = BossBehaviourStates.Walking;
         navMeshAgent.SetDestination(player.transform.position);
 
@@ -262,10 +266,12 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     {
         bossState = BossBehaviourStates.Death;
         CancelInvoke("SummonEnemy");
+        OnBossDeath();
     }
 
     private void OnDestroy()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().SetGameWin();
+        if(GameManager.Instance)
+            GameManager.Instance.SetGameWin();
     }
 }

@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class DropsLoot : MonoBehaviour
 {
     public SpellItem _SpellItem;
+    
     private Vector3 pos;
     public void Start()
     {
