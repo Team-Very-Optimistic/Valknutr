@@ -1,9 +1,9 @@
-﻿
+﻿﻿
 using UnityEngine;
 
 public class GroundStrikeBase : SpellBase
 {
-    public float radius = 2F;
+    private float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
     

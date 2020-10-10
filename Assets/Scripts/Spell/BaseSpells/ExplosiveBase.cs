@@ -8,15 +8,15 @@ public class ExplosiveBase : SpellBase
 
     protected override void SetValues()
     {
-        // _damage = 10f;
-        // radius = 5.0F;
+        _damage = 10f;
+        radius = 5.0F;
         power = 100.0F;
-        // _scale = 1;
-        // _speed = 5.5f;
-        // _cooldown = 5f;
+        _scale = 1;
+        _speed = 5.5f;
+        _cooldown = 5f;
         _offset = Vector3.up  + _player.forward * 1.5f;
         _objectForSpell = SpellManager.Instance.explosionObject;
-        // animationType = CastAnimation.Bomb;
+        animationType = CastAnimation.Bomb;
     }
 
     /// <summary>

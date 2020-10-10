@@ -104,14 +104,16 @@ public class Spell : SpellItem
 
     public void AddBaseType(SpellBase baseType)
     {
-        baseType.InitializeValues();
-        spellBase = baseType;
-        castAnimation = baseType.animationType;
+        SpellBase copy = Instantiate(baseType);
+        copy.InitializeValues();
+        spellBase = copy;
+        castAnimation = copy.animationType;
     }
 
     public void AddModifier(SpellModifier modifier)
     {
-        _spellModifiers.Add(modifier);
+        SpellModifier copy = Instantiate(modifier);
+        _spellModifiers.Add(copy);
     }
 
     public bool IsReady()

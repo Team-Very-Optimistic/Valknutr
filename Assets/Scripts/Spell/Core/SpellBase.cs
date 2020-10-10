@@ -43,13 +43,11 @@ public abstract class SpellBase : SpellElement
     #endregion
 
     #region PropertyManagement
+    private bool _copied; //why is persistent data so arhghghgh
     
-    private bool _copied;
-    public struct SpellProperty {
+    [Serializable]
+    protected class SpellProperty : ScriptableObject{
         public GameObject _objectForSpell; //spell cast in reference to this object
-    
-        public Collider[] _objectsCollided; //colliders that have interacted with object for spell
-        public Vector3 _direction; //The vector direction
     
         public Vector3 _offset; //The vector offset for any behaviour
     
@@ -62,10 +60,15 @@ public abstract class SpellBase : SpellElement
         public float _cooldown;
     
         public CastAnimation animationType; //will be mostly ignored by modifiers
-    
-        public int _iterations; //Not used yet
-    
-        public Action behaviour; //The behaviour is the one being invoked when spell is cast.
+
+        public Action OnDestroyed;
+        /*
+         * Required or else the data would be modified
+         */
+        public void OnDestroy()
+        {
+            OnDestroyed();
+        }
     }
     
     private void ResetValues()
@@ -85,23 +88,19 @@ public abstract class SpellBase : SpellElement
 
     private void CopyValues()
     {
-        properties = new SpellProperty {_offset = _offset, _damage = _damage, _speed = _speed};
-        
-        properties._scale =_scale;
+        properties = (SpellProperty) CreateInstance(typeof(SpellProperty));
 
+        properties._offset = _offset;
+        properties._damage = _damage;
+        properties._speed = _speed;
+        properties._scale = _scale;
         properties._cooldown = _cooldown;
-        
         properties.animationType = animationType;
+        properties.OnDestroyed += ResetValues;
+        properties.OnDestroyed += () => _copied = false; //neccessaryarayrayryaryryayasyyasrry
     }
     
-    /*
-     * Required or else the data would be modified
-     */
-    public void OnDestroy()
-    {
-        ResetValues();
-    }
-    
+
     #endregion
     
     public void Cast()
@@ -117,7 +116,10 @@ public abstract class SpellBase : SpellElement
             _copied = true;
             CopyValues();
         }
-        ResetValues();
+        else
+        {
+            ResetValues();
+        }
     }
     protected abstract void SetValues();
     //public virtual void AfterModified(){}

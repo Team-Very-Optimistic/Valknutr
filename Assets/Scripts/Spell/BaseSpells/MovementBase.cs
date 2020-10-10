@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 using Random = UnityEngine.Random;
