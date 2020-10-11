@@ -15,9 +15,11 @@ public class RepeatSpellModifier : SpellModifier
             oldBehavior.Invoke();
             if (--n < 0) return;
             var existingHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
-            if (existingHandler == null)
-                existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
-            existingHandler.AddEvent(Invoke);
+            if (existingHandler != null)
+                //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
+    
+                existingHandler.AddEvent(Invoke);
+            
             this.action = action;
         };
 

@@ -15,6 +15,8 @@ public class EffectManager : Singleton<EffectManager>
     private float ori; 
     private float mixerRedOutRedIn;
     private Light _staffLight;
+    private float oriIntensity;
+
     [System.Serializable]
     public class EffectEntry
     {
@@ -26,6 +28,7 @@ public class EffectManager : Singleton<EffectManager>
     [SerializeField]
     private EffectEntry[] m_VFXLibrary;
 
+
     public void Start()
     {
         _staffLight = GameManager.Instance._weapon.GetComponent<Light>();
@@ -34,6 +37,8 @@ public class EffectManager : Singleton<EffectManager>
         m_ColorGrading = m_postProcessVolume.profile.GetSetting<ColorGrading>();
         ori = m_Vignette.intensity.value;
         mixerRedOutRedIn = m_ColorGrading.mixerRedOutRedIn.value;
+        oriIntensity = _staffLight.intensity;
+
     }
 
     public static GameObject PlayEffectAtPosition(string identifier, Vector3 position, Vector3 scale = new Vector3())
@@ -78,7 +83,6 @@ public class EffectManager : Singleton<EffectManager>
     {
         if (_staffLight)
         {
-            var oriIntensity = _staffLight.intensity;
             _staffLight.intensity *= 8f;
             DOTween.To(() => _staffLight.intensity, 
                 x => _staffLight.intensity =  x, 

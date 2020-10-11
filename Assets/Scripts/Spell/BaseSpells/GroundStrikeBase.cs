@@ -13,6 +13,18 @@ public class GroundStrikeBase : SpellBase
         damageScript = _objectForSpell.GetComponent<Damage>();
     }
     
+    protected override void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
+    {
+        if (screenshake)
+        {
+            ScreenShakeManager.Instance.ScreenShake(duration, intensity);
+        }
+        
+        AudioManager.PlaySoundAtPosition("groundStrike", pos);
+        EffectManager.PlayEffectAtPosition("groundStrike", pos + _offset, 
+            new Vector3(_scale,_scale,_scale));
+        EffectManager.Instance.UseStaffEffect();
+    }
     
     /// <summary>
     /// todo: use the following properties:
@@ -30,8 +42,7 @@ public class GroundStrikeBase : SpellBase
         var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
-        EffectManager.PlayEffectAtPosition("groundStrike", position + _offset, 
-            new Vector3(_scale,_scale,_scale));
+        
         SpellEffects(true, 0.1f, intensity, position);
         
         var cols = Physics.OverlapSphere(position, radius);

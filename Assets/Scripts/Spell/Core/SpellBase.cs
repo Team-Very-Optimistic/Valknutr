@@ -133,11 +133,11 @@ public abstract class SpellBase : SpellElement
             ScreenShakeManager.Instance.ScreenShake(duration, intensity);
         }
 
-        if (pos != default)
-        {
-            AudioManager.PlaySoundAtPosition(name, pos);
-
-        }
+        // if (pos != default)
+        // {
+        //     AudioManager.PlaySoundAtPosition(name, pos);
+        //
+        // }
         EffectManager.Instance.UseStaffEffect();
     }
 
