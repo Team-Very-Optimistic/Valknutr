@@ -17,11 +17,15 @@ public class Summon : NoTrigger
         _speed = speed;
         _damage = damage;
         transform.localScale *= scale;
+        
+    }
+
+    public void Start()
+    {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemy = GameObject.FindWithTag("Enemy");
     }
-    
     public void DamageEnemy(){}
 
     public void SetPlayerBarrier()
@@ -52,7 +56,6 @@ public class Summon : NoTrigger
         {
             if (!navMeshAgent.isStopped) navMeshAgent.isStopped = true;
 
-            //Set rotation to player when fighting (use enemy y to prevent rotation)
             transform.LookAt(new Vector3(enemy.transform.position.x, this.transform.position.y, enemy.transform.position.z));
         }
     }

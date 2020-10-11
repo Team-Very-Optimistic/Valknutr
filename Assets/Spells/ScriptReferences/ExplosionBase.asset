@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: ExplosionBase
   m_EditorClassIdentifier: 
   _objectForSpell: {fileID: 0}
-  _objectCollided: {fileID: 0}
-  _posDiff: {x: 0, y: 0, z: 0}
-  _cooldown: 0
-  _iterations: 1
+  _objectsCollided: []
+  _direction: {x: 0, y: 0, z: 0}
+  _offset: {x: 0, y: 0, z: 0}
+  _damage: 10
   _speed: 0
-  _damage: 1
+  _scale: 1
+  _cooldown: 0
   animationType: 0
+  _iterations: 1
   radius: 7
   power: 10

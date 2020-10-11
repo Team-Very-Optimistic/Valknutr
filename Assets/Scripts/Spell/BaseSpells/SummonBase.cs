@@ -1,30 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu]
-class TimeSlowBase : SpellBase
+class SummonBase : SpellBase
 {
     public float _duration;
+    
     protected override void SetValues()
     {
-        _speed = 0.2f;
-        _cooldown = 8f;
-
-        _duration = 1.5f;
-
-        _objectForSpell = null;
+        _cooldown = 30f;
+        _duration = 30f;
     }
     public override void SpellBehaviour(Spell spell)
     {
-        var timeScale = _speed * (_speed/ 0.2f) * (_speed/ 0.2f);
-        Time.timeScale = timeScale;
-        GameManager.Instance.StartCoroutine(TimeSlow(timeScale * _duration));
+        _objectForSpell = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.identity);
+        _objectForSpell.GetComponent<Summon>().Set(_duration, _speed, _damage, _scale);
     }
-    
-    IEnumerator TimeSlow(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        Time.timeScale = 1;
-    }
-    
 }

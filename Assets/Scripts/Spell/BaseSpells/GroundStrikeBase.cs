@@ -30,10 +30,9 @@ public class GroundStrikeBase : SpellBase
         var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
         var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
-        AudioManager.PlaySoundAtPosition("groundStrike", position);
         EffectManager.PlayEffectAtPosition("groundStrike", position + _offset, 
             new Vector3(_scale,_scale,_scale));
-        SpellEffects(true, 0.1f, intensity);
+        SpellEffects(true, 0.1f, intensity, position);
         
         var cols = Physics.OverlapSphere(position, radius);
         

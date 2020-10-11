@@ -3,16 +3,17 @@
 [RequireComponent(typeof(Collider))]
 public class Projectile : TriggerEventHandler
 {
-    public float _damage = 3;
-    public Vector3 direction;
-    public float speed;
+    private float _damage = 3;
+    private Vector3 direction;
+    private float speed;
     public float timeToExpire = 20f;
     private float explosionRadius = 2f;
     private float explosionForce = 500f;
 
-    public void Launch(Vector3 direction, float speed)
+    public void Launch(Vector3 direction, float speed, float damage)
     {
         this.direction = direction;
+        this._damage = damage;
         this.speed = speed;
         gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
         AudioManager.PlaySoundAtPosition("projectileLaunch", transform.position);

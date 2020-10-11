@@ -126,11 +126,17 @@ public abstract class SpellBase : SpellElement
 
     public abstract void SpellBehaviour(Spell spell);
 
-    protected virtual void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f)
+    protected virtual void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
     {
         if (screenshake)
         {
             ScreenShakeManager.Instance.ScreenShake(duration, intensity);
+        }
+
+        if (pos != default)
+        {
+            AudioManager.PlaySoundAtPosition(name, pos);
+
         }
         EffectManager.Instance.UseStaffEffect();
     }
