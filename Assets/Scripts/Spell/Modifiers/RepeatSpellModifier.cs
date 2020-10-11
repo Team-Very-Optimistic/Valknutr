@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class RepeatSpellModifier : SpellModifier
 {
     private int n = 2;

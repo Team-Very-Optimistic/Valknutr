@@ -1,4 +1,8 @@
-﻿public class DamageIncreaseModifier : SpellModifier
+﻿
+using UnityEngine;
+
+[CreateAssetMenu]
+public class DamageIncreaseModifier : SpellModifier
 {
     private int damageMultiplier = 2;
 

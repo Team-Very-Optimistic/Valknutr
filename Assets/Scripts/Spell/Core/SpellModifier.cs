@@ -10,7 +10,7 @@ public abstract class SpellModifier : SpellElement
     
     public virtual void ModifySpell(SpellBase spell)
     {
-        
+        spell._cooldown *= _cooldownMultiplier;
     }
 
     public virtual SpellBase ModifyBehaviour(SpellBase action)

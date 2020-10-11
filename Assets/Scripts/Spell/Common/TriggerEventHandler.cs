@@ -34,6 +34,15 @@ public abstract class TriggerEventHandler : MonoBehaviour
         OnTriggerEnterEvent -= savedDelegate;
         OnTriggerEnterEvent += trigger;
     }
+    
+    public void AddEvent(EventHandler<Collider> trigger)
+    {
+        OnTriggerEnterEvent += trigger;
+    }
+    public void RemoveEvent(EventHandler<Collider> trigger)
+    {
+        OnTriggerEnterEvent -= trigger;
+    }
 
     /// <summary>
     /// Returns normal functionality
