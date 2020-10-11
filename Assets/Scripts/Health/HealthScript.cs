@@ -33,6 +33,7 @@ public class HealthScript : MonoBehaviour
 
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         GameObject damageText = Instantiate(damageTextPrefab);
+        EffectManager.Instance.EnemyHurtEffect();
         damageText.GetComponent<DamageText>().SetDamageTextProperties(finalDamage, worldPositionText, damageColor);
         if (damage <= 0)
             return false;
