@@ -37,7 +37,7 @@ public class PlayerHealth : HealthScript
         }
         currentHealth -= damage;    
         PlayHurtSound(damage);
-        EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damage);
+        EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damage / currentHealth);
         if (currentHealth <= 0.0f)
         {
             GetComponent<PlayerDeathSequence>().StartDeathSequence();
@@ -78,7 +78,7 @@ public class PlayerHealth : HealthScript
             {
                 currentHealth -= damagePerTick;
                 PlayHurtSound(damagePerTick);
-                EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damagePerTick);
+                EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damagePerTick / currentHealth);
                 if (currentHealth <= 0.0f)
                 {
                     GetComponent<PlayerDeathSequence>().StartDeathSequence();

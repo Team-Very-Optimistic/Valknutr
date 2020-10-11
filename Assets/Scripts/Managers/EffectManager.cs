@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -13,6 +14,7 @@ public class EffectManager : Singleton<EffectManager>
     private float playerHurtIntensity;
     private float ori; 
     private float mixerRedOutRedIn;
+    private Light _staffLight;
     [System.Serializable]
     public class EffectEntry
     {
@@ -26,6 +28,7 @@ public class EffectManager : Singleton<EffectManager>
 
     public void Start()
     {
+        _staffLight = GameManager.Instance._weapon.GetComponent<Light>();
         m_postProcessVolume = GameObject.Find("PostProcess").GetComponent<PostProcessVolume>();
         m_Vignette = m_postProcessVolume.profile.GetSetting<Vignette>();
         m_ColorGrading = m_postProcessVolume.profile.GetSetting<ColorGrading>();
@@ -51,9 +54,9 @@ public class EffectManager : Singleton<EffectManager>
         return temp;
     }
 
-    public void PlayerHurtEffect(Vector3 pos, float damage = 1f)
+    public void PlayerHurtEffect(Vector3 pos, float damageRatio)
     {
-        playerHurtIntensity = Mathf.Min(1, 0.05f * damage);
+        playerHurtIntensity = Mathf.Min(1, damageRatio);
         PlayEffectAtPosition("bloodExplosion", pos).transform.localScale *= 4 * playerHurtIntensity;
         StartCoroutine(PlayerHurt());
     }
@@ -69,5 +72,17 @@ public class EffectManager : Singleton<EffectManager>
         Time.timeScale = 1;
         m_Vignette.intensity.value = ori;
         m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn;
+    }
+
+    public void UseStaffEffect(float time = 0.15f)
+    {
+        if (_staffLight)
+        {
+            var oriIntensity = _staffLight.intensity;
+            _staffLight.intensity *= 8f;
+            DOTween.To(() => _staffLight.intensity, 
+                x => _staffLight.intensity =  x, 
+                oriIntensity, time).SetEase(Ease.InQuad);
+        }
     }
 }

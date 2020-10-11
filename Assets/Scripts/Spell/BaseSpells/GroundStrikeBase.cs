@@ -12,7 +12,8 @@ public class GroundStrikeBase : SpellBase
         _objectForSpell = GameManager.Instance._weapon;
         damageScript = _objectForSpell.GetComponent<Damage>();
     }
-
+    
+    
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes
@@ -28,11 +29,11 @@ public class GroundStrikeBase : SpellBase
         radius = _scale * 1.5f;
         var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
-        ScreenShakeManager.Instance.ScreenShake(0.1f, 0.1f);
+        var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
         AudioManager.PlaySoundAtPosition("groundStrike", position);
         EffectManager.PlayEffectAtPosition("groundStrike", position + _offset, 
             new Vector3(_scale,_scale,_scale));
-
+        SpellEffects(true, 0.1f, intensity);
         
         var cols = Physics.OverlapSphere(position, radius);
         
@@ -55,7 +56,7 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * power * (_damage / 2f) * _scale);
+                col.attachedRigidbody.AddForce(knockbackDirection * (power * (_damage / properties._damage) * _scale));
             }
 
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -11,11 +12,24 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     public void Awake()
     {
         EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
+        StartCoroutine(IncreaseDifficulty(1, 5f));
+    }
+
+    public void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 
     private void ManageDifficulty(EnemyBehaviourBase enemyBehaviourBase)
     {
         IncreaseEnemyHealth(enemyBehaviourBase);
+        IncreaseEnemyDamage(enemyBehaviourBase);
+    }
+
+    private void IncreaseEnemyDamage(EnemyBehaviourBase enemyBehaviourBase)
+    {
+        var dps = enemyBehaviourBase.GetComponent<Damage>();
+        dps.SetDamage(dps.GetDamage() * difficultyLevel);
     }
 
     public void IncreaseEnemyHealth(EnemyBehaviourBase enemyBehaviourBase)
@@ -24,8 +38,10 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         hp.SetHealth(hp.maxHealth * difficultyLevel);
     }
 
-    public void IncreaseDifficulty(int amount)
+    public IEnumerator IncreaseDifficulty(int amount, float time)
     {
         difficultyLevel += amount;
+        yield return new WaitForSeconds(time);
+        StartCoroutine(IncreaseDifficulty(amount, time));
     }
 }
