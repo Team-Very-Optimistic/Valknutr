@@ -29,6 +29,6 @@ public class DropsLoot : MonoBehaviour
         hasDropped = true;
         pos = transform.position;
         if(GameManager.Instance!= null)
-            GameManager.Instance.SpawnItem(pos, _SpellItem);
+            GameManager.Instance.SpawnItem(pos + Vector3.up * 0.5f, _SpellItem);
     }
 }
