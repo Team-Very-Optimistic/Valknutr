@@ -6,6 +6,7 @@ public class RepeatSpellModifier : SpellModifier
 {
     private int n = 2;
     private SpellBase action;
+    private TriggerEventHandler eventHandler;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
@@ -13,12 +14,13 @@ public class RepeatSpellModifier : SpellModifier
         Action temp = () =>
         {
             oldBehavior.Invoke();
+            Debug.Log(n);
             if (--n < 0) return;
-            var existingHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
-            if (existingHandler != null)
+            eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
+            if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
     
-                existingHandler.AddEvent(Invoke);
+                eventHandler.AddEvent(Invoke);
             
             this.action = action;
         };
@@ -31,6 +33,7 @@ public class RepeatSpellModifier : SpellModifier
     public void Invoke(Collider collider)
     {
         action._objectForSpell = collider.gameObject;
+        eventHandler.RemoveEvent(Invoke);
         action.behaviour.Invoke();
     }
 }

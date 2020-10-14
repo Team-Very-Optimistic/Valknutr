@@ -89,4 +89,17 @@ public class EffectManager : Singleton<EffectManager>
                 oriIntensity, time).SetEase(Ease.InQuad);
         }
     }
+
+    public void EnemyHurtEffect()
+    {
+        StartCoroutine(EnemyHurt());
+    }
+
+    IEnumerator EnemyHurt()
+    {
+        Time.timeScale = 0.1f;
+        ScreenShakeManager.Instance.ScreenShake(0.05f, 0.5f);
+        yield return new WaitForSeconds(0.01f);
+        Time.timeScale = 1;
+    }
 }
