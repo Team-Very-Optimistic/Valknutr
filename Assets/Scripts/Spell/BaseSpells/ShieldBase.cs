@@ -9,8 +9,6 @@ class ShieldBase : SpellBase
     protected override void SetValues()
     {
         offsetIncrement = 45f;
-        _objectForSpell = SpellManager.Instance.shieldObject;
-        animationType = CastAnimation.Shield;
     }
     
     public override void SpellBehaviour(Spell spell)

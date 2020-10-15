@@ -31,13 +31,13 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     private void IncreaseEnemyDamage(EnemyBehaviourBase enemyBehaviourBase)
     {
         var dps = enemyBehaviourBase.GetComponent<Damage>();
-        dps.SetDamage(dps.GetDamage() * difficultyLevel);
+        dps.SetDamage(dps.GetDamage() * difficultyLevel / 2);
     }
 
     public void IncreaseEnemyHealth(EnemyBehaviourBase enemyBehaviourBase)
     {
         var hp = enemyBehaviourBase.GetComponent<HealthScript>();
-        hp.SetHealth(hp.maxHealth * difficultyLevel);
+        hp.SetHealth(hp.maxHealth * difficultyLevel/ 2);
     }
 
     public IEnumerator IncreaseDifficulty(int amount, float time)
