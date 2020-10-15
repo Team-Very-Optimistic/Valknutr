@@ -12,7 +12,7 @@ public abstract class SpellBase : SpellElement
     public static Transform _player; //allows all spell element to have easy reference to player
     
     #region Properties
-    [HideInInspector]
+    [SerializeField]
     public GameObject _objectForSpell; //spell cast in reference to this object
     
     [HideInInspector]
@@ -39,6 +39,7 @@ public abstract class SpellBase : SpellElement
     [HideInInspector]
     public Action behaviour; //The behaviour is the one being invoked when spell is cast.
 
+    [SerializeField]
     protected SpellProperty properties;
     #endregion
 
@@ -73,6 +74,7 @@ public abstract class SpellBase : SpellElement
     
     private void ResetValues()
     {
+        _objectForSpell = properties._objectForSpell;
         _offset = properties._offset;
         
         _damage = properties._damage;
@@ -89,7 +91,7 @@ public abstract class SpellBase : SpellElement
     private void CopyValues()
     {
         properties = (SpellProperty) CreateInstance(typeof(SpellProperty));
-
+        properties._objectForSpell = _objectForSpell;
         properties._offset = _offset;
         properties._damage = _damage;
         properties._speed = _speed;
