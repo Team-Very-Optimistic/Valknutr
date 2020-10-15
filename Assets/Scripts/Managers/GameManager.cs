@@ -73,5 +73,6 @@ public class GameManager : Singleton<GameManager>
     public void IncreasePlayerHealth()
     {
         _playerHealth.IncreasePlayerHealth(healthPickupValue);
+        
     }
 }

@@ -19,6 +19,9 @@ public class HealthPickup : MonoBehaviour
         if (other.gameObject == GameManager.Instance._player)
         {
             GameManager.Instance.IncreasePlayerHealth();
+            DamageTextManager.SpawnDamage(GameManager.Instance.healthPickupValue, transform.position, Color.green);
+            AudioManager.PlaySoundAtPosition("healthPickup", transform.position);
+            Destroy(gameObject);
         }
     }
 
