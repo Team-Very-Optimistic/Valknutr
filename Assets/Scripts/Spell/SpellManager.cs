@@ -5,10 +5,7 @@ public class SpellManager : Singleton<SpellManager>
     /*
      * Used as a database to store prefabs
      */
-    public GameObject projectileObject;
-    public GameObject shieldObject;
     public GameObject fireObject;
-    public GameObject explosionObject;
     public Spell[] _defaultSpells;
     public int maxShields = 10;
     private int currShields = 0;

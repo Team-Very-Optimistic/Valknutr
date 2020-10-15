@@ -30,8 +30,14 @@ public class UIItem : Selectable, IPointerClickHandler
         _canvasGroup = GetComponent<CanvasGroup>();
         if (_spellItem != null)
         {
-            GetComponent<Image>().sprite = _spellItem._UIsprite;
+            transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
             _tooltipString = _spellItem._tooltipMessage;
+        }
+
+        if (_spellItem.isBaseSpell)
+        {
+            GetComponent<Mask>().enabled = false;
+            //transform.GetChild(0).GetComponent<Image>().enabled = false;
         }
         _tooltipObject = transform.Find("Tooltip").gameObject;
         _tooltipRectTransform = _tooltipObject.GetComponent<RectTransform>();
@@ -59,7 +65,7 @@ public class UIItem : Selectable, IPointerClickHandler
     {
         if (_spellItem != null)
         {
-            GetComponent<Image>().sprite = _spellItem._UIsprite;
+            transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
             _tooltipString = _spellItem._tooltipMessage;
         }
     }

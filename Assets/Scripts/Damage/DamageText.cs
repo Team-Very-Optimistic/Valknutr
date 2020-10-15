@@ -8,7 +8,7 @@ public class DamageText : MonoBehaviour
 {
     private Vector3 worldLocationStart;
     private float timeElapsed = 0.0f;
-    private GameObject mainCamera;
+    private Camera mainCamera;
     private Canvas canvas;
     private Boolean isMovingLeft;
     private RectTransform rectTransform;
@@ -23,7 +23,7 @@ public class DamageText : MonoBehaviour
 
     void Start()
     {
-        mainCamera = GameObject.Find("MainCamera");
+        mainCamera = Camera.main;
         isMovingLeft = (UnityEngine.Random.value < 0.5);
 
         //Set max scale
@@ -45,7 +45,7 @@ public class DamageText : MonoBehaviour
         float percentAlive = timeElapsed / aliveTime;
 
         //World -> Canvas location
-        Vector2 canvasPos = mainCamera.GetComponent<Camera>().WorldToScreenPoint(worldLocationStart);
+        Vector2 canvasPos = mainCamera.WorldToScreenPoint(worldLocationStart);
 
         //Place along sin trajectory
         canvasPos += new Vector2(
