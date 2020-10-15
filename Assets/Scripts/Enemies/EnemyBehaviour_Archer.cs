@@ -99,8 +99,10 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
                             ResetWaitTicks();
                         }
-
-                        //Transition to HoldBow done by HoldBow() called by animation event
+                        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("DrawBow") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                        {
+                            HoldBow();
+                        }
 
                         break;
                     }
@@ -163,7 +165,10 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                         //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
                         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
-                        //Transition done to DrawBow/Running by DrawBowOrRun() called by animation event
+                        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Release") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                        {
+                            DrawBowOrRun();
+                        }
 
                         break;
                     }
@@ -185,6 +190,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                 {
                     EnableKnockback(false);
                     isInKnockback = false;
+
+                    ResetWaitTicks();
                 }
             }
         }
@@ -204,6 +211,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
         arrow.GetComponent<EnemyProjectile>().Launch(fireDirection, arrowSpeed);
 
         HideRedIndicator();
+
+        ResetWaitTicks();
     }
 
     public void HoldBow()
@@ -217,6 +226,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
         //ShowRedIndicator after duration
         Invoke("ShowRedIndicator", holdBowDuration / 1.5f);
+
+        ResetWaitTicks();
     }
 
     //Called by animation event
@@ -243,6 +254,8 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
             //Start navMeshAgent
             navMeshAgent.isStopped = false;
         }
+
+        ResetWaitTicks();
     }
 
     private void ShowRedIndicator()
