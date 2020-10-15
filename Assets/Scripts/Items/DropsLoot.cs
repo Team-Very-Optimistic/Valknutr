@@ -16,6 +16,8 @@ public class DropsLoot : MonoBehaviour
 
     public void OnDestroy()
     {
+        if (GameManager.Instance == null) return;
+        
         pos = transform.position;
         if (isGameObjectDrop)
         {
@@ -24,7 +26,7 @@ public class DropsLoot : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance != null)
+           
                 GameManager.Instance.SpawnItem(pos);
         }
     }
