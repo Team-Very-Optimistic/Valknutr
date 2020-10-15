@@ -5,8 +5,9 @@ using Random = UnityEngine.Random;
 
 public class DropsLoot : MonoBehaviour
 {
-    public SpellItem _SpellItem;
-    
+    public GameObject _itemDrop;
+    public bool isGameObjectDrop;
+    public float dropChance;
     private Vector3 pos;
     public void Start()
     {
@@ -16,7 +17,15 @@ public class DropsLoot : MonoBehaviour
     public void OnDestroy()
     {
         pos = transform.position;
-        if(GameManager.Instance!= null)
-            GameManager.Instance.SpawnItem(pos, _SpellItem);
+        if (isGameObjectDrop)
+        {
+            if (Random.value < dropChance)
+                Instantiate(_itemDrop, pos, Quaternion.identity);
+        }
+        else
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.SpawnItem(pos);
+        }
     }
 }
