@@ -15,8 +15,6 @@ public class ExplosiveBase : SpellBase
         _speed = 5.5f;
         _cooldown = 5f;
         _offset = Vector3.up  + _player.forward * 1.5f;
-        _objectForSpell = SpellManager.Instance.explosionObject;
-        animationType = CastAnimation.Bomb;
     }
 
     /// <summary>

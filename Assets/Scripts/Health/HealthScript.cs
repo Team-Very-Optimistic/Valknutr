@@ -11,8 +11,7 @@ public class HealthScript : MonoBehaviour
     public string hurtSound;
     public bool hurtSoundOnHit = true;
   
-    [HideInInspector]
-    public GameObject damageTextPrefab;
+
 
     //Damage protection multipliers
     private float damageMultiplier = 1.0f;
@@ -22,7 +21,7 @@ public class HealthScript : MonoBehaviour
     public virtual void Start()
     {
         currentHealth = maxHealth;
-        damageTextPrefab = DamageTextManager.Instance.damageTextPrefab;
+       
         
         height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
@@ -32,9 +31,8 @@ public class HealthScript : MonoBehaviour
         float finalDamage = damage * damageMultiplier;
 
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        GameObject damageText = Instantiate(damageTextPrefab);
+        DamageTextManager.SpawnDamage(finalDamage, worldPositionText, damageColor);
         EffectManager.Instance.EnemyHurtEffect();
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(finalDamage, worldPositionText, damageColor);
         if (damage <= 0)
             return false;
         if (hurtSoundOnHit)

@@ -20,7 +20,7 @@ public class GroundStrikeBase : SpellBase
             ScreenShakeManager.Instance.ScreenShake(duration, intensity);
         }
         
-        AudioManager.PlaySoundAtPosition("groundStrike", pos);
+        AudioManager.PlaySoundAtPosition("groundStrike", pos, 0, Random.Range(0.8f, 1.3f));
         EffectManager.PlayEffectAtPosition("groundStrike", pos + _offset, 
             new Vector3(_scale,_scale,_scale));
         EffectManager.Instance.UseStaffEffect();

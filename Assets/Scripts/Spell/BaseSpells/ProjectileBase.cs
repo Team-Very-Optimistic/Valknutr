@@ -10,7 +10,6 @@ class ProjectileBase : SpellBase
     protected override void SetValues()
     {
         offsetIncrement = 7f;
-        _objectForSpell = SpellManager.Instance.projectileObject;
     }
     
     /// <summary>

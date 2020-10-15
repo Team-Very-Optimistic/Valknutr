@@ -19,8 +19,7 @@ public class PlayerHealth : HealthScript
     public override bool ApplyDamage(float damage)
     {
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        GameObject damageText = Instantiate(damageTextPrefab);
-        damageText.GetComponent<DamageText>().SetDamageTextProperties(damage, worldPositionText, damageColor);
+        DamageTextManager.SpawnDamage(damage, worldPositionText, damageColor);
         if (damage <= 0)
             return false;
 
@@ -62,8 +61,7 @@ public class PlayerHealth : HealthScript
             Debug.Log("after wait for tick " + i);
 
             Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-            GameObject damageText = Instantiate(damageTextPrefab);
-            damageText.GetComponent<DamageText>().SetDamageTextProperties(damagePerTick, worldPositionText, damageColor);
+            DamageTextManager.SpawnDamage(damagePerTick, worldPositionText, damageColor);
 
             if (shields.Count > 0)
             {
@@ -85,6 +83,15 @@ public class PlayerHealth : HealthScript
                     Destroy(this);
                 }
             }
+        }
+    }
+
+    public void IncreasePlayerHealth(float healthIncrease)
+    {
+        currentHealth += healthIncrease;
+        if (currentHealth > maxHealth)
+        {
+            maxHealth += healthIncrease;
         }
     }
 }
