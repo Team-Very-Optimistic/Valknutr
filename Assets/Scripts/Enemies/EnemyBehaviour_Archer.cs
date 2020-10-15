@@ -296,8 +296,6 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
         if (redIndicatorInstance != null)
         {
             Destroy(redIndicatorInstance);
-            Console.WriteLine("destryoed instance");
         } 
-        
     }
 }
