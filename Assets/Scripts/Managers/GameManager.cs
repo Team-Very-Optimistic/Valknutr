@@ -16,10 +16,13 @@ public class GameManager : Singleton<GameManager>
 
     public Room activeRoom;
     public GameObject itemDropPrefab;
+    private PlayerHealth _playerHealth;
+    public float healthPickupValue = 2f;
 
     public void Awake()
     {
         _player = GameObject.Find("Player");
+        _playerHealth = _player.GetComponent<PlayerHealth>();
         if (_player == null)
         {
             Debug.LogError("No player in this scene for GameManager");
@@ -67,4 +70,8 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+    public void IncreasePlayerHealth()
+    {
+        _playerHealth.IncreasePlayerHealth(healthPickupValue);
+    }
 }

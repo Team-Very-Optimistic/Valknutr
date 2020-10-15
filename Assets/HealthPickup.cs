@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
  
 ///summary
 ///summary
@@ -6,20 +7,21 @@ public class HealthPickup : MonoBehaviour
 {
  
     #region Public Fields
+
     #endregion
  
     #region Unity Methods
- 
-    void Start()
+
+
+
+    public void OnTriggerEnter(Collider other)
     {
-	
+        if (other.gameObject == GameManager.Instance._player)
+        {
+            GameManager.Instance.IncreasePlayerHealth();
+        }
     }
- 
-    void Update()
-    {
-	
-    }
- 
+
     #endregion
  
     #region Private Methods

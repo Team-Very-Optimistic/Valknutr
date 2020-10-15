@@ -43,6 +43,7 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     public IEnumerator IncreaseDifficulty(int amount, float time)
     {
         difficultyLevel += amount;
+        GameManager.Instance.healthPickupValue *= difficultyLevel/2;
         yield return new WaitForSeconds(time);
         StartCoroutine(IncreaseDifficulty(amount, time));
     }
