@@ -1,4 +1,5 @@
 ﻿using Doozy.Engine.Extensions;
+using System;
 using UnityEngine;
 
 
@@ -288,5 +289,15 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
     private void ResetWaitTicks()
     {
         wait = waitTicks;
+    }
+
+    private void OnDestroy()
+    {
+        if (redIndicatorInstance != null)
+        {
+            Destroy(redIndicatorInstance);
+            Console.WriteLine("destryoed instance");
+        } 
+        
     }
 }
