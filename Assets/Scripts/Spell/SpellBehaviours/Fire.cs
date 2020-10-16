@@ -9,6 +9,8 @@ public class Fire : TriggerEventHandler
     public Vector3 _origPosition;
     private Transform parent;
     private int maxFires = 10;
+    public float damage = 1;
+    
     public override void TriggerEvent(Collider other)
     {
         if(maxFires < 0) return;
@@ -19,7 +21,7 @@ public class Fire : TriggerEventHandler
         var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
         other.gameObject.AddComponent<Fire>().SetInitializer(maxFires)._origPosition = closestPointOnBounds;
         var damageScript = GetComponent<Damage>();
-        damageScript.SetDamage(1);   
+        damageScript.SetDamage(damage);   
         damageScript.DealDamage(other);
         
         StartCoroutine(WaitCooldown(3f));
@@ -41,7 +43,9 @@ public class Fire : TriggerEventHandler
             sound.tag = "Fire";
             sound.layer = fire.layer;
             sound.transform.SetParent(fire.transform);
-            fire.AddComponent<Fire>().maxFires = maxFires;
+            Fire childFire = fire.AddComponent<Fire>();
+            childFire.maxFires = maxFires;
+            childFire.damage = damage;
             fire.transform.SetParent(gameObject.transform);
             Destroy(this);
         }

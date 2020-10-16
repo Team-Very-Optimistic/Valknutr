@@ -3,6 +3,7 @@
 class FireSpellModifier : SpellModifier
 {
     private float fireMultiplier = 1.2f;
+    private float dmg = 1f;
     public override void ModifySpell(SpellBase spell)
     {
         //base.ModifySpell(spell);
@@ -17,7 +18,9 @@ class FireSpellModifier : SpellModifier
         Action spell = () =>
         {
             oldBehavior.Invoke();
-            action._objectForSpell.AddComponent<Fire>().SetInitializer();
+            Fire fire = action._objectForSpell.AddComponent<Fire>();
+            fire.damage = dmg;
+            fire.SetInitializer();
         };
         action.behaviour = spell;
         return action;
@@ -26,5 +29,6 @@ class FireSpellModifier : SpellModifier
     public override void UseQuality()
     {
         fireMultiplier *=  quality;
+        dmg *= quality;
     }
 }
