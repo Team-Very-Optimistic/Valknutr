@@ -24,4 +24,9 @@ class PhaseSpellModifier : SpellModifier
         action.behaviour = spell;
         return action;
     }
+
+    public override void UseQuality()
+    {
+        phaseAmount = Mathf.RoundToInt(phaseAmount * quality);
+    }
 }

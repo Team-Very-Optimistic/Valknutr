@@ -8,6 +8,12 @@ public class DamageIncreaseModifier : SpellModifier
 
     public override void ModifySpell(SpellBase spell)
     {
+        base.ModifySpell(spell);
         spell._damage *= damageMultiplier;
+    }
+
+    public override void UseQuality()
+    {
+        damageMultiplier = Mathf.RoundToInt(damageMultiplier * quality);
     }
 }

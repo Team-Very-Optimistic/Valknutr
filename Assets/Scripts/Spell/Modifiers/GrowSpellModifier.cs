@@ -23,6 +23,12 @@ class GrowSpellModifier : SpellModifier
         return action;
     }
 
+    public override void UseQuality()
+    {
+        sizeChange *= quality;
+        cap *= quality;
+    }
+
     public override void ModifySpell(SpellBase spell)
     {
         var varSize = Math.Log(spell._cooldown, 1000) + 1.7f;

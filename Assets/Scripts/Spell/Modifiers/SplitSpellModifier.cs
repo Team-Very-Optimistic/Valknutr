@@ -5,7 +5,8 @@ using Random = UnityEngine.Random;
 
 class SplitSpellModifier : SpellModifier
 {
-    private int n = 2;
+    private int iterations = 2;
+    private float damageReduction = 0.8f;
     private float randomMax = 0.2f;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
@@ -19,19 +20,26 @@ class SplitSpellModifier : SpellModifier
             action._offset += new Vector3(Random.Range(-randomMax, randomMax), 0,
                 Random.Range(-randomMax, randomMax));
             action._direction.Normalize();
+            action._damage *= damageReduction;
             oldBehavior.Invoke();
             action._direction = originalPosDiff; //reset
         };
             
         Action spell = () =>
         {
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < iterations; i++)
             {
                 GameManager.Instance.StartCoroutine(DelayInvoke(temp, i / 10f));
             }
         };
         action.behaviour = spell;
         return action;
+    }
+
+    public override void UseQuality()
+    {
+        iterations = Mathf.RoundToInt(iterations * quality);
+        damageReduction = quality / (iterations/2);
     }
 
     IEnumerator DelayInvoke(Action invoke, float delay)
