@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
     private PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
+
+    public QualityManager QualityManager;
     public void Awake()
     {
         _player = GameObject.Find("Player");
@@ -53,6 +55,9 @@ public class GameManager : Singleton<GameManager>
             var itemListSpellItems = _itemList._SpellItems;
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
+        //Add quality to item
+        QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
+        
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;
         return itemDrop;

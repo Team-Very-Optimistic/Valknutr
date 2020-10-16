@@ -54,62 +54,77 @@ public class QualityManager : ScriptableObject
         return value;
     }
     
-    private Quality GetQuality()
+    public Quality GetQuality(int difficulty)
     {
-        var totalChance = simpleChance + intricateChance + arcaneChance + divineChance + sanctifiedChance;
+        var simple = simpleChance + difficulty * simpleAddDifficultyChance;
+        var intricate = intricateChance + difficulty * intricateAddDifficultyChance;
+        var arcane = arcaneChance + difficulty * arcaneAddDifficultyChance;
+        var divine = divineChance + difficulty * divineAddDifficultyChance;
+        var sanc = sanctifiedChance + difficulty * sanctifiedAddDifficultyChance;
+        var totalChance = simple + intricate + arcane + divine + sanc;
         var rand = Random.Range(0, totalChance);
 
-        if (rand < simpleChance)
+        if (rand < simple)
         {
             return Quality.Simple;
         }
 
-        rand -= simpleChance;
-        if (rand < intricateChance)
+        rand -= simple;
+        if (rand < intricate)
         {
             return Quality.Intricate;
         }
-        rand -= intricateChance;
+        rand -= intricate;
 
-        if (rand < arcaneChance)
+        if (rand < arcane)
         {
             return Quality.Arcane;
         }
-        rand -= arcaneChance;
+        rand -= arcane;
 
-        if (rand < divineChance)
+        if (rand < divine)
         {
             return Quality.Divine;
         }
-        rand -= divineChance;
+        rand -= divine;
 
-        if (rand < sanctifiedChance)
+        if (rand < sanc)
         {
             return Quality.Sanctified;
         }
 
-        return Quality.Simple;
+        return Quality.Sanctified;
     }
     
     [Range(0f, 1.5f)]
     public float simpleValue;
     public float simpleChance;
+    public float simpleAddDifficultyChance;
+
     
     [Range(1.5f, 5f)]
     public float intricateValue;
     public float intricateChance;
+    public float intricateAddDifficultyChance;
+
     
     [Range(5f, 15f)]
     public float arcaneValue;
     public float arcaneChance;
+    public float arcaneAddDifficultyChance;
+
    
     [Range(15f, 20f)]
     public float divineValue;
     public float divineChance;
+    public float divineAddDifficultyChance;
+
     
     [Range(20f, 100f)]
     public float sanctifiedValue;
     public float sanctifiedChance;
+    public float sanctifiedAddDifficultyChance;
+
     [Range(0f, 0.99f)]
     public float randomSpread = 0.2f;
     
@@ -127,6 +142,7 @@ public class QualityManager : ScriptableObject
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
             mod._cooldownMultiplier *= Spread() * Value(quality, true);
+            mod.quality *= Spread() * Value(quality, true);
         }
     }
     
