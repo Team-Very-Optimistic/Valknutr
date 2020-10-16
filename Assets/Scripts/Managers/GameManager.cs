@@ -50,6 +50,7 @@ public class GameManager : Singleton<GameManager>
             if (Random.value < healthPickupDropChance)
             {
                 var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
+                
                 return hp;
             }
             var itemListSpellItems = _itemList._SpellItems;
@@ -83,7 +84,7 @@ public class GameManager : Singleton<GameManager>
 
     public void IncreasePlayerHealth()
     {
-        _playerHealth.IncreasePlayerHealth(healthPickupValue);
+        _playerHealth.IncreasePlayerHealth(healthPickupValue * DifficultyScalingSystem.Instance.difficultyLevel);
         
     }
 }
