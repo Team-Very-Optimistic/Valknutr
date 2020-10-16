@@ -37,10 +37,10 @@ public class UiManager : Singleton<UiManager>
     void Update()
     {
         if (playerHealth != null)
-            healthBar.SetHealth(playerHealth.currentHealth);
+            healthBar.SetHealth(playerHealth.currentHealth, playerHealth.maxHealth);
         else
         {
-            healthBar.SetHealth(0f);
+            healthBar.SetHealth(0f, 0f);
         }
     }
 
