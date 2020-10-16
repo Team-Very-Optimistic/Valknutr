@@ -6,12 +6,13 @@ using UnityEngine;
 public class ItemDrop : MonoBehaviour
 {
     public SpellItem _spellItem;
-
+    public static Action OnPickup;
     private bool isMouseOver = false;
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            OnPickup();
             PickUp();
         }
     }

@@ -26,8 +26,7 @@ public class DropsLoot : MonoBehaviour
         }
         else
         {
-           
-                GameManager.Instance.SpawnItem(pos);
+            GameManager.Instance.SpawnItem(pos);
         }
     }
 }

@@ -40,7 +40,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void SpawnItem(Vector3 position, SpellItem _SpellItem = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null)
     {
         if (_SpellItem == null)
         {
@@ -48,8 +48,9 @@ public class GameManager : Singleton<GameManager>
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
         //Debug.Log(_SpellItem._itemObject);
-        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity);
-        itemDrop.GetComponent<ItemDrop>()._spellItem = _SpellItem;
+        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
+        itemDrop._spellItem = _SpellItem;
+        return itemDrop;
     }
 
     public void SetGameWin()
