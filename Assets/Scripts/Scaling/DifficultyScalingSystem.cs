@@ -11,6 +11,7 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     public int difficultyLevel = 1;
 
     public float difficultyIncreaseInterval = 60f;
+    
     public void Awake()
     {
         EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;

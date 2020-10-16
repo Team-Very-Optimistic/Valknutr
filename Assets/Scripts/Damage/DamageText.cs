@@ -76,4 +76,12 @@ public class DamageText : MonoBehaviour
         GetComponent<Text>().color = damageColor;
         this.worldLocationStart = worldLocationStart;
     }
+    public void SetWordTextProperties(string word, Vector3 worldLocationStart, Color wordColor)
+    {
+        aliveTime *= 3;
+        minScale *= 1.3f;
+        GetComponent<Text>().text = word;
+        GetComponent<Text>().color = wordColor;
+        this.worldLocationStart = worldLocationStart;
+    }
 }

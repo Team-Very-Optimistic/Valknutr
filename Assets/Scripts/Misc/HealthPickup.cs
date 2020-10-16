@@ -3,7 +3,7 @@ using UnityEngine;
  
 ///summary
 ///summary
-public class HealthPickup : MonoBehaviour
+public class HealthPickup : ItemDrop
 {
  
     #region Public Fields
@@ -12,9 +12,7 @@ public class HealthPickup : MonoBehaviour
  
     #region Unity Methods
 
-
-
-    public void OnTriggerEnter(Collider other)
+    public override void PickUp(Collider other)
     {
         if (other.gameObject == GameManager.Instance._player)
         {

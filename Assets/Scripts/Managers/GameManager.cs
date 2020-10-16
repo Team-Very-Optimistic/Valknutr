@@ -16,9 +16,10 @@ public class GameManager : Singleton<GameManager>
 
     public Room activeRoom;
     public GameObject itemDropPrefab;
+    public GameObject healthPickupObj;
     private PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
-
+    public float healthPickupDropChance = 0.3f;
     public void Awake()
     {
         _player = GameObject.Find("Player");
@@ -44,10 +45,14 @@ public class GameManager : Singleton<GameManager>
     {
         if (_SpellItem == null)
         {
+            if (Random.value < healthPickupDropChance)
+            {
+                var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
+                return hp;
+            }
             var itemListSpellItems = _itemList._SpellItems;
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
-        //Debug.Log(_SpellItem._itemObject);
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;
         return itemDrop;

@@ -119,7 +119,6 @@ public class UIItem : Selectable, IPointerClickHandler
 
         if (_tooltipPosition != null)
         {
-            Debug.Log("not null");
             _tooltipObject.transform.SetParent(_tooltipPosition);
             _tooltipRectTransform.position = _tooltipPosition.position;
         }
