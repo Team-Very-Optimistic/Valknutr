@@ -38,6 +38,10 @@ public class UiManager : Singleton<UiManager>
     {
         if (playerHealth != null)
             healthBar.SetHealth(playerHealth.currentHealth);
+        else
+        {
+            healthBar.SetHealth(0f);
+        }
     }
 
     public void PopulateSpells()
