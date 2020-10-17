@@ -53,7 +53,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				if(m_Animator == null)
 					print("nul");
-				m_Animator.applyRootMotion = false;
 				StartCoroutine(routine: Dashing(dashTime, dashSpeed, direction));
 			}
 		}
@@ -114,39 +113,38 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 			m_GroundNormal = Vector3.up;
 			m_IsGrounded = true;
+			// m_Animator.applyRootMotion = false;
 
 		}
 
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool dashing =false)
 		{
-			
 			if (IsDisabled())
 			{
 				return;
 			}
+			
+			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
+			if (move.magnitude > 1f) move.Normalize();
+
+
+			m_Rigidbody.velocity = move * m_MoveSpeedMultiplier;
+			// print(move);
+			
+
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
-			if (move.magnitude > 1f) move.Normalize();
 			move = transform.InverseTransformDirection(move);
 			//CheckGroundStatus();
-			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
-
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			//control and velocity handling is different when grounded and airborne:
-			if (m_IsGrounded)
-			{
-				
-			}
-			else
-			{
-				
+			if (!m_IsGrounded)
 				HandleAirborneMovement();
-			}
 
 			//ScaleCapsuleForCrouching(crouch);
 			//PreventStandingInLowHeadroom();
@@ -251,7 +249,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// jump!
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
 				//m_IsGrounded = false;
-				m_Animator.applyRootMotion = false;
 				m_GroundCheckDistance = 0.1f;
 			}
 			
@@ -265,20 +262,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		public void OnAnimatorMove()
-		{
-			// we implement this function to override the default root motion.
-			// this allows us to modify the positional speed before it's applied.
-			if (m_IsGrounded && !m_Dashing && Time.deltaTime > 0)
-			{
-				Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
-
-				// we preserve the existing y part of the current velocity.
-				v.y = m_Rigidbody.velocity.y;
-				m_Rigidbody.velocity = v;
-			}
-			
-		}
+		// public void OnAnimatorMove()
+		// {
+		// 	// we implement this function to override the default root motion.
+		// 	// this allows us to modify the positional speed before it's applied.
+		// 	if (m_IsGrounded && !m_Dashing && Time.deltaTime > 0)
+		// 	{
+		// 		Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
+		//
+		// 		// we preserve the existing y part of the current velocity.
+		// 		v.y = m_Rigidbody.velocity.y;
+		// 		m_Rigidbody.velocity = v;
+		// 	}
+		// 	
+		// }
 
 
 		void CheckGroundStatus()
@@ -294,14 +291,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
 				m_IsGrounded = true;
-				if (!m_Dashing)
-					m_Animator.applyRootMotion = true;
 			}
 			else
 			{
 				//m_IsGrounded = false;
 				m_GroundNormal = Vector3.up;
-				m_Animator.applyRootMotion = false;
 			}
 		}
 
@@ -317,7 +311,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
 		{
-			m_Animator.applyRootMotion = false;
 			switch (animationType)
 			{
 				case CastAnimation.Bomb:
@@ -347,7 +340,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void ClearCastingAnimation()
 		{
-			m_Animator.applyRootMotion = true;
 			m_CastingBomb = false;
 			m_CastingProjectile = false;
 			m_CastingShield = false;
@@ -361,6 +353,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void StopMovement()
 		{
+			m_Rigidbody.velocity = Vector3.zero;
 			m_ForwardAmount = 0;
 			m_Animator.SetFloat(Forward, m_ForwardAmount, 0.0f, Time.deltaTime);
 		}

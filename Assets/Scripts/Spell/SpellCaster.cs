@@ -101,6 +101,7 @@ public class SpellCaster : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(storedDirection, Vector3.up), Vector3.up);
         var animSpeed = spell.GetAnimSpeed();
         character.SetCastingAnimation(spell.castAnimation, animSpeed);
+        character.StopMovement();
     }
 
     public void CastPoint()
