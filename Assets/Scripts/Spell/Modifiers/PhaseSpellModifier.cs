@@ -3,6 +3,7 @@ using UnityEngine;
 
 class PhaseSpellModifier : SpellModifier
 {
+    [SerializeField]
     private int phaseAmount = 3;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
