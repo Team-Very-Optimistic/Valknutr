@@ -84,10 +84,12 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
             spell.CreateTooltip(baseSpellItem._tooltipMessage, modStrings);
             Inventory.Instance._spells.Add(spell); //crafted
+            AudioManager.PlaySound("craftSuccess");
         }
         else
         {
             Debug.Log("No base spell for crafting");
+            AudioManager.PlaySound("craftFailure");
             return;
         }
         
