@@ -15,17 +15,6 @@ public class DeathParticleSystem : MonoBehaviour
 
     public void Update()
     {
-        ragdollAliveTime -= Time.deltaTime;
-
-        if (ragdollAliveTime <= 0.0f)
-        {
-            if (!triggerStopSystem)
-            {
-                GetComponent<ParticleSystem>().Stop();
-                triggerStopSystem = true;
-            }
-        }
-
         if(ragdollChildGameObject != null)
         {
             this.transform.position = ragdollChildGameObject.transform.position;
@@ -35,8 +24,17 @@ public class DeathParticleSystem : MonoBehaviour
     public void SetRagdollAliveTime(float ragdollAliveTime)
     {
         this.ragdollAliveTime = ragdollAliveTime;
-        Destroy(this.gameObject, ragdollAliveTime + GetComponent<ParticleSystem>().main.startLifetime.constantMax);
+        Invoke(nameof(Die), ragdollAliveTime);
+        Destroy(gameObject, ragdollAliveTime + GetComponent<ParticleSystem>().main.startLifetime.constantMax);
     }
+
+    public void Die()
+    {
+        GetComponent<ParticleSystem>().Stop();
+        triggerStopSystem = true;
+        Instantiate(SpellManager.Instance.skeleton, transform.position, Quaternion.identity);
+    }
+    
 
     // In event where ragdoll still moves after certain time
     public void SetRagdollChildGameObject(GameObject ragdollChildGameObject)

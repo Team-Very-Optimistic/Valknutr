@@ -47,12 +47,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (_SpellItem == null)
         {
-            if (Random.value < healthPickupDropChance)
-            {
-                var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
-                
-                return hp;
-            }
+            
             var itemListSpellItems = _itemList._SpellItems;
             _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
         }
@@ -62,6 +57,15 @@ public class GameManager : Singleton<GameManager>
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;
         return itemDrop;
+    }
+
+    public ItemDrop SpawnHP(Vector3 position)
+    {
+
+        var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
+            
+        return hp;
+        
     }
 
     public void SetGameWin()
@@ -84,7 +88,7 @@ public class GameManager : Singleton<GameManager>
 
     public void IncreasePlayerHealth()
     {
-        _playerHealth.IncreasePlayerHealth(healthPickupValue * DifficultyScalingSystem.Instance.difficultyLevel);
+        _playerHealth.IncreasePlayerHealth(healthPickupValue);
         
     }
 }
