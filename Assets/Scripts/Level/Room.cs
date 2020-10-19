@@ -29,6 +29,8 @@ public class Room : MonoBehaviour
     public int depth;
     public int minDepth;
     public GameObject[] lightingObjects;
+    public float lootQualityModifier = 1f;
+    public bool spawnTreasure = true;
 
     public GameObject minimapPrefab;
     private Collider roomCollider;
@@ -125,7 +127,21 @@ public class Room : MonoBehaviour
         isCleared = spawnersDone && enemiesDead;
 
         if (isCleared)
-            OpenAllDoors();
+            OnClear();
+    }
+
+    private void OnClear()
+    {
+        OpenAllDoors();
+        if (spawnTreasure)
+        {
+            SpawnTreasure();
+        }
+    }
+
+    private void SpawnTreasure()
+    {
+        GameManager.SpawnTreasureChest(transform.position, lootQualityModifier);
     }
 
     public void AddEnemy(GameObject enemy)
