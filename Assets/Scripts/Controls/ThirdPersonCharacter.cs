@@ -47,6 +47,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private static readonly int OnGround = Animator.StringToHash("OnGround");
 		private static readonly int JumpLeg = Animator.StringToHash("JumpLeg");
 		private static readonly int Ready = Animator.StringToHash("Ready");
+		private SpellCaster spellCaster;
 
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
@@ -105,6 +106,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		
 		void Start()
 		{
+			spellCaster = GetComponent<SpellCaster>();
 			m_Animator = GetComponent<Animator>();
 			m_Rigidbody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
@@ -314,6 +316,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void CastPoint()
 		{
 			ClearCastingAnimation();
+			spellCaster.CastPoint();
 		}
 
 		public bool IsDisabled()
@@ -346,12 +349,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					break;
 				case CastAnimation.Aoe:
 					m_Casting = true;
+					spellCaster.CastPoint();
 
 					m_Animator.SetBool(CastingAOE, true);
+					
 					break;
 				case CastAnimation.Summon:
 					m_Casting = true;
-
 					m_Animator.SetBool(CastingSummon, true);
 					break;
 				default:

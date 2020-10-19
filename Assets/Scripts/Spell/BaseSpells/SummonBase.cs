@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu]
 class SummonBase : SpellBase
 {
     public float _duration;

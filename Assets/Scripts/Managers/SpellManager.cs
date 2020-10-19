@@ -11,20 +11,27 @@ public class SpellManager : Singleton<SpellManager>
     public int maxShields = 10;
     private int currShields = 0;
     public GameObject skeleton;
+    public GameObject aoeEffect;
 
     public Spell[] GetDefaultSpells()
     {
         int i = 0;
+        Spell[] defaultSpells = new Spell[_defaultSpells.Length];
         foreach (var spell in _defaultSpells)
         {
-            spell._spellElement = Instantiate(spell._spellElement);
+            var sp = Instantiate(spell);
+            sp.spellBase = Instantiate(spell.spellBase);
             var mods = spell._spellModifiers;
-            spell._spellModifiers = new List<SpellModifier>();
+            sp._spellModifiers = new List<SpellModifier>();
             foreach (var m in mods)
             {
-                spell.AddModifier(m);
+                sp.AddModifier(m);
             }
+
+            defaultSpells[i++] = sp;
         }
+
+        _defaultSpells = defaultSpells;
         return _defaultSpells;
     }
 

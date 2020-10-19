@@ -8,7 +8,7 @@ public class Spell : SpellItem
 {
     #region fields
     
-    [SerializeField] protected SpellBase spellBase;
+    [SerializeField] public SpellBase spellBase;
     [SerializeField] public List<SpellModifier> _spellModifiers = new List<SpellModifier>();
     [HideInInspector] public CastAnimation castAnimation;
     
