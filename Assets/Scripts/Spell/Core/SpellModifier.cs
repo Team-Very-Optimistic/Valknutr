@@ -8,6 +8,7 @@ public abstract class SpellModifier : SpellElement
 {
     public float _cooldownMultiplier = 1;
     public float quality;
+    [SerializeField]
     private bool init = false;
     public virtual void ModifySpell(SpellBase spell)
     {

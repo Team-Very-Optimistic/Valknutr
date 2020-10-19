@@ -145,10 +145,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			
 			if(m_ForwardAmount > 0) {
 				//started moving
-				
 				//cancels animation
 				if (Ready != m_Animator.GetCurrentAnimatorStateInfo(1).shortNameHash)
+				{
+
 					m_Animator.Play(Ready);
+				}
 			}
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);

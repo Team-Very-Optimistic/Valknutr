@@ -11,7 +11,7 @@ public class ExplosiveBase : SpellBase
 
         radius = 3.0F;
         power = 100.0F;
-        _offset = Vector3.up  + _player.forward * 1.5f;
+        _offset = Vector3.up  + _player.forward * 1.3f;
     }
 
     /// <summary>

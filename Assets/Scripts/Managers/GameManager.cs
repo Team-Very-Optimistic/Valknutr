@@ -49,7 +49,10 @@ public class GameManager : Singleton<GameManager>
         {
             
             var itemListSpellItems = _itemList._SpellItems;
-            _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]); //copies
+             _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+            Type type = _SpellItem._spellElement.GetType();
+            Debug.Log(type.Name);
+            _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
         }
         //Add quality to item
         QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
