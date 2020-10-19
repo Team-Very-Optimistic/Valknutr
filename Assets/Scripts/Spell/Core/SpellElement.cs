@@ -5,7 +5,7 @@ using UnityEngine;
 /// Building block of spells, Behavior and Modifiers. They all inherit from this
 /// </summary>
 [Serializable]
-public abstract class SpellElement : ScriptableObject
+public abstract class SpellElement : ScriptableObject, ITooltip
 {
     public abstract Tooltip GetTooltip();
 }

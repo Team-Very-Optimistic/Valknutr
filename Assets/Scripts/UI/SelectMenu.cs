@@ -52,7 +52,6 @@ public class SelectMenu : MonoBehaviour
             }
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
-            uiItem._tooltipPosition = tooltipPos;
             uiItem._spellItem = spell;
             uiItem.Init();
             UISlots[count++].Slot(uiItem);

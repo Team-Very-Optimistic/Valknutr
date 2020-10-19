@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -59,9 +60,11 @@ public class Spell : SpellItem
         _tooltipMessage = tooltip;
     }
 
-    public Tooltip GetTooltip()
+    public override Tooltip GetTooltip()
     {
-        return new Tooltip("", _tooltipMessage);
+        string bodyMessage = spellBase.GetTooltip().Body +
+                             _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip().Body);
+        return new Tooltip(spellBase.GetTooltip().Title, bodyMessage);
         
         /*
          * Damaging Multi-Projectile of Speed

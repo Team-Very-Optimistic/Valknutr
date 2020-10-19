@@ -16,12 +16,7 @@ public class UIItem : Selectable, IPointerClickHandler
     public SpellItem _spellItem;
     protected bool selected;
     protected KeyCodeUI _keyCodeUi;
-    protected TextMeshProUGUI _tooltipText;
-    protected GameObject _tooltipObject;
-    protected RectTransform _tooltipRectTransform;
-    protected string _tooltipString;
-    public RectTransform _tooltipPosition;
-    
+
 
     private void Start()
     {
@@ -31,7 +26,6 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem.GetTooltip().ToString();
         }
 
         if (_spellItem.isBaseSpell)
@@ -39,21 +33,13 @@ public class UIItem : Selectable, IPointerClickHandler
             GetComponent<Mask>().enabled = false;
             //transform.GetChild(0).GetComponent<Image>().enabled = false;
         }
-        _tooltipObject = transform.Find("Tooltip").gameObject;
-        _tooltipRectTransform = _tooltipObject.GetComponent<RectTransform>();
-        _tooltipText = _tooltipObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void SetTooltipString(string tooltipString)
-    {
-        _tooltipString = tooltipString;
-    }
-    
     //Detect if the Cursor starts to pass over the GameObject
     public override void OnPointerEnter(PointerEventData pointerEventData)
     {
         if (_spellItem != null)
-            UiManager.ShowTooltip(_spellItem.GetTooltip());
+            UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip());
     }
 
     //Detect when Cursor leaves the GameObject
@@ -67,7 +53,6 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem.GetTooltip().ToString();
         }
     }
     
@@ -83,8 +68,7 @@ public class UIItem : Selectable, IPointerClickHandler
             Debug.Log ("double click");
         }
     }
-
-
+    
     public override void OnDeselect(BaseEventData eventData)
     {
         base.OnDeselect(eventData);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu]
-public class SpellItem : ScriptableObject
+public class SpellItem : ScriptableObject, ITooltip
 {
     public Sprite _UIsprite;
 
@@ -11,7 +11,7 @@ public class SpellItem : ScriptableObject
 
     public bool isBaseSpell;
 
-    public Tooltip GetTooltip()
+    public virtual Tooltip GetTooltip()
     {
         if (_spellElement == null)
         {
