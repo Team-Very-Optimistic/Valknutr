@@ -16,4 +16,9 @@ public class DamageIncreaseModifier : SpellModifier
     {
         damageMultiplier = Mathf.RoundToInt(damageMultiplier * quality);
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return default;
+    }
 }
