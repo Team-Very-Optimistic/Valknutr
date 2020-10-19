@@ -7,7 +7,7 @@ public class ItemDrop : MonoBehaviour
 {
     public SpellItem _spellItem;
     public Action<ItemDrop> OnPickup;
-    private Collider playerCollider;
+    protected Collider playerCollider;
     
     public void OnTriggerEnter(Collider other)
     {

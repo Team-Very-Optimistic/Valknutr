@@ -14,15 +14,22 @@ public class HealthPickup : ItemDrop
 
     public override void PickUp(Collider other)
     {
+        UiManager.HideInWorldTooltip();
         GameManager.Instance.IncreasePlayerHealth();
         DamageTextManager.SpawnDamage(GameManager.Instance.healthPickupValue, transform.position, Color.green);
         AudioManager.PlaySoundAtPosition("healthPickup", transform.position);
         Destroy(gameObject);
     }
 
+    // public override void PlayerEnterHandler(Collider other)
+    // {
+    //     PickUp(other);
+    // }
+    
     public override void PlayerEnterHandler(Collider other)
     {
-        PickUp(other);
+        playerCollider = other;
+        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores {GameManager.Instance.healthPickupValue} health."));
     }
 
     #endregion
