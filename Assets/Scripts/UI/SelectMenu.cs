@@ -18,6 +18,8 @@ public class SelectMenu : MonoBehaviour
     List<KeyCode> keyBindings; //make can make everything use this keybinding
 
     public RectTransform tooltipPos;
+    public TooltipDisplay tooltipWindow;
+
     // Start is called before the first frame update
     void Awake()
     {

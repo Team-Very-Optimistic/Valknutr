@@ -16,6 +16,7 @@ public class Spell : SpellItem
     [HideInInspector]
     public float cooldownRemaining = 1;
     private readonly int hashCode = DateTime.Now.GetHashCode();
+    private string _tooltipMessage;
     #endregion
 
     /// <summary>
@@ -56,6 +57,22 @@ public class Spell : SpellItem
             tooltip += " " + modiTooltip;
         }
         _tooltipMessage = tooltip;
+    }
+
+    public Tooltip GetTooltip()
+    {
+        return new Tooltip("", _tooltipMessage);
+        
+        /*
+         * Damaging Multi-Projectile of Speed
+         * CD: 0.6
+         * Dmg: 2
+         * Count: 3
+         *
+         * Fires a projectile. Affected spells will be faster. Repeats spell 3 times with 50% effect. Spell deals 100% increased damage.
+         *
+         * Flavor text
+         */
     }
     
     public void CastSpell(SpellCastData data)

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 {
@@ -33,7 +30,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
     public GameObject redIndicatorPrefab;
     private Vector3 redIndicatorPosOffset;
-    
+
     public override void Start()
     {
         base.Start();
@@ -58,48 +55,52 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
             switch (wolfState)
             {
                 case WolfBehaviourStates.Running:
+                {
+                    if (!isInKnockback)
                     {
-                        if (!isInKnockback)
-                        {
-                            //Navigation
-                            navMeshAgent.SetDestination(player.transform.position);
-                        }
-                            
-                        //If close enough to player, switch to wind up
-                        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
-                        {
-                            SetupDash();
-                        }
-
-                        break;
+                        //Navigation
+                        navMeshAgent.SetDestination(player.transform.position);
                     }
+
+                    //If close enough to player, switch to wind up
+                    if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                    {
+                        SetupDash();
+                    }
+
+                    break;
+                }
 
                 case WolfBehaviourStates.Windup:
-                    {
-                        //Transition to Charging by invoking StartDash in SetupDash
-                        break;
-                    }
+                {
+                    //Transition to Charging by invoking StartDash in SetupDash
+                    break;
+                }
 
                 case WolfBehaviourStates.Charging:
-                    {
-                        //Change navMeshAgent speed according to curve multiplier
-                        float distanceLeftToDashLocation = (transform.position - dashLocation).magnitude;
-                        navMeshAgent.speed = originalSpeed * dashCurve.Evaluate(1.0f - (distanceLeftToDashLocation / distanceToDashLocation));
+                {
+                    //Change navMeshAgent speed according to curve multiplier
+                    float distanceLeftToDashLocation = (transform.position - dashLocation).magnitude;
+                    navMeshAgent.speed = originalSpeed *
+                                         dashCurve.Evaluate(
+                                             1.0f - (distanceLeftToDashLocation / distanceToDashLocation));
 
-                        //If close enough to dash location, start resting
-                        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
-                        {
-                            StartRest();
-                        }
-                        break;
-                    }
-                 
-                case WolfBehaviourStates.Rest:
+                    //If close enough to dash location, start resting
+                    if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
-                        //Transition to running state by invoking StartRunning by StartRest
-                        transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-                        break;
+                        StartRest();
                     }
+
+                    break;
+                }
+
+                case WolfBehaviourStates.Rest:
+                {
+                    //Transition to running state by invoking StartRunning by StartRest
+                    transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y,
+                        player.transform.position.z));
+                    break;
+                }
             }
         }
         else
@@ -130,7 +131,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         dashLocation = transform.position + direction * 2.0f * originalStoppingDistance;
 
         //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
-        transform.LookAt(new Vector3(dashLocation.x , this.transform.position.y, dashLocation.z));
+        transform.LookAt(new Vector3(dashLocation.x, this.transform.position.y, dashLocation.z));
 
         //Temporarily disable navMeshAgent
         navMeshAgent.enabled = false;
@@ -147,7 +148,8 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     {
         float timeToDestroy = dashWindupTime * 0.5f;
 
-        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset, Quaternion.identity);
+        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset,
+            Quaternion.identity);
         Destroy(redIndicator, timeToDestroy);
     }
 
@@ -189,7 +191,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     public void OnTriggerEnter(Collider other)
     {
         //Only trigger when charging - Cannot toggle boxcollider + isTrigger
-        if(wolfState == WolfBehaviourStates.Charging)
+        if (wolfState == WolfBehaviourStates.Charging)
         {
             //Check only player's capsule collider
             if (!other.gameObject.CompareTag("Enemy") && other.GetType() == typeof(CapsuleCollider))

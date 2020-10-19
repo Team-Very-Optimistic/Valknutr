@@ -46,6 +46,11 @@ class MovementBase : SpellBase
             _objectForSpell = illu;
         }
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Roll <Base>", $"Roll.");
+    }
 }
 
 public class Illusion : MonoBehaviour

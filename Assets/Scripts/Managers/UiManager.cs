@@ -12,6 +12,7 @@ public class UiManager : Singleton<UiManager>
 
     private bool isPaused = false;
     private HealthScript playerHealth;
+    private TooltipDisplay currentTooltipWindow;
 
 
     // Start is called before the first frame update
@@ -30,7 +31,6 @@ public class UiManager : Singleton<UiManager>
         
         transform.Find("QuickAssignMenu").gameObject.SetActive(true);
         transform.Find("SpellCrafting").gameObject.SetActive(true);
-
     }
 
     // Update is called once per frame
@@ -95,5 +95,37 @@ public class UiManager : Singleton<UiManager>
         {
             PauseGame();
         }
+    }
+
+    public static void SetTooltipWindow(TooltipDisplay tooltipDisplay)
+    {
+        Instance.currentTooltipWindow = tooltipDisplay;
+    }
+
+    public static void ShowTooltip(Tooltip tooltip)
+    {
+        Instance.currentTooltipWindow.Show(tooltip);
+    }
+
+    public static void HideTooltip()
+    {
+        Instance.currentTooltipWindow.Hide();
+    }
+}
+
+public readonly struct Tooltip
+{
+    public readonly string Title;
+    public readonly string Body;
+
+    public Tooltip(string title, string body)
+    {
+        Title = title;
+        Body = body;
+    }
+
+    public string ToString()
+    {
+        return $"{Title}\n{Body}";
     }
 }

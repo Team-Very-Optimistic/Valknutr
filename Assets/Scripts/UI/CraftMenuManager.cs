@@ -6,6 +6,8 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
 {
     public UIView craftMenu;
     public UIView selectMenu;
+    public TooltipDisplay craftMenuTooltip;
+    public TooltipDisplay selectMenuTooltip;
 
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
@@ -17,14 +19,10 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         if (craftMenu.IsHidden)
         {
             if (IsSelectMenuDisplayed())
-            {
-                craftMenu.Show();
                 selectMenu.Hide();
-            }
-            else
-            {
-                craftMenu.Show();
-            }
+            craftMenu.Show();
+            UiManager.SetTooltipWindow(craftMenuTooltip);
+
         }
         else craftMenu.Hide();
     }
@@ -78,11 +76,11 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
                 modStr += mod._spellElement.name + " ";
                 spell.AddModifier(mod._spellElement as SpellModifier);
                 modSprites.Add(mod._UIsprite);
-                modStrings.Add(mod._tooltipMessage);
+                modStrings.Add(mod.GetTooltip().Body);
             }
             spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
-            spell.CreateTooltip(baseSpellItem._tooltipMessage, modStrings);
+            spell.CreateTooltip(baseSpellItem.GetTooltip().Body, modStrings);
             Inventory.Instance._spells.Add(spell); //crafted
             AudioManager.PlaySound("craftSuccess");
         }
@@ -113,14 +111,9 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
         if (selectMenu.IsHidden)
         {
             if (IsCraftMenuDisplayed())
-            {
                 craftMenu.Hide();
-                selectMenu.Show();
-            }
-            else
-            {
-                selectMenu.Show();
-            }
+            selectMenu.Show();
+            UiManager.SetTooltipWindow(selectMenuTooltip);
         }
         else selectMenu.Hide();
     }

@@ -33,6 +33,8 @@ public class Room : MonoBehaviour
     public GameObject minimapPrefab;
     private Collider roomCollider;
 
+    public bool hasTreasure;
+
     private void Start()
     {
         foreach (var lightingObject in lightingObjects)

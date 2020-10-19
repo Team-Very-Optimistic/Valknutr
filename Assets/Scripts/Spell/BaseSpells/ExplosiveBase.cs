@@ -39,4 +39,9 @@ public class ExplosiveBase : SpellBase
         explosive.Launch(_direction * 2 + _offset, _speed);
         _objectForSpell = p;
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Bomb <Base>", $"Creates an explosive that detonates after {0} seconds, dealing {_damage} to entities in a large radius. Can damage self");
+    }
 }

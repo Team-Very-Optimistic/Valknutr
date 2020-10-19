@@ -28,7 +28,12 @@ class FireSpellModifier : SpellModifier
 
     public override void UseQuality()
     {
-        fireMultiplier *=  quality;
+        fireMultiplier *= quality;
         dmg *= quality;
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Fire <Modifier>", "Affected entities will be set on fire");
     }
 }

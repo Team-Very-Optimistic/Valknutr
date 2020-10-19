@@ -31,7 +31,7 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem._tooltipMessage;
+            _tooltipString = _spellItem.GetTooltip().ToString();
         }
 
         if (_spellItem.isBaseSpell)
@@ -52,13 +52,14 @@ public class UIItem : Selectable, IPointerClickHandler
     //Detect if the Cursor starts to pass over the GameObject
     public override void OnPointerEnter(PointerEventData pointerEventData)
     {
-        ShowTooltip(_tooltipString);
+        if (_spellItem != null)
+            UiManager.ShowTooltip(_spellItem.GetTooltip());
     }
 
     //Detect when Cursor leaves the GameObject
     public override void OnPointerExit(PointerEventData pointerEventData)
     {
-        HideTooltip();
+        UiManager.HideTooltip();
     }
 
     public void Init()
@@ -66,7 +67,7 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem._tooltipMessage;
+            _tooltipString = _spellItem.GetTooltip().ToString();
         }
     }
     
@@ -107,26 +108,5 @@ public class UIItem : Selectable, IPointerClickHandler
             _keyCodeUi = GetComponentInChildren<KeyCodeUI>();
         }
         _keyCodeUi.SetKeyCode(key);
-    }
-
-    public void ShowTooltip(string tooltipString)
-    {
-        _tooltipObject.SetActive(true);
-        _tooltipText.text = tooltipString;
-        float textPaddingSize = 4f;
-        Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
-        _tooltipRectTransform.sizeDelta = backgoundSize;
-
-        if (_tooltipPosition != null)
-        {
-            _tooltipObject.transform.SetParent(_tooltipPosition);
-            _tooltipRectTransform.position = _tooltipPosition.position;
-        }
-        //_tooltipRectTransform.localPosition = backgoundSize / 2;
-    }
-
-    public void HideTooltip()
-    {
-        _tooltipObject.SetActive(false);
     }
 }

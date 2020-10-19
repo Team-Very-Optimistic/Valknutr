@@ -11,5 +11,17 @@ public class SpellItem : ScriptableObject
 
     public bool isBaseSpell;
 
-    public string _tooltipMessage;
+    public Tooltip GetTooltip()
+    {
+        if (_spellElement == null)
+        {
+            Debug.Log("Null spell element");
+            return default;
+        }
+        else
+        {
+            Debug.Log(_spellElement);
+            return _spellElement.GetTooltip();
+        }
+    }
 }
