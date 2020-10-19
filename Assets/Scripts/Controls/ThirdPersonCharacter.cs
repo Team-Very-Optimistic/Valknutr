@@ -46,6 +46,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private static readonly int Turn = Animator.StringToHash("Turn");
 		private static readonly int OnGround = Animator.StringToHash("OnGround");
 		private static readonly int JumpLeg = Animator.StringToHash("JumpLeg");
+		private static readonly int Ready = Animator.StringToHash("Ready");
+
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -140,6 +142,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			//CheckGroundStatus();
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
+			
+			if(m_ForwardAmount > 0) {
+				//started moving
+				
+				//cancels animation
+				if (Ready != m_Animator.GetCurrentAnimatorStateInfo(1).shortNameHash)
+					m_Animator.Play(Ready);
+			}
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			//control and velocity handling is different when grounded and airborne:
