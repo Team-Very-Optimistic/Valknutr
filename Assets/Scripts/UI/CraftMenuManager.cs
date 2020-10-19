@@ -24,7 +24,11 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             UiManager.SetTooltipWindow(craftMenuTooltip);
 
         }
-        else craftMenu.Hide();
+        else
+        {
+            UiManager.ResetTooltipWindow();
+            craftMenu.Hide();
+        }
     }
 
     public bool IsCraftMenuDisplayed()
@@ -115,7 +119,11 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             selectMenu.Show();
             UiManager.SetTooltipWindow(selectMenuTooltip);
         }
-        else selectMenu.Hide();
+        else
+        {
+            selectMenu.Hide();
+            UiManager.ResetTooltipWindow();
+        }
     }
 
     public bool IsSelectMenuDisplayed()
@@ -148,5 +156,6 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     {
         craftMenu.Hide();
         selectMenu.Hide();
+        UiManager.ResetTooltipWindow();
     }
 }

@@ -9,6 +9,7 @@ public class UiManager : Singleton<UiManager>
     public HealthBar healthBar;
     public GameObject minimap;
     public GameObject pauseMenu;
+    public GameObject inWorldTooltipWindow;
 
     private bool isPaused = false;
     private HealthScript playerHealth;
@@ -31,6 +32,7 @@ public class UiManager : Singleton<UiManager>
         
         transform.Find("QuickAssignMenu").gameObject.SetActive(true);
         transform.Find("SpellCrafting").gameObject.SetActive(true);
+        ResetTooltipWindow();
     }
 
     // Update is called once per frame
@@ -110,6 +112,23 @@ public class UiManager : Singleton<UiManager>
     public static void HideTooltip()
     {
         Instance.currentTooltipWindow.Hide();
+    }
+
+    public static void ResetTooltipWindow()
+    {
+        Instance.currentTooltipWindow = Instance.inWorldTooltipWindow.GetComponent<TooltipDisplay>();
+    }
+
+    public static void ShowInWorldTooltip(Tooltip tooltip)
+    {
+        Instance.currentTooltipWindow = Instance.inWorldTooltipWindow.GetComponent<TooltipDisplay>();
+        Instance.inWorldTooltipWindow.SetActive(true);
+        Instance.currentTooltipWindow.Show(tooltip);
+    }
+    
+    public static void HideInWorldTooltip()
+    {
+        Instance.inWorldTooltipWindow.SetActive(false);
     }
 }
 
