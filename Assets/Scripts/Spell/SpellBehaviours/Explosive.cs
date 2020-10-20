@@ -46,7 +46,8 @@ public class Explosive : TriggerEventHandler {
 
         foreach (Collider hit in colliders)
         {
-            damageScript.DealDamage(hit);
+            if(hit.gameObject != GameManager.Instance._player)
+                damageScript.DealDamage(hit);
         }
         
         AudioManager.PlaySoundAtPosition("explosion", transform.position);
@@ -56,7 +57,7 @@ public class Explosive : TriggerEventHandler {
         var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
-        o.transform.localScale *= radius / 5f;
+        o.transform.localScale *= radius;
         o.SetActive(true);
         o.transform.SetParent(null);
         Destroy(gameObject);

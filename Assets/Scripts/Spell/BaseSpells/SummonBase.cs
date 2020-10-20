@@ -11,6 +11,7 @@ class SummonBase : SpellBase
     {
         _cooldown = 30f;
         _duration = 30f;
+        _offset = _player.forward * 1.5f;
     }
     public override void SpellBehaviour(Spell spell)
     {

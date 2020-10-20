@@ -9,6 +9,8 @@ public class SpellManager : Singleton<SpellManager>
     public Spell[] _defaultSpells;
     public int maxShields = 10;
     private int currShields = 0;
+    public GameObject skeleton;
+
     public Spell[] GetDefaultSpells()
     {
         // var movementSpell = ScriptableObject.CreateInstance<Spell>();

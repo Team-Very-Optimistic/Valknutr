@@ -11,4 +11,9 @@ public class DamageTextManager : Singleton<DamageTextManager>
         var damageText = Instantiate(Instance.damageTextPrefab);
         damageText.GetComponent<DamageText>().SetDamageTextProperties(finalDamage, worldPositionText, damageColor);
     }
+    public static void SpawnTempWord(string word, Vector3 worldPositionText, Color wordColor)
+    {
+        var damageText = Instantiate(Instance.damageTextPrefab);
+        damageText.GetComponent<DamageText>().SetWordTextProperties(word, worldPositionText, wordColor);
+    }
 }

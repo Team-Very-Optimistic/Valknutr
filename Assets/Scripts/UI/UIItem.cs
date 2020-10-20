@@ -36,7 +36,9 @@ public class UIItem : Selectable, IPointerClickHandler
 
         if (_spellItem.isBaseSpell)
         {
-            GetComponent<Mask>().enabled = false;
+            var mask = GetComponent<Mask>();
+            if(mask)
+                mask.enabled = false;
             //transform.GetChild(0).GetComponent<Image>().enabled = false;
         }
         _tooltipObject = transform.Find("Tooltip").gameObject;
@@ -119,7 +121,6 @@ public class UIItem : Selectable, IPointerClickHandler
 
         if (_tooltipPosition != null)
         {
-            Debug.Log("not null");
             _tooltipObject.transform.SetParent(_tooltipPosition);
             _tooltipRectTransform.position = _tooltipPosition.position;
         }

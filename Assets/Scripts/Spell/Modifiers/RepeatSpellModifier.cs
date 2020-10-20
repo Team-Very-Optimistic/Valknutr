@@ -4,18 +4,19 @@ using UnityEngine;
 [CreateAssetMenu]
 public class RepeatSpellModifier : SpellModifier
 {
-    private int n = 2;
+    private int iterations = 2;
     private SpellBase action;
     private TriggerEventHandler eventHandler;
+    
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action.behaviour;
+        
         Action temp = () =>
         {
             oldBehavior.Invoke();
-            Debug.Log(n);
-            if (--n < 0) return;
+            if (--iterations < 0) return;
             eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
             if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
@@ -28,6 +29,11 @@ public class RepeatSpellModifier : SpellModifier
         Action spell = temp;
         action.behaviour = spell;
         return action;
+    }
+
+    public override void UseQuality()
+    {
+        iterations = Mathf.RoundToInt(iterations * quality);
     }
 
     public void Invoke(Collider collider)

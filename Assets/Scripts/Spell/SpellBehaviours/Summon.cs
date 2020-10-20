@@ -1,52 +1,55 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Summon : NoTrigger
+public class Summon : TriggerEventHandler
 {
-    private float _damage;
     private float _speed;
     private NavMeshAgent navMeshAgent;
     private Animator animator;
     private bool isAttacking;
-    private GameObject enemy;
+    private Camera mainCam;
+    private Damage _damageScript;
 
     public void Set(float duration, float speed, float damage, float scale)
     {
         Destroy(gameObject, duration);
         _speed = speed;
-        _damage = damage;
         transform.localScale *= scale;
-        
+        _damageScript = gameObject.AddComponent<Damage>();
+        _damageScript.SetDamage(damage);
+
     }
 
     public void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        enemy = GameObject.FindWithTag("Enemy");
+        navMeshAgent.speed = _speed;
+        navMeshAgent.angularSpeed += _speed;
+        navMeshAgent.acceleration = _speed;
+        mainCam = Camera.main;
     }
     public void DamageEnemy(){}
 
-    public void SetPlayerBarrier()
+    public override void TriggerEvent(Collider other)
     {
+        if (other.CompareTag("Player")) return;
+        if (_damageScript.DealDamage(other))
+        {
+            EffectManager.PlayEffectAtPosition("summonDmg", transform.position, transform.lossyScale / 2f);
+            AudioManager.PlaySoundAtPosition("summonDmg", transform.position);
+        }
     }
-
+    
     public void Update()
     {
         //Animation
-        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
-        {
-            isAttacking = true;
-        }
-        else
-        {
-            isAttacking = false;
-        }
-        animator.SetBool("Attacking", isAttacking);
-
+        var target = Util.GetMousePositionOnWorldPlane(mainCam);
         //Navigation
-        navMeshAgent.SetDestination(enemy.transform.position);
+        navMeshAgent.SetDestination(target);
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
         {
@@ -56,7 +59,7 @@ public class Summon : NoTrigger
         {
             if (!navMeshAgent.isStopped) navMeshAgent.isStopped = true;
 
-            transform.LookAt(new Vector3(enemy.transform.position.x, this.transform.position.y, enemy.transform.position.z));
+            transform.LookAt(target);
         }
     }
 }

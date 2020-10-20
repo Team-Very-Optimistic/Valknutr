@@ -44,6 +44,7 @@ public abstract class SpellBase : SpellElement
     #endregion
 
     #region PropertyManagement
+    [SerializeField]
     private bool _copied; //why is persistent data so arhghghgh
     
     [Serializable]

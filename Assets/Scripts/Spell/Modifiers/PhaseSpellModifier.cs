@@ -3,6 +3,7 @@ using UnityEngine;
 
 class PhaseSpellModifier : SpellModifier
 {
+    [SerializeField]
     private int phaseAmount = 3;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
@@ -23,5 +24,10 @@ class PhaseSpellModifier : SpellModifier
         
         action.behaviour = spell;
         return action;
+    }
+
+    public override void UseQuality()
+    {
+        phaseAmount = Mathf.RoundToInt(phaseAmount * quality);
     }
 }

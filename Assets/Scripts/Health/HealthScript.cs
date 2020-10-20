@@ -50,9 +50,14 @@ public class HealthScript : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            OnDeath();
         }
         return true;
+    }
+
+    public virtual void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     protected void PlayHurtSound(float damage)
