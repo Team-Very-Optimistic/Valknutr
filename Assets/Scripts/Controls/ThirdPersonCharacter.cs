@@ -113,7 +113,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
 
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY 
+			                                                               | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 			m_GroundNormal = Vector3.up;
 			m_IsGrounded = true;
