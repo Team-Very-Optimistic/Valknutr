@@ -36,7 +36,7 @@ public class ExplosiveBase : SpellBase
         explosive._damage = ctx.damage;
         explosive.power = power * ctx.scale;
         explosive.Launch(direction * 2 + offset, speed);
-        objectForSpell = p;
+        ctx.objectForSpell = p;
     }
     
     public override Tooltip GetTooltip()
