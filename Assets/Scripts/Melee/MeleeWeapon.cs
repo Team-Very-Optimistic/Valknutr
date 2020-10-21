@@ -1,21 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Permissions;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
-{ 
+{
+    BoxCollider weaponBoxCollider;
+    SkinnedMeshRenderer weaponSkinnedMeshRenderer;
+    public GameObject swordJoint;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        weaponBoxCollider = GetComponent<BoxCollider>();
+        weaponSkinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Box collision to follow skinnedMeshRenderer still buggy
-        GetComponent<BoxCollider>().transform.position = GetComponent<SkinnedMeshRenderer>().rootBone.transform.position;
+        weaponBoxCollider.transform.position = swordJoint.transform.position;
     }
 
     //Only used against player
@@ -24,6 +29,7 @@ public class MeleeWeapon : MonoBehaviour
         //Only apply damage one via capsule collider
         if(other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider))
         {
+            UnityEngine.Debug.Log(other.gameObject);
             this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
         }
     }

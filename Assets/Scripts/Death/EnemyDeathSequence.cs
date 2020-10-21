@@ -81,7 +81,11 @@ public class EnemyDeathSequence : BaseDeathSequence
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
         Destroy(GetComponent("EnemyBehaviourBase"));
-        SendMessage("OnDeath");
+        
+        if(GetComponent<DropsLoot>() != null)
+        {
+            GetComponent<DropsLoot>().OnDeath();
+        }
 
         if(GetComponent<EnemyBehaviour_Boss>() != null)
         {
