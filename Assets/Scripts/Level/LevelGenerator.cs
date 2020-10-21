@@ -31,12 +31,14 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> _rooms = new List<GameObject>();
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     [SerializeField] private NavMeshSurface _navMeshSurface;
+    public bool generateOnAwake = false;
     
 
     private void Awake()
     {
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
         RebuildNavMesh();
+        if (generateOnAwake) Generate();
     }
 
     /// <summary>
