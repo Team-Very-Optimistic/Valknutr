@@ -26,9 +26,16 @@ class FireSpellModifier : SpellModifier
         return action;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        fireMultiplier *=  quality;
-        dmg *= quality;
+        fireMultiplier *= value;
+        dmg *= value;
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Fire" + DefaultModTitle(), $"Affected entities will be set on fire which afflicts {dmg} " +
+                                              $"damage to other entities in contact. Speed is increased by {fireMultiplier} " +
+                                              $"times." + DefaultModBody());
     }
 }

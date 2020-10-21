@@ -23,10 +23,10 @@ class GrowSpellModifier : SpellModifier
         return action;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        sizeChange *= quality;
-        cap *= quality;
+        sizeChange *= value;
+        cap *= value;
     }
 
     public override void ModifySpell(SpellBase spell)
@@ -50,6 +50,11 @@ class GrowSpellModifier : SpellModifier
             yield return new WaitForSeconds(0.15f);
             GameManager.Instance.StartCoroutine(MakeSmall(obj, size));
         }
-    } 
-    
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Size+" + DefaultModTitle(), 
+            $"Increases size of affected entities by {sizeChange} times. Capped at {cap} times the original size." + DefaultModBody());
+    }
 }

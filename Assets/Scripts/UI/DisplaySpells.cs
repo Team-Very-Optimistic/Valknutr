@@ -23,7 +23,6 @@ public class DisplaySpells : MonoBehaviour
             // Create new instances of our prefab until we've created as many as we specified
             newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
-            uiItem._tooltipPosition = tooltipPos;
             uiItem._spellItem = spellItem;
         }
 
@@ -39,7 +38,6 @@ public class DisplaySpells : MonoBehaviour
         _spellItems.Add(spellItem);
         GameObject newObj = Instantiate(prefab, transform);
         var uiItem = newObj.GetComponent<UIItem>();
-        uiItem._tooltipPosition = tooltipPos;
         uiItem._spellItem = spellItem;
     }
 }

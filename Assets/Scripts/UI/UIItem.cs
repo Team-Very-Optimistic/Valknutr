@@ -16,12 +16,7 @@ public class UIItem : Selectable, IPointerClickHandler
     public SpellItem _spellItem;
     protected bool selected;
     protected KeyCodeUI _keyCodeUi;
-    protected TextMeshProUGUI _tooltipText;
-    protected GameObject _tooltipObject;
-    protected RectTransform _tooltipRectTransform;
-    protected string _tooltipString;
-    public RectTransform _tooltipPosition;
-    
+
 
     private void Start()
     {
@@ -31,7 +26,6 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem._tooltipMessage;
         }
 
         if (_spellItem.isBaseSpell)
@@ -41,26 +35,19 @@ public class UIItem : Selectable, IPointerClickHandler
                 mask.enabled = false;
             //transform.GetChild(0).GetComponent<Image>().enabled = false;
         }
-        _tooltipObject = transform.Find("Tooltip").gameObject;
-        _tooltipRectTransform = _tooltipObject.GetComponent<RectTransform>();
-        _tooltipText = _tooltipObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void SetTooltipString(string tooltipString)
-    {
-        _tooltipString = tooltipString;
-    }
-    
     //Detect if the Cursor starts to pass over the GameObject
     public override void OnPointerEnter(PointerEventData pointerEventData)
     {
-        ShowTooltip(_tooltipString);
+        if (_spellItem != null)
+            UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip());
     }
 
     //Detect when Cursor leaves the GameObject
     public override void OnPointerExit(PointerEventData pointerEventData)
     {
-        HideTooltip();
+        UiManager.HideTooltip();
     }
 
     public void Init()
@@ -68,7 +55,6 @@ public class UIItem : Selectable, IPointerClickHandler
         if (_spellItem != null)
         {
             transform.GetChild(1).GetComponent<Image>().sprite = _spellItem._UIsprite;
-            _tooltipString = _spellItem._tooltipMessage;
         }
     }
     
@@ -84,8 +70,7 @@ public class UIItem : Selectable, IPointerClickHandler
             Debug.Log ("double click");
         }
     }
-
-
+    
     public override void OnDeselect(BaseEventData eventData)
     {
         base.OnDeselect(eventData);
@@ -109,26 +94,5 @@ public class UIItem : Selectable, IPointerClickHandler
             _keyCodeUi = GetComponentInChildren<KeyCodeUI>();
         }
         _keyCodeUi.SetKeyCode(key);
-    }
-
-    public void ShowTooltip(string tooltipString)
-    {
-        _tooltipObject.SetActive(true);
-        _tooltipText.text = tooltipString;
-        float textPaddingSize = 4f;
-        Vector2 backgoundSize = new Vector2(_tooltipText.preferredWidth + textPaddingSize, _tooltipText.preferredHeight + textPaddingSize);
-        _tooltipRectTransform.sizeDelta = backgoundSize;
-
-        if (_tooltipPosition != null)
-        {
-            _tooltipObject.transform.SetParent(_tooltipPosition);
-            _tooltipRectTransform.position = _tooltipPosition.position;
-        }
-        //_tooltipRectTransform.localPosition = backgoundSize / 2;
-    }
-
-    public void HideTooltip()
-    {
-        _tooltipObject.SetActive(false);
     }
 }

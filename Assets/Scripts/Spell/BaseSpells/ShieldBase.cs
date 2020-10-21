@@ -29,4 +29,9 @@ class ShieldBase : SpellBase
             _objectForSpell = p;
         }
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip($"Shield {DefaultBaseTitle()}", $"Spawns a shield that absorbs {_player.GetComponent<PlayerHealth>().maxHealth/10 + 10 * _scale} damage for the player. \n{DefaultBaseBody()}");
+    }
 }

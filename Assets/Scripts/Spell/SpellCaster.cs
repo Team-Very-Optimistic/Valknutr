@@ -107,7 +107,6 @@ public class SpellCaster : MonoBehaviour
     public void CastPoint()
     {
         // print("cast point! " + castedSpell.name + " (" + storedDirection + ")");
-        character.ClearCastingAnimation();
         var data = new SpellCastData(gameObject, transform.position, storedDirection);
         castedSpell.CastSpell(data);
     }

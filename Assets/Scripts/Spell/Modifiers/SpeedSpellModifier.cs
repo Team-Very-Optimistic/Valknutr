@@ -26,8 +26,13 @@ class SpeedSpellModifier : SpellModifier
         return action; // No change
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        speedMultiplier *= quality;
+        speedMultiplier *= value;
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Haste" + DefaultModTitle(), $"Increases speed of affected entities by {speedMultiplier}% and {DefaultModBody()}");
     }
 }

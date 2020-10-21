@@ -77,6 +77,21 @@ public static class Util
     }
 
     /// <summary>
+    /// Retrieves the generic component, if it doesnt exist add it instead
+    /// </summary>
+    public static T GetComponentElseAddIt<T>(this GameObject obj) where T : Component
+    {
+        T temp;
+        temp = obj.GetComponent<T>();
+        if (temp == null)
+        {
+            temp = obj.AddComponent<T>();
+        }
+
+        return temp;
+    }
+
+    /// <summary>
     /// Returns a random rotation to the cardinal directions
     /// </summary>
     /// <returns></returns>

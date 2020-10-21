@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu]
 class SummonBase : SpellBase
 {
     public float _duration;
@@ -17,5 +16,9 @@ class SummonBase : SpellBase
     {
         _objectForSpell = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.identity);
         _objectForSpell.GetComponent<Summon>().Set(_duration, _speed, _damage, _scale);
+    }
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody()}");
     }
 }
