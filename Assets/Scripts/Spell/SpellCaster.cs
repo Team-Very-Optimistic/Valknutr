@@ -30,7 +30,8 @@ public class SpellCaster : MonoBehaviour
         int i = 0;
         foreach (var spell in  SpellManager.Instance.GetDefaultSpells())
         {
-            spells[i++] = Instantiate(spell);
+            if (spell)
+                spells[i++] = Instantiate(spell);
         }
 
         if (Inventory.Instance._spells.Count == 0)
