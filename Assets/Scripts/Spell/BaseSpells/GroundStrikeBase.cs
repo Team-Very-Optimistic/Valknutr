@@ -73,6 +73,6 @@ public class GroundStrikeBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Strike <Base>", $"Strikes the ground with a charged staff, dealing {_damage} to entities in a small radius");
+        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage} to entities in a small radius. {DefaultBaseBody()}");
     }
 }

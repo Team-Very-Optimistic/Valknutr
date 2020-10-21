@@ -11,7 +11,7 @@ public class ExplosiveBase : SpellBase
 
         radius = 3.0F;
         power = 100.0F;
-        _offset = Vector3.up  + _player.forward * 1.5f;
+        _offset = Vector3.up  + _player.forward * 1.3f;
     }
 
     /// <summary>
@@ -42,6 +42,6 @@ public class ExplosiveBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Bomb <Base>", $"Creates an explosive that detonates after {0} seconds, dealing {_damage} to entities in a large radius. Can damage self");
+        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
     }
 }

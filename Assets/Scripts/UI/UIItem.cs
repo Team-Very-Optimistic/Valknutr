@@ -30,7 +30,9 @@ public class UIItem : Selectable, IPointerClickHandler
 
         if (_spellItem.isBaseSpell)
         {
-            GetComponent<Mask>().enabled = false;
+            var mask = GetComponent<Mask>();
+            if(mask)
+                mask.enabled = false;
             //transform.GetChild(0).GetComponent<Image>().enabled = false;
         }
     }

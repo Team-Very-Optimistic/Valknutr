@@ -4,5 +4,7 @@
     Projectile,
     Movement,
     Shield,
-    Bomb
+    Bomb,
+    Aoe,
+    Summon
 }

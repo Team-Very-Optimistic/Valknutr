@@ -33,12 +33,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 		public bool m_Dashing;
-		private bool m_CastingProjectile;
-		private bool m_CastingShield;
-		private bool m_CastingBomb;
+		private bool m_Casting;
 		public Transform transformChild;
 		private static readonly int CastingBomb = Animator.StringToHash("CastingBomb");
 		private static readonly int CastingProjectile = Animator.StringToHash("CastingProjectile");
+		private static readonly int CastingAOE = Animator.StringToHash("CastingAOE");
+        private static readonly int CastingSummon = Animator.StringToHash("CastingSummon");
 		private static readonly int CastingShield = Animator.StringToHash("CastingShield");
 		private static readonly int CastingDash = Animator.StringToHash("CastingDash");
 		private static readonly int AnimationSpeed = Animator.StringToHash("AnimationSpeed");
@@ -46,6 +46,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private static readonly int Turn = Animator.StringToHash("Turn");
 		private static readonly int OnGround = Animator.StringToHash("OnGround");
 		private static readonly int JumpLeg = Animator.StringToHash("JumpLeg");
+		private static readonly int Ready = Animator.StringToHash("Ready");
+		private SpellCaster spellCaster;
+
 
 		public void Dash(float dashTime, float dashSpeed, Vector3 direction)
 		{
@@ -103,13 +106,15 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		
 		void Start()
 		{
+			spellCaster = GetComponent<SpellCaster>();
 			m_Animator = GetComponent<Animator>();
 			m_Rigidbody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
 
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY 
+			                                                               | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 			m_GroundNormal = Vector3.up;
 			m_IsGrounded = true;
@@ -140,6 +145,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			//CheckGroundStatus();
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
+			
+			if(m_ForwardAmount > 0) {
+				//started moving
+				//cancels animation
+				if (Ready != m_Animator.GetCurrentAnimatorStateInfo(1).shortNameHash)
+				{
+
+					m_Animator.Play(Ready);
+				}
+			}
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			//control and velocity handling is different when grounded and airborne:
@@ -302,11 +317,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void CastPoint()
 		{
 			ClearCastingAnimation();
+			spellCaster.CastPoint();
 		}
 
 		public bool IsDisabled()
 		{
-			return m_CastingBomb || m_CastingProjectile || m_CastingShield || m_Dashing;
+			return m_Casting || m_Dashing ;
 		}
 
 		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
@@ -314,23 +330,34 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			switch (animationType)
 			{
 				case CastAnimation.Bomb:
-					m_CastingBomb = true;
+					m_Casting = true;
 					m_Animator.SetBool(CastingBomb, true);
 					break;
 				case CastAnimation.Projectile:
-					m_CastingProjectile = true;
+					m_Casting = true;
 					//m_Animator.SetBool(CastingProjectile, true);
 					m_Animator.SetFloat(AnimationSpeed, speed);
 					m_Animator.Play("Projectile");
 					break;
 				case CastAnimation.Shield:
-					m_CastingShield = true;
+					m_Casting = true;
 					m_Animator.SetBool(CastingShield, true);
 					break;
 				case CastAnimation.Movement:
 					//m_Dashing = true;
 					//m_Animator.SetBool(CastingDash, true);
 					m_Animator.Play("Post");
+					break;
+				case CastAnimation.Aoe:
+					m_Casting = true;
+					spellCaster.CastPoint();
+
+					m_Animator.SetBool(CastingAOE, true);
+					
+					break;
+				case CastAnimation.Summon:
+					m_Casting = true;
+					m_Animator.SetBool(CastingSummon, true);
 					break;
 				default:
 					m_Animator.Play("Post");
@@ -340,15 +367,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void ClearCastingAnimation()
 		{
-			m_CastingBomb = false;
-			m_CastingProjectile = false;
-			m_CastingShield = false;
+			m_Casting = false;
+
 			m_Dashing = false;
 			m_Animator.SetFloat(AnimationSpeed, 1f);
 			m_Animator.SetBool(CastingBomb, false);
 			m_Animator.SetBool(CastingProjectile, false);
 			m_Animator.SetBool(CastingShield, false);
 			m_Animator.SetBool(CastingDash, false);
+			m_Animator.SetBool(CastingSummon, false);
+			m_Animator.SetBool(CastingAOE, false);
 		}
 
 		public void StopMovement()

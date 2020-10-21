@@ -36,10 +36,10 @@ class SplitSpellModifier : SpellModifier
         return action;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        iterations = Mathf.RoundToInt(iterations * quality);
-        damageReduction = quality / (iterations/2);
+        iterations = Mathf.RoundToInt(iterations * value);
+        damageReduction = value / (iterations/2);
     }
 
     IEnumerator DelayInvoke(Action invoke, float delay)
@@ -49,6 +49,7 @@ class SplitSpellModifier : SpellModifier
     }
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Echo <Modifier>", $"Repeats the spell effects {iterations} times, but each spell effect is {0}% weaker");
+        return new Tooltip("Split" + DefaultModTitle(), 
+            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction}% weaker. {DefaultModBody()}");
     }
 }

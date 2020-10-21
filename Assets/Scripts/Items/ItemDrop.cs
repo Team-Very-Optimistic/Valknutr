@@ -19,7 +19,7 @@ public class ItemDrop : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKey("z"))
+        if (Input.GetKey(KeyCode.Space))
         {
             if (playerCollider != null)
             {

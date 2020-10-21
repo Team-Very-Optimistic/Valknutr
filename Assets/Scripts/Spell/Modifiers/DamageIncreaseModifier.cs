@@ -12,13 +12,13 @@ public class DamageIncreaseModifier : SpellModifier
         spell._damage *= damageMultiplier;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        damageMultiplier = Mathf.RoundToInt(damageMultiplier * quality);
+        damageMultiplier = Mathf.RoundToInt(damageMultiplier * value);
     }
     
     public override Tooltip GetTooltip()
     {
-        return default;
+        return new Tooltip("Damage Amplification" + DefaultModTitle(), $"Increases damage of spell by {damageMultiplier}. {DefaultModBody()}");
     }
 }

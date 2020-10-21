@@ -38,15 +38,15 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action behaviour; //The behaviour is the one being invoked when spell is cast.
-
+    [HideInInspector]
+    public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;
     #endregion
 
     #region PropertyManagement
-    [SerializeField]
     private bool _copied; //why is persistent data so arhghghgh
-    
+
     [Serializable]
     protected class SpellProperty : ScriptableObject{
         public GameObject _objectForSpell; //spell cast in reference to this object
@@ -126,6 +126,22 @@ public abstract class SpellBase : SpellElement
     }
     protected abstract void SetValues();
     //public virtual void AfterModified(){}
+    
+    protected virtual string DefaultBaseTitle()
+    {
+        return $"<Base> (<b><color=\"{QualityManager.GetQualityColor(_quality)}\"> {_quality}</color></b>)";
+    }
+
+   
+    protected virtual string DefaultBaseBody()
+    {
+        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+    }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip(DefaultBaseTitle(), DefaultBaseBody());
+    }
 
     public abstract void SpellBehaviour(Spell spell);
 

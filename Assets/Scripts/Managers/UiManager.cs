@@ -142,7 +142,7 @@ public readonly struct Tooltip
         Title = title;
         Body = body;
     }
-
+    
     public string ToString()
     {
         return $"{Title}\n{Body}";

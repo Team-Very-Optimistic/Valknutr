@@ -31,9 +31,9 @@ public class RepeatSpellModifier : SpellModifier
         return action;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        iterations = Mathf.RoundToInt(iterations * quality);
+        iterations = Mathf.RoundToInt(iterations * value);
     }
 
     public void Invoke(Collider collider)
@@ -45,6 +45,6 @@ public class RepeatSpellModifier : SpellModifier
     
     public override Tooltip GetTooltip()
     {
-        return default;
+        return new Tooltip(DefaultModTitle(), "Repeats the spell and changes the central object of the spell to the first object that had been interacted." + DefaultModBody());
     }
 }

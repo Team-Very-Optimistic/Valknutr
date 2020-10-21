@@ -24,7 +24,7 @@
     //     yield return new WaitForSeconds(duration);
     //     Time.timeScale = 1;
     // }
-    public override void UseQuality()
+    public override void UseValue()
     {
         throw new System.NotImplementedException();
     }
