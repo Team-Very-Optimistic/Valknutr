@@ -96,31 +96,31 @@ public class QualityManager : ScriptableObject
         return Quality.Sanctified;
     }
     
-    [Range(0f, 1.5f)]
+    // [Range(0f, 1.5f)]
     public float simpleValue;
     public float simpleChance;
     public float simpleAddDifficultyChance;
 
     
-    [Range(1.5f, 5f)]
+    // [Range(1.5f, 5f)]
     public float intricateValue;
     public float intricateChance;
     public float intricateAddDifficultyChance;
 
     
-    [Range(5f, 15f)]
+    // [Range(5f, 15f)]
     public float arcaneValue;
     public float arcaneChance;
     public float arcaneAddDifficultyChance;
 
    
-    [Range(15f, 20f)]
+    // [Range(15f, 20f)]
     public float divineValue;
     public float divineChance;
     public float divineAddDifficultyChance;
 
     
-    [Range(20f, 100f)]
+    // [Range(20f, 100f)]
     public float sanctifiedValue;
     public float sanctifiedChance;
     public float sanctifiedAddDifficultyChance;
