@@ -12,7 +12,7 @@ public class HealthPickup : ItemDrop
  
     #region Unity Methods
 
-    public override void PickUp(Collider other)
+    public override void PickUp(GameObject other)
     {
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);
