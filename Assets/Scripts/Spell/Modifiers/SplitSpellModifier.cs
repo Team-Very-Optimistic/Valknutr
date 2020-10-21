@@ -45,9 +45,9 @@ class SplitSpellModifier : SpellModifier
         invoke.Invoke();
     }
 
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip("Split" + DefaultModTitle(),
-            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction}% weaker. {DefaultModBody()}");
+        return new Tooltip("Split" + DefaultModTitle(ctx),
+            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction}% weaker. {DefaultModBody(ctx)}");
     }
 }

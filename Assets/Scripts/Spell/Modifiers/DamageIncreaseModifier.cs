@@ -24,8 +24,8 @@ public class DamageIncreaseModifier : SpellModifier
         damageMultiplier = Mathf.RoundToInt(damageMultiplier * value);
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip("Damage Amplification" + DefaultModTitle(), $"Increases damage of spell by {damageMultiplier}. {DefaultModBody()}");
+        return new Tooltip("Damage Amplification" + DefaultModTitle(ctx), $"Increases damage of spell by {damageMultiplier}. {DefaultModBody(ctx)}");
     }
 }

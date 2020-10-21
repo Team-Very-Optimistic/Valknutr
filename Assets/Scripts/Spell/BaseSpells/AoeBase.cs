@@ -17,8 +17,8 @@ public class AoeBase : SpellBase
         ctx.objectForSpell = aoe._aoeEffect;
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0} seconds, dealing {damage} to entities in a large radius. Can damage self");
+        return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0.5} seconds, dealing {ctx.damage:F1} to entities in a large radius. Can damage self");
     }
 }

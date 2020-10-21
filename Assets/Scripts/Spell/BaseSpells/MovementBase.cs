@@ -55,9 +55,9 @@ class MovementBase : SpellBase
         }
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {_moveTime * 30f / speed}s. {DefaultBaseBody()}");
+        return new Tooltip($"Dash {DefaultBaseTitle(ctx)}", $"Dash quickly in any direction in {_moveTime * 30f / ctx.speed:F}s. {DefaultBaseBody(ctx)}");
     }
 }
 

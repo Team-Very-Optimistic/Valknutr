@@ -34,10 +34,10 @@ class FireSpellModifier : SpellModifier
         dmg *= value;
     }
 
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip("Fire" + DefaultModTitle(), $"Affected entities will be set on fire which afflicts {dmg} " +
+        return new Tooltip("Fire" + DefaultModTitle(ctx), $"Affected entities will be set on fire which afflicts {dmg} " +
                                                        $"damage to other entities in contact. Speed is increased by {fireMultiplier} " +
-                                                       $"times." + DefaultModBody());
+                                                       $"times." + DefaultModBody(ctx));
     }
 }

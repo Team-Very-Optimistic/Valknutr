@@ -46,19 +46,19 @@ public abstract class SpellBase : SpellElement
 
     #region Tooltip
 
-    protected virtual string DefaultBaseTitle()
+    protected virtual string DefaultBaseTitle(SpellContext ctx)
     {
         return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     
-    protected virtual string DefaultBaseBody()
+    protected virtual string DefaultBaseBody(SpellContext ctx)
     {
-        return $"\nCooldown: {cooldown}\nDamage: {damage} \nSpeed: {speed}";
+        return $"\nCooldown: {ctx.cooldown}\nDamage: {ctx.damage} \nSpeed: {ctx.speed}";
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip(DefaultBaseTitle(), DefaultBaseBody());
+        return new Tooltip(DefaultBaseTitle(ctx), DefaultBaseBody(ctx));
     }
 
     #endregion

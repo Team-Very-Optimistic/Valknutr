@@ -24,19 +24,19 @@ public abstract class SpellModifier : SpellElement
     }
 
     public abstract void UseValue();
-    protected virtual string DefaultModTitle()
+    protected virtual string DefaultModTitle(SpellContext ctx)
     {
         return $"<Modifier> (<b><color={QualityManager.GetQualityColor(quality)}>{quality}</color></b>)";
     }
 
    
-    protected virtual string DefaultModBody()
+    protected virtual string DefaultModBody(SpellContext ctx)
     {
-        return $"Modifies spell cooldown by {_cooldownMultiplier * 100}%.";
+        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F1}%.";
     }
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip(DefaultModTitle(), DefaultModBody());
+        return new Tooltip(DefaultModTitle(ctx), DefaultModBody(ctx));
     }
 
     public SpellContext Modify(SpellContext ctx)

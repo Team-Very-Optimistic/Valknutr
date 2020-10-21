@@ -7,6 +7,13 @@ public class ExplosiveBase : SpellBase
     public float radius = 5.0F;
     public float power = 100.0F;
 
+    public override SpellContext GetContext()
+    {
+        var ctx = base.GetContext();
+        ctx.offset = Vector3.up;
+        return ctx;
+    }
+
     // protected override void SetValues()
     // {
     //
@@ -35,12 +42,12 @@ public class ExplosiveBase : SpellBase
         explosive.radius = radius * ctx.scale;
         explosive._damage = ctx.damage;
         explosive.power = power * ctx.scale;
-        explosive.Launch(direction * 2 + offset, speed);
+        explosive.Launch(ctx.direction * 2 + ctx.offset, ctx.speed);
         ctx.objectForSpell = p;
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
+        return new Tooltip($"Bomb {DefaultBaseTitle(ctx)}", $"Creates an explosive that detonates on contact, dealing {ctx.damage:F1} to entities in a radius of {radius * ctx.scale:F1}. {DefaultBaseBody(ctx)}");
     }
 }

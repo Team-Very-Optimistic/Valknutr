@@ -7,5 +7,5 @@ using UnityEngine;
 [Serializable]
 public abstract class SpellElement : ScriptableObject, ITooltip
 {
-    public abstract Tooltip GetTooltip();
+    public abstract Tooltip GetTooltip(SpellContext ctx);
 }

@@ -39,8 +39,8 @@ class ProjectileBase : SpellBase
         ctx.objectForSpell = p;
     }
     
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {damage} to enemies that it collides into. {DefaultBaseBody()}");
+        return new Tooltip($"Projectile {DefaultBaseTitle(ctx)}", $"Sends forth a projectile that deals {ctx.damage:F1} to enemies that it collides into. {DefaultBaseBody(ctx)}");
     }
 }

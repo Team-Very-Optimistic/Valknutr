@@ -15,8 +15,8 @@ class SummonBase : SpellBase
         ctx.objectForSpell = Instantiate(objectForSpell, _player.position + ctx.offset, Quaternion.identity);
         ctx.objectForSpell.GetComponent<Summon>().Set(ctx.duration, ctx.speed, ctx.damage, ctx.scale);
     }
-    public override Tooltip GetTooltip()
+    public override Tooltip GetTooltip(SpellContext ctx)
     {
-        return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody()}");
+        return new Tooltip($"Summon {DefaultBaseTitle(ctx)}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody(ctx)}");
     }
 }

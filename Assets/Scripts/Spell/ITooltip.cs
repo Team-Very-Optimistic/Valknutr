@@ -1,4 +1,4 @@
 ﻿public interface ITooltip
 {
-    Tooltip GetTooltip();
+    Tooltip GetTooltip(SpellContext ctx);
 }
