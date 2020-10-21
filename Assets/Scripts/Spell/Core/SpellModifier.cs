@@ -30,14 +30,14 @@ public abstract class SpellModifier : SpellElement
         return $"<Modifier> (<b><color=\"{QualityManager.GetQualityColor(quality)}\"> {quality}</color></b>)";
     }
 
+   
+    protected virtual string DefaultModBody()
+    {
+        return $"Modifies spell cooldown by {_cooldownMultiplier * 100}%.";
+    }
     public override Tooltip GetTooltip()
     {
         return new Tooltip(DefaultModTitle(), DefaultModBody());
-    }
-
-    protected virtual string DefaultModBody()
-    {
-        return $"Changes spell cooldown by {(1 - this._cooldownMultiplier) * 100}%.";
     }
 
     public SpellBase Modify(SpellBase spell)

@@ -126,6 +126,22 @@ public abstract class SpellBase : SpellElement
     }
     protected abstract void SetValues();
     //public virtual void AfterModified(){}
+    
+    protected virtual string DefaultBaseTitle()
+    {
+        return $"<Base> (<b><color=\"{QualityManager.GetQualityColor(_quality)}\"> {_quality}</color></b>)";
+    }
+
+   
+    protected virtual string DefaultBaseBody()
+    {
+        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+    }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip(DefaultBaseTitle(), DefaultBaseBody());
+    }
 
     public abstract void SpellBehaviour(Spell spell);
 

@@ -158,10 +158,10 @@ public class QualityManager : ScriptableObject
         switch (quality)
         {
             case Quality.Simple:
-                return "cyan";
+                return "red";
                 break;
             case Quality.Intricate:
-                return "red";
+                return "aqua";
                 break;
 
             case Quality.Arcane:
@@ -177,7 +177,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             default:
-                return "cyan";
+                return "teal";
                 break;
         }
     }
