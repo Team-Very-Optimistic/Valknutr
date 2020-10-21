@@ -129,7 +129,7 @@ public abstract class SpellBase : SpellElement
     
     protected virtual string DefaultBaseTitle()
     {
-        return $"<Base> (<b><color=\"{QualityManager.GetQualityColor(_quality)}\"> {_quality}</color></b>)";
+        return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
     }
 
    
