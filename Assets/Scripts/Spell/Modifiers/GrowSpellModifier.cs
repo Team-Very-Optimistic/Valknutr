@@ -50,6 +50,10 @@ class GrowSpellModifier : SpellModifier
             yield return new WaitForSeconds(0.15f);
             GameManager.Instance.StartCoroutine(MakeSmall(obj, size));
         }
-    } 
-    
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Size+ <Modifier>", "Increases size of affected entities by {sizeChange}%");
+    }
 }

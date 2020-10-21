@@ -30,4 +30,9 @@ class PhaseSpellModifier : SpellModifier
     {
         phaseAmount = Mathf.RoundToInt(phaseAmount * quality);
     }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Phase <Modifier>", "Causes affected entities to pass through solid objects");
+    }
 }

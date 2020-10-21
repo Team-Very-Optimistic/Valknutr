@@ -29,4 +29,9 @@ class ShieldBase : SpellBase
             _objectForSpell = p;
         }
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Shield <Base>", $"Spawns a shield that absorbs {0} damage for the player. Shields also deal {_damage} to enemies that it collides with.");
+    }
 }

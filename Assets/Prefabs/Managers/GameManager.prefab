@@ -54,6 +54,11 @@ MonoBehaviour:
   _weapon: {fileID: 0}
   activeRoom: {fileID: 0}
   itemDropPrefab: {fileID: 3498559886049984015, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
+  healthPickupObj: {fileID: 0}
+  treasurePrefab: {fileID: 9082468501717190872, guid: 239fa0c917ba3024fa470a8a516aa3fe, type: 3}
+  healthPickupValue: 2
+  healthPickupDropChance: 0.3
+  QualityManager: {fileID: 0}
 --- !u!114 &2674764975012913393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,12 +71,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c2d73780ea42258b4ffe246cf41365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileObject: {fileID: 7908457230315757119, guid: bb0994a64b1552c478f34ad6f50e15cc, type: 3}
-  shieldObject: {fileID: 1082058612622460507, guid: f22f80e2857da3a4cb6596b0bd84a261, type: 3}
   fireObject: {fileID: 1259517371758144061, guid: b899f8874556bd3448b1ff3b9bf79718, type: 3}
-  explosionObject: {fileID: 6847475854198797690, guid: 0d08ff7a5f4a5414890a67e8b581f998, type: 3}
   _defaultSpells: []
   maxShields: 10
+  skeleton: {fileID: 0}
 --- !u!114 &2674764975012913399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,24 +139,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MasterMixer: {fileID: 24100000, guid: 10036c82bf565df4396e0fb9156ac972, type: 2}
-  m_SfxLibrary:
-  - m_Identifier: playerHurt
-    m_Clip: {fileID: 8300000, guid: ef6e15b3e78db5247a8d489278e0b2e4, type: 3}
-    m_Volume: 0.3
-    m_Pitch: 1
-    m_Source: {fileID: 0}
-  - m_Identifier: projectileLaunch
-    m_Clip: {fileID: 8300000, guid: 9071b03152d8f634588f9ba85d78d593, type: 3}
-    m_Volume: 0.5
-    m_Pitch: 1
-    m_Source: {fileID: 0}
-  - m_Identifier: projectileHit
-    m_Clip: {fileID: 8300000, guid: 3163d468a95ccf940a38463fe456af02, type: 3}
-    m_Volume: 0.5
-    m_Pitch: 1
-    m_Source: {fileID: 0}
-  - m_Identifier: explosion
-    m_Clip: {fileID: 8300000, guid: 14dde69b4efc8d3409c01917f264e58f, type: 3}
-    m_Volume: 0.5
-    m_Pitch: 1
-    m_Source: {fileID: 0}
+  _library: {fileID: 0}

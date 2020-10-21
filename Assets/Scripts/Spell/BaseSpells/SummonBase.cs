@@ -17,4 +17,9 @@ class SummonBase : SpellBase
         _objectForSpell = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.identity);
         _objectForSpell.GetComponent<Summon>().Set(_duration, _speed, _damage, _scale);
     }
+
+    public override Tooltip GetTooltip()
+    {
+        return default;
+    }
 }

@@ -30,4 +30,9 @@ class SpeedSpellModifier : SpellModifier
     {
         speedMultiplier *= quality;
     }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Haste <Modifier>", $"Reduces spell cooldown by {(1-_cooldownMultiplier) * 100}%, and increases speed of affected entities by {"?"}%");
+    }
 }

@@ -42,4 +42,9 @@ public class RepeatSpellModifier : SpellModifier
         eventHandler.RemoveEvent(Invoke);
         action.behaviour.Invoke();
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return default;
+    }
 }

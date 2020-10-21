@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     public Room activeRoom;
     public GameObject itemDropPrefab;
     public GameObject healthPickupObj;
+    public GameObject treasurePrefab;
     private PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
@@ -69,6 +70,13 @@ public class GameManager : Singleton<GameManager>
             
         return hp;
         
+    }
+
+    public static TreasureChest SpawnTreasureChest(Vector3 position, float quality)
+    {
+        var treasure = Instantiate(Instance.treasurePrefab, position, Quaternion.identity).GetComponent<TreasureChest>();
+        // todo: set loot + quality
+        return treasure;
     }
 
     public void SetGameWin()
