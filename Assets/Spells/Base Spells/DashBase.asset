@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae59c0f8fbe9491ea155fccf82284152, type: 3}
-  m_Name: movement
+  m_Name: DashBase
   m_EditorClassIdentifier: 
-  _objectForSpell: {fileID: 0}
   _objectsCollided: []
-  _direction: {x: -0.69107234, y: 0, z: 0.6763533}
-  _offset: {x: 2, y: 0, z: 0}
-  _damage: 1.5
-  _speed: 50
-  _scale: 1
-  _cooldown: 1
+  _quality: 0
+  objectForSpell: {fileID: 0}
+  damage: 1
+  speed: 30
+  scale: 1
+  cooldown: 8
+  _duration: 1
+  direction: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   animationType: 2
-  _iterations: 1
-  properties: {fileID: 0}
-  _copied: 0
+  _moveTime: 0.3

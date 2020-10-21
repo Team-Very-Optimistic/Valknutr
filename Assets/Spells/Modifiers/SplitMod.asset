@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950f70d0b9bd4b0eb862dcc0e53247e8, type: 3}
-  m_Name: Phase Spell Modifier
+  m_Script: {fileID: 11500000, guid: e192453a6aef4c5da3bd0810a9f5b101, type: 3}
+  m_Name: SplitMod
   m_EditorClassIdentifier: 
-  _cooldownMultiplier: 1.2
-  quality: 1
+  _cooldownMultiplier: 1.1
+  value: 0
   init: 0
-  phaseAmount: 3
+  quality: 1
+  iterations: 2
+  damageReduction: 0.8
+  randomMax: 0.2

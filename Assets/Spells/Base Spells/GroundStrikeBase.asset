@@ -9,17 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9dd71ec390e4ee88ef0975fa3922c89, type: 3}
-  m_Name: New Aoe Base
+  m_Script: {fileID: 11500000, guid: beba7a6a1a73454da0d7776ec245bdf6, type: 3}
+  m_Name: GroundStrikeBase
   m_EditorClassIdentifier: 
-  _objectForSpell: {fileID: 0}
   _objectsCollided: []
-  _direction: {x: 0, y: 0, z: 0}
-  _offset: {x: 0, y: 0, z: 0}
-  _damage: 3
-  _speed: 1
-  _scale: 1
-  _cooldown: 10
-  animationType: 5
-  _iterations: 1
-  properties: {fileID: 0}
+  _quality: 0
+  objectForSpell: {fileID: 0}
+  damage: 3
+  speed: 1
+  scale: 1
+  cooldown: 1
+  _duration: 1
+  direction: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  animationType: 1
+  radius: 2
+  power: 1000
