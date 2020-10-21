@@ -17,9 +17,9 @@ public class QualityManager : ScriptableObject
         Sanctified
     }
 
-    private float Value(Quality quality, bool positiveBetter)
+    private float Value(Quality quality, bool positiveBetter = true)
     {
-        var value = 0f;
+        var value = 1f;
         switch (quality)
         {
             case Quality.Simple:
@@ -42,7 +42,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             default:
-                value = -1;
+                value = 1;
                 break;
         }
 
@@ -133,17 +133,17 @@ public class QualityManager : ScriptableObject
         if (element.isBaseSpell)
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
-            spellBase._cooldown *= Spread() * Value(quality, false);
-            spellBase._damage *= Spread() * Value(quality, true);
-            spellBase._scale *= Spread();
-            spellBase._speed *= Spread() * Value(quality, true);
+            spellBase._cooldown *= 1 - Mathf.Log(Spread() * Value(quality));
+            spellBase._damage *= Spread() * Value(quality);
+            spellBase._scale *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
+            spellBase._speed *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
             spellBase._quality = quality;
         }
         else
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
-            mod._cooldownMultiplier *= Spread() * Value(quality, true);
-            mod.value *= Spread() * Value(quality, true);
+            mod._cooldownMultiplier *= 1 + 0.2f * Mathf.Log(Spread() * Value(quality), 2);
+            mod.value *= Spread() * Value(quality);
             mod.quality = quality;
         }
     }
@@ -182,3 +182,4 @@ public class QualityManager : ScriptableObject
         }
     }
 }
+
