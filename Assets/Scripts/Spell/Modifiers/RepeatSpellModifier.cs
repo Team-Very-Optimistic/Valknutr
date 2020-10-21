@@ -31,9 +31,9 @@ public class RepeatSpellModifier : SpellModifier
         return action;
     }
 
-    public override void UseQuality()
+    public override void UseValue()
     {
-        iterations = Mathf.RoundToInt(iterations * quality);
+        iterations = Mathf.RoundToInt(iterations * value);
     }
 
     public void Invoke(Collider collider)

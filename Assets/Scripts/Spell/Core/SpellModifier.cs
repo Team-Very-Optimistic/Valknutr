@@ -7,9 +7,12 @@ using Object = System.Object;
 public abstract class SpellModifier : SpellElement
 {
     public float _cooldownMultiplier = 1;
-    public float quality;
+    public float value;
     [SerializeField]
     private bool init = false;
+
+    public QualityManager.Quality quality;
+
     public virtual void ModifySpell(SpellBase spell)
     {
         spell._cooldown *= _cooldownMultiplier;
@@ -21,13 +24,27 @@ public abstract class SpellModifier : SpellElement
         return action; // No change
     }
 
-    public abstract void UseQuality();
+    public abstract void UseValue();
+    protected virtual string DefaultModTitle()
+    {
+        return $" (<color=\"{QualityManager.GetQualityColor(quality)}\"> {quality})";
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip(DefaultModTitle(), DefaultModBody());
+    }
+
+    protected virtual string DefaultModBody()
+    {
+        return $"Changes spell cooldown by {(1 - this._cooldownMultiplier) * 100}%.";
+    }
 
     public SpellBase Modify(SpellBase spell)
     {
         if (!init)
         {
-            UseQuality();
+            UseValue();
             init = true;
         }
         ModifySpell(spell);

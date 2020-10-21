@@ -137,17 +137,48 @@ public class QualityManager : ScriptableObject
             spellBase._damage *= Spread() * Value(quality, true);
             spellBase._scale *= Spread();
             spellBase._speed *= Spread() * Value(quality, true);
+            spellBase._quality = quality;
         }
         else
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
             mod._cooldownMultiplier *= Spread() * Value(quality, true);
-            mod.quality *= Spread() * Value(quality, true);
+            mod.value *= Spread() * Value(quality, true);
+            mod.quality = quality;
         }
     }
     
     private float Spread()
     {
         return Random.Range(1 - randomSpread, 1 + randomSpread);
+    }
+
+    public static string GetQualityColor(Quality quality)
+    {
+        switch (quality)
+        {
+            case Quality.Simple:
+                return "cyan";
+                break;
+            case Quality.Intricate:
+                return "red";
+                break;
+
+            case Quality.Arcane:
+                return "yellow";
+                break;
+
+            case Quality.Divine:
+                return "magenta";
+                break;
+
+            case Quality.Sanctified:
+                return "#120A8F";
+                break;
+
+            default:
+                return "cyan";
+                break;
+        }
     }
 }

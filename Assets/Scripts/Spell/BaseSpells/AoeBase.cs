@@ -13,4 +13,9 @@ public class AoeBase : SpellBase
         aoe.Set(_damage, 0.5f);
         _objectForSpell = aoe._aoeEffect;
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0} seconds, dealing {_damage} to entities in a large radius. Can damage self");
+    }
 }

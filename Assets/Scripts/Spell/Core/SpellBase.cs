@@ -38,14 +38,15 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action behaviour; //The behaviour is the one being invoked when spell is cast.
-
+    [HideInInspector]
+    public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;
     #endregion
 
     #region PropertyManagement
     private bool _copied; //why is persistent data so arhghghgh
-    
+
     [Serializable]
     protected class SpellProperty : ScriptableObject{
         public GameObject _objectForSpell; //spell cast in reference to this object
