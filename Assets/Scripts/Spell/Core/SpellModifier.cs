@@ -27,7 +27,7 @@ public abstract class SpellModifier : SpellElement
     public abstract void UseValue();
     protected virtual string DefaultModTitle()
     {
-        return $" (<color=\"{QualityManager.GetQualityColor(quality)}\"> {quality})";
+        return $"<Modifier> (<b><color=\"{QualityManager.GetQualityColor(quality)}\"> {quality}</color></b>)";
     }
 
     public override Tooltip GetTooltip()

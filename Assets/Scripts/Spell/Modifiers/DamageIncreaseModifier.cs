@@ -19,6 +19,6 @@ public class DamageIncreaseModifier : SpellModifier
     
     public override Tooltip GetTooltip()
     {
-        return base.GetTooltip();
+        return new Tooltip("Damage Amplification" + DefaultModTitle(), $"Increases damage of spell by {damageMultiplier}. {DefaultModBody()}");
     }
 }

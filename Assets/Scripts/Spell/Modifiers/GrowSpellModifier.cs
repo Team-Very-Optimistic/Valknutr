@@ -54,6 +54,7 @@ class GrowSpellModifier : SpellModifier
 
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Size+ <Modifier>", $"Increases size of affected entities by {sizeChange}%");
+        return new Tooltip("Size+" + DefaultModTitle(), 
+            $"Increases size of affected entities by {sizeChange} times. Capped at {cap} times the original size." + DefaultModBody());
     }
 }

@@ -33,6 +33,6 @@ class PhaseSpellModifier : SpellModifier
 
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Phase <Modifier>", $"Causes affected entities to pass through solid objects up to {phaseAmount} times");
+        return new Tooltip("Phase" + DefaultModTitle(), $"Causes affected entities to pass through solid objects up to {phaseAmount} times." + DefaultModBody());
     }
 }

@@ -45,6 +45,6 @@ public class RepeatSpellModifier : SpellModifier
     
     public override Tooltip GetTooltip()
     {
-        return default;
+        return new Tooltip(DefaultModTitle(), "Repeats the spell and changes the central object of the spell to the first object that had been interacted." + DefaultModBody());
     }
 }
