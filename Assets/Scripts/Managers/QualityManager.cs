@@ -161,7 +161,7 @@ public class QualityManager : ScriptableObject
                 return "red";
                 break;
             case Quality.Intricate:
-                return "aqua";
+                return "#008080";
                 break;
 
             case Quality.Arcane:
