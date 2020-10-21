@@ -29,7 +29,7 @@ public class GroundStrikeBase : SpellBase
         }
         
         AudioManager.PlaySoundAtPosition("groundStrike", pos, 0, Random.Range(0.8f, 1.3f));
-        EffectManager.PlayEffectAtPosition("groundStrike", pos + offset, 
+        EffectManager.PlayEffectAtPosition("groundStrike", pos + Vector3.down * 1.7f, 
             new Vector3(scale,scale,scale));
         EffectManager.Instance.UseStaffEffect();
     }
