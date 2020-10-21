@@ -15,6 +15,7 @@ public struct SpellContext
     public int iterations;
     public Vector3 direction; //The vector direction
     public Vector3 offset; //The vector offset for any behaviour
+    public bool useCtx;
 
     public SpellContext(Action<SpellContext> action, SpellBase spellBase, SpellModifier[] spellModifiers, GameObject objectForSpell, float damage, float speed, float scale, float cooldown, Vector3 direction, Vector3 offset, float duration, int iterations)
     {
@@ -30,6 +31,6 @@ public struct SpellContext
         this.spellModifiers = spellModifiers;
         this.action = action;
         this.iterations = iterations;
+        useCtx = true;
     }
-
 }

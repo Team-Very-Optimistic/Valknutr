@@ -143,7 +143,7 @@ public class QualityManager : ScriptableObject
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
             mod._cooldownMultiplier *= 1 + 0.2f * Mathf.Log(Spread() * Value(quality), 2);
-            mod.value *= Spread() * Value(quality);
+            mod.value = Spread() * Value(quality);
             mod.quality = quality;
             mod.UseValue();
         }

@@ -29,7 +29,7 @@ class ProjectileBase : SpellBase
 
         var p = Instantiate(objectForSpell, _player.position + ctx.offset, Quaternion.Euler(ctx.direction));
         // double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
-        var rotateBy = Random.Range(-5f, 5f);
+        var rotateBy = 0f;
         Vector3 newDirection = new Vector3((float) (ctx.direction.x * Math.Cos(rotateBy) - ctx.direction.z * Math.Sin(rotateBy)), 
             ctx.direction.y, (float) (ctx.direction.x * Math.Sin(rotateBy) + ctx.direction.z * Math.Cos(rotateBy)));
         
@@ -41,6 +41,7 @@ class ProjectileBase : SpellBase
     
     public override Tooltip GetTooltip(SpellContext ctx)
     {
+        if (!ctx.useCtx) ctx = GetContext();
         return new Tooltip($"Projectile {DefaultBaseTitle(ctx)}", $"Sends forth a projectile that deals {ctx.damage:F1} to enemies that it collides into. {DefaultBaseBody(ctx)}");
     }
 }

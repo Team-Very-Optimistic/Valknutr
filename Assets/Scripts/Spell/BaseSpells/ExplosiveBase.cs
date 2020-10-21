@@ -48,6 +48,7 @@ public class ExplosiveBase : SpellBase
     
     public override Tooltip GetTooltip(SpellContext ctx)
     {
+        if (!ctx.useCtx) ctx = GetContext();
         return new Tooltip($"Bomb {DefaultBaseTitle(ctx)}", $"Creates an explosive that detonates on contact, dealing {ctx.damage:F1} to entities in a radius of {radius * ctx.scale:F1}. {DefaultBaseBody(ctx)}");
     }
 }

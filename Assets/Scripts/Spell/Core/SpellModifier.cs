@@ -32,7 +32,7 @@ public abstract class SpellModifier : SpellElement
    
     protected virtual string DefaultModBody(SpellContext ctx)
     {
-        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F1}%.";
+        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F0}%.";
     }
     public override Tooltip GetTooltip(SpellContext ctx)
     {

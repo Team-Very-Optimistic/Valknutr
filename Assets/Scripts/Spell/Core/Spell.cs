@@ -62,6 +62,7 @@ public class Spell : SpellItem
 
     public override Tooltip GetTooltip(SpellContext ctx)
     {
+        if (!ctx.useCtx) ctx = GetFinalSpellContext();
         string bodyMessage = spellBase.GetTooltip(ctx).Body +
                              _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip(ctx).Body);
         return new Tooltip(spellBase.GetTooltip(ctx).Title, bodyMessage);

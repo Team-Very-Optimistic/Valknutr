@@ -17,6 +17,7 @@ class SummonBase : SpellBase
     }
     public override Tooltip GetTooltip(SpellContext ctx)
     {
+        if (!ctx.useCtx) ctx = GetContext();
         return new Tooltip($"Summon {DefaultBaseTitle(ctx)}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody(ctx)}");
     }
 }

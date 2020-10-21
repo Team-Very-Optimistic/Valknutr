@@ -19,6 +19,7 @@ public class AoeBase : SpellBase
     
     public override Tooltip GetTooltip(SpellContext ctx)
     {
+        if (!ctx.useCtx) ctx = GetContext();
         return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0.5} seconds, dealing {ctx.damage:F1} to entities in a large radius. Can damage self");
     }
 }
