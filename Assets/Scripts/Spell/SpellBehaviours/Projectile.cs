@@ -28,10 +28,11 @@ public class Projectile : TriggerEventHandler
     
     public override void TriggerEvent(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile"))
+        if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile") || other.gameObject.tag.Equals("Fire") || other.gameObject.tag.Equals("Room"))
         {
             return;
         }
+        print(other);
         AudioManager.PlaySoundAtPosition("projectileHit", transform.position, _damage * 0.05f, Random.Range(0.8f, 1.2f) * speed / 25);
         
         var cols = Physics.OverlapSphere(transform.position, explosionRadius);

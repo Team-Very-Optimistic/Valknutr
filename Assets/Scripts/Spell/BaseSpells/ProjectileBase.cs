@@ -29,11 +29,11 @@ class ProjectileBase : SpellBase
 
         var p = Instantiate(objectForSpell, _player.position + ctx.offset, Quaternion.Euler(ctx.direction));
         // double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
-        var rotateBy = 0f;
-        Vector3 newDirection = new Vector3((float) (ctx.direction.x * Math.Cos(rotateBy) - ctx.direction.z * Math.Sin(rotateBy)), 
-            ctx.direction.y, (float) (ctx.direction.x * Math.Sin(rotateBy) + ctx.direction.z * Math.Cos(rotateBy)));
+        // var rotateBy = 0f;
+        // Vector3 newDirection = new Vector3((float) (ctx.direction.x * Math.Cos(rotateBy) - ctx.direction.z * Math.Sin(rotateBy)), 
+        //     ctx.direction.y, (float) (ctx.direction.x * Math.Sin(rotateBy) + ctx.direction.z * Math.Cos(rotateBy)));
         
-        p.GetComponent<Projectile>().Launch(newDirection, ctx.speed, ctx.damage);
+        p.GetComponent<Projectile>().Launch(ctx.direction, ctx.speed, ctx.damage);
         
         SpellEffects(true, 0.1f, 0.1f);
         ctx.objectForSpell = p;
