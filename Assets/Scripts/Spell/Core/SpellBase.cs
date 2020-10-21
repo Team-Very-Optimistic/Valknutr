@@ -53,7 +53,7 @@ public abstract class SpellBase : SpellElement
     
     protected virtual string DefaultBaseBody(SpellContext ctx)
     {
-        return $"\nCooldown: {ctx.cooldown}\nDamage: {ctx.damage} \nSpeed: {ctx.speed}";
+        return $"\nCooldown: {ctx.cooldown:F2}\nDamage: {ctx.damage:F2} \nSpeed: {ctx.speed:F2}";
     }
     
     public override Tooltip GetTooltip(SpellContext ctx)
