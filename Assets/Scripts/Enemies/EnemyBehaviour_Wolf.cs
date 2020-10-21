@@ -167,12 +167,18 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         //Set overall distance
         distanceToDashLocation = (transform.position - dashLocation).magnitude;
+
+        //Disable knockback
+        canKnockback = false;
     }
 
     private void StartRest()
     {
         //Change enum state
         wolfState = WolfBehaviourStates.Rest;
+
+        //Enable knockback
+        canKnockback = false;
 
         Invoke(nameof(StartRunning), restTime);
     }

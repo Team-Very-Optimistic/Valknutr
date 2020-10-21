@@ -16,6 +16,9 @@ public class EnemyBehaviourBase : MonoBehaviour
     protected Rigidbody rigidbody;
     protected bool isInKnockback = false;
     public float knockbackVelStoppingThreshold;
+
+    //Bool to allow knockback
+    protected bool canKnockback = true;
     
     //For events
     public static Action<EnemyBehaviourBase> OnEnemyStart;
@@ -84,11 +87,14 @@ public class EnemyBehaviourBase : MonoBehaviour
 
     public void EnableKnockback(bool isEnabled)
     {
-        //Temporarily enable/disable navMeshAgent and isKinematic
-        navMeshAgent.enabled = !isEnabled;
-        rigidbody.isKinematic = !isEnabled;
-        rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
-        isInKnockback = false;
+        if (canKnockback)
+        {
+            //Temporarily enable/disable navMeshAgent and isKinematic
+            navMeshAgent.enabled = !isEnabled;
+            rigidbody.isKinematic = !isEnabled;
+            rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            isInKnockback = false;
+        }
     }
 }
 
