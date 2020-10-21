@@ -5,9 +5,9 @@ using Random = UnityEngine.Random;
 
 class SplitSpellModifier : SpellModifier
 {
-    private int iterations = 2;
-    private float damageReduction = 0.8f;
-    private float randomMax = 0.2f;
+    public int iterations = 2;
+    public float damageReduction = 0.8f;
+    public float randomMax = 0.2f;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method

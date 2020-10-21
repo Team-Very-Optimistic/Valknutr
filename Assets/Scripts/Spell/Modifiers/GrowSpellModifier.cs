@@ -4,8 +4,8 @@ using UnityEngine;
 
 class GrowSpellModifier : SpellModifier
 {
-    protected float sizeChange = 1.5f;
-    protected float cap = 1f;
+    public float sizeChange = 1.5f;
+    public float cap = 1f;
 
     public override SpellBase ModifyBehaviour(SpellBase action)
     {

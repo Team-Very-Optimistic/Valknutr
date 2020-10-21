@@ -2,8 +2,8 @@
 
 class FireSpellModifier : SpellModifier
 {
-    private float fireMultiplier = 1.2f;
-    private float dmg = 1f;
+    public float fireMultiplier = 1.2f;
+    public float dmg = 1f;
     public override void ModifySpell(SpellBase spell)
     {
         //base.ModifySpell(spell);

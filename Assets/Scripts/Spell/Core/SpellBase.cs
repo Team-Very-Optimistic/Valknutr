@@ -38,7 +38,6 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action behaviour; //The behaviour is the one being invoked when spell is cast.
-    [HideInInspector]
     public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class RepeatSpellModifier : SpellModifier
 {
-    private int iterations = 2;
+    public int iterations = 2;
     private SpellBase action;
     private TriggerEventHandler eventHandler;
     

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ExplosiveBase : SpellBase
 {
+    // todo: scale with dmg and scale
     public float radius = 5.0F;
     public float power = 100.0F;
 

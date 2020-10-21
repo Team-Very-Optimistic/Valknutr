@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class DamageIncreaseModifier : SpellModifier
 {
-    private int damageMultiplier = 2;
+    public int damageMultiplier = 2;
 
     public override void ModifySpell(SpellBase spell)
     {

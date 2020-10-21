@@ -3,8 +3,7 @@ using UnityEngine;
 
 class SpeedSpellModifier : SpellModifier
 {
-    [SerializeField]
-    private float speedMultiplier = 2f;
+    public float speedMultiplier = 2f;
     public override void ModifySpell(SpellBase spell)
     {
         spell._speed += 1f;

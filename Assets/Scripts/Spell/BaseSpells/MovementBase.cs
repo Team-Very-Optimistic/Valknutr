@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 class MovementBase : SpellBase
 {
     private ThirdPersonCharacter _controller;
-    private float _moveTime = 0.3f;
+    public float _moveTime = 0.3f;
     
     protected override void SetValues()
     {
