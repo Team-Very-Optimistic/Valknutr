@@ -49,7 +49,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Set collider
         wolfCollider = GetComponent<Collider>();
 
-        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y, 0.0f);
+        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y * 2.0f, 0.0f);
 
         //Disable knockback (temporarily)
         canKnockback = false;
