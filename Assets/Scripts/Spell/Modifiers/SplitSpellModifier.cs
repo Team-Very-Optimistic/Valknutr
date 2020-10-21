@@ -8,38 +8,35 @@ class SplitSpellModifier : SpellModifier
     public int iterations = 2;
     public float damageReduction = 0.8f;
     public float randomMax = 0.2f;
-    public override SpellBase ModifyBehaviour(SpellBase action)
+
+    public override SpellContext ModifyBehaviour(SpellContext ctx)
     {
-        //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
-        Action temp = () =>
+        var oldBehavior = ctx.action;
+        ctx.action = ctx2 =>
         {
-            Vector3 originalPosDiff = action._direction;
-            action._direction += new Vector3(Random.Range(-randomMax, randomMax), 0,
-                Random.Range(-randomMax, randomMax));
-            action._offset += new Vector3(Random.Range(-randomMax, randomMax), 0,
-                Random.Range(-randomMax, randomMax));
-            action._direction.Normalize();
-            action._damage *= damageReduction;
-            oldBehavior.Invoke();
-            action._direction = originalPosDiff; //reset
-        };
-            
-        Action spell = () =>
-        {
-            for (int i = 0; i < iterations; i++)
+            Vector3 originalPosDiff = ctx2.direction;
+            for (int i = iterations - 1; i >= 0; i--)
             {
-                GameManager.Instance.StartCoroutine(DelayInvoke(temp, i / 10f));
+                ctx2.direction += new Vector3(Random.Range(-randomMax, randomMax), 0,
+                    Random.Range(-randomMax, randomMax));
+                ctx2.offset += new Vector3(Random.Range(-randomMax, randomMax), 0,
+                    Random.Range(-randomMax, randomMax));
+                ctx2.direction.Normalize();
+                oldBehavior.Invoke(ctx2);
             }
+            ctx2.direction = originalPosDiff; //reset
         };
-        action.behaviour = spell;
-        return action;
+
+        ctx.damage *= damageReduction;
+        ctx.cooldown *= _cooldownMultiplier;
+        // ctx.iterations += iterations;
+        return ctx;
     }
 
     public override void UseValue()
     {
         iterations = Mathf.RoundToInt(iterations * value);
-        damageReduction = value / (iterations/2);
+        damageReduction = value / (iterations / 2);
     }
 
     IEnumerator DelayInvoke(Action invoke, float delay)
@@ -47,9 +44,10 @@ class SplitSpellModifier : SpellModifier
         yield return new WaitForSeconds(delay);
         invoke.Invoke();
     }
+
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Split" + DefaultModTitle(), 
+        return new Tooltip("Split" + DefaultModTitle(),
             $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction}% weaker. {DefaultModBody()}");
     }
 }

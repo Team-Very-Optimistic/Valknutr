@@ -7,13 +7,13 @@ public class ExplosiveBase : SpellBase
     public float radius = 5.0F;
     public float power = 100.0F;
 
-    protected override void SetValues()
-    {
-
-        radius = 3.0F;
-        power = 100.0F;
-        _offset = Vector3.up  + _player.forward * 1.3f;
-    }
+    // protected override void SetValues()
+    // {
+    //
+    //     radius = 3.0F;
+    //     power = 100.0F;
+    //     offset = Vector3.up  + _player.forward * 1.3f;
+    // }
 
     /// <summary>
     /// todo: use the following properties:
@@ -25,24 +25,22 @@ public class ExplosiveBase : SpellBase
     /// _objectsCollided: 
     /// _trigger: yes
     /// </summary>
-    public override void SpellBehaviour(Spell spell)
+    public override void SpellBehaviour(SpellContext ctx)
     {
-        var p = Instantiate(_objectForSpell, _player.position + _offset,
-            Quaternion.Euler(_direction));
+        var p = Instantiate(objectForSpell, _player.position + ctx.offset,
+            Quaternion.Euler(direction));
         
         Explosive explosive = p.GetComponent<Explosive>();
-
-        radius *= _scale;
-
-        explosive.radius = radius;
-        explosive._damage = _damage;
-        explosive.power = power * _damage / properties._damage + power * radius;
-        explosive.Launch(_direction * 2 + _offset, _speed);
-        _objectForSpell = p;
+        
+        explosive.radius = radius * ctx.scale;
+        explosive._damage = ctx.damage;
+        explosive.power = power * ctx.scale;
+        explosive.Launch(direction * 2 + offset, speed);
+        objectForSpell = p;
     }
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
+        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
     }
 }

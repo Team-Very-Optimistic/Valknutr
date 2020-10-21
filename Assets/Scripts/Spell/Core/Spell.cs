@@ -77,30 +77,44 @@ public class Spell : SpellItem
          * Flavor text
          */
     }
+
+    public SpellContext GetFinalSpellContext()
+    {
+        return ApplyModifiers(spellBase.GetContext());
+    }
+
+    private SpellContext ApplyModifiers(SpellContext ctx)
+    {
+        if (_spellModifiers != null && _spellModifiers.Count != 0)
+        {
+            foreach (var modifier in _spellModifiers)
+            {
+                ctx = modifier.Modify(ctx);
+            }
+        }
+
+        return ctx;
+    }
     
     public void CastSpell(SpellCastData data)
     {
         if (!IsReady()) return;
 
-        float totalCooldown = spellBase._cooldown;
-        spellBase.InitializeValues();
-        spellBase._direction = data.castDirection;
-        spellBase.behaviour = () => spellBase.SpellBehaviour(this);
+        var ctx = spellBase.GetContext();
+        ctx.direction = data.castDirection;
+        ctx = ApplyModifiers(ctx);
 
-        if (_spellModifiers != null && _spellModifiers.Count != 0)
-        {
-            foreach (var modifier in _spellModifiers)
-            {
-                spellBase = modifier.Modify(spellBase);
-                totalCooldown *= modifier._cooldownMultiplier;
-            }
-        }
+        // float totalCooldown = spellBase.cooldown;
+        // spellBase.InitializeValues();
+        // spellBase.direction = data.castDirection;
+        // spellBase.behaviour = () => spellBase.SpellBehaviour(this);
 
-        spellBase.Cast();
-        cooldownMax = totalCooldown;
-        cooldownRemaining = totalCooldown;
+        
+
+        ctx.action(ctx);
+        cooldownMax = cooldownRemaining = ctx.cooldown;
     }
-    
+
     public override int GetHashCode()
     {
         return hashCode;
@@ -108,24 +122,26 @@ public class Spell : SpellItem
 
     public float GetAnimSpeed()
     {
-        spellBase.InitializeValues();
+        var ctx = GetFinalSpellContext();
+
         castAnimation = spellBase.animationType;
 
-        float oriSpeed = spellBase._speed;
-        if (_spellModifiers != null && _spellModifiers.Count != 0)
-        {
-            foreach (var modifier in _spellModifiers)
-            {
-                modifier.ModifySpell(spellBase);
-            }
-        }
-        return spellBase._speed / oriSpeed;
+        // float oriSpeed = spellBase.speed;
+        // if (_spellModifiers != null && _spellModifiers.Count != 0)
+        // {
+        //     foreach (var modifier in _spellModifiers)
+        //     {
+        //         modifier.ModifySpell(spellBase);
+        //     }
+        // }
+
+        return ctx.speed;
+        // return spellBase.speed / oriSpeed;
     }
 
     public void AddBaseType(SpellBase baseType)
     {
         SpellBase copy = Instantiate(baseType);
-        copy.InitializeValues();
         spellBase = copy;
         castAnimation = copy.animationType;
     }

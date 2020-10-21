@@ -1,16 +1,17 @@
 ﻿﻿using System;
 using System.Security.Cryptography;
 using UnityEngine;
+ using Random = UnityEngine.Random;
 
-[Serializable]
+ [Serializable]
 class ProjectileBase : SpellBase
 {
-    private float offsetIncrement;
+    // private float offsetIncrement = 7f;
     
-    protected override void SetValues()
-    {
-        offsetIncrement = 7f;
-    }
+    // protected override void SetValues()
+    // {
+    //     offsetIncrement = 7f;
+    // }
     
     /// <summary>
     /// todo: use the following properties:
@@ -22,26 +23,24 @@ class ProjectileBase : SpellBase
     /// _objectsCollided: 
     /// _trigger: yes
     /// </summary>
-    public override void SpellBehaviour(Spell spell)
+    public override void SpellBehaviour(SpellContext ctx)
     {
-        _direction.y = 0;
-        for (int i = 0; i < _iterations; i++)
-        {
-            var p = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.Euler(_direction));
-            double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
-            Vector3 newDirection = new Vector3((float) (_direction.x * Math.Cos(rotateBy) - _direction.z * Math.Sin(rotateBy)), 
-                _direction.y, (float) (_direction.x * Math.Sin(rotateBy) + _direction.z * Math.Cos(rotateBy)));
-            
-            p.GetComponent<Projectile>().Launch(newDirection, _speed, _damage);
-            
-            SpellEffects(true, 0.1f, 0.1f * _scale / properties._scale);
-            _objectForSpell = p;
-        }
+        ctx.direction.y = 0;
+
+        var p = Instantiate(objectForSpell, _player.position + ctx.offset, Quaternion.Euler(ctx.direction));
+        // double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
+        var rotateBy = Random.Range(-5f, 5f);
+        Vector3 newDirection = new Vector3((float) (ctx.direction.x * Math.Cos(rotateBy) - ctx.direction.z * Math.Sin(rotateBy)), 
+            ctx.direction.y, (float) (ctx.direction.x * Math.Sin(rotateBy) + ctx.direction.z * Math.Cos(rotateBy)));
         
+        p.GetComponent<Projectile>().Launch(newDirection, ctx.speed, ctx.damage);
+        
+        SpellEffects(true, 0.1f, 0.1f);
+        ctx.objectForSpell = p;
     }
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {_damage} to enemies that it collides into. {DefaultBaseBody()}");
+        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {damage} to enemies that it collides into. {DefaultBaseBody()}");
     }
 }

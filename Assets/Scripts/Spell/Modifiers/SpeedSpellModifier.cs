@@ -6,23 +6,25 @@ class SpeedSpellModifier : SpellModifier
     public float speedMultiplier = 2f;
     public override void ModifySpell(SpellBase spell)
     {
-        spell._speed += 1f;
-        spell._speed *= speedMultiplier;
-        spell._cooldown *= _cooldownMultiplier;
+        spell.speed += 1f;
+        spell.speed *= speedMultiplier;
+        spell.cooldown *= _cooldownMultiplier;
     }
-    
-    public override SpellBase ModifyBehaviour(SpellBase action)
+
+    public override SpellContext ModifyBehaviour(SpellContext ctx)
     {
-        Action oldBehavior = action.behaviour;
-        Action spell = () =>
+        var oldBehavior = ctx.action;
+        ctx.action = ctx2 =>
         {
-            oldBehavior.Invoke();
-            var obj = action._objectForSpell.transform;
+            oldBehavior.Invoke(ctx2);
+            var obj = ctx2.objectForSpell.transform;
             EffectManager.PlayEffectAtPosition("speedTrail", obj.position, obj.lossyScale).transform.SetParent(obj);
         };
-        action.behaviour = spell;
-        
-        return action; // No change
+
+        ctx.speed += 1f;
+        ctx.speed *= speedMultiplier;
+        ctx.cooldown *= _cooldownMultiplier;
+        return ctx;
     }
 
     public override void UseValue()

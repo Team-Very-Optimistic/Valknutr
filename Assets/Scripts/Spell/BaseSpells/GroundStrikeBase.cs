@@ -8,12 +8,19 @@ public class GroundStrikeBase : SpellBase
     public float power = 1000.0F;
     private Damage damageScript;
     
-    protected override void SetValues()
+    // protected override void SetValues()
+    // {
+    //     objectForSpell = GameManager.Instance._weapon;
+    //     damageScript = objectForSpell.GetComponent<Damage>();
+    // }
+
+    public override SpellContext GetContext()
     {
-        _objectForSpell = GameManager.Instance._weapon;
-        damageScript = _objectForSpell.GetComponent<Damage>();
+        var ctx = base.GetContext();
+        ctx.objectForSpell = GameManager.Instance._weapon;
+        return ctx;
     }
-    
+
     protected override void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
     {
         if (screenshake)
@@ -22,8 +29,8 @@ public class GroundStrikeBase : SpellBase
         }
         
         AudioManager.PlaySoundAtPosition("groundStrike", pos, 0, Random.Range(0.8f, 1.3f));
-        EffectManager.PlayEffectAtPosition("groundStrike", pos + _offset, 
-            new Vector3(_scale,_scale,_scale));
+        EffectManager.PlayEffectAtPosition("groundStrike", pos + offset, 
+            new Vector3(scale,scale,scale));
         EffectManager.Instance.UseStaffEffect();
     }
     
@@ -37,12 +44,13 @@ public class GroundStrikeBase : SpellBase
     /// _objectsCollided: 
     /// _trigger: yes
     /// </summary>
-    public override void SpellBehaviour(Spell spell)
+    public override void SpellBehaviour(SpellContext ctx)
     {
-        radius = _scale * 1.5f;
-        var position = _objectForSpell.transform.position + _direction * _scale;
+        radius = ctx.scale * 1.5f;
+        var position = ctx.objectForSpell.transform.position + ctx.direction * ctx.scale;
         position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
-        var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
+        var intensity = 0.05f * ctx.scale;
+        var damageScript = ctx.objectForSpell.GetComponent<Damage>();
         
         SpellEffects(true, 0.1f, intensity, position);
         
@@ -52,7 +60,7 @@ public class GroundStrikeBase : SpellBase
         {
             if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
             {
-                damageScript.SetDamage(_damage);
+                damageScript.SetDamage(ctx.damage);
                 damageScript.DealDamage(col);
             }
 
@@ -67,13 +75,13 @@ public class GroundStrikeBase : SpellBase
                 //Add knockback direction based on player position
                 Vector3 knockbackDirection = (col.transform.position - _player.transform.position).normalized;
                 knockbackDirection.y = 0.0f;
-                col.attachedRigidbody.AddForce(knockbackDirection * (power * (_damage / properties._damage) * _scale));
+                col.attachedRigidbody.AddForce(knockbackDirection * (power * scale));
             }
         }
     }
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage} to entities in a small radius. {DefaultBaseBody()}");
+        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {damage} to entities in a small radius. {DefaultBaseBody()}");
     }
 }

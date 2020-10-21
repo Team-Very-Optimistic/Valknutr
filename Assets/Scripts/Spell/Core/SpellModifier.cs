@@ -15,13 +15,12 @@ public abstract class SpellModifier : SpellElement
 
     public virtual void ModifySpell(SpellBase spell)
     {
-        spell._cooldown *= _cooldownMultiplier;
+        spell.cooldown *= _cooldownMultiplier;
     }
 
-    public virtual SpellBase ModifyBehaviour(SpellBase action)
+    public virtual SpellContext ModifyBehaviour(SpellContext ctx)
     {
-        //ModifySpell(action);
-        return action; // No change
+        return ctx; // No change
     }
 
     public abstract void UseValue();
@@ -40,14 +39,9 @@ public abstract class SpellModifier : SpellElement
         return new Tooltip(DefaultModTitle(), DefaultModBody());
     }
 
-    public SpellBase Modify(SpellBase spell)
+    public SpellContext Modify(SpellContext ctx)
     {
-        if (!init)
-        {
-            UseValue();
-            init = true;
-        }
-        ModifySpell(spell);
-        return ModifyBehaviour(spell);
+        ctx.cooldown *= _cooldownMultiplier;
+        return ModifyBehaviour(ctx);
     }
 }
