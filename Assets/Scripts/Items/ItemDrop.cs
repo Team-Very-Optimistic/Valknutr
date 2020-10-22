@@ -36,15 +36,18 @@ public class ItemDrop : MonoBehaviour
 
     public void PickupHandler(ItemDrop itemDrop)
     {
-        Destroy(gameObject);
+        if (this != itemDrop)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public virtual void PickUp(GameObject other)
     {
-        AudioManager.PlaySoundAtPosition("itemPickup", transform.position);
         UiManager.HideInWorldTooltip();
-        Inventory.Instance.Add(_spellItem);
         OnPickup?.Invoke(this);
+        AudioManager.PlaySoundAtPosition("itemPickup", transform.position);
+        Inventory.Instance.Add(_spellItem);
         Destroy(gameObject);
     }
 }
