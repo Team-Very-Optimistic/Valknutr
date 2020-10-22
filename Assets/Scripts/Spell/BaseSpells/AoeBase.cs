@@ -25,6 +25,6 @@ public class AoeBase : SpellBase
     public override Tooltip GetTooltip()
     {
         //SetValues();
-        return new Tooltip("Aoe <Base>", $"Channels for {_duration}, dealing {_damage} damage every {_aoeInterval}s around you. {DefaultBaseBody()}");
+        return new Tooltip($"Sphere blast {DefaultBaseTitle()}", $"Channels for {_duration}, dealing {_damage} damage every {_aoeInterval}s around you. {DefaultBaseBody()}");
     }
 }
