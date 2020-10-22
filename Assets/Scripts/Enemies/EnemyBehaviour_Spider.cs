@@ -126,13 +126,17 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         //Change enum state
         spiderState = SpiderBehaviourStates.Windup;
+
+        //Trigger anim
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToWindup");
     }
 
     private void ShowRedIndicator()
     {
         float timeToDestroy = windUpTime * 0.5f;
 
-        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset, Quaternion.identity);
+        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset * 2.0f, Quaternion.identity);
         Destroy(redIndicator, timeToDestroy);
     }
 
@@ -144,6 +148,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         originalPosition = transform.position;
 
         GetComponent<Collider>().enabled = false;
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToJump");
     }
 
     private void Explode()
@@ -178,5 +185,12 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         ScreenShakeManager.Instance.ScreenShake(0.25f, 0.4f);
 
         Destroy(gameObject);
+    }
+
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToWindup");
+        animator.ResetTrigger("ToJump");
     }
 }
