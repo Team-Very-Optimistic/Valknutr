@@ -4,28 +4,26 @@ class FireSpellModifier : SpellModifier
 {
     public float fireMultiplier = 1.2f;
     public float dmg = 1f;
-
-    // public override void ModifySpell(SpellBase spell)
-    // {
-    //     //base.ModifySpell(spell);
-    //     spell.speed *= fireMultiplier;
-    //     spell.cooldown *= _cooldownMultiplier;
-    // }
-
-    public override SpellContext ModifyBehaviour(SpellContext ctx)
+    public override void ModifySpell(SpellBase spell)
     {
-        var oldBehavior = ctx.action;
-        ctx.action = ctx2 =>
+        //base.ModifySpell(spell);
+        spell._speed *= fireMultiplier;
+        spell._cooldown *= _cooldownMultiplier;
+    }
+    
+    public override SpellBase ModifyBehaviour(SpellBase action)
+    {
+        //important to make sure it doesnt cast a recursive method
+        Action oldBehavior = action.behaviour;
+        Action spell = () =>
         {
-            oldBehavior.Invoke(ctx2);
-            Fire fire = ctx2.objectForSpell.AddComponent<Fire>();
+            oldBehavior.Invoke();
+            Fire fire = action._objectForSpell.AddComponent<Fire>();
             fire.damage = dmg;
             fire.SetInitializer();
         };
-
-        ctx.speed *= fireMultiplier;
-        ctx.cooldown *= _cooldownMultiplier;
-        return ctx;
+        action.behaviour = spell;
+        return action;
     }
 
     public override void UseValue()
@@ -34,10 +32,10 @@ class FireSpellModifier : SpellModifier
         dmg *= value;
     }
 
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        return new Tooltip("Fire" + DefaultModTitle(ctx), $"Affected entities will be set on fire which afflicts {dmg} " +
-                                                       $"damage to other entities in contact. Speed is increased by {fireMultiplier} " +
-                                                       $"times." + DefaultModBody(ctx));
+        return new Tooltip("Fire" + DefaultModTitle(), $"Affected entities will be set on fire which afflicts {dmg} " +
+                                              $"damage to other entities in contact. Speed is increased by {fireMultiplier} " +
+                                              $"times." + DefaultModBody());
     }
 }

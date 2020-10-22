@@ -6,17 +6,10 @@ public class DamageIncreaseModifier : SpellModifier
 {
     public int damageMultiplier = 2;
 
-    // public override void ModifySpell(SpellBase spell)
-    // {
-    //     base.ModifySpell(spell);
-    //     spell.damage *= damageMultiplier;
-    // }
-    
-    public override SpellContext ModifyBehaviour(SpellContext ctx)
+    public override void ModifySpell(SpellBase spell)
     {
-        ctx.damage *= damageMultiplier;
-        ctx.cooldown *= _cooldownMultiplier;
-        return ctx;
+        base.ModifySpell(spell);
+        spell._damage *= damageMultiplier;
     }
 
     public override void UseValue()

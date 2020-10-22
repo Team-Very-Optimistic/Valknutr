@@ -8,38 +8,16 @@ public class RepeatSpellModifier : SpellModifier
     private SpellBase action;
     private TriggerEventHandler eventHandler;
     
-    // public override SpellBase ModifyBehaviour(SpellBase action)
-    // {
-    //     //important to make sure it doesnt cast a recursive method
-    //     Action oldBehavior = action.behaviour;
-    //     
-    //     Action temp = () =>
-    //     {
-    //         oldBehavior.Invoke();
-    //         if (--iterations < 0) return;
-    //         eventHandler = action.objectForSpell.GetComponent<TriggerEventHandler>();
-    //         if (eventHandler != null)
-    //             //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
-    //
-    //             eventHandler.AddEvent(Invoke);
-    //         
-    //         this.action = action;
-    //     };
-    //
-    //     Action spell = temp;
-    //     action.behaviour = spell;
-    //     return action;
-    // }
-    
-    public override SpellContext ModifyBehaviour(SpellContext ctx)
+    public override SpellBase ModifyBehaviour(SpellBase action)
     {
-        var oldBehavior = ctx.action;
-        ctx.action = ctx2 =>
+        //important to make sure it doesnt cast a recursive method
+        Action oldBehavior = action.behaviour;
+        
+        Action temp = () =>
         {
-            oldBehavior(ctx2);
-            if (--ctx2.iterations < 0) return;
-            // todo: i dont know how to refactor this, probably broken
-            eventHandler = ctx2.objectForSpell.GetComponent<TriggerEventHandler>();
+            oldBehavior.Invoke();
+            if (--iterations < 0) return;
+            eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
             if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
     
@@ -47,9 +25,10 @@ public class RepeatSpellModifier : SpellModifier
             
             this.action = action;
         };
-        
-        ctx.cooldown *= _cooldownMultiplier;
-        return ctx;
+
+        Action spell = temp;
+        action.behaviour = spell;
+        return action;
     }
 
     public override void UseValue()
@@ -59,9 +38,9 @@ public class RepeatSpellModifier : SpellModifier
 
     public void Invoke(Collider collider)
     {
-        action.objectForSpell = collider.gameObject;
+        action._objectForSpell = collider.gameObject;
         eventHandler.RemoveEvent(Invoke);
-        action.behaviour.Invoke(default);
+        action.behaviour.Invoke();
     }
     
     public override Tooltip GetTooltip(SpellContext ctx)

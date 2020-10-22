@@ -25,7 +25,7 @@ public class Shield : NoTrigger
         transform.SetParent(newParent);
         _healthScript = gameObject.AddComponent<HealthScript>();
         _healthScript.damageColor = Color.yellow;
-        _healthScript.maxHealth = playerHealth.maxHealth/10 + parent.lossyScale.x * 10f; // todo: lmao pls make this a property
+        _healthScript.maxHealth = playerHealth.maxHealth/10 + parent.lossyScale.x * 10f;
         _healthScript.hurtSound = "shieldHit";
         playerHealth = parent.GetComponent<PlayerHealth>();
         playerHealth.AddBuffer(this);

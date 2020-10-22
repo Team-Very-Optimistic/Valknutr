@@ -7,22 +7,20 @@ class GrowSpellModifier : SpellModifier
     public float sizeChange = 1.5f;
     public float cap = 1f;
 
-    public override SpellContext ModifyBehaviour(SpellContext ctx)
+    public override SpellBase ModifyBehaviour(SpellBase action)
     {
-        var oldBehavior = ctx.action;
-        ctx.action = ctx2 =>
+        //important to make sure it doesnt cast a recursive method
+        Action oldBehavior = action.behaviour;
+        Action spell = () =>
         {
-            oldBehavior.Invoke(ctx2);
-            var transformLocalScale = ctx2.objectForSpell.transform.localScale;
+            oldBehavior.Invoke();
+            var transformLocalScale = action._objectForSpell.transform.localScale;
             if (transformLocalScale.x > cap) return;
-            ctx2.objectForSpell.transform.localScale = transformLocalScale * sizeChange;
-            GameManager.Instance.StartCoroutine(MakeSmall(ctx2.objectForSpell, transformLocalScale));
+            action._objectForSpell.transform.localScale = transformLocalScale * sizeChange;
+            GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, transformLocalScale));
         };
-        
-        ctx.scale *= sizeChange;
-        ctx.damage *= sizeChange;
-        ctx.cooldown *= _cooldownMultiplier;
-        return ctx;
+        action.behaviour = spell;
+        return action;
     }
 
     public override void UseValue()
@@ -31,14 +29,14 @@ class GrowSpellModifier : SpellModifier
         cap *= value;
     }
 
-    // public override void ModifySpell(SpellBase spell)
-    // {
-    //     var varSize = Math.Log(spell.cooldown, 1000) + 1.7f;
-    //     sizeChange = (float) Math.Max(1.01f, varSize);;
-    //     base.ModifySpell(spell);
-    //     spell.scale *= sizeChange;
-    //     cap = spell.scale * 2;
-    // }
+    public override void ModifySpell(SpellBase spell)
+    {
+        var varSize = Math.Log(spell._cooldown, 1000) + 1.7f;
+        sizeChange = (float) Math.Max(1.01f, varSize);;
+        base.ModifySpell(spell);
+        spell._scale *= sizeChange;
+        cap = spell._scale * 2;
+    }
 
     IEnumerator MakeSmall(GameObject obj, Vector3 size)
     {

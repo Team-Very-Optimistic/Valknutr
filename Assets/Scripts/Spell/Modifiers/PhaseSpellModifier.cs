@@ -4,24 +4,25 @@ using UnityEngine;
 class PhaseSpellModifier : SpellModifier
 {
     public int phaseAmount = 3;
-
-    public override SpellContext ModifyBehaviour(SpellContext ctx)
+    public override SpellBase ModifyBehaviour(SpellBase action)
     {
-        var oldBehavior = ctx.action;
-        ctx.action = ctx2 =>
+        //important to make sure it doesnt cast a recursive method
+        Action oldBehavior = action.behaviour;
+        
+        Action spell = () =>
         {
-            oldBehavior.Invoke(ctx2);
-            var existingPhase = ctx2.objectForSpell.GetComponent<Phasing>();
+            oldBehavior.Invoke();
+            var existingPhase = action._objectForSpell.GetComponent<Phasing>();
             if(existingPhase == null)
-                ctx2.objectForSpell.AddComponent<Phasing>()._damage = ctx2.damage;
+                action._objectForSpell.AddComponent<Phasing>()._damage = action._damage;
             else
             {
                 existingPhase.AddPhaseAmount(phaseAmount);
             }
         };
         
-        ctx.cooldown *= _cooldownMultiplier;
-        return ctx;
+        action.behaviour = spell;
+        return action;
     }
 
     public override void UseValue()

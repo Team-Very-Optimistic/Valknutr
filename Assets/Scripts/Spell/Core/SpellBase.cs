@@ -12,59 +12,137 @@ public abstract class SpellBase : SpellElement
     public static Transform _player; //allows all spell element to have easy reference to player
     
     #region Properties
+    [SerializeField]
+    public GameObject _objectForSpell; //spell cast in reference to this object
     
     [HideInInspector]
     public Collider[] _objectsCollided; //colliders that have interacted with object for spell
-
-    public QualityManager.Quality _quality;
-    public GameObject objectForSpell; //spell cast in reference to this object
-    public float damage = 1;
-    public float speed = 1;
-    public float scale = 1;
-    public float cooldown = 1;
-    public float _duration = 1;
-    public Vector3 direction; //The vector direction
-    public Vector3 offset; //The vector offset for any behaviour
+    
+    [HideInInspector]
+    public Vector3 _direction; //The vector direction
+    
+    public Vector3 _offset; //The vector offset for any behaviour
+    
+    public float _damage = 1;
+    
+    public float _speed;
+    
+    public float _scale = 1;
+    
+    public float _cooldown;
+    
     public CastAnimation animationType; //will be mostly ignored by modifiers
-    public Action<SpellContext> behaviour; //The behaviour is the one being invoked when spell is cast.
+    
+    [HideInInspector]
+    public int _iterations = 1; //Not used yet
+    
+    [HideInInspector]
+    public Action behaviour; //The behaviour is the one being invoked when spell is cast.
+    public QualityManager.Quality _quality;
+    [SerializeField]
+    protected SpellProperty properties;
     #endregion
 
     #region PropertyManagement
+    private bool _copied; //why is persistent data so arhghghgh
+
+    [Serializable]
+    protected class SpellProperty : ScriptableObject{
+        public GameObject _objectForSpell; //spell cast in reference to this object
     
+        public Vector3 _offset; //The vector offset for any behaviour
+    
+        public float _damage;
+    
+        public float _speed;
+    
+        public float _scale;
+    
+        public float _cooldown;
+    
+        public CastAnimation animationType; //will be mostly ignored by modifiers
+
+        public Action OnDestroyed;
+        /*
+         * Required or else the data would be modified
+         */
+        public void OnDestroy()
+        {
+            OnDestroyed();
+        }
+    }
+    
+    private void ResetValues()
+    {
+        _objectForSpell = properties._objectForSpell;
+        _offset = properties._offset;
+        
+        _damage = properties._damage;
+        
+        _speed = properties._speed;
+        
+        _scale = properties._scale;
+        
+        _cooldown = properties._cooldown;
+        
+        animationType = properties.animationType; //will be mostly ignored by modifiers
+    }
+
+    private void CopyValues()
+    {
+        properties = (SpellProperty) CreateInstance(typeof(SpellProperty));
+        properties._objectForSpell = _objectForSpell;
+        properties._offset = _offset;
+        properties._damage = _damage;
+        properties._speed = _speed;
+        properties._scale = _scale;
+        properties._cooldown = _cooldown;
+        properties.animationType = animationType;
+        properties.OnDestroyed += ResetValues;
+        properties.OnDestroyed += () => _copied = false; //neccessaryarayrayryaryryayasyyasrry
+    }
+    
+
     #endregion
-
-    public virtual SpellContext GetContext()
+    
+    public void Cast()
     {
-        behaviour = SpellBehaviour;
-        return new SpellContext(behaviour, this, default, objectForSpell, damage, speed, scale, cooldown, direction, offset, _duration, 1);
+        behaviour.Invoke();
     }
     
-    public void Cast(SpellContext ctx)
+    public void InitializeValues()
     {
-        behaviour.Invoke(ctx);
+        SetValues();
+        if (!_copied)
+        {
+            _copied = true;
+            CopyValues();
+        }
+        else
+        {
+            ResetValues();
+        }
     }
-
-    #region Tooltip
-
-    protected virtual string DefaultBaseTitle(SpellContext ctx)
+    protected abstract void SetValues();
+    //public virtual void AfterModified(){}
+    
+    protected virtual string DefaultBaseTitle()
     {
         return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-    
-    protected virtual string DefaultBaseBody(SpellContext ctx)
-    {
-        return $"\nCooldown: {ctx.cooldown:F2}\nDamage: {ctx.damage:F2} \nSpeed: {ctx.speed:F2}";
-    }
-    
-    public override Tooltip GetTooltip(SpellContext ctx)
-    {
-        return new Tooltip(DefaultBaseTitle(ctx), DefaultBaseBody(ctx));
     }
 
-    #endregion
+   
+    protected virtual string DefaultBaseBody()
+    {
+        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+    }
     
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip(DefaultBaseTitle(), DefaultBaseBody());
+    }
 
-    public abstract void SpellBehaviour(SpellContext ctx);
+    public abstract void SpellBehaviour(Spell spell);
 
     protected virtual void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
     {
@@ -72,6 +150,12 @@ public abstract class SpellBase : SpellElement
         {
             ScreenShakeManager.Instance.ScreenShake(duration, intensity);
         }
+
+        // if (pos != default)
+        // {
+        //     AudioManager.PlaySoundAtPosition(name, pos);
+        //
+        // }
         EffectManager.Instance.UseStaffEffect();
     }
 

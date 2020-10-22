@@ -7,20 +7,13 @@ public class ExplosiveBase : SpellBase
     public float radius = 5.0F;
     public float power = 100.0F;
 
-    public override SpellContext GetContext()
+    protected override void SetValues()
     {
-        var ctx = base.GetContext();
-        ctx.offset = Vector3.up;
-        return ctx;
-    }
 
-    // protected override void SetValues()
-    // {
-    //
-    //     radius = 3.0F;
-    //     power = 100.0F;
-    //     offset = Vector3.up  + _player.forward * 1.3f;
-    // }
+        radius = 3.0F;
+        power = 100.0F;
+        _offset = Vector3.up  + _player.forward * 1.3f;
+    }
 
     /// <summary>
     /// todo: use the following properties:
@@ -32,23 +25,24 @@ public class ExplosiveBase : SpellBase
     /// _objectsCollided: 
     /// _trigger: yes
     /// </summary>
-    public override void SpellBehaviour(SpellContext ctx)
+    public override void SpellBehaviour(Spell spell)
     {
-        var p = Instantiate(objectForSpell, _player.position + ctx.offset,
-            Quaternion.Euler(direction));
+        var p = Instantiate(_objectForSpell, _player.position + _offset,
+            Quaternion.Euler(_direction));
         
         Explosive explosive = p.GetComponent<Explosive>();
-        
-        explosive.radius = radius * ctx.scale;
-        explosive._damage = ctx.damage;
-        explosive.power = power * ctx.scale;
-        explosive.Launch(ctx.direction * 2 + ctx.offset, ctx.speed);
-        ctx.objectForSpell = p;
+
+        radius *= _scale;
+
+        explosive.radius = radius;
+        explosive._damage = _damage;
+        explosive.power = power * _damage / properties._damage + power * radius;
+        explosive.Launch(_direction * 2 + _offset, _speed);
+        _objectForSpell = p;
     }
     
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        if (!ctx.useCtx) ctx = GetContext();
-        return new Tooltip($"Bomb {DefaultBaseTitle(ctx)}", $"Creates an explosive that detonates on contact, dealing {ctx.damage:F1} to entities in a radius of {radius * ctx.scale:F1}. {DefaultBaseBody(ctx)}");
+        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
     }
 }

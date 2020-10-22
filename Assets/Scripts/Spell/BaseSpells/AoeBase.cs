@@ -3,23 +3,19 @@
 [CreateAssetMenu]
 public class AoeBase : SpellBase
 {
-    public override SpellContext GetContext()
+    protected override void SetValues()
     {
-        var ctx = base.GetContext();
-        ctx.objectForSpell = _player.gameObject;
-        return ctx;
+        _objectForSpell = _player.gameObject;
     }
-
-    public override void SpellBehaviour(SpellContext ctx)
+    public override void SpellBehaviour(Spell spell)
     {
-        var aoe = ctx.objectForSpell.AddComponent<AoeBlast>();
-        aoe.Set(ctx.damage, 0.5f);
-        ctx.objectForSpell = aoe._aoeEffect;
+        var aoe = _objectForSpell.AddComponent<AoeBlast>();
+        aoe.Set(_damage, 0.5f);
+        _objectForSpell = aoe._aoeEffect;
     }
     
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        if (!ctx.useCtx) ctx = GetContext();
-        return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0.5} seconds, dealing {ctx.damage:F1} to entities in a large radius. Can damage self");
+        return new Tooltip("Aoe <Base>", $"Creates an explosive that detonates after {0} seconds, dealing {_damage} to entities in a large radius. Can damage self");
     }
 }
