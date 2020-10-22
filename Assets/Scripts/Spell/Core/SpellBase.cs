@@ -37,15 +37,15 @@ public abstract class SpellBase : SpellElement
     public int _iterations = 1; //Not used yet
     
     [HideInInspector]
-    public Action behaviour; //The behaviour is the one being invoked when spell is cast.
-    [HideInInspector]
+    public Action _behaviour; //The behaviour is the one being invoked when spell is cast.
     public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;
     #endregion
 
     #region PropertyManagement
-    private bool _copied; //why is persistent data so arhghghgh
+    [SerializeField]
+    protected bool _copied; //why is persistent data so arhghghgh
 
     [Serializable]
     protected class SpellProperty : ScriptableObject{
@@ -71,6 +71,8 @@ public abstract class SpellBase : SpellElement
         {
             OnDestroyed();
         }
+
+        public Action behaviour;
     }
     
     private void ResetValues()
@@ -85,6 +87,8 @@ public abstract class SpellBase : SpellElement
         _scale = properties._scale;
         
         _cooldown = properties._cooldown;
+
+        _behaviour = properties.behaviour;
         
         animationType = properties.animationType; //will be mostly ignored by modifiers
     }
@@ -108,7 +112,7 @@ public abstract class SpellBase : SpellElement
     
     public void Cast()
     {
-        behaviour.Invoke();
+        _behaviour.Invoke();
     }
     
     public void InitializeValues()
@@ -126,10 +130,11 @@ public abstract class SpellBase : SpellElement
     }
     protected abstract void SetValues();
     //public virtual void AfterModified(){}
-    
+
+    #region Tooltips
     protected virtual string DefaultBaseTitle()
     {
-        return $"<Base> (<b><color=\"{QualityManager.GetQualityColor(_quality)}\"> {_quality}</color></b>)";
+        return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
     }
 
    
@@ -142,6 +147,10 @@ public abstract class SpellBase : SpellElement
     {
         return new Tooltip(DefaultBaseTitle(), DefaultBaseBody());
     }
+    
+
+    #endregion
+   
 
     public abstract void SpellBehaviour(Spell spell);
 

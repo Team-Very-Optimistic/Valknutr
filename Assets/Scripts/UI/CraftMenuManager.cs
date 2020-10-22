@@ -80,11 +80,9 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
                 modStr += mod._spellElement.name + " ";
                 spell.AddModifier(mod._spellElement as SpellModifier);
                 modSprites.Add(mod._UIsprite);
-                modStrings.Add(mod.GetTooltip().Body);
             }
             spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
-            spell.CreateTooltip(baseSpellItem.GetTooltip().Body, modStrings);
             Inventory.Instance._spells.Add(spell); //crafted
             AudioManager.PlaySound("craftSuccess");
         }

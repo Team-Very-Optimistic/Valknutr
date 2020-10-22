@@ -35,8 +35,6 @@ public class Room : MonoBehaviour
     public GameObject minimapPrefab;
     private Collider roomCollider;
 
-    public bool hasTreasure;
-
     private void Start()
     {
         foreach (var lightingObject in lightingObjects)
@@ -49,7 +47,7 @@ public class Room : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject == GameManager.Instance._player)
         {
             var bounds = other.bounds;
             if (roomCollider.bounds.Contains(bounds.min) && roomCollider.bounds.Contains(bounds.max))

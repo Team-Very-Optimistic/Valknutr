@@ -13,7 +13,8 @@ public class EffectManager : Singleton<EffectManager>
     public float _enemyHurtTimeStopIntensity = 2f;
     private Vignette m_Vignette;
     private ColorGrading m_ColorGrading;
-    private float playerHurtIntensity;
+    public float playerHurtIntensityMultiplier;
+    private float _playerHurtIntensity;
     private float ori; 
     private float mixerRedOutRedIn;
     private Light _staffLight;
@@ -63,19 +64,19 @@ public class EffectManager : Singleton<EffectManager>
 
     public void PlayerHurtEffect(Vector3 pos, float damageRatio)
     {
-        playerHurtIntensity = Mathf.Min(1, damageRatio);
-        PlayEffectAtPosition("bloodExplosion", pos).transform.localScale *= 4 * playerHurtIntensity;
+        _playerHurtIntensity = Mathf.Min(1, damageRatio) * playerHurtIntensityMultiplier;
+        PlayEffectAtPosition("bloodExplosion", pos).transform.localScale *= 4 * _playerHurtIntensity;
         StartCoroutine(PlayerHurt());
     }
 
     IEnumerator PlayerHurt()
     {
         
-        m_Vignette.intensity.value =  ori +  0.45f * playerHurtIntensity;
-        m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn + 50f * playerHurtIntensity ;
+        m_Vignette.intensity.value =  ori +  0.45f * _playerHurtIntensity;
+        m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn + 50f * _playerHurtIntensity ;
         Time.timeScale = 0.1f;
-        ScreenShakeManager.Instance.ScreenShake(0.3f * playerHurtIntensity, 0.9f * playerHurtIntensity);
-        yield return new WaitForSeconds(0.06f * playerHurtIntensity);
+        ScreenShakeManager.Instance.ScreenShake(0.3f * _playerHurtIntensity, 0.9f * _playerHurtIntensity);
+        yield return new WaitForSeconds(0.06f * _playerHurtIntensity);
         Time.timeScale = 1;
         m_Vignette.intensity.value = ori;
         m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn;

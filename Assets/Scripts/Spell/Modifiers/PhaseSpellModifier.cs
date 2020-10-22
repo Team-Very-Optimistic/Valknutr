@@ -3,12 +3,11 @@ using UnityEngine;
 
 class PhaseSpellModifier : SpellModifier
 {
-    [SerializeField]
-    private int phaseAmount = 3;
+    public int phaseAmount = 3;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         
         Action spell = () =>
         {
@@ -22,7 +21,7 @@ class PhaseSpellModifier : SpellModifier
             }
         };
         
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

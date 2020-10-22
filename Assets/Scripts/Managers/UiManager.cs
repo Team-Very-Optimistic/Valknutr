@@ -14,6 +14,7 @@ public class UiManager : Singleton<UiManager>
     private bool isPaused = false;
     private HealthScript playerHealth;
     private TooltipDisplay currentTooltipWindow;
+    public static ItemDrop currentItemDrop;
 
 
     // Start is called before the first frame update
@@ -43,6 +44,15 @@ public class UiManager : Singleton<UiManager>
         else
         {
             healthBar.SetHealth(0f, 0f);
+        }
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (currentItemDrop != null)
+            {
+                currentItemDrop.GetComponent<ItemDrop>().PickUp(GameManager.Instance._player);
+                currentItemDrop = null;
+            }
         }
     }
 

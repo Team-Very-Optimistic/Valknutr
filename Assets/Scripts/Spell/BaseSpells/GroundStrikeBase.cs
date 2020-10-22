@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class GroundStrikeBase : SpellBase
 {
-    private float radius = 2F;
+    // todo: scale with scale and dmg
+    public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
     

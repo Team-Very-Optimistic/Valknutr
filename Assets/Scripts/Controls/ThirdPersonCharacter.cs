@@ -114,7 +114,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CapsuleCenter = m_Capsule.center;
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY 
-			                                                               | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+			                                                               | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 			m_GroundNormal = Vector3.up;
 			m_IsGrounded = true;
@@ -327,6 +327,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
 		{
+			m_Animator.SetFloat(AnimationSpeed, speed);
 			switch (animationType)
 			{
 				case CastAnimation.Bomb:
@@ -336,7 +337,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				case CastAnimation.Projectile:
 					m_Casting = true;
 					//m_Animator.SetBool(CastingProjectile, true);
-					m_Animator.SetFloat(AnimationSpeed, speed);
 					m_Animator.Play("Projectile");
 					break;
 				case CastAnimation.Shield:
@@ -351,7 +351,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				case CastAnimation.Aoe:
 					m_Casting = true;
 					spellCaster.CastPoint();
-
 					m_Animator.SetBool(CastingAOE, true);
 					
 					break;

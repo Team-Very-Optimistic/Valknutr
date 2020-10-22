@@ -122,6 +122,11 @@ public class Cheats : MonoBehaviour
             DisplayCheat("Inverse Gravity", () => Physics.gravity = -Physics.gravity);
             DisplayCheat("Unlock all spells", () => UnlockAllSpells());
             DisplayCheat("GodMode", () => GodMode());
+            DisplayCheat("Spawn Item", () => GameManager.Instance.SpawnItem(Util.GetMousePositionOnWorldPlane(Camera.main)));
+            DisplayCheat("Spawn Chest (Q=1)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 1));
+            DisplayCheat("Spawn Chest (Q=10)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 10));
+            DisplayCheat("Spawn Chest (Q=100)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 100));
+            DisplayCheat("Spawn Chest (Q=1000)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 1000));
         }
     }
 
