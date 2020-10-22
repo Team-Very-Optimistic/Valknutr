@@ -2,8 +2,8 @@
 
 class FireSpellModifier : SpellModifier
 {
-    private float fireMultiplier = 1.2f;
-    private float dmg = 1f;
+    public float fireMultiplier = 1.2f;
+    public float dmg = 1f;
     public override void ModifySpell(SpellBase spell)
     {
         //base.ModifySpell(spell);
@@ -14,7 +14,7 @@ class FireSpellModifier : SpellModifier
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         Action spell = () =>
         {
             oldBehavior.Invoke();
@@ -22,7 +22,7 @@ class FireSpellModifier : SpellModifier
             fire.damage = dmg;
             fire.SetInitializer();
         };
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

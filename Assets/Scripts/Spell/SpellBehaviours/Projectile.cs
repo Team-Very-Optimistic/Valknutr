@@ -28,7 +28,7 @@ public class Projectile : TriggerEventHandler
     
     public override void TriggerEvent(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile"))
+        if (other.gameObject.tag.Equals("Player")  || other.gameObject.tag.Equals("Projectile") || other.gameObject.tag.Equals("Fire") || other.gameObject.tag.Equals("Room"))
         {
             return;
         }
@@ -51,7 +51,7 @@ public class Projectile : TriggerEventHandler
             }
         }
 
-        EffectManager.PlayEffectAtPosition("projectileHit", transform.position);
+        EffectManager.PlayEffectAtPosition("projectileHit", transform.position, transform.localScale/10);
         var damageScript = GetComponent<Damage>();
         damageScript.SetDamage(_damage);
         damageScript.DealDamage(other);

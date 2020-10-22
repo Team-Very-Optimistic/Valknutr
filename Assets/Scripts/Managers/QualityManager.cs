@@ -17,9 +17,9 @@ public class QualityManager : ScriptableObject
         Sanctified
     }
 
-    private float Value(Quality quality, bool positiveBetter)
+    private float Value(Quality quality, bool positiveBetter = true)
     {
-        var value = 0f;
+        var value = 1f;
         switch (quality)
         {
             case Quality.Simple:
@@ -42,7 +42,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             default:
-                value = -1;
+                value = 1;
                 break;
         }
 
@@ -96,31 +96,31 @@ public class QualityManager : ScriptableObject
         return Quality.Sanctified;
     }
     
-    [Range(0f, 1.5f)]
+    // [Range(0f, 1.5f)]
     public float simpleValue;
     public float simpleChance;
     public float simpleAddDifficultyChance;
 
     
-    [Range(1.5f, 5f)]
+    // [Range(1.5f, 5f)]
     public float intricateValue;
     public float intricateChance;
     public float intricateAddDifficultyChance;
 
     
-    [Range(5f, 15f)]
+    // [Range(5f, 15f)]
     public float arcaneValue;
     public float arcaneChance;
     public float arcaneAddDifficultyChance;
 
    
-    [Range(15f, 20f)]
+    // [Range(15f, 20f)]
     public float divineValue;
     public float divineChance;
     public float divineAddDifficultyChance;
 
     
-    [Range(20f, 100f)]
+    // [Range(20f, 100f)]
     public float sanctifiedValue;
     public float sanctifiedChance;
     public float sanctifiedAddDifficultyChance;
@@ -133,17 +133,17 @@ public class QualityManager : ScriptableObject
         if (element.isBaseSpell)
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
-            spellBase._cooldown *= Spread() * Value(quality, false);
-            spellBase._damage *= Spread() * Value(quality, true);
-            spellBase._scale *= Spread();
-            spellBase._speed *= Spread() * Value(quality, true);
+            spellBase._cooldown /= Mathf.Clamp(Mathf.Log(Spread() * Value(quality)), 1, 10);
+            spellBase._damage *= Spread() * Value(quality);
+            spellBase._scale *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
+            spellBase._speed /= Mathf.Clamp(Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2), 1, 10);
             spellBase._quality = quality;
         }
         else
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
-            mod._cooldownMultiplier *= Spread() * Value(quality, true);
-            mod.value *= Spread() * Value(quality, true);
+            mod._cooldownMultiplier *= 1 + 0.2f * Mathf.Log(Spread() * Value(quality), 2);
+            mod.value = Spread() * Value(quality);
             mod.quality = quality;
         }
     }
@@ -161,7 +161,7 @@ public class QualityManager : ScriptableObject
                 return "red";
                 break;
             case Quality.Intricate:
-                return "aqua";
+                return "#008080";
                 break;
 
             case Quality.Arcane:
@@ -169,7 +169,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             case Quality.Divine:
-                return "magenta";
+                return "#8B008B";
                 break;
 
             case Quality.Sanctified:
@@ -182,3 +182,4 @@ public class QualityManager : ScriptableObject
         }
     }
 }
+

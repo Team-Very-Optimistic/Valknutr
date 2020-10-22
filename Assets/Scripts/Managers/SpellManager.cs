@@ -19,6 +19,7 @@ public class SpellManager : Singleton<SpellManager>
         Spell[] defaultSpells = new Spell[_defaultSpells.Length];
         foreach (var spell in _defaultSpells)
         {
+            if (!spell) continue;
             var sp = Instantiate(spell);
             sp.spellBase = Instantiate(spell.spellBase);
             var mods = spell._spellModifiers;
