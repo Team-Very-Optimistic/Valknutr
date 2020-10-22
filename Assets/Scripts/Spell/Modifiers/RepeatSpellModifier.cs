@@ -43,8 +43,8 @@ public class RepeatSpellModifier : SpellModifier
         action.behaviour.Invoke();
     }
     
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        return new Tooltip(DefaultModTitle(ctx), "Repeats the spell and changes the central object of the spell to the first object that had been interacted." + DefaultModBody(ctx));
+        return new Tooltip(DefaultModTitle(), "Repeats the spell and changes the central object of the spell to the first object that had been interacted." + DefaultModBody());
     }
 }

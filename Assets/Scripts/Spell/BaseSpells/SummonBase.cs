@@ -4,22 +4,19 @@ using UnityEngine;
 
 class SummonBase : SpellBase
 {
-    public float _duration;
-    
-    protected override void SetValues()
+    // protected override void SetValues()
+    // {
+    //     cooldown = 30f;
+    //     duration = 30f;
+    //     offset = _player.forward * 1.5f;
+    // }
+    public override void SpellBehaviour(SpellContext ctx)
     {
-        _cooldown = 30f;
-        _duration = 30f;
-        _offset = _player.forward * 1.5f;
+        ctx.objectForSpell = Instantiate(objectForSpell, _player.position + ctx.offset, Quaternion.identity);
+        ctx.objectForSpell.GetComponent<Summon>().Set(ctx.duration, ctx.speed, ctx.damage, ctx.scale);
     }
-    public override void SpellBehaviour(Spell spell)
+    public override Tooltip GetTooltip()
     {
-        _objectForSpell = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.identity);
-        _objectForSpell.GetComponent<Summon>().Set(_duration, _speed, _damage, _scale);
-    }
-    public override Tooltip GetTooltip(SpellContext ctx)
-    {
-        if (!ctx.useCtx) ctx = GetContext();
-        return new Tooltip($"Summon {DefaultBaseTitle(ctx)}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody(ctx)}");
+        return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody()}");
     }
 }

@@ -52,9 +52,9 @@ class GrowSpellModifier : SpellModifier
         }
     }
 
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        return new Tooltip("Size+" + DefaultModTitle(ctx), 
-            $"Increases size of affected entities by {sizeChange} times. Capped at {cap} times the original size." + DefaultModBody(ctx));
+        return new Tooltip("Size+" + DefaultModTitle(), 
+            $"Increases size of affected entities by {sizeChange} times. Capped at {cap} times the original size." + DefaultModBody());
     }
 }

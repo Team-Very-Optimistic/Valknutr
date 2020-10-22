@@ -11,7 +11,7 @@ public class SpellItem : ScriptableObject, ITooltip
 
     public bool isBaseSpell;
 
-    public virtual Tooltip GetTooltip(SpellContext ctx)
+    public virtual Tooltip GetTooltip()
     {
         if (_spellElement == null)
         {
@@ -21,7 +21,7 @@ public class SpellItem : ScriptableObject, ITooltip
         else
         {
             Debug.Log(_spellElement);
-            return _spellElement.GetTooltip(ctx);
+            return _spellElement.GetTooltip();
         }
     }
 }

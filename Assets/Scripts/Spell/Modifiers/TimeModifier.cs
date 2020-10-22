@@ -29,7 +29,7 @@
         throw new System.NotImplementedException();
     }
 
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
         return default;
     }

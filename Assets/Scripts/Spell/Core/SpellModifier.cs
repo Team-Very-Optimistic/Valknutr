@@ -15,39 +15,33 @@ public abstract class SpellModifier : SpellElement
 
     public virtual void ModifySpell(SpellBase spell)
     {
-        spell._cooldown *= _cooldownMultiplier;
+        spell.cooldown *= _cooldownMultiplier;
     }
 
-    public virtual SpellBase ModifyBehaviour(SpellBase action)
+    public virtual SpellContext ModifyBehaviour(SpellContext ctx)
     {
-        //ModifySpell(action);
-        return action; // No change
+        return ctx; // No change
     }
 
     public abstract void UseValue();
-    protected virtual string DefaultModTitle(SpellContext ctx)
+    protected virtual string DefaultModTitle()
     {
         return $"<Modifier> (<b><color={QualityManager.GetQualityColor(quality)}>{quality}</color></b>)";
     }
 
    
-    protected virtual string DefaultModBody(SpellContext ctx)
+    protected virtual string DefaultModBody()
     {
-        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F0}%.";
+        return $"Modifies spell cooldown by {_cooldownMultiplier * 100}%.";
     }
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        return new Tooltip(DefaultModTitle(ctx), DefaultModBody(ctx));
+        return new Tooltip(DefaultModTitle(), DefaultModBody());
     }
 
-    public SpellBase Modify(SpellBase spell)
+    public SpellContext Modify(SpellContext ctx)
     {
-        if (!init)
-        {
-            UseValue();
-            init = true;
-        }
-        ModifySpell(spell);
-        return ModifyBehaviour(spell);
+        ctx.cooldown *= _cooldownMultiplier;
+        return ModifyBehaviour(ctx);
     }
 }

@@ -145,7 +145,6 @@ public class QualityManager : ScriptableObject
             mod._cooldownMultiplier *= 1 + 0.2f * Mathf.Log(Spread() * Value(quality), 2);
             mod.value = Spread() * Value(quality);
             mod.quality = quality;
-            mod.UseValue();
         }
     }
     
@@ -170,7 +169,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             case Quality.Divine:
-                return "#ff00ff";
+                return "magenta";
                 break;
 
             case Quality.Sanctified:
