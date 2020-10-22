@@ -7,7 +7,7 @@ class PhaseSpellModifier : SpellModifier
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         
         Action spell = () =>
         {
@@ -21,7 +21,7 @@ class PhaseSpellModifier : SpellModifier
             }
         };
         
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

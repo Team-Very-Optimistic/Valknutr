@@ -85,7 +85,7 @@ public class Spell : SpellItem
         float totalCooldown = spellBase._cooldown;
         spellBase.InitializeValues();
         spellBase._direction = data.castDirection;
-        spellBase.behaviour = () => spellBase.SpellBehaviour(this);
+        spellBase._behaviour = () => spellBase.SpellBehaviour(this);
 
         if (_spellModifiers != null && _spellModifiers.Count != 0)
         {

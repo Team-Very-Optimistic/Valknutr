@@ -14,7 +14,7 @@ class FireSpellModifier : SpellModifier
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         Action spell = () =>
         {
             oldBehavior.Invoke();
@@ -22,7 +22,7 @@ class FireSpellModifier : SpellModifier
             fire.damage = dmg;
             fire.SetInitializer();
         };
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

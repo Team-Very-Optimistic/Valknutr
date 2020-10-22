@@ -13,14 +13,14 @@ class SpeedSpellModifier : SpellModifier
     
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         Action spell = () =>
         {
             oldBehavior.Invoke();
             var obj = action._objectForSpell.transform;
             EffectManager.PlayEffectAtPosition("speedTrail", obj.position, obj.lossyScale).transform.SetParent(obj);
         };
-        action.behaviour = spell;
+        action._behaviour = spell;
         
         return action; // No change
     }

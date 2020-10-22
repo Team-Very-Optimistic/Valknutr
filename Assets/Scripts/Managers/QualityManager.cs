@@ -169,7 +169,7 @@ public class QualityManager : ScriptableObject
                 break;
 
             case Quality.Divine:
-                return "magenta";
+                return "#8B008B";
                 break;
 
             case Quality.Sanctified:

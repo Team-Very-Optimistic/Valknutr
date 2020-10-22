@@ -9,10 +9,9 @@ public class ExplosiveBase : SpellBase
 
     protected override void SetValues()
     {
-
         radius = 3.0F;
         power = 100.0F;
-        _offset = Vector3.up  + _player.forward * 1.3f;
+        _offset = Vector3.up + _player.forward * 1.3f;
     }
 
     /// <summary>
@@ -33,7 +32,6 @@ public class ExplosiveBase : SpellBase
         Explosive explosive = p.GetComponent<Explosive>();
 
         radius *= _scale;
-
         explosive.radius = radius;
         explosive._damage = _damage;
         explosive.power = power * _damage / properties._damage + power * radius;

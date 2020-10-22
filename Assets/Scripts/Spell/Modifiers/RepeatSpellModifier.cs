@@ -11,7 +11,7 @@ public class RepeatSpellModifier : SpellModifier
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         
         Action temp = () =>
         {
@@ -20,14 +20,13 @@ public class RepeatSpellModifier : SpellModifier
             eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
             if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
-    
                 eventHandler.AddEvent(Invoke);
             
             this.action = action;
         };
 
         Action spell = temp;
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 
@@ -40,7 +39,7 @@ public class RepeatSpellModifier : SpellModifier
     {
         action._objectForSpell = collider.gameObject;
         eventHandler.RemoveEvent(Invoke);
-        action.behaviour.Invoke();
+        action._behaviour.Invoke();
     }
     
     public override Tooltip GetTooltip()

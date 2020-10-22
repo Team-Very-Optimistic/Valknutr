@@ -11,7 +11,7 @@ class SplitSpellModifier : SpellModifier
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         Action temp = () =>
         {
             Vector3 originalPosDiff = action._direction;
@@ -32,7 +32,7 @@ class SplitSpellModifier : SpellModifier
                 GameManager.Instance.StartCoroutine(DelayInvoke(temp, i / 10f));
             }
         };
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

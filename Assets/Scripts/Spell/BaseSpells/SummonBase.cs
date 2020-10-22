@@ -4,7 +4,9 @@ using UnityEngine;
 
 class SummonBase : SpellBase
 {
+    [SerializeField]
     private float _duration;
+    
     protected override void SetValues()
     {
         // cooldown = 30f;

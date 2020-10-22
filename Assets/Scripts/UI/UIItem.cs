@@ -41,7 +41,7 @@ public class UIItem : Selectable, IPointerClickHandler
     public override void OnPointerEnter(PointerEventData pointerEventData)
     {
         if (_spellItem != null)
-            UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip(default));
+            UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip());
     }
 
     //Detect when Cursor leaves the GameObject
