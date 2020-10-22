@@ -11,7 +11,6 @@ public class DisplaySpells : MonoBehaviour
 
     void Start()
     {
-        Populate();
     }
     
     void Populate()
@@ -25,7 +24,6 @@ public class DisplaySpells : MonoBehaviour
             var uiItem = newObj.GetComponent<UIItem>();
             uiItem._spellItem = spellItem;
         }
-
     }
 
     public void RemoveItem(SpellItem spellItem)
