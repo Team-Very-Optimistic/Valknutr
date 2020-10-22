@@ -4,11 +4,12 @@ using UnityEngine;
 
 class SummonBase : SpellBase
 {
-    public float _duration;
+    [SerializeField]
+    private float _duration;
     
     protected override void SetValues()
     {
-        _cooldown = 30f;
+        // cooldown = 30f;
         _duration = 30f;
         _offset = _player.forward * 1.5f;
     }

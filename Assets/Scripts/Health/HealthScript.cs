@@ -10,6 +10,7 @@ public class HealthScript : MonoBehaviour
     public bool destroyOnDeath = true;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
+    private bool dead = false;
   
 
 
@@ -41,7 +42,9 @@ public class HealthScript : MonoBehaviour
         }
         
         currentHealth -= finalDamage;
-        if (currentHealth > 0.0f) return false;
+        if (currentHealth > 0.0f || dead) return false;
+
+        dead = true;
 
         //todo: Derive from enemy instead
         if (gameObject.tag == "Enemy")

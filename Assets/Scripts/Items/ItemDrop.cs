@@ -17,17 +17,6 @@ public class ItemDrop : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (playerCollider != null)
-            {
-                PickUp(playerCollider);
-            }
-        }
-    }
-
     public void OnTriggerExit(Collider other)
     {
         if (playerCollider == other)
@@ -35,12 +24,14 @@ public class ItemDrop : MonoBehaviour
             UiManager.HideInWorldTooltip();
             playerCollider = null;
         }
+        UiManager.currentItemDrop = null;
     }
 
     public virtual void PlayerEnterHandler(Collider other)
     {
         playerCollider = other;
         UiManager.ShowTooltip(((ITooltip)_spellItem).GetTooltip());
+        UiManager.currentItemDrop = this;
     }
 
     public void PickupHandler(ItemDrop itemDrop)
@@ -51,7 +42,7 @@ public class ItemDrop : MonoBehaviour
         }
     }
 
-    public virtual void PickUp(Collider other)
+    public virtual void PickUp(GameObject other)
     {
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);

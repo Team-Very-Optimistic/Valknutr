@@ -5,8 +5,7 @@ using UnityEngine;
 ///summary
 public class AoeBlast : TriggerEventHandler
 {
- 
-    #region Public Fields
+	#region Public Fields
 	[HideInInspector]
     public GameObject _aoeEffect;
 
@@ -16,7 +15,7 @@ public class AoeBlast : TriggerEventHandler
 
     #endregion
  
-    #region Unity Methods
+
 
     public override void TriggerEvent(Collider other)
     {
@@ -34,18 +33,16 @@ public class AoeBlast : TriggerEventHandler
 	    _collider.enabled = true;
     }
 
-    public void Set(float damage, float time)
+    public void Set(float damage, float time, float duration)
     {
 	    _aoeEffect = SpellManager.Instance.aoeEffect;
 	    _aoeEffect = Instantiate(_aoeEffect, gameObject.transform);
-	    _collider = _aoeEffect.GetComponentElseAddIt<Collider>();
+	    _collider = _aoeEffect.GetComponentElseAddIt<SphereCollider>();
 	    _damage = _aoeEffect.GetComponentElseAddIt<Damage>();
 	    _damage.SetDamage(damage);
 	    this.time = time;
+	    Destroy(this, duration);
+	    Destroy(_aoeEffect, duration);
     }
 
-    #endregion
- 
-    #region Private Methods
-    #endregion
 }

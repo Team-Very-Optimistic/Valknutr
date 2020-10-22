@@ -4,13 +4,13 @@ using UnityEngine;
 
 class GrowSpellModifier : SpellModifier
 {
-    protected float sizeChange = 1.5f;
-    protected float cap = 1f;
+    public float sizeChange = 1.5f;
+    public float cap = 1f;
 
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
-        Action oldBehavior = action.behaviour;
+        Action oldBehavior = action._behaviour;
         Action spell = () =>
         {
             oldBehavior.Invoke();
@@ -19,7 +19,7 @@ class GrowSpellModifier : SpellModifier
             action._objectForSpell.transform.localScale = transformLocalScale * sizeChange;
             GameManager.Instance.StartCoroutine(MakeSmall(action._objectForSpell, transformLocalScale));
         };
-        action.behaviour = spell;
+        action._behaviour = spell;
         return action;
     }
 

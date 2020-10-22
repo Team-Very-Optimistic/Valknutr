@@ -31,12 +31,14 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> _rooms = new List<GameObject>();
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     [SerializeField] private NavMeshSurface _navMeshSurface;
+    public bool generateOnAwake = false;
     
 
     private void Awake()
     {
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
         RebuildNavMesh();
+        if (generateOnAwake) Generate();
     }
 
     /// <summary>
@@ -285,16 +287,21 @@ public class LevelGenerator : MonoBehaviour
 
     private void PlaceBossRoom()
     {
-        var deepest = _rooms
-            .Select(room => room.GetComponent<Room>())
-            .Aggregate((_rooms[0].GetComponent<Room>()), (last, room) => last.depth > room.depth ? last : room);
+        var success = false;
+        var n = 10;
+        while (n-- > 0 && !success)
+        {
+            var deepest = _rooms
+                .Select(room => room.GetComponent<Room>())
+                .Aggregate((_rooms[0].GetComponent<Room>()), (last, room) => last.depth > room.depth ? last : room);
 
-        var bossRoom = GenerateRoomConnectedTo(bossRoomPrefab, deepest);
-        if (bossRoom == null)
+            success = GenerateRoomConnectedTo(bossRoomPrefab, deepest) != null;
+        }
+        
+        if (!success)
         {
             throw new GenerationException();
         }
-        //todo
     }
 
     public void RebuildNavMesh()
