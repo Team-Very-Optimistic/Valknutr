@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8662945d64e4f1aa5e59d2130134d07, type: 3}
   m_Name: ProjectileBase
   m_EditorClassIdentifier: 
+  _objectForSpell: {fileID: 0}
   _objectsCollided: []
-  _quality: 0
-  objectForSpell: {fileID: 7908457230315757119, guid: bb0994a64b1552c478f34ad6f50e15cc, type: 3}
-  damage: 4
-  speed: 10
-  scale: 1
-  cooldown: 6
-  _duration: 1
-  direction: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
+  _direction: {x: 0, y: 0, z: 0}
+  _offset: {x: 0, y: 0, z: 0}
+  _damage: 3
+  _speed: 30
+  _scale: 1
+  _cooldown: 1
   animationType: 1
+  _iterations: 1
+  _quality: 0
+  properties: {fileID: 0}
+  _copied: 0
