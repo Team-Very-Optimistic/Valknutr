@@ -133,10 +133,10 @@ public class QualityManager : ScriptableObject
         if (element.isBaseSpell)
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
-            spellBase.cooldown /= Mathf.Clamp(Mathf.Log(Spread() * Value(quality)), 1, 10);
-            spellBase.damage *= Spread() * Value(quality);
-            spellBase.scale *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
-            spellBase.speed /= Mathf.Clamp(Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2), 1, 10);
+            spellBase._cooldown /= Mathf.Clamp(Mathf.Log(Spread() * Value(quality)), 1, 10);
+            spellBase._damage *= Spread() * Value(quality);
+            spellBase._scale *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
+            spellBase._speed /= Mathf.Clamp(Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2), 1, 10);
             spellBase._quality = quality;
         }
         else

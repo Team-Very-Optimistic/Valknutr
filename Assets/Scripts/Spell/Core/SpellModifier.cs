@@ -15,12 +15,13 @@ public abstract class SpellModifier : SpellElement
 
     public virtual void ModifySpell(SpellBase spell)
     {
-        spell.cooldown *= _cooldownMultiplier;
+        spell._cooldown *= _cooldownMultiplier;
     }
 
-    public virtual SpellContext ModifyBehaviour(SpellContext ctx)
+    public virtual SpellBase ModifyBehaviour(SpellBase action)
     {
-        return ctx; // No change
+        //ModifySpell(action);
+        return action; // No change
     }
 
     public abstract void UseValue();
@@ -32,16 +33,21 @@ public abstract class SpellModifier : SpellElement
    
     protected virtual string DefaultModBody()
     {
-        return $"Modifies spell cooldown by {_cooldownMultiplier * 100}%.";
+        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F0}%.";
     }
     public override Tooltip GetTooltip()
     {
         return new Tooltip(DefaultModTitle(), DefaultModBody());
     }
 
-    public SpellContext Modify(SpellContext ctx)
+    public SpellBase Modify(SpellBase spell)
     {
-        ctx.cooldown *= _cooldownMultiplier;
-        return ModifyBehaviour(ctx);
+        if (!init)
+        {
+            UseValue();
+            init = true;
+        }
+        ModifySpell(spell);
+        return ModifyBehaviour(spell);
     }
 }

@@ -60,12 +60,11 @@ public class Spell : SpellItem
         _tooltipMessage = tooltip;
     }
 
-    public override Tooltip GetTooltip(SpellContext ctx)
+    public override Tooltip GetTooltip()
     {
-        if (!ctx.useCtx) ctx = GetFinalSpellContext();
-        string bodyMessage = spellBase.GetTooltip(ctx).Body +
-                             _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip(ctx).Body);
-        return new Tooltip(spellBase.GetTooltip(ctx).Title, bodyMessage);
+        string bodyMessage = spellBase.GetTooltip().Body +
+                             _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip().Body);
+        return new Tooltip(spellBase.GetTooltip().Title, bodyMessage);
         
         /*
          * Damaging Multi-Projectile of Speed
