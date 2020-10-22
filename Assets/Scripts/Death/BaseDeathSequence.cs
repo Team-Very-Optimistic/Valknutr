@@ -50,6 +50,7 @@ public class BaseDeathSequence : MonoBehaviour
             c.enabled = true;
             c.isTrigger = false;
             c.GetComponent<Rigidbody>().isKinematic = false;
+            c.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 
