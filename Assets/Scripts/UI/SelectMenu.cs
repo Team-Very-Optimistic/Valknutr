@@ -18,6 +18,8 @@ public class SelectMenu : MonoBehaviour
     List<KeyCode> keyBindings; //make can make everything use this keybinding
 
     public RectTransform tooltipPos;
+    public TooltipDisplay tooltipWindow;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,7 +52,6 @@ public class SelectMenu : MonoBehaviour
             }
             var newObj = Instantiate(prefab, transform);
             var uiItem = newObj.GetComponent<UIItem>();
-            uiItem._tooltipPosition = tooltipPos;
             uiItem._spellItem = spell;
             uiItem.Init();
             UISlots[count++].Slot(uiItem);

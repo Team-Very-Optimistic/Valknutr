@@ -30,6 +30,20 @@ MonoBehaviour:
   ActivateAreaSize: 0.1
   ClicksCount: 5
   WaitTime: 2
+--- !u!114 &2077337565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167201728770615237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e55027ddf2b4f8da8cea9df0bc79738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultyLevel: 1
+  difficultyIncreaseInterval: 60
 --- !u!114 &64389496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_postProcessVolume: {fileID: 0}
+  _enemyHurtTimeStopIntensity: 2
   m_VFXLibrary:
   - m_Identifier: projectileHit
     effect: {fileID: 8846962978078135933, guid: b245d7507cfe6244ba663fed90842ad0, type: 3}
@@ -146,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.data[0]
@@ -238,6 +253,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2674764975012913395, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
+      propertyPath: healthPickupObj
+      value: 
+      objectReference: {fileID: 6274791721525489689, guid: 35746ea90049fdd42b8ed7a34c28e2cc, type: 3}
+    - target: {fileID: 2674764975012913395, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
+      propertyPath: QualityManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 08e371fd6d15b4a458f4be3825a48b95, type: 2}
     - target: {fileID: 2674764975012913399, guid: 5878553da3c93794f917fdd74fdf2086, type: 3}
       propertyPath: damageTextPrefab
       value: 
@@ -407,6 +430,10 @@ PrefabInstance:
       propertyPath: m_SfxLibrary.Array.data[13].m_Pitch
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7160135705865240117, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
+      propertyPath: _library
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e619ba7569ff554596bc072176e4257, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd42e3a649895b4d9ec7618029f1029, type: 3}
 --- !u!4 &8724259198553196123 stripped

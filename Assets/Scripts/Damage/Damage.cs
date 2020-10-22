@@ -10,12 +10,15 @@ public class Damage : MonoBehaviour
     [SerializeField]
     private bool isFriendly;
 
-    public void DealDamage(Collider other)
+    public bool DealDamage(Collider other)
     {
         if (other.gameObject.GetComponent<HealthScript>() != null)
         {
             other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
+            return true;
         }
+
+        return false;
     }
 
     //Getters/Setters

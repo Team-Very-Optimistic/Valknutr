@@ -11,6 +11,7 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     public int difficultyLevel = 1;
 
     public float difficultyIncreaseInterval = 60f;
+    
     public void Awake()
     {
         EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
@@ -31,20 +32,20 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     private void IncreaseEnemyDamage(EnemyBehaviourBase enemyBehaviourBase)
     {
         var dps = enemyBehaviourBase.GetComponent<Damage>();
-        dps.SetDamage(dps.GetDamage() * difficultyLevel / 2);
+        dps.SetDamage(dps.GetDamage() * difficultyLevel);
     }
 
     public void IncreaseEnemyHealth(EnemyBehaviourBase enemyBehaviourBase)
     {
         var hp = enemyBehaviourBase.GetComponent<HealthScript>();
-        hp.SetHealth(hp.maxHealth * difficultyLevel/ 2);
+        hp.SetHealth(hp.maxHealth * difficultyLevel);
     }
 
     public IEnumerator IncreaseDifficulty(int amount, float time)
     {
-        difficultyLevel += amount;
-        GameManager.Instance.healthPickupValue *= difficultyLevel/2;
         yield return new WaitForSeconds(time);
+        difficultyLevel += amount;
+        GameManager.Instance.healthPickupValue *= difficultyLevel;
         StartCoroutine(IncreaseDifficulty(amount, time));
     }
 }

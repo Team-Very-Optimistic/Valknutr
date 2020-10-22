@@ -8,13 +8,10 @@ public class ExplosiveBase : SpellBase
 
     protected override void SetValues()
     {
-        _damage = 10f;
-        radius = 5.0F;
+
+        radius = 3.0F;
         power = 100.0F;
-        _scale = 1;
-        _speed = 5.5f;
-        _cooldown = 5f;
-        _offset = Vector3.up  + _player.forward * 1.5f;
+        _offset = Vector3.up  + _player.forward * 1.3f;
     }
 
     /// <summary>
@@ -38,8 +35,13 @@ public class ExplosiveBase : SpellBase
 
         explosive.radius = radius;
         explosive._damage = _damage;
-        explosive.power = power * _damage / 10f + power * radius;
+        explosive.power = power * _damage / properties._damage + power * radius;
         explosive.Launch(_direction * 2 + _offset, _speed);
         _objectForSpell = p;
+    }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage} to entities in a radius of {radius}. {DefaultBaseBody()}");
     }
 }

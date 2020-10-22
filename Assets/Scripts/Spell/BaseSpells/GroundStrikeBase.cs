@@ -68,8 +68,11 @@ public class GroundStrikeBase : SpellBase
                 knockbackDirection.y = 0.0f;
                 col.attachedRigidbody.AddForce(knockbackDirection * (power * (_damage / properties._damage) * _scale));
             }
-
         }
-
+    }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage} to entities in a small radius. {DefaultBaseBody()}");
     }
 }

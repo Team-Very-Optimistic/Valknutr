@@ -46,6 +46,11 @@ class MovementBase : SpellBase
             _objectForSpell = illu;
         }
     }
+    
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {_moveTime * 30f / _speed}s. {DefaultBaseBody()}");
+    }
 }
 
 public class Illusion : MonoBehaviour

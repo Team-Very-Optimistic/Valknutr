@@ -16,9 +16,13 @@ public class GameManager : Singleton<GameManager>
 
     public Room activeRoom;
     public GameObject itemDropPrefab;
+    public GameObject healthPickupObj;
+    public GameObject treasurePrefab;
     private PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
+    public float healthPickupDropChance = 0.3f;
 
+    public QualityManager QualityManager;
     public void Awake()
     {
         _player = GameObject.Find("Player");
@@ -40,16 +44,39 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void SpawnItem(Vector3 position, SpellItem _SpellItem = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null)
     {
         if (_SpellItem == null)
         {
+            
             var itemListSpellItems = _itemList._SpellItems;
-            _SpellItem = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
+             _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+            Type type = _SpellItem._spellElement.GetType();
+            Debug.Log(type.Name);
+            _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
         }
-        //Debug.Log(_SpellItem._itemObject);
-        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity);
-        itemDrop.GetComponent<ItemDrop>()._spellItem = _SpellItem;
+        //Add quality to item
+        QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
+        
+        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
+        itemDrop._spellItem = _SpellItem;
+        return itemDrop;
+    }
+
+    public ItemDrop SpawnHP(Vector3 position)
+    {
+
+        var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
+            
+        return hp;
+        
+    }
+
+    public static TreasureChest SpawnTreasureChest(Vector3 position, float quality)
+    {
+        var treasure = Instantiate(Instance.treasurePrefab, position, Quaternion.identity).GetComponent<TreasureChest>();
+        // todo: set loot + quality
+        return treasure;
     }
 
     public void SetGameWin()

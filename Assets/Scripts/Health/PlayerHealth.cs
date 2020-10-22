@@ -89,9 +89,7 @@ public class PlayerHealth : HealthScript
     public void IncreasePlayerHealth(float healthIncrease)
     {
         currentHealth += healthIncrease;
-        if (currentHealth > maxHealth)
-        {
-            maxHealth += healthIncrease;
-        }
+        maxHealth += healthIncrease;
+            
     }
 }

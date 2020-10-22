@@ -3,6 +3,7 @@ using UnityEngine;
 
 class PhaseSpellModifier : SpellModifier
 {
+    [SerializeField]
     private int phaseAmount = 3;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
@@ -23,5 +24,15 @@ class PhaseSpellModifier : SpellModifier
         
         action.behaviour = spell;
         return action;
+    }
+
+    public override void UseValue()
+    {
+        phaseAmount = Mathf.RoundToInt(phaseAmount * value);
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Phase" + DefaultModTitle(), $"Causes affected entities to pass through solid objects up to {phaseAmount} times." + DefaultModBody());
     }
 }

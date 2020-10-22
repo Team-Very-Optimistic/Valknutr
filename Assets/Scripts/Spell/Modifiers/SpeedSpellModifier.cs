@@ -3,12 +3,12 @@ using UnityEngine;
 
 class SpeedSpellModifier : SpellModifier
 {
-    
+    [SerializeField]
+    private float speedMultiplier = 2f;
     public override void ModifySpell(SpellBase spell)
     {
-        _cooldownMultiplier = 1 / 1.5f;
         spell._speed += 1f;
-        spell._speed *= 2;
+        spell._speed *= speedMultiplier;
         spell._cooldown *= _cooldownMultiplier;
     }
     
@@ -24,5 +24,15 @@ class SpeedSpellModifier : SpellModifier
         action.behaviour = spell;
         
         return action; // No change
+    }
+
+    public override void UseValue()
+    {
+        speedMultiplier *= value;
+    }
+
+    public override Tooltip GetTooltip()
+    {
+        return new Tooltip("Haste" + DefaultModTitle(), $"Increases speed of affected entities by {speedMultiplier}% and {DefaultModBody()}");
     }
 }

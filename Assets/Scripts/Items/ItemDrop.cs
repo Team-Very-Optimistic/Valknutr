@@ -6,37 +6,57 @@ using UnityEngine;
 public class ItemDrop : MonoBehaviour
 {
     public SpellItem _spellItem;
-
-    private bool isMouseOver = false;
+    public Action<ItemDrop> OnPickup;
+    protected Collider playerCollider;
+    
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (GameManager.Instance._player == other.gameObject) //harder comparison precludes clones and shields
         {
-            PickUp();
+            PlayerEnterHandler(other);
         }
     }
 
-    public void PickUp()
+    public void Update()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (playerCollider != null)
+            {
+                PickUp(playerCollider);
+            }
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (playerCollider == other)
+        {
+            UiManager.HideInWorldTooltip();
+            playerCollider = null;
+        }
+    }
+
+    public virtual void PlayerEnterHandler(Collider other)
+    {
+        playerCollider = other;
+        UiManager.ShowTooltip(((ITooltip)_spellItem).GetTooltip());
+    }
+
+    public void PickupHandler(ItemDrop itemDrop)
+    {
+        if (this != itemDrop)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public virtual void PickUp(Collider other)
+    {
+        UiManager.HideInWorldTooltip();
+        OnPickup?.Invoke(this);
         AudioManager.PlaySoundAtPosition("itemPickup", transform.position);
         Inventory.Instance.Add(_spellItem);
         Destroy(gameObject);
-    }
-
-    private void OnMouseEnter()
-    {
-        print("mouse over");
-        isMouseOver = true;
-    }
-
-    private void OnMouseExit()
-    {
-        isMouseOver = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (isMouseOver)
-            Gizmos.DrawSphere(transform.position, 1f);
     }
 }
