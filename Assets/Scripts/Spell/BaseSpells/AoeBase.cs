@@ -13,6 +13,7 @@ public class AoeBase : SpellBase
         _objectForSpell = _player.gameObject;
     }
     
+    
     public override void SpellBehaviour(Spell spell)
     {
         _aoeInterval = 0.5f * _speed / properties._speed;
@@ -25,6 +26,6 @@ public class AoeBase : SpellBase
     public override Tooltip GetTooltip()
     {
         //SetValues();
-        return new Tooltip($"Sphere blast {DefaultBaseTitle()}", $"Channels for {_duration}, dealing {_damage} damage every {_aoeInterval}s around you. {DefaultBaseBody()}");
+        return new Tooltip($"Sphere blast {DefaultBaseTitle()}", $"Channels for {_duration:F}, dealing {_damage:F} damage every {_aoeInterval:F}s around you. {DefaultBaseBody()}");
     }
 }

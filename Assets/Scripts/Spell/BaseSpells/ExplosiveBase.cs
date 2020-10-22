@@ -11,7 +11,6 @@ public class ExplosiveBase : SpellBase
     {
         radius = 3.0F;
         power = 100.0F;
-        _offset = Vector3.up + _player.forward * 1.3f;
     }
 
     /// <summary>
@@ -26,6 +25,7 @@ public class ExplosiveBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
+        _offset += Vector3.up + _player.forward * 1.3f;
         var p = Instantiate(_objectForSpell, _player.position + _offset,
             Quaternion.Euler(_direction));
         

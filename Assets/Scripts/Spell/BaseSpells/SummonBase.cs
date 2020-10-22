@@ -20,6 +20,6 @@ class SummonBase : SpellBase
     }
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration}s. \n{DefaultBaseBody()}");
+        return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration}s. Follows your guided direction. \n{DefaultBaseBody()}");
     }
 }
