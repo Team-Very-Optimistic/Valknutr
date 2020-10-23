@@ -72,7 +72,7 @@ public class DamageText : MonoBehaviour
 
     public void SetDamageTextProperties(float damage, Vector3 worldLocationStart, Color damageColor)
     {
-        GetComponent<Text>().text = $"{damage:F}";
+        GetComponent<Text>().text = $"{damage:0.##}";
         GetComponent<Text>().color = damageColor;
         this.worldLocationStart = worldLocationStart;
     }

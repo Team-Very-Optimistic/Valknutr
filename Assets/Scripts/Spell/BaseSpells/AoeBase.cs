@@ -19,7 +19,7 @@ public class AoeBase : SpellBase
         _aoeInterval = 0.5f * _speed / properties._speed;
         _duration = 4f * _speed / properties._speed;
         var aoe = _objectForSpell.AddComponent<AoeBlast>();
-        aoe.Set(_damage, _aoeInterval, _duration);
+        aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
     }
     
