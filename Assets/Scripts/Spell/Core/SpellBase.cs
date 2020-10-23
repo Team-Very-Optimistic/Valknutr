@@ -106,8 +106,14 @@ public abstract class SpellBase : SpellElement
         properties.OnDestroyed += ResetValues;
         properties.OnDestroyed += () => _copied = false; //neccessaryarayrayryaryryayasyyasrry
     }
-    
 
+    public void InitCopy()
+    {
+        SetValues();
+        _copied = true;
+        CopyValues();
+        AfterReset();
+    }
     #endregion
     
     public void Cast()
@@ -127,9 +133,11 @@ public abstract class SpellBase : SpellElement
         {
             ResetValues();
         }
+        AfterReset();
     }
+    
     protected abstract void SetValues();
-    //public virtual void AfterModified(){}
+    protected virtual void AfterReset(){}
 
     #region Tooltips
     protected virtual string DefaultBaseTitle()

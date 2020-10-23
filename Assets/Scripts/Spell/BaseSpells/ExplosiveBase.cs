@@ -5,14 +5,21 @@ public class ExplosiveBase : SpellBase
 {
     // todo: scale with dmg and scale
     public float radius = 5.0F;
-    public float power = 100.0F;
+    public float power = 10.0F;
 
     protected override void SetValues()
     {
-        radius = 3.0F;
-        power = 100.0F;
+        power = 40.0F;
     }
 
+    protected override void AfterReset()
+    {
+        power *= _damage / properties._damage + power * radius;
+        _offset += Vector3.up + _player.forward * 1.3f;
+        _direction = _direction * 2 + _offset;
+        radius = 3 * _scale;
+
+    }
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes
@@ -25,22 +32,26 @@ public class ExplosiveBase : SpellBase
     /// </summary>
     public override void SpellBehaviour(Spell spell)
     {
-        _offset += Vector3.up + _player.forward * 1.3f;
+        if (!_objectForSpell)
+        {
+            _objectForSpell = properties._objectForSpell;
+        }
+        
         var p = Instantiate(_objectForSpell, _player.position + _offset,
             Quaternion.Euler(_direction));
         
         Explosive explosive = p.GetComponent<Explosive>();
 
-        radius *= _scale;
         explosive.radius = radius;
         explosive._damage = _damage;
-        explosive.power = power * _damage / properties._damage + power * radius;
-        explosive.Launch(_direction * 2 + _offset, _speed);
+        explosive.power = power;
+        explosive.Launch(_direction, _speed);
         _objectForSpell = p;
     }
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage:F} to entities in a radius of {radius:F}. {DefaultBaseBody()}");
+        return new Tooltip($"Bomb {DefaultBaseTitle()}", $"Creates an explosive that detonates on contact, dealing {_damage:F} to entities in a radius of {radius:F} with " +
+                                                         $"an explosive power of {power:F}. {DefaultBaseBody()}");
     }
 }

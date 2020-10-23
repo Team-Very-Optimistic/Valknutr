@@ -41,7 +41,7 @@ public class AoeBlast : SpellBehaviour
 	    _collider = _aoeEffect.GetComponentElseAddIt<SphereCollider>();
 	    _damage = _aoeEffect.GetComponentElseAddIt<Damage>();
 	    _damage.SetDamage(damage);
-	    this.time = add[0];
+	    time = add[0];
 	    duration = add[1];
 	    Destroy(this, duration);
 	    Destroy(_aoeEffect, duration);

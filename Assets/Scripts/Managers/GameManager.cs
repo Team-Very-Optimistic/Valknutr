@@ -44,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = default)
     {
         if (_SpellItem == null)
         {
@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>
             _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
         }
         //Add quality to item
-        QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
+        QualityManager.RandomizeAndInitProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
         
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;

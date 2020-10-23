@@ -128,7 +128,7 @@ public class QualityManager : ScriptableObject
     [Range(0f, 0.99f)]
     public float randomSpread = 0.2f;
     
-    public void RandomizeProperties(SpellItem element, Quality quality)
+    public void RandomizeAndInitProperties(SpellItem element, Quality quality)
     {
         if (element.isBaseSpell)
         {
@@ -138,6 +138,7 @@ public class QualityManager : ScriptableObject
             spellBase._scale *= Spread() * Value(quality);
             spellBase._speed *= Spread() * Value(quality);
             spellBase._quality = quality;
+            spellBase.InitCopy();
         }
         else
         {

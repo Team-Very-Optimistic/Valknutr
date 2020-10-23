@@ -11,13 +11,17 @@ public class AoeBase : SpellBase
     protected override void SetValues()
     {
         _objectForSpell = _player.gameObject;
+        
     }
-    
-    
+    protected override void AfterReset()
+    {
+        _aoeInterval *= _speed / properties._speed;
+        _duration *= _speed / properties._speed;
+        
+    }
+
     public override void SpellBehaviour(Spell spell)
     {
-        _aoeInterval = 0.5f * _speed / properties._speed;
-        _duration = 4f * _speed / properties._speed;
         var aoe = _objectForSpell.AddComponent<AoeBlast>();
         aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;

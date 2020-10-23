@@ -27,6 +27,10 @@ class ProjectileBase : SpellBase
         _direction.y = 0;
         for (int i = 0; i < _iterations; i++)
         {
+            if (!_objectForSpell)
+            {
+                _objectForSpell = properties._objectForSpell;
+            }
             var p = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.Euler(_direction));
             double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
             Vector3 newDirection = new Vector3((float) (_direction.x * Math.Cos(rotateBy) - _direction.z * Math.Sin(rotateBy)), 
