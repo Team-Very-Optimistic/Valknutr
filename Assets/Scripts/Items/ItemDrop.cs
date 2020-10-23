@@ -8,7 +8,7 @@ public class ItemDrop : MonoBehaviour
     public SpellItem _spellItem;
     public Action<ItemDrop> OnPickup;
     protected Collider playerCollider;
-    
+    public bool pickedup;
     public void OnTriggerEnter(Collider other)
     {
         if (GameManager.Instance._player == other.gameObject) //harder comparison precludes clones and shields
@@ -44,6 +44,12 @@ public class ItemDrop : MonoBehaviour
 
     public virtual void PickUp(GameObject other)
     {
+        if (pickedup)
+        {
+            Debug.Log("picked up already");
+            return;
+        }
+        pickedup = true;
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);
         AudioManager.PlaySoundAtPosition("itemPickup", transform.position);

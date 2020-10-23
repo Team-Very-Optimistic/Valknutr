@@ -10,7 +10,6 @@ public class TreasureChest : HealthScript
     
     public override void OnDeath()
     {
-        base.OnDeath();
         DamageTextManager.SpawnTempWord("Choose one . . .", transform.position + Vector3.up, Color.yellow);
         var direction =  transform.position - GameManager.Instance._player.transform.position;
         direction.y = 0;
@@ -39,5 +38,6 @@ public class TreasureChest : HealthScript
                 itemDrops[i].OnPickup  += itemDrops[j].PickupHandler;
             }
         }
+        base.OnDeath();
     }
 }

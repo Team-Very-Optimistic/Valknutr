@@ -50,8 +50,9 @@ public class UiManager : Singleton<UiManager>
         {
             if (currentItemDrop != null)
             {
-                currentItemDrop.GetComponent<ItemDrop>().PickUp(GameManager.Instance._player);
+                var temp = currentItemDrop;
                 currentItemDrop = null;
+                temp.GetComponent<ItemDrop>().PickUp(GameManager.Instance._player);
             }
         }
     }

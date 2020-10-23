@@ -42,6 +42,6 @@ class ProjectileBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {_damage} to enemies that it collides into. {DefaultBaseBody()}");
+        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {_damage:F} to enemies that it collides into. {DefaultBaseBody()}");
     }
 }

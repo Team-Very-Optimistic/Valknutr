@@ -13,18 +13,19 @@ public class AoeBase : SpellBase
         _objectForSpell = _player.gameObject;
     }
     
+    
     public override void SpellBehaviour(Spell spell)
     {
         _aoeInterval = 0.5f * _speed / properties._speed;
         _duration = 4f * _speed / properties._speed;
         var aoe = _objectForSpell.AddComponent<AoeBlast>();
-        aoe.Set(_damage, _aoeInterval, _duration);
+        aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
     }
     
     public override Tooltip GetTooltip()
     {
         //SetValues();
-        return new Tooltip($"Sphere blast {DefaultBaseTitle()}", $"Channels for {_duration}, dealing {_damage} damage every {_aoeInterval}s around you. {DefaultBaseBody()}");
+        return new Tooltip($"Sphere blast {DefaultBaseTitle()}", $"Channels for {_duration:F}, dealing {_damage:F} damage every {_aoeInterval:F}s around you. {DefaultBaseBody()}");
     }
 }

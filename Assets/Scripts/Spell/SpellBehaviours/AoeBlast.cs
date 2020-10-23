@@ -3,7 +3,7 @@ using UnityEngine;
  
 ///summary
 ///summary
-public class AoeBlast : TriggerEventHandler
+public class AoeBlast : SpellBehaviour
 {
 	#region Public Fields
 	[HideInInspector]
@@ -12,6 +12,7 @@ public class AoeBlast : TriggerEventHandler
     private Collider _collider;
     private Damage _damage;
     [SerializeField] private float time;
+    [SerializeField] private float duration;
 
     #endregion
  
@@ -33,16 +34,16 @@ public class AoeBlast : TriggerEventHandler
 	    _collider.enabled = true;
     }
 
-    public void Set(float damage, float time, float duration)
+    public override void SetProperties(float damage,  float scale, float speed, float cooldown, params float[] add)
     {
 	    _aoeEffect = SpellManager.Instance.aoeEffect;
 	    _aoeEffect = Instantiate(_aoeEffect, gameObject.transform);
 	    _collider = _aoeEffect.GetComponentElseAddIt<SphereCollider>();
 	    _damage = _aoeEffect.GetComponentElseAddIt<Damage>();
 	    _damage.SetDamage(damage);
-	    this.time = time;
+	    this.time = add[0];
+	    duration = add[1];
 	    Destroy(this, duration);
 	    Destroy(_aoeEffect, duration);
     }
-
 }

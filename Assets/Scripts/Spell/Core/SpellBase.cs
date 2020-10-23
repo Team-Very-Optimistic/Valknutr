@@ -88,7 +88,7 @@ public abstract class SpellBase : SpellElement
         
         _cooldown = properties._cooldown;
 
-        _behaviour = properties.behaviour;
+        //_behaviour = properties.behaviour;
         
         animationType = properties.animationType; //will be mostly ignored by modifiers
     }
@@ -140,7 +140,7 @@ public abstract class SpellBase : SpellElement
    
     protected virtual string DefaultBaseBody()
     {
-        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+        return $"\nCooldown: {_cooldown:F}\nDamage: {_damage:F} \nSpeed: {_speed:F}";
     }
     
     public override Tooltip GetTooltip()
