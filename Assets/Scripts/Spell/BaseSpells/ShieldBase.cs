@@ -32,6 +32,6 @@ class ShieldBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Shield {DefaultBaseTitle()}", $"Spawns a shield that absorbs {_player.GetComponent<PlayerHealth>().maxHealth/10 + 10 * _scale} damage for the player. \n{DefaultBaseBody()}");
+        return new Tooltip($"Shield {DefaultBaseTitle()}", $"Spawns a shield that absorbs {(_player.GetComponent<PlayerHealth>().maxHealth/10 + 10 * _scale):F} damage for the player. \n{DefaultBaseBody()}");
     }
 }
