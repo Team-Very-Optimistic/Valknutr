@@ -2,20 +2,27 @@
 using UnityEngine;
 
 [RequireComponent(typeof(TriggerEventHandler), typeof(Damage))]
-public class Phasing : MonoBehaviour
+public class Phasing : SpellBehaviour
 {
     public float _damage;
     public int _phaseNum = 2;
     public List<TriggerEventHandler> triggers;
-    
+
+    public override void TriggerEvent(Collider other)
+    {
+    }
+
     public void Start()
     {
         var trig = GetComponents<TriggerEventHandler>();
         triggers = new List<TriggerEventHandler>();
         foreach (var t in trig)
         {
-            t.OverrideEvent(Trigger);
-            triggers.Add(t);
+            if (t != this)
+            {
+                t.OverrideEvent(Trigger);
+                triggers.Add(t);
+            }
         }
     }
 
@@ -48,4 +55,10 @@ public class Phasing : MonoBehaviour
             }
         }
     }
+
+    public override void SetProperties(float damage, float scale, float speed, float cooldown, params float[] additionalProperties)
+    {
+        this._damage = damage;
+    }
+
 }
