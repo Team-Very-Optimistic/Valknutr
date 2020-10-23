@@ -31,10 +31,16 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
     public GameObject stompFeet;
 
     // Attack stopping distances
-    private float closeAttacksStopDist = 3.0f;
-    private float throwAttackStopDist = 10.0f;
+    public float closeAttacksStopDist = 4.0f;
+    public float throwAttackStopDist = 20.0f;
 
     public GameObject closeAttackCollider;
+
+    //Rock throw
+    public GameObject mossRockPrefab;
+    public GameObject leftHand;
+    public GameObject rightHand;
+    public GameObject mossRockRef;
 
     private bool preAnimTriggerSet = false;
 
@@ -97,6 +103,9 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
                                     break;
                                 }
                         }
+
+                        //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
+                        transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
                         navMeshAgent.enabled = false;
 
@@ -275,6 +284,25 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
 
     public void AddRockToBoss()
     {
-        Debug.Log("Add rock to boss!");
+        //Get mean position between two hands
+        Vector3 rockPosition = (leftHand.transform.position + rightHand.transform.position) / 2.0f;
+        GameObject mossRock = GameObject.Instantiate(mossRockPrefab, rockPosition, Quaternion.identity);
+        mossRock.GetComponent<MossRock>().SetHandReferences(leftHand, rightHand);
+        mossRockRef = mossRock;
+    }
+
+    public void DetatchRockFromBoss()
+    {
+        mossRockRef.GetComponent<MossRock>().SetTargetPosition(player.transform.position);
+        mossRockRef.GetComponent<MossRock>().DetatchFromBoss();
+    }
+
+    public void SetDeathState()
+    {
+        GetComponent<NavMeshAgent>().speed = 0.0f;
+
+        //Disable colliders
+        Destroy(closeAttackCollider);
+        GetComponent<BoxCollider>().enabled = false;
     }
 }

@@ -1558,6 +1558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17d3f0ea0a562b942b710aecc69e38a7, type: 3}
+--- !u!1 &631798484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100014, guid: 9fdc926626472a649945aa7eeaa44418, type: 3}
+  m_PrefabInstance: {fileID: 676675476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &661452930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1594,11 @@ Transform:
   m_Father: {fileID: 1119044939}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &674338592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100108, guid: 9fdc926626472a649945aa7eeaa44418, type: 3}
+  m_PrefabInstance: {fileID: 676675476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &676675476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1974,7 +1984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400170, guid: 9fdc926626472a649945aa7eeaa44418, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0612974
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 400170, guid: 9fdc926626472a649945aa7eeaa44418, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4224,7 +4234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1532363479653837469, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2692504171076664098, guid: ae77aa549f7fa9440bf8bd29f166a60a, type: 3}
       propertyPath: m_Intensity
@@ -7842,7 +7852,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stompPrefab: {fileID: 1561954506197372127, guid: cc7f134d5cf079444854bcfddd15112c, type: 3}
   stompFeet: {fileID: 523866614}
+  closeAttacksStopDist: 3
+  throwAttackStopDist: 10
   closeAttackCollider: {fileID: 1476108488}
+  mossRockPrefab: {fileID: 6547608203363382485, guid: b0f9d2d9bcecba841bd606f37b31dca6, type: 3}
+  leftHand: {fileID: 631798484}
+  rightHand: {fileID: 2070546933}
+  mossRockRef: {fileID: 0}
 --- !u!65 &1823375744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7872,8 +7888,8 @@ Rigidbody:
   m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -7909,6 +7925,30 @@ MonoBehaviour:
   hurtSound: 
   hurtSoundOnHit: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1823375750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823375741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821cf8b73a94d7d42af5f18aae68ee4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ragdollParts: []
+  RagdollKnockbackForce: 0
+  deathParticleSystemPrefab: {fileID: 2148595126400666907, guid: 71d7eaf7a67c098448a40d440666cc39, type: 3}
+  ragdollMaterials: []
+  delayBeforeFade: 3
+  timeToDestroy: 6
+  triggeredParticle: 0
+  triggeredDeathSequence: 0
+  animator: {fileID: 0}
+  particleEmitLocation: {fileID: 674338592}
+  smrMaterials: []
+  particleEmitTime: 3
 --- !u!1001 &1914107543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8402,6 +8442,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2070546933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100068, guid: 9fdc926626472a649945aa7eeaa44418, type: 3}
+  m_PrefabInstance: {fileID: 676675476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2085724681
 GameObject:
   m_ObjectHideFlags: 0
