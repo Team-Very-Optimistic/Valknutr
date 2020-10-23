@@ -149,8 +149,8 @@ public class QualityManager : ScriptableObject
             mod.UseValue();
         }
     }
-    
-    private float Spread()
+
+    public float Spread()
     {
         return Random.Range(1 - randomSpread, 1 + randomSpread);
     }
