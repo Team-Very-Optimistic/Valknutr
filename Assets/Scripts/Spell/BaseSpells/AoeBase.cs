@@ -11,13 +11,13 @@ public class AoeBase : SpellBase
     protected override void SetValues()
     {
         _objectForSpell = _player.gameObject;
-        
+        _duration = 3.75f;
+
     }
     protected override void AfterReset()
     {
-        _aoeInterval *= _speed / properties._speed;
-        _duration *= _speed / properties._speed;
-        
+        _aoeInterval /= _speed / properties._speed;
+        _duration /= _speed / properties._speed;
     }
 
     public override void SpellBehaviour(Spell spell)

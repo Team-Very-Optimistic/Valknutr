@@ -18,9 +18,8 @@ class FireSpellModifier : SpellModifier
         Action spell = () =>
         {
             oldBehavior.Invoke();
-            Fire fire = action._objectForSpell.AddComponent<Fire>();
-            fire.damage = dmg;
-            fire.SetInitializer();
+            Fire fire = Fire.SpawnFire(action._objectForSpell);
+            fire.Set(action);
         };
         action._behaviour = spell;
         return action;

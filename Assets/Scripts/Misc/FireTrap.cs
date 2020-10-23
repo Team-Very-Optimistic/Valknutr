@@ -6,6 +6,6 @@ public class FireTrap : Trap
     {
         base.TriggerEvent(other);
         var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
-        other.gameObject.AddComponent<Fire>().SetInitializer()._origPosition = closestPointOnBounds;
+        Fire.SpawnFire(other.gameObject, closestPointOnBounds);
     }
 }
