@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -155,6 +156,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					m_Animator.Play(Ready);
 				}
 			}
+
+			SoundEffects(m_ForwardAmount);
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			//control and velocity handling is different when grounded and airborne:
@@ -166,6 +169,27 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
+		}
+		[Header("Footsteps Sound")]
+		public float footstepsVolume = 0.05f;
+		public float footstepsInterval = 0.2f;
+		private bool footstepsReady = true;
+		
+		private void SoundEffects(float mForwardAmount)
+		{
+			
+			if (mForwardAmount < 0.1 || !footstepsReady) return;
+			footstepsReady = false;
+			StartCoroutine(FootstepReady(footstepsInterval));
+			var vol = footstepsVolume * mForwardAmount;
+			AudioManager.PlaySoundAtPosition("footsteps", transform.position, vol,
+				Random.Range(0.5f, 1.5f));
+		}
+
+		IEnumerator FootstepReady(float time)
+		{
+			yield return new WaitForSeconds(time);
+			footstepsReady = true;
 		}
 
 
