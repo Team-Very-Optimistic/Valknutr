@@ -32,7 +32,7 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
 
     // Attack stopping distances
     public float closeAttacksStopDist = 4.0f;
-    public float throwAttackStopDist = 20.0f;
+    public float throwAttackStopDist = 30.0f;
 
     public GameObject closeAttackCollider;
 

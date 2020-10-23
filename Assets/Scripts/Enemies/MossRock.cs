@@ -15,6 +15,9 @@ public class MossRock : MonoBehaviour
     private bool isInHands = false;
     private bool isDetatched = false;
 
+    public GameObject targetParticlePrefab;
+    public GameObject targetParticleRef;
+
     // Slerp
     private Vector3 oppLandingPosition;
     private Vector3 throwPosition;
@@ -57,6 +60,7 @@ public class MossRock : MonoBehaviour
 
             if(fracComplete >= 0.95f)
             {
+                Destroy(targetParticleRef);
                 Destroy(gameObject);
             }
         }
@@ -83,6 +87,9 @@ public class MossRock : MonoBehaviour
         setRelCenter = landingPosition - throwPosition;
 
         startTime = Time.time;
+
+        GameObject go = GameObject.Instantiate(targetParticlePrefab, landingPosition - new Vector3(0.0f, 0.5f, 0.0f), targetParticlePrefab.transform.rotation) ;
+        targetParticleRef = go;
     }
 
     public void DetatchFromBoss()
@@ -106,6 +113,7 @@ public class MossRock : MonoBehaviour
         float screenShakeAmount = 1.0f - ((GameManager.Instance._player.transform.position - transform.position).magnitude / screenShakeMaxDistance);
         Debug.Log(screenShakeAmount);
         ScreenShakeManager.Instance.ScreenShake(0.25f, screenShakeAmount);
+        Destroy(targetParticleRef);
         Destroy(gameObject);
     }
 }
