@@ -31,6 +31,7 @@ public class HealthPickup : ItemDrop
     {
         playerCollider = other;
         UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."));
+        UiManager.currentItemDrop = this;
     }
 
     #endregion
