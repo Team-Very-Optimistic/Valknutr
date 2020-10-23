@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TriggerEventHandler), typeof(Damage))]
 public class Phasing : SpellBehaviour
 {
     public float _damage;
@@ -41,7 +40,7 @@ public class Phasing : SpellBehaviour
     //public bool CanTrigger { get; set; }
     public void Trigger(Collider other)
     {
-        var damageScript = GetComponent<Damage>();
+        var damageScript = gameObject.GetComponentElseAddIt<Damage>();
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);
         _phaseNum--;

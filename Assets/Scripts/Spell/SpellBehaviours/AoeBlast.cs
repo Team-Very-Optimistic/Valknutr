@@ -15,9 +15,17 @@ public class AoeBlast : SpellBehaviour
     [SerializeField] private float duration;
 
     #endregion
- 
 
-
+    public static AoeBlast SpawnBlast(GameObject parent)
+    {
+	    var instanceAoeEffect = SpellManager.Instance.aoeEffect;
+	    instanceAoeEffect = Instantiate(instanceAoeEffect, parent.transform);
+	    var blast = instanceAoeEffect.GetComponentElseAddIt<AoeBlast>();
+	    blast._aoeEffect = instanceAoeEffect;
+	    blast._collider = instanceAoeEffect.GetComponentElseAddIt<SphereCollider>();
+	    blast._damage = instanceAoeEffect.GetComponentElseAddIt<Damage>();
+	    return blast;
+    }
     public override void TriggerEvent(Collider other)
     {
 	    if (other.gameObject != GameManager.Instance._player)
@@ -36,10 +44,6 @@ public class AoeBlast : SpellBehaviour
 
     public override void SetProperties(float damage,  float scale, float speed, float cooldown, params float[] add)
     {
-	    _aoeEffect = SpellManager.Instance.aoeEffect;
-	    _aoeEffect = Instantiate(_aoeEffect, gameObject.transform);
-	    _collider = _aoeEffect.GetComponentElseAddIt<SphereCollider>();
-	    _damage = _aoeEffect.GetComponentElseAddIt<Damage>();
 	    _damage.SetDamage(damage);
 	    time = add[0];
 	    duration = add[1];

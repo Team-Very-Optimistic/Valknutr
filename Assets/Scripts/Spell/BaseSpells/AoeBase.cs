@@ -22,7 +22,7 @@ public class AoeBase : SpellBase
 
     public override void SpellBehaviour(Spell spell)
     {
-        var aoe = _objectForSpell.AddComponent<AoeBlast>();
+        var aoe = AoeBlast.SpawnBlast(_objectForSpell);
         aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
     }
