@@ -3,7 +3,7 @@
 class FireSpellModifier : SpellModifier
 {
     public float fireMultiplier = 1.2f;
-    public float dmg = 1f;
+    public float dmgRatio = 0.2f;
     public override void ModifySpell(SpellBase spell)
     {
         //base.ModifySpell(spell);
@@ -19,7 +19,7 @@ class FireSpellModifier : SpellModifier
         {
             oldBehavior.Invoke();
             Fire fire = Fire.SpawnFire(action._objectForSpell);
-            fire.Set(action);
+            fire.Set(action, dmgRatio);
         };
         action._behaviour = spell;
         return action;
@@ -28,13 +28,13 @@ class FireSpellModifier : SpellModifier
     public override void UseValue()
     {
         fireMultiplier *= value;
-        dmg *= value;
+        dmgRatio *= value;
     }
 
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Fire" + DefaultModTitle(), $"Affected entities will be set on fire which afflicts {dmg:F} " +
-                                              $"damage to other entities in contact. Speed is increased by {fireMultiplier:F} " +
+        return new Tooltip("Fire" + DefaultModTitle(), $"Affected entities will be set on fire which afflicts a percent ({dmgRatio:P}%) " +
+                                              $"of the spell's damage to other entities in contact. Speed is increased by {fireMultiplier:F} " +
                                               $"times." + DefaultModBody());
     }
 }

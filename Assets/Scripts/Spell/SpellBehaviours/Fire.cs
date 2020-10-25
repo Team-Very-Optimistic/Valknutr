@@ -69,6 +69,6 @@ public class Fire : SpellBehaviour
 
     public override void SetProperties(float damage, float scale, float speed, float cooldown, params float[] additionalProperties)
     {
-        this.damage = damage/10f;
+        this.damage = damage * additionalProperties[0];
     }
 }
