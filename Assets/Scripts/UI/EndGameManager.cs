@@ -58,13 +58,13 @@ public class EndGameManager : Singleton<EndGameManager>
     {
         yield return new WaitForSeconds(time);
         HideGameUI();
-        gameOverObjects.SetActive(!gameOverObjects.activeSelf);
+        gameOverObjects.SetActive(true);
     }
 
     public void DisplayGameWin()
     {
         HideGameUI();
-        gameWinObjects.SetActive(!gameWinObjects.activeSelf);
+        gameWinObjects.SetActive(true);
     }
 
     IEnumerator StartFadeInBackground(float time)
