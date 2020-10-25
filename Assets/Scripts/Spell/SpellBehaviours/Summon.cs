@@ -15,6 +15,7 @@ public class Summon : SpellBehaviour
     private Damage _damageScript;
     private float offsetTime = .5f;
     private Vector3 offset;
+    private bool isPhase;
     
     public override void SetProperties(float damage, float scale, float speed, float cooldown, params float[] additionalProperties)
     {
@@ -37,6 +38,9 @@ public class Summon : SpellBehaviour
         navMeshAgent.acceleration = _speed;
         mainCam = Camera.main;
         StartCoroutine(ChangeOffset(offsetTime));
+        isPhase = (bool) GetComponent<Phasing>();
+        if(isPhase)
+            navMeshAgent.enabled = false;
     }
 
     IEnumerator ChangeOffset(float offsetTime)
@@ -58,24 +62,28 @@ public class Summon : SpellBehaviour
             AudioManager.PlaySoundAtPosition("summonDmg", transform.position);
         }
     }
-    
+    private Vector3 currentVelocity = Vector3.zero;
     public void Update()
     {
         //Animation
         var target = Util.GetMousePositionOnWorldPlane(mainCam);
+        target = target + offset;
         //Navigation
-        navMeshAgent.SetDestination(target + offset);
+        navMeshAgent.SetDestination(target);
 
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
+        if (isPhase)
         {
-            if (navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+            target += Vector3.up;
+            
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref currentVelocity, 0.3f, _speed);;
         }
-        else
-        {
-            if (!navMeshAgent.isStopped) navMeshAgent.isStopped = true;
+        
+       
 
-            transform.LookAt(target);
-        }
+        var rotation = Quaternion.LookRotation (target - transform.position);
+        // rotation.x = 0; This is for limiting the rotation to the y axis. I needed this for my project so just
+        // rotation.z = 0;                 delete or add the lines you need to have it behave the way you want.
+        transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * _speed/5f);
     }
 
 
