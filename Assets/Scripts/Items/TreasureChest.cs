@@ -17,6 +17,7 @@ public class TreasureChest : HealthScript
         var offset = offsetDistance * new Vector3(-direction.z, 0, direction.x);
         ItemDrop[] itemDrops = new ItemDrop[numTreasure];
         int hp = Random.Range(0, numTreasure);
+        SpellElement prevDrop = null;
         for (int i = 0; i < numTreasure; i++)
         {
             ItemDrop itemDrop; 
@@ -26,8 +27,8 @@ public class TreasureChest : HealthScript
             }
             else
             {
-                itemDrop = GameManager.Instance.SpawnItem(transform.position + (i - (numTreasure - 1) / 2) * offset +
-                                                          direction);
+                itemDrop = GameManager.Instance.SpawnItem(transform.position + (i - (numTreasure - 1) / 2) * offset + direction, notThis: prevDrop);
+                prevDrop = itemDrop._spellItem._spellElement;
             }
             itemDrops[i]  = itemDrop;
         }

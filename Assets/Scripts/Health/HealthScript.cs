@@ -11,9 +11,7 @@ public class HealthScript : MonoBehaviour
     public string hurtSound;
     public bool hurtSoundOnHit = true;
     private bool dead = false;
-  
-
-
+    
     //Damage protection multipliers
     private float damageMultiplier = 1.0f;
 

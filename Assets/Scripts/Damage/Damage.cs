@@ -6,11 +6,11 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField]
-    private float damage = 1;
+    protected float damage = 1;
     [SerializeField]
     private bool isFriendly;
 
-    public bool DealDamage(Collider other)
+    public virtual bool DealDamage(Collider other)
     {
         if (other.gameObject.GetComponent<HealthScript>() != null)
         {

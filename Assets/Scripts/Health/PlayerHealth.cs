@@ -86,10 +86,12 @@ public class PlayerHealth : HealthScript
         }
     }
 
-    public void IncreasePlayerHealth(float healthIncrease)
+    public void IncreaseCurrHealth(float healthIncrease)
     {
         currentHealth += healthIncrease;
+    }
+    public void IncreaseMaxHealth(float healthIncrease)
+    {
         maxHealth += healthIncrease;
-            
     }
 }

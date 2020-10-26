@@ -44,15 +44,21 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = default)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = default, SpellElement notThis = null)
     {
         if (_SpellItem == null)
         {
             
             var itemListSpellItems = _itemList._SpellItems;
-             _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
-            Type type = _SpellItem._spellElement.GetType();
-            Debug.Log(type.Name);
+            for (int i = 0; i < 10; i++)
+            {
+                _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+                if (_SpellItem._spellElement != notThis)
+                {
+                    break;
+                }
+            }
+
             _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
         }
         //Add quality to item
@@ -97,9 +103,13 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public void IncreasePlayerHealth()
+    public void HealthPickup()
     {
-        _playerHealth.IncreasePlayerHealth(healthPickupValue);
-        
+        _playerHealth.IncreaseCurrHealth(healthPickupValue);
+        _playerHealth.IncreaseMaxHealth(healthPickupValue);
+    }
+    public void IncreasePlayerCurrHealth(float value)
+    {
+        _playerHealth.IncreaseCurrHealth(value);
     }
 }

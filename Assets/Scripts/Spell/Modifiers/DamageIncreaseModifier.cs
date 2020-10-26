@@ -1,7 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu]
 public class DamageIncreaseModifier : SpellModifier
 {
     public int damageMultiplier = 2;
