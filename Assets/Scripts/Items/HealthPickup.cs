@@ -16,7 +16,7 @@ public class HealthPickup : ItemDrop
     {
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);
-        GameManager.Instance.IncreasePlayerHealth();
+        GameManager.Instance.HealthPickup();
         DamageTextManager.SpawnDamage(GameManager.Instance.healthPickupValue, transform.position, Color.green);
         AudioManager.PlaySoundAtPosition("healthPickup", transform.position);
         Destroy(gameObject);
@@ -31,6 +31,7 @@ public class HealthPickup : ItemDrop
     {
         playerCollider = other;
         UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."));
+        UiManager.currentItemDrop = this;
     }
 
     #endregion

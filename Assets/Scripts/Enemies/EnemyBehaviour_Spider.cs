@@ -102,14 +102,14 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
             //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
             if (!isInKnockback)
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                if (rigidbody.velocity.magnitude > 0.0f)
                 {
                     isInKnockback = true;
                 }
             }
             else
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                if (rigidbody.velocity.magnitude <= knockbackVelStoppingThreshold)
                 {
                     EnableKnockback(false);
                     isInKnockback = false;
@@ -126,13 +126,17 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         //Change enum state
         spiderState = SpiderBehaviourStates.Windup;
+
+        //Trigger anim
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToWindup");
     }
 
     private void ShowRedIndicator()
     {
         float timeToDestroy = windUpTime * 0.5f;
 
-        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset, Quaternion.identity);
+        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset * 2.0f, Quaternion.identity);
         Destroy(redIndicator, timeToDestroy);
     }
 
@@ -144,6 +148,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         originalPosition = transform.position;
 
         GetComponent<Collider>().enabled = false;
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToJump");
     }
 
     private void Explode()
@@ -178,5 +185,12 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         ScreenShakeManager.Instance.ScreenShake(0.25f, 0.4f);
 
         Destroy(gameObject);
+    }
+
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToWindup");
+        animator.ResetTrigger("ToJump");
     }
 }

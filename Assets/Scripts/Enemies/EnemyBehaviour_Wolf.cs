@@ -31,6 +31,10 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     public GameObject redIndicatorPrefab;
     private Vector3 redIndicatorPosOffset;
 
+
+    //Wait frames between states - NavMeshAgent SetDestination bug: remaining distance always starts off at zero
+    int wait = 0, waitTicks = 1;
+
     public override void Start()
     {
         base.Start();
@@ -45,7 +49,10 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Set collider
         wolfCollider = GetComponent<Collider>();
 
-        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y, 0.0f);
+        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y * 2.0f, 0.0f);
+
+        //Disable knockback (temporarily)
+        canKnockback = false;
     }
 
     public override void Update()
@@ -65,6 +72,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     //If close enough to player, switch to wind up
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
+
                         SetupDash();
                     }
 
@@ -108,14 +116,14 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
             //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
             if (!isInKnockback)
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                if (rigidbody.velocity.magnitude > 0.0f)
                 {
                     isInKnockback = true;
                 }
             }
             else
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                if (rigidbody.velocity.magnitude <= knockbackVelStoppingThreshold)
                 {
                     EnableKnockback(false);
                     isInKnockback = false;
@@ -142,6 +150,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         //Change enum state
         wolfState = WolfBehaviourStates.Windup;
+
+        //Trigger anim state
+        ResetWaitTicks();
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToWindup");
     }
 
     private void ShowRedIndicator()
@@ -171,7 +184,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         distanceToDashLocation = (transform.position - dashLocation).magnitude;
 
         //Disable knockback
-        canKnockback = false;
+        //canKnockback = false;
+
+        //Trigger anim state
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToCharge");
     }
 
     private void StartRest()
@@ -180,9 +197,12 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         wolfState = WolfBehaviourStates.Rest;
 
         //Enable knockback
-        canKnockback = false;
+        //canKnockback = true;
 
         Invoke(nameof(StartRunning), restTime);
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToRest");
     }
 
     private void StartRunning()
@@ -192,6 +212,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         navMeshAgent.stoppingDistance = originalStoppingDistance;
         navMeshAgent.speed = originalSpeed;
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToRun");
     }
 
     public void OnTriggerEnter(Collider other)
@@ -205,5 +228,18 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                 this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
             }
         }
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToRun");
+        animator.ResetTrigger("ToWindup");
+        animator.ResetTrigger("ToCharge");
+        animator.ResetTrigger("ToRest");
+    }
+
+    private void ResetWaitTicks()
+    {
+        wait = waitTicks;
     }
 }

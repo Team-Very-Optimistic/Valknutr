@@ -1,10 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu]
 public class DamageIncreaseModifier : SpellModifier
 {
-    public int damageMultiplier = 2;
+    public float damageMultiplier = 2;
 
     public override void ModifySpell(SpellBase spell)
     {
@@ -14,11 +12,11 @@ public class DamageIncreaseModifier : SpellModifier
 
     public override void UseValue()
     {
-        damageMultiplier = Mathf.RoundToInt(damageMultiplier * value);
+        damageMultiplier = damageMultiplier * value;
     }
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Damage Amplification" + DefaultModTitle(), $"Increases damage of spell by {damageMultiplier}. {DefaultModBody()}");
+        return new Tooltip("Damage Amplification" + DefaultModTitle(), $"Increases damage of spell by {damageMultiplier:F} times. {DefaultModBody()}");
     }
 }

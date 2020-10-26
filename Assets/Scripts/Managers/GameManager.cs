@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject itemDropPrefab;
     public GameObject healthPickupObj;
     public GameObject treasurePrefab;
-    private PlayerHealth _playerHealth;
+    public PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
 
@@ -44,19 +44,25 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = default, SpellElement notThis = null)
     {
         if (_SpellItem == null)
         {
             
             var itemListSpellItems = _itemList._SpellItems;
-             _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
-            Type type = _SpellItem._spellElement.GetType();
-            Debug.Log(type.Name);
+            for (int i = 0; i < 10; i++)
+            {
+                _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+                if (_SpellItem._spellElement != notThis)
+                {
+                    break;
+                }
+            }
+
             _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
         }
         //Add quality to item
-        QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
+        QualityManager.RandomizeAndInitProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
         
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;
@@ -97,9 +103,18 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public void IncreasePlayerHealth()
+    public void HealthPickup()
     {
-        _playerHealth.IncreasePlayerHealth(healthPickupValue);
-        
+        _playerHealth.IncreaseCurrHealth(healthPickupValue);
+        _playerHealth.IncreaseMaxHealth(healthPickupValue);
+    }
+    public void AffectPlayerCurrHealth(float value)
+    {
+        if(value > 0)
+            _playerHealth.IncreaseCurrHealth(value);
+        else
+        {
+            _playerHealth.ApplyDamage(-value);
+        }
     }
 }

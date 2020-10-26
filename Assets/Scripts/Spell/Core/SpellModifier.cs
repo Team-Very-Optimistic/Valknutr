@@ -8,8 +8,7 @@ public abstract class SpellModifier : SpellElement
 {
     public float _cooldownMultiplier = 1;
     public float value;
-    [SerializeField]
-    private bool init = false;
+
 
     public QualityManager.Quality quality;
 
@@ -42,11 +41,6 @@ public abstract class SpellModifier : SpellElement
 
     public SpellBase Modify(SpellBase spell)
     {
-        if (!init)
-        {
-            UseValue();
-            init = true;
-        }
         ModifySpell(spell);
         return ModifyBehaviour(spell);
     }

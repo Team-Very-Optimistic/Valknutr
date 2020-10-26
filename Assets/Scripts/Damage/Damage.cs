@@ -6,19 +6,38 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField]
-    private float damage = 1;
-    [SerializeField]
-    private bool isFriendly;
+    protected float damage = 1;
 
-    public bool DealDamage(Collider other)
+    public List<DamageEffect> damageEffects;
+
+    public virtual bool DealDamage(Collider other)
     {
-        if (other.gameObject.GetComponent<HealthScript>() != null)
+        if (other.GetComponent<HealthScript>() != null)
         {
-            other.gameObject.GetComponent<HealthScript>().ApplyDamage(damage);
+            other.GetComponent<HealthScript>().ApplyDamage(damage);
+            foreach (var damageEffect in damageEffects)
+            {
+                damageEffect.CastDamageEffect(other, damage);
+            }
             return true;
         }
 
         return false;
+    }
+
+    public void AddDamageEffect(DamageEffect damageEffect)
+    {
+        if(!damageEffects.Contains(damageEffect))
+            damageEffects.Add(damageEffect);
+    }
+    public void RemoveDamageEffect(DamageEffect damageEffect)
+    {
+        damageEffects.Remove(damageEffect);
+    }
+
+    public void Start()
+    {
+        damageEffects = new List<DamageEffect>();
     }
 
     //Getters/Setters
@@ -32,8 +51,4 @@ public class Damage : MonoBehaviour
         this.damage = damage;
     }
 
-    public void SetIsFriendly(bool isFriendly)
-    {
-        this.isFriendly = isFriendly;
-    }
 }

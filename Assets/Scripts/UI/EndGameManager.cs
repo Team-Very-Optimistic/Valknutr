@@ -50,24 +50,27 @@ public class EndGameManager : Singleton<EndGameManager>
 
     public void StartGameOverSequence()
     {
-        Invoke(nameof(DisplayGameOver), gameOverScreenDelay);
-        Invoke(nameof(StartFadeInBackground), fadeBackgroundDelay);
+        StartCoroutine(DisplayGameOver(gameOverScreenDelay));
+        StartCoroutine(StartFadeInBackground(fadeBackgroundDelay));
     }
 
-    private void DisplayGameOver()
+    IEnumerator DisplayGameOver(float time)
     {
+        yield return new WaitForSeconds(time);
         HideGameUI();
-        gameOverObjects.SetActive(!gameOverObjects.activeSelf);
+        gameOverObjects.SetActive(true);
     }
 
     public void DisplayGameWin()
     {
         HideGameUI();
-        gameWinObjects.SetActive(!gameWinObjects.activeSelf);
+        gameWinObjects.SetActive(true);
     }
 
-    private void StartFadeInBackground()
+    IEnumerator StartFadeInBackground(float time)
     {
+        yield return new WaitForSeconds(time);
+
         fadeComplete = false;
         fadeBackground.SetActive(true);
     }

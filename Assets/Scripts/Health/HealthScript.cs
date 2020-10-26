@@ -11,11 +11,9 @@ public class HealthScript : MonoBehaviour
     public string hurtSound;
     public bool hurtSoundOnHit = true;
     private bool dead = false;
-  
-
-
+    
     //Damage protection multipliers
-    private float damageMultiplier = 1.0f;
+    protected float damageMultiplier = 1.0f;
 
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     protected float height;
@@ -92,13 +90,10 @@ public class HealthScript : MonoBehaviour
         currentHealth += health;
     }
 
-    public void SetDamageMultiplier(float damageMultiplier)
+    public void AdditivelyAddDmgMultiplier(float damageMultiplier)
     {
-        //If not original value, dont overlap multipliers
-        if(this.damageMultiplier == 1.0f)
-        {
-            this.damageMultiplier = damageMultiplier;
-        }
+        // overlap multipliers
+        this.damageMultiplier *= damageMultiplier;
     }
 
     public void ResetDamageMultiplier()
