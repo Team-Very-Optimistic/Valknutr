@@ -18,6 +18,7 @@ public class PlayerHealth : HealthScript
     
     public override bool ApplyDamage(float damage)
     {
+        damage *= damageMultiplier;
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         DamageTextManager.SpawnDamage(damage, worldPositionText, damageColor);
         if (damage <= 0)
@@ -48,6 +49,8 @@ public class PlayerHealth : HealthScript
 
     public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
     {
+        damagePerTick *= damageMultiplier;
+
         Debug.Log(this.gameObject);
         Debug.Log("called coroutine");
         //Ticks starts after timeInterval and ends on last frame(?)

@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject itemDropPrefab;
     public GameObject healthPickupObj;
     public GameObject treasurePrefab;
-    private PlayerHealth _playerHealth;
+    public PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
 
@@ -108,8 +108,13 @@ public class GameManager : Singleton<GameManager>
         _playerHealth.IncreaseCurrHealth(healthPickupValue);
         _playerHealth.IncreaseMaxHealth(healthPickupValue);
     }
-    public void IncreasePlayerCurrHealth(float value)
+    public void AffectPlayerCurrHealth(float value)
     {
-        _playerHealth.IncreaseCurrHealth(value);
+        if(value > 0)
+            _playerHealth.IncreaseCurrHealth(value);
+        else
+        {
+            _playerHealth.ApplyDamage(-value);
+        }
     }
 }

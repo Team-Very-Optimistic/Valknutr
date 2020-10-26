@@ -43,7 +43,7 @@ public class EnemyShielder_Link : MonoBehaviour
         line.endWidth = 0.02f;
 
         health = GetComponent<HealthScript>();
-        health.SetDamageMultiplier(damageMultiplier);
+        health.AdditivelyAddDmgMultiplier(damageMultiplier);
     }
 
     void OnDestroy()
