@@ -27,7 +27,7 @@ public class Summon : SpellBehaviour
         _damageScript.SetDamage(damage);
     }
 
-    public void Start()
+    protected override void Start()
     {
         base.Start();
         offset = new Vector3();
