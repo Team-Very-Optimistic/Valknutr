@@ -5,7 +5,7 @@ using UnityEngine;
 public class LifeStealModifier : SpellModifier
 {
     public float lifeStealRatio = 0.02f;
-    LifeStealDamageEffect _lifeStealDamageEffect;
+    private LifeStealDamageEffect _lifeStealDamageEffect;
 
     public override void UseValue()
     {
@@ -28,6 +28,7 @@ public class LifeStealModifier : SpellModifier
         action._behaviour = spell;
         return action;
     }
+    
 
     public override Tooltip GetTooltip()
     {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class LifeStealDamageEffect : DamageEffect
 {
@@ -12,15 +13,18 @@ public class LifeStealDamageEffect : DamageEffect
 
     public override void CastDamageEffect(Collider other, float damage)
     {
-        GameManager.Instance.AffectPlayerCurrHealth(damage * lifeStealRatio);
+        if(other.CompareTag("Enemy"))
+            GameManager.Instance.AffectPlayerCurrHealth(damage * lifeStealRatio);
     }
 }
 public class WeaknessDamageEffect : DamageEffect
 {
     private float weaknessRatio;
+    private float weaknessDuration;
     
-    public WeaknessDamageEffect SetWeaknessDamageEffect(float ratio)
+    public WeaknessDamageEffect SetWeaknessDamageEffect(float ratio, float time)
     {
+        weaknessDuration = time;
         this.weaknessRatio = ratio;
         return this;
     }
@@ -31,7 +35,15 @@ public class WeaknessDamageEffect : DamageEffect
         if (dmg)
         {
             dmg.SetDamage(dmg.GetDamage() * weaknessRatio);
+            GameManager.Instance.StartCoroutine(SetOriginal(dmg));
         }
+    }
+
+    IEnumerator SetOriginal(Damage dmg)
+    {
+        yield return new WaitForSeconds(weaknessDuration);
+        if(dmg)
+            dmg.SetDamage(dmg.GetDamage() / weaknessRatio);
     }
 }
 
