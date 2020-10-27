@@ -38,7 +38,6 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action _behaviour; //The behaviour is the one being invoked when spell is cast.
-    public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;
     #endregion
@@ -142,7 +141,7 @@ public abstract class SpellBase : SpellElement
     #region Tooltips
     protected virtual string DefaultBaseTitle()
     {
-        return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
+        return $"<Base> (<b><color={QualityManager.GetQualityColor(quality)}>{quality}</color></b>)";
     }
 
    

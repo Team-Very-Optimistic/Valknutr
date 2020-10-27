@@ -28,6 +28,6 @@ class SummonBase : SpellBase
     public override Tooltip GetTooltip()
     {
         return new Tooltip($"Summon {DefaultBaseTitle()}", $"Spawns a familiar that lasts {_duration:0.##}s. " +
-                                                           $"Follows your guided direction. {(_quality==QualityManager.Quality.Sanctified?"Be wary, for this may be your last chance to get close to nexus.": "")}\n{DefaultBaseBody()}");
+                                                           $"Follows your guided direction. {(quality==QualityManager.Quality.Sanctified?"Be wary, for this may be your last chance to get close to nexus.": "")}\n{DefaultBaseBody()}");
     }
 }
