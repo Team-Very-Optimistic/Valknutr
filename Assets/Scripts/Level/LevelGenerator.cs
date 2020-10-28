@@ -288,7 +288,7 @@ public class LevelGenerator : MonoBehaviour
     private void PlaceBossRoom()
     {
         var success = false;
-        var n = 10;
+        var n = 20;
         while (n-- > 0 && !success)
         {
             var deepest = _rooms

@@ -26,9 +26,15 @@ public class Room : MonoBehaviour
     private bool isPlayerInside = false;
     private List<GameObject> enemies = new List<GameObject>();
     public RoomType roomType;
-    public int depth;
-    public int minDepth;
-    public GameObject[] lightingObjects;
+    [HideInInspector] public int depth;
+    [HideInInspector] public int minDepth;
+
+    // spawning
+    public EnemyPack[] availablePacks;
+    public float difficultyTarget;
+    private bool spawnedEnemies;
+
+    // Loot
     public float lootQualityModifier = 1f;
     public bool spawnTreasure = true;
 
@@ -37,11 +43,6 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        foreach (var lightingObject in lightingObjects)
-        {
-            lightingObject.GetComponent<Light>().enabled = false;
-        }
-
         roomCollider = GetComponent<BoxCollider>();
     }
 
@@ -63,20 +64,49 @@ public class Room : MonoBehaviour
         isActive = true;
         isPlayerInside = true;
 
-        foreach (var o in spawnZones)
+        if (!spawnedEnemies)
         {
-            o.GetComponent<SpawnZone>().SetActive();
+            spawnedEnemies = true;
+            SpawnEnemies();
         }
 
-        foreach (var lightingObject in lightingObjects)
-        {
-            lightingObject.GetComponent<Light>().enabled = true;
-        }
-        
         CheckCleared();
-        
+
         if (!isCleared)
+        {
             CloseAllDoors();
+        }
+    }
+
+    private void SpawnEnemies()
+    {
+        if (availablePacks.Length != 0)
+        {
+            float currentDifficulty = 0;
+            List<EnemyPack> toSpawn = new List<EnemyPack>();
+            
+            // Select packs until we meet a difficulty target
+            while (currentDifficulty < difficultyTarget)
+            {
+                var newPack = Util.RandomItem(availablePacks);
+                toSpawn.Add(newPack);
+                currentDifficulty += newPack.difficultyRating;
+            }
+
+            var spawnPosition = spawnZones.Length > 0 ? spawnZones[0].transform.position : transform.position;
+
+            toSpawn.ForEach(pack =>
+                pack.SpawnEnemies(spawnPosition).ForEach(AddEnemy)
+            );
+        }
+        else
+        {
+            // old implementation
+            foreach (var o in spawnZones)
+            {
+                o.GetComponent<SpawnZone>().SetActive();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -108,12 +138,13 @@ public class Room : MonoBehaviour
     {
         if (isActive && isCleared && !isPlayerInside)
             isActive = false;
-        CheckCleared();
+        if (isActive)
+            CheckCleared();
     }
 
     private void CheckCleared()
     {
-        if (isCleared || !isActive) return;
+        if (isCleared || !isActive || !spawnedEnemies) return;
 
         var spawnersDone = spawnZones.Length == 0 || spawnZones.All((o =>
         {
@@ -163,7 +194,7 @@ public class Room : MonoBehaviour
                 hasOpened = exit.Open() || hasOpened;
             }
         }
-        
+
         if (hasOpened) AudioManager.PlaySound("doorOpen");
     }
 
@@ -187,7 +218,7 @@ public class Room : MonoBehaviour
     public void GenerateMinimapSprite()
     {
         var minimaps = FindObjectsOfType<SpriteRenderer>();
-        
+
         var bounds = GetComponent<Collider>().bounds;
         print(bounds);
         var minimapIcon = Instantiate(minimapPrefab, transform);

@@ -106,7 +106,6 @@ public class GameManager : Singleton<GameManager>
         {
             Destroy(enemy);
         }
-
     }
 
     public void HealthPickup()

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9561b5d6d2ef4219ace77b9ab426d55c, type: 3}
+  m_Name: ArcherMinibossPack
+  m_EditorClassIdentifier: 
+  enemies:
+  - BaseType: {fileID: 264226206149513925, guid: 4d80ef5665d1bda4ca1e9d524b142029, type: 3}
+    SpawnChance: 1
+    Count: {x: 1, y: 1}
+    difficultyModifier: 2
+  - BaseType: {fileID: 1110327215755334056, guid: 8496404fac73a754da33a60907708915, type: 3}
+    SpawnChance: 1
+    Count: {x: 2, y: 4}
+    difficultyModifier: 0.5
+  difficultyModifier: 1
+  difficultyRating: 4
