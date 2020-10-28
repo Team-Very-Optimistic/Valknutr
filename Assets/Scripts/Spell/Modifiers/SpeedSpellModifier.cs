@@ -32,6 +32,6 @@ class SpeedSpellModifier : SpellModifier
 
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Haste" + DefaultModTitle(), $"Increases speed of affected entities by {speedMultiplier}% and {DefaultModBody()}");
+        return new Tooltip("Haste" + DefaultModTitle(), $"Increases speed of affected entities by {speedMultiplier:F} times. {DefaultModBody()}");
     }
 }

@@ -8,10 +8,12 @@ public class EnemyBossStomp : MonoBehaviour
     private float elapsedTime;
     private float prefabActiveTime = 5.0f;
 
+    private Collider _cOllider;
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, prefabActiveTime);
+        _cOllider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -23,7 +25,7 @@ public class EnemyBossStomp : MonoBehaviour
         }
         else
         {
-            GetComponent<Collider>().enabled = false;
+            _cOllider.enabled = false;
         }
     }
 

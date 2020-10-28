@@ -180,14 +180,14 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
             //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
             if (!isInKnockback)
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                if (rigidbody.velocity.magnitude > 0.0f)
                 {
                     isInKnockback = true;
                 }
             }
             else
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                if (rigidbody.velocity.magnitude <= knockbackVelStoppingThreshold)
                 {
                     EnableKnockback(false);
                     isInKnockback = false;

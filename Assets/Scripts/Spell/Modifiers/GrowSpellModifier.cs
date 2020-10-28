@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 class GrowSpellModifier : SpellModifier
 {
     public float sizeChange = 1.5f;
     public float cap = 1f;
+    [SerializeField]
+    private float speedSlow = 1.2f;
 
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
@@ -27,6 +30,7 @@ class GrowSpellModifier : SpellModifier
     {
         sizeChange *= value;
         cap *= value;
+        speedSlow *= Random.Range(0.8f, 1.2f);
     }
 
     public override void ModifySpell(SpellBase spell)
@@ -35,6 +39,7 @@ class GrowSpellModifier : SpellModifier
         sizeChange = (float) Math.Max(1.01f, varSize);;
         base.ModifySpell(spell);
         spell._scale *= sizeChange;
+        spell._speed *= speedSlow;
         cap = spell._scale * 2;
     }
 
@@ -55,6 +60,6 @@ class GrowSpellModifier : SpellModifier
     public override Tooltip GetTooltip()
     {
         return new Tooltip("Size+" + DefaultModTitle(), 
-            $"Increases size of affected entities by {sizeChange} times. Capped at {cap} times the original size." + DefaultModBody());
+            $"Increases size of affected entities by {sizeChange:F} times. Capped at {cap:F} times the original size. Reduces speed by {speedSlow:F} times. " + DefaultModBody());
     }
 }

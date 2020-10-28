@@ -49,7 +49,7 @@ class MovementBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {_moveTime * 30f / _speed}s. {DefaultBaseBody()}");
+        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {(_moveTime * 30f / _speed):F}s. {DefaultBaseBody()}");
     }
 }
 

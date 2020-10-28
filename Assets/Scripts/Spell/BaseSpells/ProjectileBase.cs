@@ -27,6 +27,10 @@ class ProjectileBase : SpellBase
         _direction.y = 0;
         for (int i = 0; i < _iterations; i++)
         {
+            if (!_objectForSpell)
+            {
+                _objectForSpell = properties._objectForSpell;
+            }
             var p = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.Euler(_direction));
             double rotateBy = (float) (Math.Ceiling(i / 2.0) * (i % 2 == 0 ? -1 : 1) * offsetIncrement * Math.PI / 180);
             Vector3 newDirection = new Vector3((float) (_direction.x * Math.Cos(rotateBy) - _direction.z * Math.Sin(rotateBy)), 
@@ -42,6 +46,6 @@ class ProjectileBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {_damage} to enemies that it collides into. {DefaultBaseBody()}");
+        return new Tooltip($"Projectile {DefaultBaseTitle()}", $"Sends forth a projectile that deals {_damage:F} to enemies that it collides into. {DefaultBaseBody()}");
     }
 }

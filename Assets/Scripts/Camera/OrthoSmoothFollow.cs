@@ -44,7 +44,7 @@ public class OrthoSmoothFollow : MonoBehaviour {
     void Update() {
         Vector3 goalPos = target.position;
         newHeight = height * target.localScale.y;
-        goalPos.y = Mathf.Lerp(transform.position.y, newHeight, Time.deltaTime);
+        goalPos.y = Mathf.Lerp(transform.position.y, newHeight, Time.deltaTime * 2f);
         goalPos += offset;
         
         transform.position = Vector3.SmoothDamp(transform.position, goalPos, ref velocity, smoothTime);

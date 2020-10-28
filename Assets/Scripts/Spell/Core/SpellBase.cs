@@ -88,7 +88,7 @@ public abstract class SpellBase : SpellElement
         
         _cooldown = properties._cooldown;
 
-        _behaviour = properties.behaviour;
+        //_behaviour = properties.behaviour;
         
         animationType = properties.animationType; //will be mostly ignored by modifiers
     }
@@ -106,8 +106,14 @@ public abstract class SpellBase : SpellElement
         properties.OnDestroyed += ResetValues;
         properties.OnDestroyed += () => _copied = false; //neccessaryarayrayryaryryayasyyasrry
     }
-    
 
+    public void InitCopy()
+    {
+        SetValues();
+        _copied = true;
+        CopyValues();
+        AfterReset();
+    }
     #endregion
     
     public void Cast()
@@ -127,9 +133,11 @@ public abstract class SpellBase : SpellElement
         {
             ResetValues();
         }
+        AfterReset();
     }
+    
     protected abstract void SetValues();
-    //public virtual void AfterModified(){}
+    protected virtual void AfterReset(){}
 
     #region Tooltips
     protected virtual string DefaultBaseTitle()
@@ -140,7 +148,7 @@ public abstract class SpellBase : SpellElement
    
     protected virtual string DefaultBaseBody()
     {
-        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+        return $"\n\nCooldown: {_cooldown:F}\nDamage: {_damage:F} \nSpeed: {_speed:F}";
     }
     
     public override Tooltip GetTooltip()

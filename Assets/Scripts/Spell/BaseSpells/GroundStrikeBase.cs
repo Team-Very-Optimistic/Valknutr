@@ -11,7 +11,8 @@ public class GroundStrikeBase : SpellBase
     protected override void SetValues()
     {
         _objectForSpell = GameManager.Instance._weapon;
-        damageScript = _objectForSpell.GetComponent<Damage>();
+        if(!damageScript)
+            damageScript = _objectForSpell.GetComponent<Damage>();
     }
     
     protected override void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
@@ -41,7 +42,7 @@ public class GroundStrikeBase : SpellBase
     {
         radius = _scale * 1.5f;
         var position = _objectForSpell.transform.position + _direction * _scale;
-        position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
+        position.y = Mathf.Max(position.y, 0.3f); //will not work with lower terrain
         var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
         
         SpellEffects(true, 0.1f, intensity, position);
@@ -74,6 +75,6 @@ public class GroundStrikeBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage} to entities in a small radius. {DefaultBaseBody()}");
+        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage:F} to entities in a radius of {radius:F}. {DefaultBaseBody()}");
     }
 }
