@@ -42,7 +42,7 @@ public class GroundStrikeBase : SpellBase
     {
         radius = _scale * 1.5f;
         var position = _objectForSpell.transform.position + _direction * _scale;
-        position.y = Mathf.Max(position.y, 1.6f); //will not work with lower terrain
+        position.y = Mathf.Max(position.y, 0.3f); //will not work with lower terrain
         var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
         
         SpellEffects(true, 0.1f, intensity, position);

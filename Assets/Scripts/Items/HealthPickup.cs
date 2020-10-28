@@ -17,7 +17,6 @@ public class HealthPickup : ItemDrop
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);
         GameManager.Instance.HealthPickup();
-        DamageTextManager.SpawnDamage(GameManager.Instance.healthPickupValue, transform.position, Color.green);
         AudioManager.PlaySoundAtPosition("healthPickup", transform.position);
         Destroy(gameObject);
     }
