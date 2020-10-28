@@ -7,20 +7,21 @@ public class PlayerDeathSequence : BaseDeathSequence
 {
     [SerializeField]
     private OrthoSmoothFollow _orthoSmoothFollow;
+
     public void StartDeathSequence()
     {
         TriggerRagdoll();
-        StartGameOverSequence();
+        // StartGameOverSequence();
         SetCameraFocusRagdoll();
         GetComponent<ThirdPersonUserControl>().enabled = false;
         UIInputController.Instance.enabled = false;
     }
 
-    private void StartGameOverSequence()
-    {
-        //use this instead
-        EndGameManager.Instance.StartGameOverSequence();
-    }
+    // private void StartGameOverSequence()
+    // {
+    //     //use this instead
+    //     EndGameUI.Instance.StartGameOverSequence();
+    // }
 
     private void SetCameraFocusRagdoll()
     {

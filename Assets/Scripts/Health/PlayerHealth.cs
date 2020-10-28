@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerHealth : HealthScript
 {
     private Queue<Shield> shields;
+
+    public event GameManager.PlayerDeathAction OnPlayerDeath;
     protected void Awake()
     {
         shields = new Queue<Shield>();
@@ -40,6 +42,7 @@ public class PlayerHealth : HealthScript
         EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damage / currentHealth);
         if (currentHealth <= 0.0f)
         {
+            OnPlayerDeath?.Invoke();
             GetComponent<PlayerDeathSequence>().StartDeathSequence();
             Destroy(this);
         }
@@ -82,6 +85,7 @@ public class PlayerHealth : HealthScript
                 EffectManager.Instance.PlayerHurtEffect(transform.position + Vector3.down, damagePerTick / currentHealth);
                 if (currentHealth <= 0.0f)
                 {
+                    OnPlayerDeath?.Invoke();
                     GetComponent<PlayerDeathSequence>().StartDeathSequence();
                     Destroy(this);
                 }

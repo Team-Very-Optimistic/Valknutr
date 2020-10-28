@@ -23,6 +23,12 @@ public class GameManager : Singleton<GameManager>
     public float healthPickupDropChance = 0.3f;
 
     public QualityManager QualityManager;
+    
+    public delegate void PlayerDeathAction();
+    public static event PlayerDeathAction OnPlayerDeath;
+    
+    public delegate void LevelCompleteAction();
+    public static event LevelCompleteAction OnLevelComplete;
     public void Awake()
     {
         _player = GameObject.Find("Player");
@@ -34,6 +40,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         SpellBase._player = _player.transform;
+        _playerHealth.OnPlayerDeath += () => OnPlayerDeath?.Invoke();
 
         //extension method (fluent)
         _weapon = _player.transform.FindDescendentTransform("Weapon").gameObject;
@@ -91,8 +98,7 @@ public class GameManager : Singleton<GameManager>
 
         //Disable controls?
 
-        EndGameManager.Instance.DisplayGameWin();
-
+        OnLevelComplete?.Invoke();
         //Kill all enemies
         List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
         //This code is scary

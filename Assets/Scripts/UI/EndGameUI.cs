@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameManager : Singleton<EndGameManager>
+public class EndGameUI : MonoBehaviour
 {
     public GameObject gameOverObjects;
     public GameObject gameWinObjects;
@@ -17,7 +18,19 @@ public class EndGameManager : Singleton<EndGameManager>
     public float gameOverScreenDelay;
     public float fadeBackgroundDelay;
 
-    public List<GameObject> gameUI;
+    private List<GameObject> gameUI = new List<GameObject>();
+
+    private void OnEnable()
+    {
+        GameManager.OnPlayerDeath += StartGameOverSequence;
+        GameManager.OnLevelComplete += DisplayGameWin;
+    }
+    
+    private void OnDisable()
+    {
+        GameManager.OnPlayerDeath -= StartGameOverSequence;
+        GameManager.OnLevelComplete -= DisplayGameWin;
+    }
 
     private void Start()
     {
