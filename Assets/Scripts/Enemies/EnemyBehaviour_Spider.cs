@@ -24,8 +24,12 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     private float lastKeyTime;
 
     //Explode
-    public float explodeRadius;
-    public Material explodeMaterial;
+    public float explodeRadius = 4.0f;
+    public float explodeDuration = 1.0f;
+    public GameObject explodeParticlePrefab;
+
+    //Post-explode lingering damage
+    public GameObject poisonLingerParticlePrefab;
     public Color explodeDamageColor;
     private float explodeDamagePerTick = 1.0f;
     private float explodeDamageTotalDuration = 2.0f;
@@ -170,17 +174,27 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                     hit.gameObject.GetComponent<PlayerHealth>().StartCoroutine(
                         hit.gameObject.GetComponent<PlayerHealth>().ApplyDamageOverTime(
                             explodeDamagePerTick, explodeDamageNumTicks, explodeDamageTotalDuration, explodeDamageColor));
+
+                    GameObject poisonLingerObject = GameObject.Instantiate(poisonLingerParticlePrefab, hit.transform.position, Quaternion.Euler(new Vector3(-90.0f, 0.0f, 0.0f)));
+                    poisonLingerObject.GetComponent<FollowObject>().SetFollowObject(hit.gameObject);
+                    ParticleSystem.MainModule poisonLingerParticleSystem = poisonLingerObject.GetComponent<ParticleSystem>().main;
+                    poisonLingerParticleSystem.startLifetime = explodeDamageTotalDuration;
+                    poisonLingerParticleSystem.duration = explodeDamageTotalDuration * 1.25f;
+                    Destroy(poisonLingerObject, explodeDamageTotalDuration * 2.0f);
+
                     break; //Player has two colliders, just apply damage once 
                 }
             }
         }
 
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = transform.position;
-        sphere.transform.localScale = new Vector3(explodeRadius * 2, explodeRadius * 2, explodeRadius * 2);
-        sphere.GetComponent<Renderer>().material = explodeMaterial;
-        sphere.GetComponent<Collider>().enabled = false;
-        Destroy(sphere, 1.0f);
+        GameObject poisonCloudParticle = GameObject.Instantiate(explodeParticlePrefab, transform.position, Quaternion.identity);
+        ParticleSystem.MainModule poisonCloudParticleSystem = poisonCloudParticle.GetComponent<ParticleSystem>().main;
+
+        poisonCloudParticleSystem.startSize = explodeRadius + 4;
+        poisonCloudParticleSystem.startLifetime = explodeDuration;
+        poisonCloudParticleSystem.duration = explodeDuration;
+        poisonCloudParticle.GetComponent<ParticleSystem>().Play();
+        Destroy(poisonCloudParticle, 1.0f);
 
         ScreenShakeManager.Instance.ScreenShake(0.25f, 0.4f);
 
