@@ -1368,7 +1368,7 @@ MonoBehaviour:
   knockbackVelStoppingThreshold: 0.05
   shieldRadius: 8
   enemies: []
-  linkMat: {fileID: 2100000, guid: a685ced74f2bf204eb61bb351eff3e6b, type: 2}
+  linkMat: {fileID: 2100000, guid: 70cc334ccba0dd64a83565c3d1acd426, type: 2}
   linkDamageMultiplier: 0.5
 --- !u!114 &5779391486341469258
 MonoBehaviour:
@@ -1459,7 +1459,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5779391485768802880
 GameObject:
   m_ObjectHideFlags: 0
