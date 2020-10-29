@@ -146,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
 
         // select random room type
         ref var roomTypeConfig = ref ChooseRandomRoom();
-        print(roomTypeConfig.currentAmount);
+        // print(roomTypeConfig.currentAmount);
         var roomType = roomTypeConfig.prefab;
         GameObject targetRoom = null;
         while (newRoom == null && iterations-- > 0)
@@ -167,7 +167,7 @@ public class LevelGenerator : MonoBehaviour
         if (newRoom != null)
         {
             newRoom.GetComponent<Room>().depth = targetRoom.GetComponent<Room>().depth + 1;
-            print(roomTypeConfig.prefab.name + ": " + roomTypeConfig.currentAmount);
+            // print(roomTypeConfig.prefab.name + ": " + roomTypeConfig.currentAmount);
             roomTypeConfig.currentAmount += 1;
         }
     }
