@@ -8,7 +8,7 @@ public class Fire : SpellBehaviour
     private Transform parent;
     private int maxFires = 10;
     public float damage = 1;
-    public string debugTag;
+    //public string debugTag;
     private float timeToExpire = 5f;
     public static int totalFires = 0;
     public static int maxTotalFires = 500;
@@ -36,8 +36,9 @@ public class Fire : SpellBehaviour
     {
         base.Start();
         parent = gameObject.transform.parent;
+        Destroy(gameObject, timeToExpire);
         StartCoroutine(WaitCooldown(0.01f));
-        debugTag = parent.tag;
+        //debugTag = parent.tag;
     }
 
     public static Fire SpawnFire(GameObject parent, Vector3 _origPosition = new Vector3(), int maxFires = 5)
