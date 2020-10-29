@@ -6,13 +6,13 @@ public class AoeBase : SpellBase
     [SerializeField]
     private float _aoeInterval = 0.5f;
 
-    public float _duration = 4f;
+    [HideInInspector]
+    public float _duration = 3f;
     
     protected override void SetValues()
     {
         _objectForSpell = _player.gameObject;
-        _duration = 3.75f;
-
+        _duration = 3f;
     }
     protected override void AfterReset()
     {
@@ -23,7 +23,6 @@ public class AoeBase : SpellBase
     public override void SpellBehaviour(Spell spell)
     {
         var aoe = AoeBlast.SpawnBlast(_objectForSpell);
-        Debug.LogWarning(_duration);
         aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
     }
