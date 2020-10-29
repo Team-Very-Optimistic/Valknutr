@@ -16,13 +16,14 @@ public class AoeBase : SpellBase
     }
     protected override void AfterReset()
     {
-        _aoeInterval /= _speed / properties._speed;
-        _duration /= _speed / properties._speed;
+        _aoeInterval /= (_speed / properties._speed);
+        _duration /= (_speed / properties._speed);
     }
 
     public override void SpellBehaviour(Spell spell)
     {
         var aoe = AoeBlast.SpawnBlast(_objectForSpell);
+        Debug.LogWarning(_duration);
         aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
     }

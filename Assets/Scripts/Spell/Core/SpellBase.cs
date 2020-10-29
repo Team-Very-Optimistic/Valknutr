@@ -117,6 +117,7 @@ public abstract class SpellBase : SpellElement
     
     public void Cast()
     {
+        AfterReset();
         _behaviour.Invoke();
     }
     
@@ -132,6 +133,7 @@ public abstract class SpellBase : SpellElement
         {
             ResetValues();
         }
+
         AfterReset();
     }
     
