@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3917317486614832434}
   - component: {fileID: 835047153226282658}
   - component: {fileID: 2634722784757055734}
-  - component: {fileID: 4041221756758817117}
   m_Layer: 11
   m_Name: Room_Treasure
   m_TagString: Room
@@ -77,26 +76,16 @@ MonoBehaviour:
   - {fileID: 7450867373392104242}
   - {fileID: 1546386861177050633}
   - {fileID: 7253493741501681125}
+  spawnZones: []
+  isActive: 0
+  isCleared: 0
+  roomType: 0
   depth: 0
+  minDepth: 0
+  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 0
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
---- !u!114 &4041221756758817117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5531430571349274628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoints: []
-  availablePacks:
-  - {fileID: 11400000, guid: d37bd3236b643ba44b1a22fe484223e0, type: 2}
-  difficultyTarget: 1
 --- !u!1 &6952225613248706582
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,6 +337,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 5364512601293629222, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
 --- !u!4 &1644356007274643451 stripped
@@ -417,6 +410,10 @@ PrefabInstance:
     - target: {fileID: 3961590980352900781, guid: c590093e3669bd94a90016af7390d808, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841474804532242318, guid: c590093e3669bd94a90016af7390d808, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7416296155481525215, guid: c590093e3669bd94a90016af7390d808, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -503,6 +500,10 @@ PrefabInstance:
     - target: {fileID: 3713104444964819695, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364512601293629222, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
@@ -633,6 +634,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3917317486614832434}
     m_Modifications:
+    - target: {fileID: 2113905732164124714, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2814233985252174591, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -937,6 +942,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3917317486614832434}
     m_Modifications:
+    - target: {fileID: 2113905732164124714, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2814233985252174591, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -1075,8 +1084,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 3713104444964819695, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 5364512601293629222, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
+      propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1175,6 +1184,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3917317486614832434}
     m_Modifications:
+    - target: {fileID: 2113905732164124714, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2814233985252174591, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295

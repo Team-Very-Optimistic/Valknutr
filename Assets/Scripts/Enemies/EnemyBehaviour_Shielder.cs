@@ -54,12 +54,21 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
             foreach(GameObject enemy in enemies)
             {
-                if((transform.position - enemy.transform.position).magnitude <= shieldRadius)
+                EnemyShielder_Link shielderLinkScript = enemy.GetComponent<EnemyShielder_Link>();
+
+                if ((transform.position - enemy.transform.position).magnitude <= shieldRadius)
                 {
-                    if(enemy.GetComponent<EnemyShielder_Link>() == null)
+                    if (shielderLinkScript == null)
                     {
                         EnemyShielder_Link linkScript = enemy.AddComponent<EnemyShielder_Link>();
                         linkScript.InitShielderLink(gameObject, shieldRadius, linkMat, linkDamageMultiplier);
+                    }
+                }
+                else
+                {
+                    if (shielderLinkScript != null)
+                    {
+                        Destroy(shielderLinkScript);
                     }
                 }
             }
@@ -108,5 +117,10 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
                 Destroy(enemy.GetComponent<EnemyShielder_Link>());
             }
         }
+    }
+
+    public void RemoveEnemyFromList(GameObject enemy)
+    {
+        enemies.Remove(enemy);
     }
 }

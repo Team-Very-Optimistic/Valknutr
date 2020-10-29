@@ -18,14 +18,16 @@ public class PlayerHealth : HealthScript
         shields.Enqueue(shield);
     }
     
-    public override bool ApplyDamage(float damage)
+    public override bool ApplyDamage(float damage, Color dmgColor = new Color())
     {
         damage *= damageMultiplier;
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        DamageTextManager.SpawnDamage(damage, worldPositionText, damageColor);
+        if (dmgColor == new Color())
+            dmgColor = this.damageColor;
+        DamageTextManager.SpawnDamage(damage, worldPositionText, dmgColor);
         if (damage <= 0)
             return false;
-
+        
         if (shields.Count > 0)
         {
             var shield = shields.Dequeue();
@@ -95,7 +97,7 @@ public class PlayerHealth : HealthScript
 
     public void IncreaseCurrHealth(float healthIncrease)
     {
-        DamageTextManager.SpawnDamage(healthIncrease, transform.position, Color.green);
+        DamageTextManager.SpawnDamage(healthIncrease, transform.position, new Color(1, 0.6f, 0.9f));
         currentHealth += healthIncrease;
     }
     public void IncreaseMaxHealth(float healthIncrease)

@@ -36,9 +36,9 @@ class ProjectileBase : SpellBase
             Vector3 newDirection = new Vector3((float) (_direction.x * Math.Cos(rotateBy) - _direction.z * Math.Sin(rotateBy)), 
                 _direction.y, (float) (_direction.x * Math.Sin(rotateBy) + _direction.z * Math.Cos(rotateBy)));
             
-            p.GetComponent<Projectile>().Launch(newDirection, _speed, _damage);
+            p.GetComponentElseAddIt<Projectile>().Launch(newDirection, _speed, _damage);
             
-            SpellEffects(true, 0.1f, 0.1f * _scale / properties._scale);
+            SpellEffects(true, 0.1f, 0.3f * _scale / properties._scale);
             _objectForSpell = p;
         }
         

@@ -9,9 +9,10 @@ public class Damage : MonoBehaviour
     [SerializeField]
     protected float damage = 1;
 
-
+    [HideInInspector]
     public UnityEvent<Collider, float> _damageCallback;
     
+    [SerializeField]
     private List<DamageEffect> damageEffects;
 
     public virtual bool DealDamage(Collider other)
@@ -28,10 +29,19 @@ public class Damage : MonoBehaviour
 
     public void AddDamageEffect(DamageEffect damageEffect)
     {
-        if(damageEffect == null)
+        if (damageEffects == null)
+            damageEffects = new List<DamageEffect>();
+        if (_damageCallback == null)
+            _damageCallback = new UnityEvent<Collider, float>();
+        if (damageEffect == null)
+        {
+            Debug.Log("Adding dmg effect null");
             return;
+        }
         if (!damageEffects.Contains(damageEffect))
         {
+            
+            Debug.Log("Adding dmg effect contains");
             damageEffects.Add(damageEffect);
             _damageCallback.AddListener(damageEffect.CastDamageEffect);
         }
@@ -44,9 +54,8 @@ public class Damage : MonoBehaviour
 
     public void Start()
     {
-        damageEffects = new List<DamageEffect>();
-        if (_damageCallback == null)
-            _damageCallback = new UnityEvent<Collider, float>();
+       
+        
 
     }
 

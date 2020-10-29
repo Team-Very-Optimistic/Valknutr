@@ -54,7 +54,8 @@ public class AoeBlast : SpellBehaviour
 		    StartCoroutine(EnableCollider(time));
 		    if (fire)
 		    {
-			    Fire.SpawnFire(other.gameObject);
+			    var closestPointOnBounds = other.ClosestPointOnBounds(transform.position);
+			    Fire.SpawnFire(other.gameObject, closestPointOnBounds);
 		    }
 	    }
     }

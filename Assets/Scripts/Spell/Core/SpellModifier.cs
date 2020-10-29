@@ -9,10 +9,7 @@ public abstract class SpellModifier : SpellElement
     public float _cooldownMultiplier = 1;
     [HideInInspector]
     public float value = 1f;
-
-
-    public QualityManager.Quality quality;
-
+    
     public virtual void ModifySpell(SpellBase spell)
     {
         spell._cooldown *= _cooldownMultiplier;

@@ -6,18 +6,18 @@ public class AoeBase : SpellBase
     [SerializeField]
     private float _aoeInterval = 0.5f;
 
-    public float _duration = 4f;
+    [HideInInspector]
+    public float _duration = 3f;
     
     protected override void SetValues()
     {
         _objectForSpell = _player.gameObject;
-        _duration = 3.75f;
-
+        _duration = 3f;
     }
     protected override void AfterReset()
     {
-        _aoeInterval /= _speed / properties._speed;
-        _duration /= _speed / properties._speed;
+        _aoeInterval /= (_speed / properties._speed);
+        _duration /= (_speed / properties._speed);
     }
 
     public override void SpellBehaviour(Spell spell)
