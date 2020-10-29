@@ -6,7 +6,7 @@ public class Fire : SpellBehaviour
     private GameObject fire;
     private bool canSpread;
     private Transform parent;
-    private int maxFires = 10;
+    private int maxFires = 5;
     public float damage = 1;
     //public string debugTag;
     private float timeToExpire = 5f;
@@ -37,8 +37,15 @@ public class Fire : SpellBehaviour
     {
         base.Start();
         parent = gameObject.transform.parent;
-        Destroy(gameObject, timeToExpire);
-        StartCoroutine(WaitCooldown(fireDelay));
+        Destroy(gameObject, timeToExpire + 0.2f);
+        StartCoroutine(WaitCooldown(timeToExpire, 0.5f));
+        if (maxFires == 5)
+            StartCoroutine(WaitCooldown(0.01f));
+        else
+        {
+            StartCoroutine(WaitCooldown(fireDelay));
+        }
+        
         //debugTag = parent.tag;
     }
 
@@ -62,11 +69,12 @@ public class Fire : SpellBehaviour
     }
     
     
-    IEnumerator WaitCooldown(float cooldown)
+    IEnumerator WaitCooldown(float cooldown, float scale = 0.9f)
     {
         canSpread = false;
         yield return new WaitForSeconds(cooldown);
         canSpread = true;
+        transform.localScale *= scale;
     }
 
     /*

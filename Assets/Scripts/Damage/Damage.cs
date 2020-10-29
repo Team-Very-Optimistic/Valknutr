@@ -29,11 +29,14 @@ public class Damage : MonoBehaviour
 
     public void AddDamageEffect(DamageEffect damageEffect)
     {
+        if (damageEffects == null)
+            damageEffects = new List<DamageEffect>();
+        if (_damageCallback == null)
+            _damageCallback = new UnityEvent<Collider, float>();
         if (damageEffect == null)
         {
             Debug.Log("Adding dmg effect null");
             return;
-
         }
         if (!damageEffects.Contains(damageEffect))
         {
@@ -51,9 +54,8 @@ public class Damage : MonoBehaviour
 
     public void Start()
     {
-        damageEffects = new List<DamageEffect>();
-        if (_damageCallback == null)
-            _damageCallback = new UnityEvent<Collider, float>();
+       
+        
 
     }
 

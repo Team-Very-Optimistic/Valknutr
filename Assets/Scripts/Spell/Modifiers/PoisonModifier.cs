@@ -32,7 +32,7 @@ public class PoisonModifier : SpellModifier
         Action spell = () =>
         {
             oldBehavior.Invoke();
-            var dmg = action._objectForSpell.GetComponent<Damage>();
+            var dmg = action._objectForSpell.GetComponentElseAddIt<Damage>();
             if (dmg)
             {
                 dmg.AddDamageEffect(_poisonDamageEffect);

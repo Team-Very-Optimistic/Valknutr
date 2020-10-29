@@ -143,7 +143,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.20211172
+  m_Radius: 0.18240564
   m_Center: {x: 0, y: 0.1633048, z: 0}
 --- !u!114 &6845507097958051061
 MonoBehaviour:
@@ -158,7 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-3357843311309863531
 MonoBehaviour:
   m_ObjectHideFlags: 0
