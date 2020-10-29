@@ -10,8 +10,16 @@ public class LifeStealModifier : SpellModifier
     public override void UseValue()
     {
         lifeStealRatio *= value;
-        _lifeStealDamageEffect  = new LifeStealDamageEffect().SetLifeSteal(lifeStealRatio) ;
-        Debug.Log("created lifesteal");
+        //Use value was called before the copy which made the object not copy over.
+    }
+
+    public override void ModifySpell(SpellBase spell)
+    {
+        if (_lifeStealDamageEffect == null)
+        {
+            _lifeStealDamageEffect = new LifeStealDamageEffect();
+            _lifeStealDamageEffect.SetLifeSteal(lifeStealRatio);
+        }
     }
 
     public override SpellBase ModifyBehaviour(SpellBase action)
