@@ -14,7 +14,8 @@ public class QualityManager : ScriptableObject
         Intricate,
         Arcane,
         Divine,
-        Sanctified
+        Sanctified,
+        NotSet
     }
 
     private float Value(Quality quality, bool positiveBetter = true)
@@ -137,7 +138,7 @@ public class QualityManager : ScriptableObject
             spellBase._damage *= Spread() * Value(quality);
             spellBase._scale *= Spread() * Value(quality);
             spellBase._speed *= Spread() * Value(quality);
-            spellBase._quality = quality;
+            spellBase.quality = quality;
             spellBase.InitCopy();
         }
         else

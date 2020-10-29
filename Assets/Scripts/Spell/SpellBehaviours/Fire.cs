@@ -8,10 +8,11 @@ public class Fire : SpellBehaviour
     private Transform parent;
     private int maxFires = 10;
     public float damage = 1;
-    public string debugTag;
+    //public string debugTag;
     private float timeToExpire = 5f;
     public static int totalFires = 0;
     public static int maxTotalFires = 500;
+    private float fireDelay = 0.5f;
     
     public override void TriggerEvent(Collider other)
     {
@@ -29,15 +30,16 @@ public class Fire : SpellBehaviour
         damageScript.SetDamage(damage);   
         damageScript.DealDamage(other);
         
-        StartCoroutine(WaitCooldown(3f));
+        StartCoroutine(WaitCooldown(fireDelay));
     }
 
     protected override void Start()
     {
         base.Start();
         parent = gameObject.transform.parent;
-        StartCoroutine(WaitCooldown(0.01f));
-        debugTag = parent.tag;
+        Destroy(gameObject, timeToExpire);
+        StartCoroutine(WaitCooldown(fireDelay));
+        //debugTag = parent.tag;
     }
 
     public static Fire SpawnFire(GameObject parent, Vector3 _origPosition = new Vector3(), int maxFires = 5)
