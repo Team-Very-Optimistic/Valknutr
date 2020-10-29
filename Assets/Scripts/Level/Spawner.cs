@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
     public EnemyPack[] availablePacks;
-    public float difficultyTarget;
+    public float difficultyTarget = 1;
 
     private bool hasSpawnedEnemies;
     private List<GameObject> enemies = new List<GameObject>();

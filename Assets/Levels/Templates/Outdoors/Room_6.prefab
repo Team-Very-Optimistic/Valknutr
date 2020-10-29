@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 6905031860303500841}
   - component: {fileID: 3173232537854439047}
   - component: {fileID: 6630184863614518566}
+  - component: {fileID: -5177350890611184410}
   m_Layer: 0
   m_Name: Room_6
   m_TagString: Untagged
@@ -638,7 +639,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6905031860303500838}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 29, y: 4.203884, z: 29}
@@ -660,16 +661,27 @@ MonoBehaviour:
   - {fileID: 7123162275342353639}
   - {fileID: 2506644616427663399}
   - {fileID: 2066898117787809326}
-  spawnZones: []
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 0
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 1
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
+--- !u!114 &-5177350890611184410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905031860303500838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints: []
+  availablePacks:
+  - {fileID: 11400000, guid: e9ad4ac01e252864eb01a4f690f7c4d0, type: 2}
+  - {fileID: 11400000, guid: 2ab1d9e4a42da284899329b0800de207, type: 2}
+  difficultyTarget: 8
 --- !u!1 &7084340077553939564
 GameObject:
   m_ObjectHideFlags: 0
