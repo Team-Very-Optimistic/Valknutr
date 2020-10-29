@@ -51,7 +51,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y * 2.0f, 0.0f);
 
-        //Disable knockback (temporarily)
+        //Disable knockback (buggy with navmesh)
         canKnockback = false;
     }
 
