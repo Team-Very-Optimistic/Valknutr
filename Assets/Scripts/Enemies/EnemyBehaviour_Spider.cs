@@ -51,6 +51,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         lastKeyTime = jumpCurve[jumpCurve.length - 1].time;
 
         redIndicatorPosOffset = new Vector3(0.0f, GetComponent<Collider>().bounds.size.y, 0.0f);
+
+        //Disable knockback (buggy with navmesh)
+        canKnockback = false;
     }
 
     // Update is called once per frame

@@ -20,29 +20,24 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
-    public GameObject[] spawnZones;
-    public bool isActive = false;
-    public bool isCleared = false;
-    private bool isPlayerInside = false;
-    private List<GameObject> enemies = new List<GameObject>();
-    public RoomType roomType;
-    public int depth;
-    public int minDepth;
-    public GameObject[] lightingObjects;
+    private bool isActive;
+    private bool isCleared;
+    private bool isPlayerInside;
+    [HideInInspector] public int depth;
+
+    // Loot
     public float lootQualityModifier = 1f;
     public bool spawnTreasure = true;
 
     public GameObject minimapPrefab;
     private Collider roomCollider;
 
+    private Spawner spawner;
+
     private void Start()
     {
-        foreach (var lightingObject in lightingObjects)
-        {
-            lightingObject.GetComponent<Light>().enabled = false;
-        }
-
         roomCollider = GetComponent<BoxCollider>();
+        spawner = GetComponent<Spawner>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -63,28 +58,14 @@ public class Room : MonoBehaviour
         isActive = true;
         isPlayerInside = true;
 
-        foreach (var o in spawnZones)
-        {
-            o.GetComponent<SpawnZone>().SetActive();
-        }
+        if (spawner) spawner.BeginSpawning();
 
-        foreach (var lightingObject in lightingObjects)
-        {
-            lightingObject.GetComponent<Light>().enabled = true;
-        }
-        
         CheckCleared();
-        
-        if (!isCleared)
-            CloseAllDoors();
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // if (other.CompareTag("Player"))
-        // {
-        //     ActivateRoom();
-        // }
+        if (!isCleared)
+        {
+            CloseAllDoors();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -108,21 +89,13 @@ public class Room : MonoBehaviour
     {
         if (isActive && isCleared && !isPlayerInside)
             isActive = false;
-        CheckCleared();
+        if (isActive && !isCleared)
+            CheckCleared();
     }
 
     private void CheckCleared()
     {
-        if (isCleared || !isActive) return;
-
-        var spawnersDone = spawnZones.Length == 0 || spawnZones.All((o =>
-        {
-            var spawnZone = o.GetComponent<SpawnZone>();
-            return !(spawnZone is null) && spawnZone.IsDone();
-        }));
-
-        var enemiesDead = enemies.Count(o => o != null) == 0;
-        isCleared = spawnersDone && enemiesDead;
+        isCleared = !spawner || spawner.IsDone();
 
         if (isCleared)
             OnClear();
@@ -134,17 +107,13 @@ public class Room : MonoBehaviour
         if (spawnTreasure)
         {
             SpawnTreasure();
+            spawnTreasure = false;
         }
     }
 
     private void SpawnTreasure()
     {
         GameManager.SpawnTreasureChest(transform.position, lootQualityModifier);
-    }
-
-    public void AddEnemy(GameObject enemy)
-    {
-        enemies.Add(enemy);
     }
 
     public void OpenAllDoors()
@@ -163,7 +132,7 @@ public class Room : MonoBehaviour
                 hasOpened = exit.Open() || hasOpened;
             }
         }
-        
+
         if (hasOpened) AudioManager.PlaySound("doorOpen");
     }
 
@@ -184,10 +153,11 @@ public class Room : MonoBehaviour
         }
     }
 
+    [ContextMenu("Generate Minimap Sprite")]
     public void GenerateMinimapSprite()
     {
         var minimaps = FindObjectsOfType<SpriteRenderer>();
-        
+
         var bounds = GetComponent<Collider>().bounds;
         print(bounds);
         var minimapIcon = Instantiate(minimapPrefab, transform);
@@ -200,5 +170,11 @@ public class Room : MonoBehaviour
 
         minimapIcon.transform.localScale = new Vector3(roomWidth / spriteWidth, roomHeight / spriteHeight, 1);
         minimapIcon.transform.position = bounds.center + Vector3.up;
+    }
+
+    [ContextMenu("Detect Exits")]
+    public void DetectExits()
+    {
+        exits = GetComponentsInChildren<RoomExit>().Select(i => i.gameObject).ToArray();
     }
 }
