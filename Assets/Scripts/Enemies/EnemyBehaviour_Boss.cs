@@ -271,7 +271,9 @@ public class EnemyBehaviour_Boss : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(GameManager.Instance)
-            GameManager.Instance.SetGameWin();
+        if (GameManager.Instance)
+        {
+            LevelManager.Instance.StartNextLevel();
+        }
     }
 }
