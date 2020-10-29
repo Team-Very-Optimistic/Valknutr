@@ -9,23 +9,54 @@ public class ItemDrop : MonoBehaviour
     public Action<ItemDrop> OnPickup;
     protected Collider playerCollider;
     public bool pickedup;
-    public void OnTriggerEnter(Collider other)
+
+    public void Update()
     {
-        if (GameManager.Instance._player == other.gameObject) //harder comparison precludes clones and shields
+        var mousePos = Util.GetMousePositionOnWorldPlane(Camera.main);
+        var pos = transform.position;
+        pos.y = 0;
+        if ((mousePos - pos).magnitude < 0.5)
         {
-            PlayerEnterHandler(other);
+            ShowTooltip();
+        }
+        else
+        {
+            CancelTooltip();
         }
     }
 
-    public void OnTriggerExit(Collider other)
+    public virtual void ShowTooltip()
     {
-        if (playerCollider == other)
+        UiManager.ShowTooltip(((ITooltip)_spellItem).GetTooltip());
+        UiManager.currentItemDrop = this;
+    }
+
+    public void CancelTooltip()
+    {
+        if (UiManager.currentItemDrop == this)
         {
             UiManager.HideInWorldTooltip();
-            playerCollider = null;
+            UiManager.currentItemDrop = null;
         }
-        UiManager.currentItemDrop = null;
     }
+
+    // public void OnTriggerEnter(Collider other)
+    // {
+    //     if (GameManager.Instance._player == other.gameObject) //harder comparison precludes clones and shields
+    //     {
+    //         PlayerEnterHandler(other);
+    //     }
+    // }
+
+    // public void OnTriggerExit(Collider other)
+    // {
+    //     if (playerCollider == other)
+    //     {
+    //         UiManager.HideInWorldTooltip();
+    //         playerCollider = null;
+    //     }
+    //     UiManager.currentItemDrop = null;
+    // }
 
     public virtual void PlayerEnterHandler(Collider other)
     {

@@ -80,8 +80,10 @@ public class EnemyDeathSequence : BaseDeathSequence
         CallDestroy(timeToDestroy);
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
-        
-        if(GetComponent<DropsLoot>() != null)
+
+        Destroy(GetComponent<EnemyBehaviourBase>());
+
+        if (GetComponent<DropsLoot>() != null)
         {
             GetComponent<DropsLoot>().OnDeath();
         }
@@ -91,9 +93,6 @@ public class EnemyDeathSequence : BaseDeathSequence
             GetComponent<EnemyBehaviour_Boss>().SetDeathState();
         }
 
-        if (GetComponent<EnemyShielder_Link>() != null)
-        {
-            Destroy(GetComponent<EnemyShielder_Link>());
-        }
+        Destroy(GetComponent<EnemyShielder_Link>());
     }
 }
