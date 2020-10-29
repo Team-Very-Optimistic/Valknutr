@@ -25,12 +25,14 @@ public class HealthScript : MonoBehaviour
         height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
 
-    public virtual bool ApplyDamage(float damage)
+    public virtual bool ApplyDamage(float damage, Color dmgColor = new Color())
     {
         float finalDamage = damage * damageMultiplier;
 
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        DamageTextManager.SpawnDamage(finalDamage, worldPositionText, damageColor);
+        if (dmgColor == new Color())
+            dmgColor = this.damageColor;
+        DamageTextManager.SpawnDamage(finalDamage, worldPositionText, dmgColor);
         EffectManager.Instance.EnemyHurtEffect();
         if (damage <= 0)
             return false;
@@ -54,6 +56,17 @@ public class HealthScript : MonoBehaviour
             OnDeath();
         }
         return true;
+    }
+    
+    public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
+    {
+        float timeInterval = totalDuration / numTicks;
+        
+        for (int i = 0; i < numTicks; i++)
+        {
+            yield return new WaitForSeconds(timeInterval);
+            ApplyDamage(damagePerTick, damageColor);
+        }
     }
 
     public virtual void OnDeath()
@@ -95,6 +108,7 @@ public class HealthScript : MonoBehaviour
         // overlap multipliers
         this.damageMultiplier *= damageMultiplier;
     }
+    
 
     public void ResetDamageMultiplier()
     {

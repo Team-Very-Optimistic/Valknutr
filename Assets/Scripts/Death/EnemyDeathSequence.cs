@@ -80,7 +80,6 @@ public class EnemyDeathSequence : BaseDeathSequence
         CallDestroy(timeToDestroy);
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
-        Destroy(GetComponent("EnemyBehaviourBase"));
         
         if(GetComponent<DropsLoot>() != null)
         {

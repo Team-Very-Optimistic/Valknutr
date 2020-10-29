@@ -1,7 +1,5 @@
 ﻿using System;
-using UnityEngine;
 
-[CreateAssetMenu]
 public class LifeStealModifier : SpellModifier
 {
     public float lifeStealRatio = 0.02f;
