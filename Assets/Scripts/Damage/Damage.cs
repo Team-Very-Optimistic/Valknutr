@@ -9,7 +9,7 @@ public class Damage : MonoBehaviour
     [SerializeField]
     protected float damage = 1;
 
-
+    [HideInInspector]
     public UnityEvent<Collider, float> _damageCallback;
     
     [SerializeField]
@@ -29,7 +29,6 @@ public class Damage : MonoBehaviour
 
     public void AddDamageEffect(DamageEffect damageEffect)
     {
-        Debug.Log("Adding dmg effect");
         if (damageEffect == null)
         {
             Debug.Log("Adding dmg effect null");
@@ -40,7 +39,6 @@ public class Damage : MonoBehaviour
         {
             
             Debug.Log("Adding dmg effect contains");
-
             damageEffects.Add(damageEffect);
             _damageCallback.AddListener(damageEffect.CastDamageEffect);
         }

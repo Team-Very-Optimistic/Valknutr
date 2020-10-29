@@ -159,7 +159,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         foreach (Collider hit in colliders)
         {
-            if(hit.gameObject.CompareTag("Player"))
+            if(hit.CompareTag("Player"))
             {
                 //Player parts are all tagged as "Player", check for PlayerHealth script
                 PlayerHealth playerHealthScript = hit.gameObject.GetComponent<PlayerHealth>();
@@ -167,8 +167,8 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                 if (playerHealthScript != null)
                 {
                     GetComponent<Damage>().DealDamage(hit);
-                    hit.gameObject.GetComponent<PlayerHealth>().StartCoroutine(
-                        hit.gameObject.GetComponent<PlayerHealth>().ApplyDamageOverTime(
+                    playerHealthScript.StartCoroutine(
+                        playerHealthScript.ApplyDamageOverTime(
                             explodeDamagePerTick, explodeDamageNumTicks, explodeDamageTotalDuration, explodeDamageColor));
                     break; //Player has two colliders, just apply damage once 
                 }

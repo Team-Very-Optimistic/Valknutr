@@ -52,7 +52,7 @@ public class PlayerHealth : HealthScript
 
     public void IncreaseCurrHealth(float healthIncrease)
     {
-        DamageTextManager.SpawnDamage(healthIncrease, transform.position, Color.green);
+        DamageTextManager.SpawnDamage(healthIncrease, transform.position, new Color(1, 0.6f, 0.9f));
         currentHealth += healthIncrease;
     }
     public void IncreaseMaxHealth(float healthIncrease)

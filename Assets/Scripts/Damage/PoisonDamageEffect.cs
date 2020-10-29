@@ -16,7 +16,8 @@ public class PoisonDamageEffect : DamageEffect
 
     public override void CastDamageEffect(Collider other, float damage)
     {
-        other.GetComponent<HealthScript>().ApplyDamageOverTime(damage, poisonTicks, duration, Color.green);
+        var healthScript = other.GetComponent<HealthScript>();
+        healthScript.StartCoroutine(healthScript.ApplyDamageOverTime(poisonRatio *damage, poisonTicks, duration, new Color(0.2f, 1f, 0.2f)));
     }
     
 }
