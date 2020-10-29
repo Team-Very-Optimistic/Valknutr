@@ -23,7 +23,7 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(float health, float max)
     {
         slider.value = health;
-        text.text = health.ToString() + "/" + max.ToString();
+        text.text = $"{health:0.##}" + "/" + max.ToString();
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 

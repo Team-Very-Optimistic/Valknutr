@@ -43,10 +43,10 @@ public class SpawnZone : MonoBehaviour
             var levelKey = enemy.AddComponent<LevelKey>();
 
             // registers enemy with room
-            if (_room != null)
-            {
-                _room.AddEnemy(enemy);
-            }
+            // if (_room != null)
+            // {
+            //     _room.AddEnemy(enemy);
+            // }
         }
     }
 
