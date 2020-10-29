@@ -2394,8 +2394,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   explodeRadius: 4
-  explodeMaterial: {fileID: 2100000, guid: e7f0f29fb729b8b4eb1edef180af3e3a, type: 2}
-  explodeDamageColor: {r: 0, g: 0.6117647, b: 0, a: 1}
+  explodeDuration: 1
+  explodeParticlePrefab: {fileID: 8820148364297313492, guid: d2772961293fe2544a6f93d2161d3cba, type: 3}
+  poisonLingerParticlePrefab: {fileID: 5878703907273149651, guid: 98e9b9f58658e2947b053d0c94d6fb4f, type: 3}
+  explodeDamageColor: {r: 0.013216423, g: 0.9339623, b: 0.013216423, a: 1}
   redIndicatorPrefab: {fileID: 1401391788558755451, guid: c4cdaa7be53d8ae40a917177be939afb, type: 3}
 --- !u!114 &4951068682768778894
 MonoBehaviour:
@@ -2464,7 +2466,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &4951068682768778882
 NavMeshAgent:
   m_ObjectHideFlags: 0

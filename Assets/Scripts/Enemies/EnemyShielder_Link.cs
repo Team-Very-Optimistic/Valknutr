@@ -6,9 +6,11 @@ public class EnemyShielder_Link : MonoBehaviour
 {
     private GameObject enemyShielder;
     private GameObject enemyShielderLink;
+    private GameObject shielderShield;
     private float enemyShielderRadius;
     private HealthScript health;
     private LineRenderer line;
+    private Color shieldDamageColor = new Color(0.0f, 0.98f, 1.0f, 1.0f);
 
     void Update()
     {
@@ -42,13 +44,23 @@ public class EnemyShielder_Link : MonoBehaviour
         line.startWidth = 0.02f;
         line.endWidth = 0.02f;
 
+        shielderShield = GameObject.Instantiate(GameManager.Instance.shielderShieldPrefab, gameObject.transform);
+        float scaleMultiplier = Mathf.Floor(GetComponentInChildren<SkinnedMeshRenderer>().bounds.extents.x);
+        if (scaleMultiplier < 1) scaleMultiplier = 1.0f;
+        shielderShield.transform.localScale *= scaleMultiplier;
+
         health = GetComponent<HealthScript>();
         health.AdditivelyAddDmgMultiplier(damageMultiplier);
+        health.SetHasShield(true);
+        health.SetShieldDamageColor(shieldDamageColor);
     }
 
     void OnDestroy()
     {
         health.ResetDamageMultiplier();
+        health.SetHasShield(false);
         Destroy(enemyShielderLink);
+        Destroy(shielderShield);
+        enemyShielder.GetComponent<EnemyBehaviour_Shielder>().RemoveEnemyFromList(gameObject);
     }
 }

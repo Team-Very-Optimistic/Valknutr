@@ -591,8 +591,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: enemyBossHurt
   hurtSoundOnHit: 1
-  damageTextPrefab: {fileID: 0}
-  damageColor: {r: 0, g: 0.27662468, b: 1, a: 1}
+  damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &747411179884346153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12ca860f3384df79e3984f7071b2c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemDrop: {fileID: 0}
   _SpellItem: {fileID: 0}
+  isGameObjectDrop: 0
+  dropChance: 0
 --- !u!114 &747411179884346151
 MonoBehaviour:
   m_ObjectHideFlags: 0

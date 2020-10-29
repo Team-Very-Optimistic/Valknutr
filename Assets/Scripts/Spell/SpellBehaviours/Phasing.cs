@@ -6,13 +6,15 @@ public class Phasing : SpellBehaviour
     public float _damage;
     public int _phaseNum = 2;
     public List<TriggerEventHandler> triggers;
-
+    public Damage damageScript;
     public override void TriggerEvent(Collider other)
     {
     }
 
     public void Start()
     {
+        damageScript = gameObject.GetComponentElseAddIt<Damage>();
+
         var trig = GetComponents<TriggerEventHandler>();
         triggers = new List<TriggerEventHandler>();
         foreach (var t in trig)
@@ -40,7 +42,6 @@ public class Phasing : SpellBehaviour
     //public bool CanTrigger { get; set; }
     public void Trigger(Collider other)
     {
-        var damageScript = gameObject.GetComponentElseAddIt<Damage>();
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);
         _phaseNum--;

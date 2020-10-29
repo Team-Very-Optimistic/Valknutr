@@ -39,7 +39,7 @@ public class Projectile : TriggerEventHandler
         
         foreach (var col in cols)
         {
-            if (!col.CompareTag("Player") && col.attachedRigidbody != null )
+            if (!col.CompareTag("Player") && col.attachedRigidbody != null && !col.CompareTag("Projectile"))
             {
                 if (col.gameObject.GetComponent<EnemyBehaviourBase>() != null)
                 {

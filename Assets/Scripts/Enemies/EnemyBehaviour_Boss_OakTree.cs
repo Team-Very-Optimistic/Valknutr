@@ -31,10 +31,16 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
     public GameObject stompFeet;
 
     // Attack stopping distances
-    private float closeAttacksStopDist = 3.0f;
-    private float throwAttackStopDist = 15.0f;
+    public float closeAttacksStopDist = 4.0f;
+    public float throwAttackStopDist = 30.0f;
 
     public GameObject closeAttackCollider;
+
+    //Rock throw
+    public GameObject mossRockPrefab;
+    public GameObject leftHand;
+    public GameObject rightHand;
+    public GameObject mossRockRef;
 
     private bool preAnimTriggerSet = false;
 
@@ -61,14 +67,14 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
 
     public void Update()
     {
-        if (--wait > 0) return;
-
         switch (bossState)
         {
             case BossOakTreeBehaviourStates.Walking:
                 {
                     //Navigation
                     navMeshAgent.SetDestination(player.transform.position);
+
+                    if (--wait > 0) return;
 
                     //If boss close enough to player, set to next attack state
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
@@ -98,6 +104,11 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
                                 }
                         }
 
+                        //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
+                        transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
+
+                        navMeshAgent.enabled = false;
+
                         preAnimTriggerSet = false;
                     }
 
@@ -117,8 +128,8 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
                         }
                     }
 
-                    if ((animator.GetCurrentAnimatorStateInfo(0).IsName("ForwardAttack") || animator.GetCurrentAnimatorStateInfo(0).IsName("RegularAttack") ||
-                           animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowRock")) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                    //Has ended transition
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("PickUpRock") || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
                     {
                         switch(nextAttackState)
                         {
@@ -136,6 +147,7 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
                                 }
                         }
 
+                        navMeshAgent.enabled = true;
                         preAnimTriggerSet = false;
                     }
 
@@ -154,8 +166,9 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
                         }
                     }
 
-                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("PickUpRock") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("WalkWithRock"))
                     {
+                        navMeshAgent.enabled = true;
                         bossState = BossOakTreeBehaviourStates.Walking;
                         preAnimTriggerSet = false;
                     }
@@ -167,11 +180,18 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
 
     public void SetStomp()
     {
-        GameObject go = GameObject.Instantiate(stompPrefab, stompFeet.transform.position, Quaternion.identity);
+       GameObject.Instantiate(stompPrefab, stompFeet.transform.position, Quaternion.identity);
     }
 
     private void SetRandomNextAttack(int numAttacks)
     {
+        if (Vector3.Distance(transform.position, player.transform.position) >= throwAttackStopDist / 1.5f)
+        {
+            Debug.Log("Weighted throw");
+            SetRandomNextAttackWeightedForThrow();
+            return;
+        }
+
         ResetAllAnimatorTriggers();
 
         int randInteger = UnityEngine.Random.Range(1, numAttacks + 1);
@@ -184,6 +204,39 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
             animator.SetTrigger("ToWalk");
         }
         else if (randInteger == 2)
+        {
+            nextAttackState = BossOakTreeBehaviourStates.Attack_Forward;
+            navMeshAgent.stoppingDistance = closeAttacksStopDist;
+
+            animator.SetTrigger("ToWalk");
+        }
+        else
+        {
+            nextAttackState = BossOakTreeBehaviourStates.Attack_ThrowRock;
+            navMeshAgent.stoppingDistance = throwAttackStopDist;
+
+            animator.SetTrigger("ToPickUpRock");
+        }
+
+        preAnimTriggerSet = true;
+
+        ResetWaitTicks();
+    }
+
+    private void SetRandomNextAttackWeightedForThrow()
+    {
+        ResetAllAnimatorTriggers();
+
+        int randInteger = UnityEngine.Random.Range(1, 101);
+
+        if (randInteger <= 25)
+        {
+            nextAttackState = BossOakTreeBehaviourStates.Attack_Regular;
+            navMeshAgent.stoppingDistance = closeAttacksStopDist;
+
+            animator.SetTrigger("ToWalk");
+        }
+        else if (randInteger <= 50)
         {
             nextAttackState = BossOakTreeBehaviourStates.Attack_Forward;
             navMeshAgent.stoppingDistance = closeAttacksStopDist;
@@ -231,6 +284,25 @@ public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
 
     public void AddRockToBoss()
     {
-        Debug.Log("Add rock to boss!");
+        //Get mean position between two hands
+        Vector3 rockPosition = (leftHand.transform.position + rightHand.transform.position) / 2.0f;
+        GameObject mossRock = GameObject.Instantiate(mossRockPrefab, rockPosition, Quaternion.identity);
+        mossRock.GetComponent<MossRock>().SetHandReferences(leftHand, rightHand);
+        mossRockRef = mossRock;
+    }
+
+    public void DetatchRockFromBoss()
+    {
+        mossRockRef.GetComponent<MossRock>().SetTargetPosition(player.transform.position);
+        mossRockRef.GetComponent<MossRock>().DetatchFromBoss();
+    }
+
+    public void SetDeathState()
+    {
+        GetComponent<NavMeshAgent>().speed = 0.0f;
+
+        //Disable colliders
+        Destroy(closeAttackCollider);
+        GetComponent<BoxCollider>().enabled = false;
     }
 }

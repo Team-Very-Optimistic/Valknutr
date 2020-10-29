@@ -29,7 +29,6 @@ public class MeleeWeapon : MonoBehaviour
         //Only apply damage one via capsule collider
         if(other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider))
         {
-            UnityEngine.Debug.Log(other.gameObject);
             this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
         }
     }

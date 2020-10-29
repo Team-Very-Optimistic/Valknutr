@@ -1,16 +1,23 @@
 ﻿using System;
-using UnityEngine;
 
-[CreateAssetMenu]
 public class LifeStealModifier : SpellModifier
 {
     public float lifeStealRatio = 0.02f;
-    LifeStealDamageEffect _lifeStealDamageEffect;
+    private LifeStealDamageEffect _lifeStealDamageEffect;
 
     public override void UseValue()
     {
         lifeStealRatio *= value;
-        _lifeStealDamageEffect  = new LifeStealDamageEffect().SetLifeSteal(lifeStealRatio) ;
+        //Use value was called before the copy which made the object not copy over.
+    }
+
+    public override void ModifySpell(SpellBase spell)
+    {
+        if (_lifeStealDamageEffect == null)
+        {
+            _lifeStealDamageEffect = new LifeStealDamageEffect();
+            _lifeStealDamageEffect.SetLifeSteal(lifeStealRatio);
+        }
     }
 
     public override SpellBase ModifyBehaviour(SpellBase action)
@@ -28,6 +35,7 @@ public class LifeStealModifier : SpellModifier
         action._behaviour = spell;
         return action;
     }
+    
 
     public override Tooltip GetTooltip()
     {

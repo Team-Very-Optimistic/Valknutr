@@ -22,6 +22,5 @@ public class SecretRoomEntrance : HealthScript
     public void OnEnable()
     {
         rooms.SetActive(false);
-        Debug.LogWarning(rooms);
     }
 }

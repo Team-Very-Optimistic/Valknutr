@@ -15,7 +15,7 @@ public class HealthScriptTeleport : HealthScript
         _enemy = GetComponent<TeleportEnemy>();
     }
 
-    public override bool ApplyDamage(float damage)
+    public override bool ApplyDamage(float damage, Color color)
     {
         //+z = looking up -- y = 0
         //-z = looking down -- y = 180
