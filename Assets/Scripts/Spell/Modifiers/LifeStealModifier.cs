@@ -11,6 +11,7 @@ public class LifeStealModifier : SpellModifier
     {
         lifeStealRatio *= value;
         _lifeStealDamageEffect  = new LifeStealDamageEffect().SetLifeSteal(lifeStealRatio) ;
+        Debug.Log("created lifesteal");
     }
 
     public override SpellBase ModifyBehaviour(SpellBase action)

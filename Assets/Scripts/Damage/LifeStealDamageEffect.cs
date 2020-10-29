@@ -13,6 +13,7 @@ public class LifeStealDamageEffect : DamageEffect
 
     public override void CastDamageEffect(Collider other, float damage)
     {
+        Debug.LogError("Casting lifesteal effect");
         if(other.CompareTag("Enemy"))
             GameManager.Instance.AffectPlayerCurrHealth(damage * lifeStealRatio);
     }

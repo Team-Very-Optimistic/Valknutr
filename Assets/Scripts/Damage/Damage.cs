@@ -12,6 +12,7 @@ public class Damage : MonoBehaviour
 
     public UnityEvent<Collider, float> _damageCallback;
     
+    [SerializeField]
     private List<DamageEffect> damageEffects;
 
     public virtual bool DealDamage(Collider other)
