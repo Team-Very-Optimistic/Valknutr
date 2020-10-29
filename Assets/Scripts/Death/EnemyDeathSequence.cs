@@ -31,8 +31,8 @@ public class EnemyDeathSequence : BaseDeathSequence
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    public virtual void Update()
+    {  
         if(triggeredDeathSequence)
         {
             delayBeforeFade -= Time.deltaTime;
@@ -73,7 +73,7 @@ public class EnemyDeathSequence : BaseDeathSequence
         }
     }
 
-    public void StartDeathSequence()
+    public virtual void StartDeathSequence()
     {
         TriggerRagdoll();
         KnockbackRagdoll();
@@ -89,6 +89,11 @@ public class EnemyDeathSequence : BaseDeathSequence
         if(GetComponent<EnemyBehaviour_Boss>() != null)
         {
             GetComponent<EnemyBehaviour_Boss>().SetDeathState();
+        }
+
+        if (GetComponent<EnemyShielder_Link>() != null)
+        {
+            Destroy(GetComponent<EnemyShielder_Link>());
         }
     }
 }
