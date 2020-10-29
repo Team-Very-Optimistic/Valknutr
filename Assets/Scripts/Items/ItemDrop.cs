@@ -13,7 +13,9 @@ public class ItemDrop : MonoBehaviour
     public void Update()
     {
         var mousePos = Util.GetMousePositionOnWorldPlane(Camera.main);
-        if ((mousePos - transform.position).magnitude < 0.5)
+        var pos = transform.position;
+        pos.y = 0;
+        if ((mousePos - pos).magnitude < 0.5)
         {
             ShowTooltip();
         }
