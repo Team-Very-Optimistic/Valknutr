@@ -1250,6 +1250,9 @@ MonoBehaviour:
   explodeParticlePrefab: {fileID: 8820148364297313492, guid: d2772961293fe2544a6f93d2161d3cba, type: 3}
   poisonLingerParticlePrefab: {fileID: 5878703907273149651, guid: 98e9b9f58658e2947b053d0c94d6fb4f, type: 3}
   explodeDamageColor: {r: 0.013216423, g: 0.9339623, b: 0.013216423, a: 1}
+  explodeDamagePerTick: 1
+  explodeDamageTotalDuration: 2
+  explodeDamageNumTicks: 2
   redIndicatorPrefab: {fileID: 1401391788558755451, guid: c4cdaa7be53d8ae40a917177be939afb, type: 3}
 --- !u!114 &729799859934132839
 MonoBehaviour:
@@ -1301,7 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 1
   _damageCallback:
     m_PersistentCalls:
       m_Calls: []

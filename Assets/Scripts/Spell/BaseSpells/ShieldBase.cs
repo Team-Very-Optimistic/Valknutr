@@ -14,7 +14,7 @@ class ShieldBase : SpellBase
 
     protected override void AfterReset()
     {
-        healthBuffer = _player.GetComponent<PlayerHealth>().maxHealth/10 + 10 * _scale;
+        healthBuffer = _player.GetComponent<PlayerHealth>().maxHealth/10 * _scale;
         _offset = _offset+ _player.forward * Math.Min(_speed / properties._speed * Random.Range(0.6f, 1.4f) * _scale, 12f);
     }
 

@@ -129,6 +129,10 @@ public class GameManager : Singleton<GameManager>
             _playerHealth.IncreaseCurrHealth(value);
         else
         {
+            if (-value >= _playerHealth.currentHealth)
+            {
+                _playerHealth.ApplyDamage(_playerHealth.currentHealth - 1);
+            }
             _playerHealth.ApplyDamage(-value);
         }
     }

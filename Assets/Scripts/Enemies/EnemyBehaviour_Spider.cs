@@ -31,8 +31,13 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     //Post-explode lingering damage
     public GameObject poisonLingerParticlePrefab;
     public Color explodeDamageColor;
+    [SerializeField]
     private float explodeDamagePerTick = 1.0f;
+    [SerializeField]
+
     private float explodeDamageTotalDuration = 2.0f;
+    [SerializeField]
+
     private int explodeDamageNumTicks = 2;
 
     public GameObject redIndicatorPrefab;
