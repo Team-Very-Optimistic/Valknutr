@@ -171,7 +171,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         navMeshAgent.enabled = true;
         chargeTimeElapsed = 0.0f;
 
-        Invoke(nameof(StartRunning), restTime);
+        Invoke(nameof(StartRunning), restTime + Random.Range(0, 1.5f));
 
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToRest");
