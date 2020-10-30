@@ -2136,7 +2136,6 @@ GameObject:
   - component: {fileID: 2706533526139679788}
   - component: {fileID: 2706533526139679789}
   - component: {fileID: 2706533526139679786}
-  - component: {fileID: 2706533526139679787}
   - component: {fileID: 2706533526139679784}
   - component: {fileID: 2706533526139679785}
   m_Layer: 0
@@ -2311,22 +2310,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   restTime: 1
   redIndicatorPrefab: {fileID: 1401391788558755451, guid: c4cdaa7be53d8ae40a917177be939afb, type: 3}
---- !u!114 &2706533526139679787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706533526139679782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12ca860f3384df79e3984f7071b2c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemDrop: {fileID: 0}
-  _SpellItem: {fileID: 0}
-  isGameObjectDrop: 0
-  dropChance: 0
 --- !u!114 &2706533526139679784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2357,7 +2340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 5
   _damageCallback:
     m_PersistentCalls:
       m_Calls: []
