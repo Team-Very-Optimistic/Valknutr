@@ -704,13 +704,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackVelStoppingThreshold: 0.05
-  dashWindupTime: 2
+  dashWindupTime: 0.2
   dashCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 2
+      time: 0.022361755
+      value: -0.0119018555
       inSlope: -0.009591588
       outSlope: -0.009591588
       tangentMode: 0
@@ -718,8 +718,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.24180196
     - serializedVersion: 3
-      time: 0.501099
-      value: 5.0028863
+      time: 0.32364342
+      value: 7.9531803
       inSlope: 0.002565835
       outSlope: 0.002565835
       tangentMode: 0
@@ -727,19 +727,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.64410293
-      value: 1.552465
-      inSlope: -7.342464
-      outSlope: -7.342464
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.5
-      inSlope: -2.9572172
-      outSlope: -2.9572172
+      time: 0.7540283
+      value: 0.0065307617
+      inSlope: -18.464052
+      outSlope: -18.464052
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -779,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 3
   _damageCallback:
     m_PersistentCalls:
       m_Calls: []
