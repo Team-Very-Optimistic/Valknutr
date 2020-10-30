@@ -1043,6 +1043,7 @@ GameObject:
   - component: {fileID: 4817530758179189855}
   - component: {fileID: 2893889350254548174}
   - component: {fileID: 7657371711747227774}
+  - component: {fileID: 6813385782466444834}
   m_Layer: 0
   m_Name: Room_4
   m_TagString: Untagged
@@ -1108,6 +1109,28 @@ MonoBehaviour:
   lootQualityModifier: 1
   spawnTreasure: 1
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
+--- !u!114 &6813385782466444834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5901698253538026158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 2080914367696049740}
+  - {fileID: 607359216130744805}
+  - {fileID: 4807058801024888323}
+  - {fileID: 8697347533372436130}
+  availablePacks:
+  - {fileID: 11400000, guid: abc744605361b1f4fa047f04b21d6ae8, type: 2}
+  - {fileID: 11400000, guid: abc744605361b1f4fa047f04b21d6ae8, type: 2}
+  - {fileID: 11400000, guid: d37bd3236b643ba44b1a22fe484223e0, type: 2}
+  difficultyTarget: 12
 --- !u!1 &6008316103752799754
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,14 +4357,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f7ea6eb3952f8e468af637f283f6168, type: 3}
---- !u!4 &3806725746923417593 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 5f7ea6eb3952f8e468af637f283f6168, type: 3}
-  m_PrefabInstance: {fileID: 3806725746923287929}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3806725746923385817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 5f7ea6eb3952f8e468af637f283f6168, type: 3}
+  m_PrefabInstance: {fileID: 3806725746923287929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3806725746923417593 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 5f7ea6eb3952f8e468af637f283f6168, type: 3}
   m_PrefabInstance: {fileID: 3806725746923287929}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3890578956479123409
