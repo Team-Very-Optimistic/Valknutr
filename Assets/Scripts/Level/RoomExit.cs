@@ -24,8 +24,8 @@ public class RoomExit : MonoBehaviour
         _collider = GetComponentInChildren<Collider>();
         _renderer = GetComponentInChildren<Renderer>();
         _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
-        
-        //minimapIcon.SetActive(isConnected);
+        if(minimapIcon)
+            minimapIcon.SetActive(isConnected);
     }
 
     private void OnDrawGizmos()
