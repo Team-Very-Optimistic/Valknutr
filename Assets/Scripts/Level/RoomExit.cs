@@ -7,8 +7,11 @@ using UnityEngine.Assertions;
 
 public class RoomExit : MonoBehaviour
 {
+    [HideInInspector]
     public bool isConnected = false;
+    [HideInInspector]
     public bool isLocked = false;
+    [HideInInspector]
     public bool isOpen = false;
     private Vector3 _originalPosition;
     [SerializeField]
@@ -16,6 +19,7 @@ public class RoomExit : MonoBehaviour
     private Collider _collider;
     private Renderer _renderer;
     private NavMeshObstacle _navMeshObstacle;
+    [HideInInspector]
     public GameObject minimapIcon;
 
     private void Start()
@@ -24,6 +28,12 @@ public class RoomExit : MonoBehaviour
         _collider = GetComponentInChildren<Collider>();
         _renderer = GetComponentInChildren<Renderer>();
         _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
+        HideMinimapIcon();
+    }
+
+    public void HideMinimapIcon()
+    {
+        if (!minimapIcon) minimapIcon = GetComponentInChildren<SpriteRenderer>()?.gameObject;
         if(minimapIcon)
             minimapIcon.SetActive(isConnected);
     }

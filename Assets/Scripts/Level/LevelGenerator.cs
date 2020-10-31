@@ -231,6 +231,13 @@ public class LevelGenerator : MonoBehaviour
             RebuildNavMesh();
             break;
         }
+
+        HideAllUnconnectedExitIcons();
+    }
+
+    private void HideAllUnconnectedExitIcons()
+    {
+        _exits.ForEach(exit => exit.HideMinimapIcon());
     }
 
     public void Cleanup()
