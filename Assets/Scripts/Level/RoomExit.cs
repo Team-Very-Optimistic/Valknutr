@@ -25,7 +25,7 @@ public class RoomExit : MonoBehaviour
         _renderer = GetComponentInChildren<Renderer>();
         _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
         
-        minimapIcon.SetActive(isConnected);
+        //minimapIcon.SetActive(isConnected);
     }
 
     private void OnDrawGizmos()
@@ -43,7 +43,7 @@ public class RoomExit : MonoBehaviour
 
     public void Connect(RoomExit other)
     {
-        Assert.IsNotNull(other);
+        //Assert.IsNotNull(other);
         _connectedExit = other;
         other._connectedExit = this;
         isConnected = true;
@@ -66,7 +66,8 @@ public class RoomExit : MonoBehaviour
         isOpen = true;
         _renderer.enabled = false;
         _collider.enabled = false;
-        _navMeshObstacle.enabled = false;
+        if(_navMeshObstacle)
+            _navMeshObstacle.enabled = false;
     }
 
     public void Close()

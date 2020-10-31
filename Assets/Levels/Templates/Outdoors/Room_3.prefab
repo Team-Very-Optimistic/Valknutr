@@ -1213,8 +1213,8 @@ MonoBehaviour:
   isConnected: 0
   isLocked: 0
   isOpen: 0
-  _connectedExit: {fileID: 0}
-  minimapIcon: {fileID: 0}
+  _connectedExit: {fileID: 5448252813410288935}
+  minimapIcon: {fileID: 37228983383275366}
 --- !u!1 &4107933209320567046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,8 +1546,8 @@ MonoBehaviour:
   isConnected: 0
   isLocked: 0
   isOpen: 0
-  _connectedExit: {fileID: 0}
-  minimapIcon: {fileID: 0}
+  _connectedExit: {fileID: 2712894362008332203}
+  minimapIcon: {fileID: 37228983383275366}
 --- !u!64 &849507360359185390
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2357,7 +2357,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints: []
+  spawnPoints:
+  - {fileID: 335615344453719200}
+  - {fileID: 7828677953973623159}
+  - {fileID: 141175022122633805}
+  - {fileID: 1085691184988317293}
+  - {fileID: 6255915570368665699}
+  - {fileID: 614179960893026380}
+  - {fileID: 3917838799564472742}
   availablePacks:
   - {fileID: 11400000, guid: e9ad4ac01e252864eb01a4f690f7c4d0, type: 2}
   - {fileID: 11400000, guid: 2ab1d9e4a42da284899329b0800de207, type: 2}
@@ -2715,8 +2722,8 @@ MonoBehaviour:
   isConnected: 0
   isLocked: 0
   isOpen: 0
-  _connectedExit: {fileID: 0}
-  minimapIcon: {fileID: 0}
+  _connectedExit: {fileID: 2712894362008332203}
+  minimapIcon: {fileID: 37228983383275366}
 --- !u!54 &4868675587113120532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3655,8 +3662,8 @@ MonoBehaviour:
   isConnected: 0
   isLocked: 0
   isOpen: 0
-  _connectedExit: {fileID: 0}
-  minimapIcon: {fileID: 0}
+  _connectedExit: {fileID: 6689715807661031365}
+  minimapIcon: {fileID: 37228983383275366}
 --- !u!1001 &144146259665632032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6007,6 +6014,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 55aa49c292af7574c9a84c4aa5b2faf0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500000, guid: 55aa49c292af7574c9a84c4aa5b2faf0, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8446,6 +8457,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: cb7da01bec49705469e0d8e9e9e6d703, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: cb7da01bec49705469e0d8e9e9e6d703, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb7da01bec49705469e0d8e9e9e6d703, type: 3}

@@ -273,7 +273,8 @@ public class EnemyBehaviour_Boss : MonoBehaviour
     {
         if (GameManager.Instance)
         {
-            LevelManager.Instance.StartNextLevel();
+            GameManager.Instance.SetGameWin();
+            //LevelManager.Instance.StartNextLevel();
         }
     }
 }
