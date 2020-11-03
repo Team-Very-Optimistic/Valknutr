@@ -11,7 +11,7 @@ enum BossBehaviourStates
     Death
 }
 
-public class EnemyBehaviour_Boss : MonoBehaviour
+public class EnemyBehaviour_Boss : Enemy
 {
     // Navigation
     private GameObject player;

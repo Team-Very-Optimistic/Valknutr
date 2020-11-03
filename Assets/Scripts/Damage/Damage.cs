@@ -40,8 +40,6 @@ public class Damage : MonoBehaviour
         }
         if (!damageEffects.Contains(damageEffect))
         {
-            
-            Debug.Log("Adding dmg effect contains");
             damageEffects.Add(damageEffect);
             _damageCallback.AddListener(damageEffect.CastDamageEffect);
         }
