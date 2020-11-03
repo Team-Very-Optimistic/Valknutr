@@ -125,7 +125,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void AffectPlayerCurrHealth(float value)
     {
-        if(value > 0)
+        if(value >= 0)
             _playerHealth.IncreaseCurrHealth(value);
         else
         {
