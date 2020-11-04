@@ -103,6 +103,10 @@ public class MossRock : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy")) return;
+
+        //Explicit check against Room_Boss_2(Clone) box collider trigger (cannot manipulate Physics, Default layer required for collision with floor/walls
+        if (other.gameObject.name == "Room_Boss_2(Clone)") return;
+
         if (other.gameObject.CompareTag("Player") && other.gameObject.name.Equals("Weapon")) return;
         
         if (other.gameObject.CompareTag("Player"))
@@ -111,7 +115,6 @@ public class MossRock : MonoBehaviour
         }
 
         float screenShakeAmount = 1.0f - ((GameManager.Instance._player.transform.position - transform.position).magnitude / screenShakeMaxDistance);
-        Debug.Log(screenShakeAmount);
         ScreenShakeManager.Instance.ScreenShake(0.25f, screenShakeAmount);
         Destroy(targetParticleRef);
         Destroy(gameObject);
