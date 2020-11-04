@@ -293,7 +293,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
     public void DetatchRockFromBoss()
     {
-        mossRockRef.GetComponent<MossRock>().SetTargetPosition(player.transform.position);
+        mossRockRef.GetComponent<MossRock>().SetTargetDirection(player.transform.position);
         mossRockRef.GetComponent<MossRock>().DetatchFromBoss();
     }
 
