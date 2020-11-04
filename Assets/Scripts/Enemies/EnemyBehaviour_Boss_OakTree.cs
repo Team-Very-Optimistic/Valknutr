@@ -12,7 +12,7 @@ enum BossOakTreeBehaviourStates
     PickUpRock,
 }
 
-public class EnemyBehaviour_Boss_OakTree : MonoBehaviour
+public class EnemyBehaviour_Boss_OakTree : Enemy
 {
     // Navigation
     private GameObject player;

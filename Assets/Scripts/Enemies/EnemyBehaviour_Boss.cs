@@ -11,7 +11,7 @@ enum BossBehaviourStates
     Death
 }
 
-public class EnemyBehaviour_Boss : MonoBehaviour
+public class EnemyBehaviour_Boss : Enemy
 {
     // Navigation
     private GameObject player;
@@ -271,7 +271,10 @@ public class EnemyBehaviour_Boss : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(GameManager.Instance)
+        if (GameManager.Instance)
+        {
             GameManager.Instance.SetGameWin();
+            //LevelManager.Instance.StartNextLevel();
+        }
     }
 }

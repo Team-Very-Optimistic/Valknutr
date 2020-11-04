@@ -24,7 +24,9 @@ public class OrthoSmoothFollow : MonoBehaviour {
     private void Awake()
     {
         EnemyBehaviour_Boss.OnBossStart += BossCameraShift;
-        EnemyBehaviour_Boss.OnBossDeath += BossCameraShift;    
+        EnemyBehaviour_Boss.OnBossDeath += BossCameraShift;  
+        EnemyBehaviour_Boss_OakTree.OnBossStart += BossCameraShift;
+        EnemyBehaviour_Boss_OakTree.OnBossDeath += BossCameraShift;    
     }
 
     private void BossCameraShift()

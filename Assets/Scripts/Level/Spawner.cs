@@ -44,4 +44,10 @@ public class Spawner : MonoBehaviour
             pack.SpawnEnemies(spawnPosition).ForEach(enemies.Add)
         );
     }
+
+    [ContextMenu("Detect SpawnZones")]
+    private void DetectSpawnZones()
+    {
+        spawnPoints = GetComponentsInChildren<SpawnZone>().Select(i => i.transform).ToArray();
+    }
 }

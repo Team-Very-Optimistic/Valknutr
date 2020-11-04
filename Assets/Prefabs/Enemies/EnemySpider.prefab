@@ -1115,7 +1115,6 @@ GameObject:
   - component: {fileID: 729799859934132833}
   - component: {fileID: 729799859934132832}
   - component: {fileID: 729799859934132839}
-  - component: {fileID: 729799859934132838}
   - component: {fileID: 729799859934132837}
   - component: {fileID: 729799859934132836}
   - component: {fileID: 729799859934132843}
@@ -1203,7 +1202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackVelStoppingThreshold: 0.05
-  windUpTime: 2
+  windUpTime: 0.3
   jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -1217,7 +1216,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.29462892
+      time: 0.13626584
       value: -0.101989746
       inSlope: 0
       outSlope: 0
@@ -1226,7 +1225,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.51011056
+      time: 0.23592609
       value: 0.5548216
       inSlope: 5.9061565
       outSlope: 5.9061565
@@ -1235,16 +1234,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5456759
-      value: 0.7084626
-      inSlope: 2.1932065
-      outSlope: 2.1932065
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.6067647
-      outWeight: 0.10695564
-    - serializedVersion: 3
-      time: 0.99747944
+      time: 0.46133417
       value: 0.998387
       inSlope: 0
       outSlope: 0
@@ -1260,6 +1250,9 @@ MonoBehaviour:
   explodeParticlePrefab: {fileID: 8820148364297313492, guid: d2772961293fe2544a6f93d2161d3cba, type: 3}
   poisonLingerParticlePrefab: {fileID: 5878703907273149651, guid: 98e9b9f58658e2947b053d0c94d6fb4f, type: 3}
   explodeDamageColor: {r: 0.013216423, g: 0.9339623, b: 0.013216423, a: 1}
+  explodeDamagePerTick: 1
+  explodeDamageTotalDuration: 2
+  explodeDamageNumTicks: 2
   redIndicatorPrefab: {fileID: 1401391788558755451, guid: c4cdaa7be53d8ae40a917177be939afb, type: 3}
 --- !u!114 &729799859934132839
 MonoBehaviour:
@@ -1281,22 +1274,6 @@ MonoBehaviour:
   timeToDestroy: 5
   triggeredParticle: 0
   triggeredDeathSequence: 0
---- !u!114 &729799859934132838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729799859934132842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12ca860f3384df79e3984f7071b2c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemDrop: {fileID: 0}
-  _SpellItem: {fileID: 0}
-  isGameObjectDrop: 0
-  dropChance: 0
 --- !u!114 &729799859934132837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1327,7 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 1
   _damageCallback:
     m_PersistentCalls:
       m_Calls: []

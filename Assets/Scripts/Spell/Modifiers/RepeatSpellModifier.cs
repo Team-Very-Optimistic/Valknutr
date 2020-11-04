@@ -16,7 +16,7 @@ public class RepeatSpellModifier : SpellModifier
         Action temp = () =>
         {
             oldBehavior.Invoke();
-            if (--iterations < 0) return;
+            if (--iterations <= 0) return;
             eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
             if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();

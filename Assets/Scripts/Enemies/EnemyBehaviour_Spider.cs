@@ -31,8 +31,13 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     //Post-explode lingering damage
     public GameObject poisonLingerParticlePrefab;
     public Color explodeDamageColor;
+    [SerializeField]
     private float explodeDamagePerTick = 1.0f;
+    [SerializeField]
+
     private float explodeDamageTotalDuration = 2.0f;
+    [SerializeField]
+
     private int explodeDamageNumTicks = 2;
 
     public GameObject redIndicatorPrefab;
@@ -178,7 +183,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                         playerHealthScript.ApplyDamageOverTime(
                             explodeDamagePerTick, explodeDamageNumTicks, explodeDamageTotalDuration, explodeDamageColor));
 
-                    GameObject poisonLingerObject = GameObject.Instantiate(poisonLingerParticlePrefab, hit.transform.position, Quaternion.Euler(new Vector3(-90.0f, 0.0f, 0.0f)));
+                    GameObject poisonLingerObject = Instantiate(poisonLingerParticlePrefab, hit.transform.position, Quaternion.Euler(new Vector3(-90.0f, 0.0f, 0.0f)));
                     poisonLingerObject.GetComponent<FollowObject>().SetFollowObject(hit.gameObject);
                     ParticleSystem.MainModule poisonLingerParticleSystem = poisonLingerObject.GetComponent<ParticleSystem>().main;
                     poisonLingerParticleSystem.startLifetime = explodeDamageTotalDuration;
@@ -191,19 +196,22 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         }
 
         GameObject poisonCloudParticle = GameObject.Instantiate(explodeParticlePrefab, transform.position, Quaternion.identity);
-        ParticleSystem.MainModule poisonCloudParticleSystem = poisonCloudParticle.GetComponent<ParticleSystem>().main;
+        ParticleSystem poisonCloudParticleSystem = poisonCloudParticle.GetComponent<ParticleSystem>();
 
         poisonCloudParticleSystem.startSize = explodeRadius + 4;
         poisonCloudParticleSystem.startLifetime = explodeDuration;
-        poisonCloudParticleSystem.duration = explodeDuration;
         poisonCloudParticle.GetComponent<ParticleSystem>().Play();
         Destroy(poisonCloudParticle, 1.0f);
-
+        StartCoroutine(StopParticle(poisonCloudParticleSystem, explodeDuration));
         ScreenShakeManager.Instance.ScreenShake(0.25f, 0.4f);
-
         Destroy(gameObject);
     }
 
+    IEnumerator StopParticle(ParticleSystem system, float time)
+    {
+        yield return new WaitForSeconds(time);
+        system.Stop();
+    }
 
     private void ResetAllAnimationTriggers()
     {
