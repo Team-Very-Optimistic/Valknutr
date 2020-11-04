@@ -304,5 +304,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
         //Disable colliders
         Destroy(closeAttackCollider);
         GetComponent<BoxCollider>().enabled = false;
+
+        Destroy(mossRockRef);
     }
 }
