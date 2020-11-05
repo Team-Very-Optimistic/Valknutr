@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7627630856167773405}
   - component: {fileID: 818477945907600500}
   - component: {fileID: 5295062619993175080}
-  - component: {fileID: 6547608203363382482}
+  - component: {fileID: -8601652148592575218}
   - component: {fileID: 7344327721765236651}
   m_Layer: 12
   m_Name: MossRock
@@ -113,9 +113,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  isFriendly: 0
---- !u!65 &6547608203363382482
-BoxCollider:
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!64 &-8601652148592575218
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,9 +126,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.847011, y: 2.4502902, z: 1.3947631}
-  m_Center: {x: -0.018196762, y: 0.02152747, z: 0.059389234}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: a22b50c8879f5734a8381c36c61748db, type: 3}
 --- !u!54 &7344327721765236651
 Rigidbody:
   m_ObjectHideFlags: 0

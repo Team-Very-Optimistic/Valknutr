@@ -80,8 +80,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
                         bossState = nextAttackState;
-                        ResetWaitTicks();
-
+    
                         switch(nextAttackState)
                         {
                             case BossOakTreeBehaviourStates.Attack_Regular:
@@ -110,6 +109,8 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                         navMeshAgent.enabled = false;
 
                         preAnimTriggerSet = false;
+
+                        ResetWaitTicks();
                     }
 
                     break;
@@ -119,8 +120,10 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
             case BossOakTreeBehaviourStates.Attack_Forward:
             case BossOakTreeBehaviourStates.Attack_ThrowRock:
                 {
+                    if (--wait > 0) return;
+
                     if ((animator.GetCurrentAnimatorStateInfo(0).IsName("ForwardAttack") || animator.GetCurrentAnimatorStateInfo(0).IsName("RegularAttack") ||
-                         animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowRock")) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f)
+                         animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowRock")) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.50f)
                     {
                         if(!preAnimTriggerSet)
                         {
@@ -149,14 +152,17 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
                         navMeshAgent.enabled = true;
                         preAnimTriggerSet = false;
-                    }
 
+                        ResetWaitTicks();
+                    }
 
                     break;
                 }
 
             case BossOakTreeBehaviourStates.PickUpRock:
                 {
+                    if (--wait > 0) return;
+
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("PickUpRock") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f)
                     {
                         if(!preAnimTriggerSet)
@@ -171,6 +177,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                         navMeshAgent.enabled = true;
                         bossState = BossOakTreeBehaviourStates.Walking;
                         preAnimTriggerSet = false;
+                        ResetWaitTicks();
                     }
 
                     break;
@@ -293,7 +300,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
     public void DetatchRockFromBoss()
     {
-        mossRockRef.GetComponent<MossRock>().SetTargetPosition(player.transform.position);
+        mossRockRef.GetComponent<MossRock>().SetTargetDirection(player.transform.position);
         mossRockRef.GetComponent<MossRock>().DetatchFromBoss();
     }
 
@@ -304,5 +311,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
         //Disable colliders
         Destroy(closeAttackCollider);
         GetComponent<BoxCollider>().enabled = false;
+
+        Destroy(mossRockRef);
     }
 }

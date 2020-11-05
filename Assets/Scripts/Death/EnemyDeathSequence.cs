@@ -93,6 +93,10 @@ public class EnemyDeathSequence : BaseDeathSequence
             GetComponent<EnemyBehaviour_Boss>().SetDeathState();
         }
 
-        Destroy(GetComponent<EnemyShielder_Link>());
+        if(GetComponent<EnemyShielder_Link>() != null)
+        {
+            GetComponent<EnemyShielder_Link>().RemoveSelfFromShielderList();
+            Destroy(GetComponent<EnemyShielder_Link>());
+        }
     }
 }
