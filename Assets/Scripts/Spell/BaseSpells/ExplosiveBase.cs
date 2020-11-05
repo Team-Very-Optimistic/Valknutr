@@ -15,7 +15,7 @@ public class ExplosiveBase : SpellBase
     protected override void AfterReset()
     {
         power *= _damage / properties._damage + power * radius;
-        _offset += Vector3.up + _player.forward * 1.3f;
+        _offset += _player.forward * 1.3f;
         _direction = _direction * 2 + _offset;
         radius = 3 * _scale;
 

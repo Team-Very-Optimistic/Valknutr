@@ -58,7 +58,7 @@ public class Room : MonoBehaviour
         isActive = true;
         isPlayerInside = true;
 
-        if (spawner) spawner.BeginSpawning();
+        if (spawner) spawner.BeginSpawning(depth);
 
         CheckCleared();
 
