@@ -16,22 +16,22 @@ public class Spawner : MonoBehaviour
         return hasSpawnedEnemies && enemies.All(enemy => enemy == null); // todo
     }
 
-    public void BeginSpawning()
+    public void BeginSpawning(int depth)
     {
         if (hasSpawnedEnemies) return;
         hasSpawnedEnemies = true;
         
-        SpawnEnemies();
+        SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + depth /5);
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemies(int difficulty)
     {
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
         List<EnemyPack> toSpawn = new List<EnemyPack>();
 
         // Select packs until we meet a difficulty target
-        while (currentDifficulty < difficultyTarget)
+        while (currentDifficulty < difficultyTarget * difficulty)
         {
             var newPack = Util.RandomItem(availablePacks);
             toSpawn.Add(newPack);

@@ -10,12 +10,12 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     /// </summary>
     public int difficultyLevel = 1;
 
-    public float difficultyIncreaseInterval = 60f;
+    //public float difficultyIncreaseInterval = 60f;
     
     public void Awake()
     {
         EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
-        StartCoroutine(IncreaseDifficulty(1, difficultyIncreaseInterval));
+        //StartCoroutine(IncreaseDifficulty(1, difficultyIncreaseInterval));
     }
 
     public void OnDestroy()

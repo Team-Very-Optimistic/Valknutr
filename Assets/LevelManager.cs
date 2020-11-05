@@ -13,7 +13,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void StartNextLevel()
     {
-        DifficultyScalingSystem.Instance.IncreaseDifficulty(1, 0.5f);
+        StartCoroutine(DifficultyScalingSystem.Instance.IncreaseDifficulty(1, 0.0f));
         StartLevel(++levelIndex % levels.Length);
     }
 
