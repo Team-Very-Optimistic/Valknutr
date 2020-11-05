@@ -273,8 +273,8 @@ public class EnemyBehaviour_Boss : Enemy
     {
         if (GameManager.Instance)
         {
-            GameManager.Instance.SetGameWin();
-            //LevelManager.Instance.StartNextLevel();
+            // GameManager.Instance.SetGameWin();
+            LevelManager.Instance.StartNextLevel();
         }
     }
 }
