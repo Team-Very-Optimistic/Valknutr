@@ -24,12 +24,12 @@ public class Spawner : MonoBehaviour
         SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + depth /5);
     }
 
-    private void SpawnEnemies(int difficulty)
+    private void SpawnEnemies(float difficulty)
     {
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
         List<EnemyPack> toSpawn = new List<EnemyPack>();
-
+        print(difficultyTarget * difficulty);
         // Select packs until we meet a difficulty target
         while (currentDifficulty < difficultyTarget * difficulty)
         {

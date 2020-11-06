@@ -47,7 +47,7 @@ public class AoeBlast : SpellBehaviour
 
     private void Trig(Collider other)
     {
-	    if (other.gameObject != GameManager.Instance._player)
+	    if (other.gameObject.CompareTag("Player"))
 	    {
 		    _damage.DealDamage(other);
 		    _collider.enabled = false;

@@ -10,6 +10,8 @@ public class Shield : NoTrigger
     private Transform newParent;
     private PlayerHealth playerHealth;
     private HealthScript _healthScript;
+    private float healthBuffer;
+
     protected override void Start()
     {
         base.Start();
@@ -25,7 +27,7 @@ public class Shield : NoTrigger
         transform.SetParent(newParent);
         _healthScript = gameObject.AddComponent<HealthScript>();
         _healthScript.damageColor = Color.yellow;
-        _healthScript.maxHealth = playerHealth.maxHealth/10 + parent.lossyScale.x * 10f;
+        _healthScript.maxHealth = healthBuffer;
         _healthScript.hurtSound = "shieldHit";
         playerHealth = parent.GetComponent<PlayerHealth>();
         playerHealth.AddBuffer(this);
@@ -38,9 +40,10 @@ public class Shield : NoTrigger
         transform.RotateAround(newParent.position, Vector3.up, angularSpeed * Time.deltaTime);
     }
     
-    public void SetSpeed(float speed)
+    public void SetSpeed(float speed, float healthBuffer)
     {
         angularSpeed = speed;
+        this.healthBuffer = healthBuffer;
     }
 
     public bool Damage(float damage)
