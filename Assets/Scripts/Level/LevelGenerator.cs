@@ -256,10 +256,21 @@ public class LevelGenerator : MonoBehaviour
 
         _rooms.Clear();
         _exits.Clear();
-
-        while (transform.childCount > 0)
+        
+        
+        if (Application.isPlaying)
         {
-            DestroyImmediate(transform.GetChild(0).gameObject);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+        else
+        {
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
         }
     }
 

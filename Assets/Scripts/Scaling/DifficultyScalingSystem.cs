@@ -48,6 +48,6 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         yield return new WaitForSeconds(time);
         difficultyLevel += amount;
         GameManager.Instance.healthPickupValue *= difficultyLevel;
-        StartCoroutine(IncreaseDifficulty(amount, time));
+        // StartCoroutine(IncreaseDifficulty(amount, time));
     }
 }

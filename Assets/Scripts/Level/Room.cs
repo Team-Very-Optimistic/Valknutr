@@ -20,8 +20,9 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
+    public GameObject levelExit;
     private bool isActive;
-    private bool isCleared;
+    public bool isCleared;
     private bool isPlayerInside;
     private List<GameObject> minimapIcons;
     public int depth;
@@ -110,11 +111,14 @@ public class Room : MonoBehaviour
     {
         UpdateMinimapIcon(new Color(0.02f, 0.58f, 0f));
         OpenAllDoors();
-        if (spawnTreasure)
-        {
-            SpawnTreasure();
-            spawnTreasure = false;
-        }
+        ActivateLevelExit();
+        SpawnTreasure();
+        
+    }
+
+    private void ActivateLevelExit()
+    {
+        if (levelExit != null) levelExit.SetActive(true);
     }
 
     private void UpdateMinimapIcon(Color color)
@@ -129,7 +133,11 @@ public class Room : MonoBehaviour
 
     private void SpawnTreasure()
     {
-        GameManager.SpawnTreasureChest(transform.position + Vector3.up * 5, lootQualityModifier);
+        if (spawnTreasure)
+        {
+            GameManager.SpawnTreasureChest(transform.position + Vector3.up * 5, lootQualityModifier);
+            spawnTreasure = false;
+        }
     }
 
     public void OpenAllDoors()
