@@ -12,7 +12,7 @@ public class HealthScript : MonoBehaviour
     public bool destroyOnDeath = true;
     public string hurtSound;
     public bool hurtSoundOnHit = true;
-    private bool dead = false;
+    public bool dead = false;
     
     //Damage protection multipliers
     protected float damageMultiplier = 1.0f;

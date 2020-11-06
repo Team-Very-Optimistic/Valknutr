@@ -13,7 +13,11 @@ public class Spawner : MonoBehaviour
 
     public bool IsDone()
     {
-        return hasSpawnedEnemies && enemies.All(enemy => enemy == null); // todo
+        return hasSpawnedEnemies && enemies.All(enemy =>
+        {
+            if (enemy == null) return true;
+            return enemy.GetComponent<HealthScript>()?.dead ?? false;
+        });
     }
 
     public void BeginSpawning(int depth)
