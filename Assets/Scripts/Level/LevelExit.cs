@@ -8,12 +8,21 @@ public class LevelExit : MonoBehaviour
     {
         if (activated || other.gameObject != GameManager.Instance._player) return;
         activated = true;
-        StartCoroutine(StartNextLevel());
+        StartNextLevel();
     }
 
-    static IEnumerator StartNextLevel()
+    void StartNextLevel()
+    {        
+        StartCoroutine(_StartNextLevel());
+
+    }
+
+    static IEnumerator _StartNextLevel()
     {
-        yield return new WaitForSeconds(5);
+        UiManager.FadeToBlack(1);
+        yield return new WaitForSeconds(1);
         LevelManager.Instance.StartNextLevel();
+        UiManager.FadeFromBlack(1);
+        UiManager.HideBlackOverlay();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UiManager : Singleton<UiManager>
 {
@@ -10,6 +12,7 @@ public class UiManager : Singleton<UiManager>
     public GameObject minimap;
     public GameObject pauseMenu;
     public GameObject inWorldTooltipWindow;
+    public GameObject blackOverlay;
 
     private bool isPaused = false;
     private HealthScript playerHealth;
@@ -140,6 +143,34 @@ public class UiManager : Singleton<UiManager>
     public static void HideInWorldTooltip()
     {
         Instance.inWorldTooltipWindow.SetActive(false);
+    }
+
+    [ContextMenu("test")]
+    public void Test()
+    {
+        Instance.blackOverlay.SetActive(true);
+        Instance.blackOverlay.GetComponent<Image>().color = Random.ColorHSV();
+    }
+    
+
+    public static void FadeToBlack(float duration)
+    {
+        Instance.blackOverlay.SetActive(true);
+        Instance.blackOverlay.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+        Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(0, 0, true);
+        Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(1, duration, false);
+    }
+
+
+    // Assumes that its already black
+    public static void FadeFromBlack(float duration)
+    {
+        Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(0, duration, true);
+    }
+
+    public static void HideBlackOverlay()
+    {
+        // throw new System.NotImplementedException();
     }
 }
 

@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
     public GameObject shielderShieldPrefab;
+    public GameObject cameraRig;
 
     public QualityManager QualityManager;
     
