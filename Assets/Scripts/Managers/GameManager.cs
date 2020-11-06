@@ -97,6 +97,7 @@ public class GameManager : Singleton<GameManager>
 
     public static TreasureChest SpawnTreasureChest(Vector3 position, float quality)
     {
+        AudioManager.PlaySoundAtPosition("treasure", position);
         var treasure = Instantiate(Instance.treasurePrefab, position, Quaternion.identity).GetComponent<TreasureChest>();
         // todo: set loot + quality
         return treasure;

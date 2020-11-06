@@ -113,7 +113,7 @@ public class Room : MonoBehaviour
 
     private void SpawnTreasure()
     {
-        GameManager.SpawnTreasureChest(transform.position, lootQualityModifier);
+        GameManager.SpawnTreasureChest(transform.position + Vector3.up * 5, lootQualityModifier);
     }
 
     public void OpenAllDoors()
