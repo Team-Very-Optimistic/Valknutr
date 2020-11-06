@@ -31,7 +31,7 @@ class ShieldBase : SpellBase
             rotateBy += _direction.x * 90 + _direction.z * 90;
             p.transform.RotateAround(_player.position,Vector3.up, rotateBy);
             p.transform.SetParent(_player);
-            p.AddComponent<Shield>().SetSpeed(_speed);
+            p.AddComponent<Shield>().SetSpeed(_speed, healthBuffer);
             _objectForSpell = p;
         }
     }
