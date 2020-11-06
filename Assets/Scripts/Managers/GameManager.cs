@@ -52,7 +52,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = QualityManager.Quality.NotSet, SpellElement notThis = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, 
+        QualityManager.Quality quality = QualityManager.Quality.NotSet, SpellElement notThis = null)
     {
         //Add quality to item
         if (quality == QualityManager.Quality.NotSet)
@@ -66,6 +67,42 @@ public class GameManager : Singleton<GameManager>
             for (int i = 0; i < 10; i++)
             {
                 _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+                if (_SpellItem._spellElement != notThis && _SpellItem._spellElement.quality <= quality)
+                {
+                    break;
+                }
+            }
+
+        }
+
+        if (_SpellItem._spellElement.quality > quality)
+        {
+            Debug.LogWarning("Spell item quality lower than it should be: " + _SpellItem._spellElement);
+        }
+        _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
+        QualityManager.RandomizeAndInitProperties(_SpellItem, quality);
+        
+        var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
+        itemDrop._spellItem = _SpellItem;
+        return itemDrop;
+    }
+    
+    public ItemDrop SpawnBase(Vector3 position, SpellItem _SpellItem = null, 
+        QualityManager.Quality quality = QualityManager.Quality.NotSet, SpellElement notThis = null)
+    {
+        //Add quality to item
+        if (quality == QualityManager.Quality.NotSet)
+        {
+            quality = QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel);
+        }
+        if (_SpellItem == null)
+        {
+            var itemListSpellItems = _itemList._SpellItems;
+            for (int i = 0; i < 100; i++)
+            {
+                var item = itemListSpellItems[Random.Range(0, itemListSpellItems.Count)];
+                if(!item.isBaseSpell) continue;
+                _SpellItem = Instantiate(item);
                 if (_SpellItem._spellElement != notThis && _SpellItem._spellElement.quality <= quality)
                 {
                     break;
