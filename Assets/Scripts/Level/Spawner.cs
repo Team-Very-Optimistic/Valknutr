@@ -20,8 +20,7 @@ public class Spawner : MonoBehaviour
     {
         if (hasSpawnedEnemies) return;
         hasSpawnedEnemies = true;
-        
-        SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + depth /5);
+        SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + (float) depth / DifficultyScalingSystem.Instance.depthDifficulty);
     }
 
     private void SpawnEnemies(float difficulty)
@@ -29,7 +28,7 @@ public class Spawner : MonoBehaviour
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
         List<EnemyPack> toSpawn = new List<EnemyPack>();
-        print(difficultyTarget * difficulty);
+        print(difficulty);
         // Select packs until we meet a difficulty target
         while (currentDifficulty < difficultyTarget * difficulty)
         {

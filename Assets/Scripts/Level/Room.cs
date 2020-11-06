@@ -23,7 +23,7 @@ public class Room : MonoBehaviour
     private bool isActive;
     private bool isCleared;
     private bool isPlayerInside;
-    [HideInInspector] public int depth;
+    public int depth;
 
     // Loot
     public float lootQualityModifier = 1f;

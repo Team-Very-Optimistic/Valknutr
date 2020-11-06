@@ -55,7 +55,7 @@ public class QualityManager : ScriptableObject
         return value;
     }
     
-    public Quality GetQuality(int difficulty)
+    public Quality GetQuality(float difficulty)
     {
         var simple = simpleChance + difficulty * simpleAddDifficultyChance;
         var intricate = intricateChance + difficulty * intricateAddDifficultyChance;
