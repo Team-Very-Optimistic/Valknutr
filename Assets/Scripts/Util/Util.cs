@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class Util
 {
@@ -71,6 +73,33 @@ public static class Util
             // Found it.
             result = childTransform;
             break;
+        }
+ 
+        return result;
+    }
+
+    /// <summary>
+    /// Performs a depth-first search of the transforms associated to the given transform, in search
+    /// of a descendant with the given name.  Avoid using this method on a frame-by-frame basis, as
+    /// it is recursive and quite capable of being slow!
+    /// </summary>
+    /// <param name="searchTransform">Transform to search within</param>
+    /// <param name="predicate">Predicate to match</param>
+    /// <returns>Descendant transform if found, otherwise null.</returns>
+    public static List<Transform> FindChildrenByPredicate(this Transform searchTransform, Predicate<Transform> predicate)
+    {
+        List<Transform> result = new List<Transform>();
+        
+        if (predicate(searchTransform))
+        {
+            result.Add(searchTransform);
+        }
+ 
+        int childCount = searchTransform.childCount;
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform childTransform = searchTransform.GetChild(i);
+            result.AddRange(FindChildrenByPredicate(childTransform, predicate));
         }
  
         return result;

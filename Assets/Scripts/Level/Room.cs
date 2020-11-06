@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     private bool isActive;
     private bool isCleared;
     private bool isPlayerInside;
+    private List<GameObject> minimapIcons;
     public int depth;
 
     // Loot
@@ -38,6 +39,8 @@ public class Room : MonoBehaviour
     {
         roomCollider = GetComponent<BoxCollider>();
         spawner = GetComponent<Spawner>();
+        minimapIcons = transform.FindChildrenByPredicate(transform1 => transform1.GetComponent<SpriteRenderer>())
+            .Select(transform1 => transform1.gameObject).ToList();
     }
 
     private void OnTriggerStay(Collider other)
@@ -57,6 +60,8 @@ public class Room : MonoBehaviour
         GameManager.Instance.activeRoom = this;
         isActive = true;
         isPlayerInside = true;
+        UpdateMinimapIcon(new Color(0.78f, 0.77f, 0f));
+
 
         if (spawner) spawner.BeginSpawning(depth);
 
@@ -103,12 +108,23 @@ public class Room : MonoBehaviour
 
     private void OnClear()
     {
+        UpdateMinimapIcon(new Color(0.02f, 0.58f, 0f));
         OpenAllDoors();
         if (spawnTreasure)
         {
             SpawnTreasure();
             spawnTreasure = false;
         }
+    }
+
+    private void UpdateMinimapIcon(Color color)
+    {
+        // todo
+        minimapIcons.ForEach(go =>
+        {
+            
+            go.GetComponent<SpriteRenderer>().color = color;
+        });
     }
 
     private void SpawnTreasure()
