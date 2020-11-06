@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HealthScript : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class HealthScript : MonoBehaviour
     private Color damageWithShieldColor;
 
     protected float height;
+    private float invulnTime;
 
     public virtual void Start()
     {
@@ -27,8 +30,14 @@ public class HealthScript : MonoBehaviour
         height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
 
+    private void Update()
+    {
+        invulnTime = Mathf.Clamp(invulnTime - Time.deltaTime, 0, Single.MaxValue);
+    }
+
     public virtual bool ApplyDamage(float damage, Color dmgColor = new Color())
     {
+        if (IsInvulnerable()) return false;
         float finalDamage = damage * damageMultiplier;
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
 
@@ -70,7 +79,12 @@ public class HealthScript : MonoBehaviour
         }
         return true;
     }
-    
+
+    protected bool IsInvulnerable()
+    {
+        return invulnTime != 0;
+    }
+
     public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
     {
         float timeInterval = totalDuration / numTicks;
@@ -136,5 +150,11 @@ public class HealthScript : MonoBehaviour
     public void SetShieldDamageColor(Color damageWithShieldColor)
     {
         this.damageWithShieldColor = damageWithShieldColor;
+    }
+
+    public void SetInvulnerable(float duration)
+    {
+        print("invulnerable");
+        invulnTime = duration;
     }
 }

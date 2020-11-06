@@ -57,7 +57,7 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public static GameObject PlaySoundAtPosition(string identifier, Vector3 position, float volume = 0, float pitch = 0)
+    public static GameObject PlaySoundAtPosition(string identifier, Vector3 position, float volume = 1, float pitch = 1)
     {
         SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 

@@ -7,6 +7,7 @@ class MovementBase : SpellBase
 {
     private ThirdPersonCharacter _controller;
     public float _moveTime = 0.3f;
+    public float invulnDuration = 0.2f;
     
     protected override void SetValues()
     {
@@ -29,8 +30,11 @@ class MovementBase : SpellBase
     public override void SpellBehaviour(Spell spell)
     {
         _direction.y = 0;
-        if(!_controller.m_Dashing)
+        if (!_controller.m_Dashing)
+        {
             _controller.Dash(_moveTime * 30f / _speed, _speed, _direction);
+            _controller.GetComponent<HealthScript>()?.SetInvulnerable(invulnDuration);
+        }
         else
         {
             var illu = Instantiate(_objectForSpell, _objectForSpell.transform.position + _offset,
@@ -49,7 +53,7 @@ class MovementBase : SpellBase
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {(_moveTime * 30f / _speed):F}s. {DefaultBaseBody()}");
+        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {(_moveTime * 30f / _speed):F}s. {DefaultBaseBody()}. Briefly becomes invulnerable to damage.");
     }
 }
 
