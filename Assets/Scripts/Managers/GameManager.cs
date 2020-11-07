@@ -25,7 +25,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject cameraRig;
 
     public QualityManager QualityManager;
-    
+    public string levelName;
+
     public delegate void PlayerDeathAction();
     public static event PlayerDeathAction OnPlayerDeath;
     

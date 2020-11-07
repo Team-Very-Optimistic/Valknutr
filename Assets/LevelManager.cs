@@ -32,7 +32,6 @@ public class LevelManager : Singleton<LevelManager>
         optionalLevel.transform.position = offset;
 
         GameManager.Instance._player.transform.position = offset;
-        
     }
     
     public static void StartLevel(int levelIndex)

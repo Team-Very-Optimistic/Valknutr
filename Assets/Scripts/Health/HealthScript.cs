@@ -157,4 +157,10 @@ public class HealthScript : MonoBehaviour
         print("invulnerable");
         invulnTime = duration;
     }
+
+    public void Scale(float healthMultiplier)
+    {
+        currentHealth *= healthMultiplier;
+        maxHealth *= healthMultiplier;
+    }
 }

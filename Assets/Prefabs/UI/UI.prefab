@@ -490,7 +490,6 @@ MonoBehaviour:
   pauseMenu: {fileID: 2845888243202491627}
   inWorldTooltipWindow: {fileID: 4038395816181349574}
   blackOverlay: {fileID: 6370676769020260169}
-  levelNameText: {fileID: 8438199421627898538}
 --- !u!114 &3675246780570356953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,6 +743,7 @@ GameObject:
   - component: {fileID: 7953162052948102622}
   - component: {fileID: 5772869012369441159}
   - component: {fileID: 8438199421627898538}
+  - component: {fileID: 4099616959890281823}
   m_Layer: 5
   m_Name: Level
   m_TagString: Untagged
@@ -812,6 +812,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: DUNGEONS
+--- !u!114 &4099616959890281823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745047640547005081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ed1fb9a139c8540b0cf3b68d860c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5132482757403016436
 GameObject:
   m_ObjectHideFlags: 0
@@ -3643,7 +3655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7350055793991535709, guid: 984787394bbf725438771421fb24a7a6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7350055793991535711, guid: 984787394bbf725438771421fb24a7a6, type: 3}
       propertyPath: m_Color.a

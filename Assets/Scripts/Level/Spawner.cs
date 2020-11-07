@@ -24,17 +24,18 @@ public class Spawner : MonoBehaviour
     {
         if (hasSpawnedEnemies) return;
         hasSpawnedEnemies = true;
-        SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + (float) depth / DifficultyScalingSystem.Instance.depthDifficulty);
+        SpawnEnemies(depth);
     }
 
-    private void SpawnEnemies(float difficulty)
+    private void SpawnEnemies(int depth)
     {
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
-        List<EnemyPack> toSpawn = new List<EnemyPack>();
-        print(difficulty);
+        var toSpawn = new List<EnemyPack>();
+        var spawnDensity = DifficultyScalingSystem.GetDensity(depth); 
+        
         // Select packs until we meet a difficulty target
-        while (currentDifficulty < difficultyTarget * difficulty)
+        while (currentDifficulty < difficultyTarget * spawnDensity)
         {
             var newPack = Util.RandomItem(availablePacks);
             toSpawn.Add(newPack);
@@ -42,7 +43,7 @@ public class Spawner : MonoBehaviour
         }
         
         toSpawn.ForEach(pack =>
-            pack.SpawnEnemies(RandomSpawnPosition()).ForEach(enemies.Add)
+            pack.SpawnEnemies(RandomSpawnPosition(), depth).ForEach(enemies.Add)
         );
     }
 
