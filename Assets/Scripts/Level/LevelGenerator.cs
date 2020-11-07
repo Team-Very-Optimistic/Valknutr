@@ -200,9 +200,10 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
+		if(!config) return;
         name = config.name;
         UiManager.SetLevelText(name);
-        roomPrefabs = config.roomPrefabs;
+		roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;
 

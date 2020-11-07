@@ -5,7 +5,7 @@ public class LevelManager : Singleton<LevelManager>
 {
     public LevelGenerator[] levels;
     public int levelIndex;
-
+    public GameObject optionalLevel;
     public void Start()
     {
         levelIndex = 0;
@@ -18,6 +18,23 @@ public class LevelManager : Singleton<LevelManager>
         StartLevel(++levelIndex % levels.Length);
     }
 
+    public void StartOptionalLevel()
+    {
+        foreach (var level in Instance.levels)
+        {
+            level.gameObject.SetActive(false);
+        }
+
+       
+        optionalLevel.gameObject.SetActive(true);
+        var offset = new Vector3(-1000, 0, -1000);
+
+        optionalLevel.transform.position = offset;
+
+        GameManager.Instance._player.transform.position = offset;
+        
+    }
+    
     public static void StartLevel(int levelIndex)
     {
         for (var index = 0; index < Instance.levels.Length; index++)
