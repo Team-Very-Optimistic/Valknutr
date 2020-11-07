@@ -199,6 +199,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
+        if(!config) return;
         roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;
