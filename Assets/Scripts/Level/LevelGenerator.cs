@@ -24,8 +24,8 @@ public class LevelGenerator : MonoBehaviour
         name = config.name ?? "";
         _navMeshSurface = GetComponent<NavMeshSurface>();
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
-        RebuildNavMesh();
         if (generateOnAwake) Generate();
+        RebuildNavMesh();
     }
 
     /// <summary>
@@ -343,6 +343,7 @@ public class LevelGenerator : MonoBehaviour
         if (!_navMeshSurface)
             _navMeshSurface = GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
+        print("Rebuilding Navmesh");
     }
 }
 

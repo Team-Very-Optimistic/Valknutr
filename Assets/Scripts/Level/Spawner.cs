@@ -40,12 +40,15 @@ public class Spawner : MonoBehaviour
             toSpawn.Add(newPack);
             currentDifficulty += newPack.difficultyRating;
         }
-
-        var spawnPosition = spawnPoints.Length > 0 ? spawnPoints[0].position : transform.position;
-
+        
         toSpawn.ForEach(pack =>
-            pack.SpawnEnemies(spawnPosition).ForEach(enemies.Add)
+            pack.SpawnEnemies(RandomSpawnPosition()).ForEach(enemies.Add)
         );
+    }
+
+    private Vector3 RandomSpawnPosition()
+    {
+        return spawnPoints.Length > 0 ? Util.RandomItem(spawnPoints).position : transform.position;
     }
 
     [ContextMenu("Detect SpawnZones")]

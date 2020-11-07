@@ -33,9 +33,10 @@ public class RoomExit : MonoBehaviour
 
     public void HideMinimapIcon()
     {
-        if (!minimapIcon) minimapIcon = GetComponentInChildren<SpriteRenderer>()?.gameObject;
-        if(minimapIcon)
-            minimapIcon.SetActive(isConnected);
+        foreach (var sprite in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sprite.gameObject.SetActive(isConnected);
+        }
     }
 
     private void OnDrawGizmos()

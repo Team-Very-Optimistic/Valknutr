@@ -209,7 +209,8 @@ public class UiManager : Singleton<UiManager>
 
     public static void SetLevelText(string name)
     {
-        Instance.levelNameText.text = name;
+        if (Application.isPlaying)
+            Instance.levelNameText.text = name;
     }
 }
 
