@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class UiManager : Singleton<UiManager>
 {
-    [HideInInspector]
-    public GameObject player;
+    [HideInInspector] public GameObject player;
     public SpellDisplayScript[] spellSlots;
     public HealthBar healthBar;
     public GameObject minimap;
@@ -27,13 +27,14 @@ public class UiManager : Singleton<UiManager>
         {
             player = GameManager.Instance._player;
         }
+
         PopulateSpells();
 
 
         playerHealth = player.GetComponent<HealthScript>();
-        
+
         healthBar.SetMaxHealth(playerHealth.maxHealth);
-        
+
         transform.Find("QuickAssignMenu").gameObject.SetActive(true);
         transform.Find("SpellCrafting").gameObject.SetActive(true);
         ResetTooltipWindow();
@@ -43,12 +44,16 @@ public class UiManager : Singleton<UiManager>
     void Update()
     {
         if (playerHealth != null)
+        {
+            healthBar.SetMaxHealth(playerHealth.maxHealth);
             healthBar.SetHealth(playerHealth.currentHealth, playerHealth.maxHealth);
+        }
+            
         else
         {
             healthBar.SetHealth(0f, 0f);
         }
-        
+
         if (Input.GetKey(KeyCode.Space))
         {
             if (currentItemDrop != null)
@@ -118,8 +123,36 @@ public class UiManager : Singleton<UiManager>
         Instance.currentTooltipWindow = tooltipDisplay;
     }
 
-    public static void ShowTooltip(Tooltip tooltip)
+    public static void ShowTooltip(Tooltip tooltip, bool followMouse=true)
     {
+        
+        if (followMouse)
+        {
+            var tooltipObj = Instance.currentTooltipWindow;
+            var bounds = tooltipObj.GetComponent<RectTransform>().sizeDelta;
+            float width = bounds.x;
+            float height = bounds.y;
+            var scaleFactor = tooltipObj.GetComponent<Image>().canvas.scaleFactor;
+
+            var screenWidth = Screen.width / scaleFactor;
+            var screenHeight = Screen.height / scaleFactor;
+
+            var mouseX = Input.mousePosition.x / scaleFactor;
+            var mouseY = Input.mousePosition.y / scaleFactor;
+
+            var x = Mathf.Clamp(mouseX, width / 2, screenWidth - width / 2);
+            var y = Mathf.Clamp(mouseY, 0, screenHeight);
+
+
+            var pivot = new Vector2(0.5f, y > screenHeight - height ? 1 : 0);
+
+            var pos = tooltipObj.transform.position;
+            pos.x = x * scaleFactor;
+            pos.y = y * scaleFactor;
+            tooltipObj.GetComponent<RectTransform>().position = pos;
+            tooltipObj.GetComponent<RectTransform>().pivot = pivot;
+        }
+
         Instance.currentTooltipWindow.Show(tooltip);
     }
 
@@ -139,7 +172,7 @@ public class UiManager : Singleton<UiManager>
         Instance.inWorldTooltipWindow.SetActive(true);
         Instance.currentTooltipWindow.Show(tooltip);
     }
-    
+
     public static void HideInWorldTooltip()
     {
         Instance.inWorldTooltipWindow.SetActive(false);
@@ -151,7 +184,7 @@ public class UiManager : Singleton<UiManager>
         Instance.blackOverlay.SetActive(true);
         Instance.blackOverlay.GetComponent<Image>().color = Random.ColorHSV();
     }
-    
+
 
     public static void FadeToBlack(float duration)
     {
@@ -184,7 +217,7 @@ public readonly struct Tooltip
         Title = title;
         Body = body;
     }
-    
+
     public string ToString()
     {
         return $"{Title}\n{Body}";

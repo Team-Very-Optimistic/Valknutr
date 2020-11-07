@@ -1,10 +1,17 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class TooltipDisplay : MonoBehaviour
 {
     public TextMeshProUGUI titleTextObject;
     public TextMeshProUGUI bodyTextObject;
+
+    private void Start()
+    {
+        titleTextObject.text = "";
+        bodyTextObject.text = "";
+    }
 
     public void Show(string titleText, string bodyText)
     {

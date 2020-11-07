@@ -136,4 +136,14 @@ public static class Util
         var d = -Vector3.Dot(ray.origin, Vector3.up) / Vector3.Dot(ray.direction, Vector3.up);
         return ray.origin + ray.direction * d;
     }
+
+    public static float MinDistanceRayPoint(Vector3 point, Ray ray)
+    {
+        
+        // Vector3 direction = rigidbody.velocity.normalized;
+        // Vector3 startingPoint = transform.position;
+        //
+        // Ray ray = new Ray(startingPoint, direction);
+        return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
+    }
 }
