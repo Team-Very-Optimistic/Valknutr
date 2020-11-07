@@ -7,12 +7,9 @@ using Object = System.Object;
 public abstract class SpellModifier : SpellElement
 {
     public float _cooldownMultiplier = 1;
-    public float value;
-    [SerializeField]
-    private bool init = false;
-
-    public QualityManager.Quality quality;
-
+    [HideInInspector]
+    public float value = 1f;
+    
     public virtual void ModifySpell(SpellBase spell)
     {
         spell._cooldown *= _cooldownMultiplier;
@@ -33,7 +30,8 @@ public abstract class SpellModifier : SpellElement
    
     protected virtual string DefaultModBody()
     {
-        return $"Modifies spell cooldown by {_cooldownMultiplier * 100:F0}%.";
+        //todo: make it use "increase or decrease"
+        return $" Modifies spell cooldown by {_cooldownMultiplier * 100:F0}%.";
     }
     public override Tooltip GetTooltip()
     {
@@ -42,11 +40,6 @@ public abstract class SpellModifier : SpellElement
 
     public SpellBase Modify(SpellBase spell)
     {
-        if (!init)
-        {
-            UseValue();
-            init = true;
-        }
         ModifySpell(spell);
         return ModifyBehaviour(spell);
     }

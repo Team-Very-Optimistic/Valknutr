@@ -10,8 +10,8 @@ class SplitSpellModifier : SpellModifier
     public float randomMax = 0.2f;
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
-        //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action._behaviour;
+        //important to make sure it doesnt cast a recursive method
         Action temp = () =>
         {
             Vector3 originalPosDiff = action._direction;
@@ -39,7 +39,7 @@ class SplitSpellModifier : SpellModifier
     public override void UseValue()
     {
         iterations = Mathf.RoundToInt(iterations * value);
-        damageReduction = value / (iterations/2);
+        damageReduction = Math.Min(value / (iterations/1.5f), 1);
     }
 
     IEnumerator DelayInvoke(Action invoke, float delay)
@@ -50,6 +50,6 @@ class SplitSpellModifier : SpellModifier
     public override Tooltip GetTooltip()
     {
         return new Tooltip("Split" + DefaultModTitle(), 
-            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction}% weaker. {DefaultModBody()}");
+            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction:P} weaker. {DefaultModBody()}");
     }
 }

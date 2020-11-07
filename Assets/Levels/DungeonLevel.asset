@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bb0fcb6f794bacb504799081cdcccf, type: 3}
+  m_Name: DungeonLevel
+  m_EditorClassIdentifier: 
+  roomPrefabs:
+  - prefab: {fileID: 5531430571349274628, guid: fb174ff790cd86d4c8c097b623c97d51, type: 3}
+    weight: 10
+    min: 0
+    max: 1
+    currentAmount: 2
+  - prefab: {fileID: 5531430571349274628, guid: e17376fa87580404aab3432fd92db004, type: 3}
+    weight: 10
+    min: 1
+    max: 4
+    currentAmount: 2
+  - prefab: {fileID: 5531430571349274628, guid: 38006217510a78f46840ba820cbc9c06, type: 3}
+    weight: 10
+    min: 0
+    max: 4
+    currentAmount: 4
+  - prefab: {fileID: 5687494328397222223, guid: 01b99ea2247ba724f910150d1deea943, type: 3}
+    weight: 15
+    min: 0
+    max: 3
+    currentAmount: 3
+  - prefab: {fileID: 8743510972604931550, guid: 257eba5f0ed053448917e52e0f8b687a, type: 3}
+    weight: 6
+    min: 0
+    max: 3
+    currentAmount: 1
+  - prefab: {fileID: 7094900447616392279, guid: 5a140e5d958009848b69deff793b252a, type: 3}
+    weight: 17
+    min: 0
+    max: 4
+    currentAmount: 2
+  - prefab: {fileID: 5531430571349274628, guid: bdc4d6f338d399f4587a087cd82d29c0, type: 3}
+    weight: 4
+    min: 0
+    max: 1
+    currentAmount: 1
+  - prefab: {fileID: 5531430571349274628, guid: 4725c148267ceb74d8b1cb91d23f668f, type: 3}
+    weight: 24
+    min: 0
+    max: 2
+    currentAmount: 1
+  - prefab: {fileID: 5531430571349274628, guid: cfa04ddfab4a4d34888703278e15f5db, type: 3}
+    weight: 24
+    min: 0
+    max: 1
+    currentAmount: 1
+  bossRoomPrefab: {fileID: 6568328073815770091, guid: 208f6225a9fd8094aa8fcef25e03e2e6, type: 3}
+  numberOfRooms: 20

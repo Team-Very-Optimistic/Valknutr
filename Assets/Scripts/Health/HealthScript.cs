@@ -11,31 +11,44 @@ public class HealthScript : MonoBehaviour
     public string hurtSound;
     public bool hurtSoundOnHit = true;
     private bool dead = false;
-  
-
-
+    
     //Damage protection multipliers
-    private float damageMultiplier = 1.0f;
+    protected float damageMultiplier = 1.0f;
+    private bool hasShield = false;
 
     public Color damageColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    private Color damageWithShieldColor;
+
     protected float height;
+
     public virtual void Start()
     {
         currentHealth = maxHealth;
-       
-        
         height = GetComponent<Collider>().bounds.size.y / 2.0f;
     }
 
-    public virtual bool ApplyDamage(float damage)
+    public virtual bool ApplyDamage(float damage, Color dmgColor = new Color())
     {
         float finalDamage = damage * damageMultiplier;
-
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
-        DamageTextManager.SpawnDamage(finalDamage, worldPositionText, damageColor);
+
+        if(hasShield)
+        {
+            DamageTextManager.SpawnDamage(finalDamage, worldPositionText, damageWithShieldColor);
+        }
+        else
+        {
+            if (dmgColor == new Color())
+                dmgColor = this.damageColor;
+
+            DamageTextManager.SpawnDamage(finalDamage, worldPositionText, dmgColor);
+        }
+       
         EffectManager.Instance.EnemyHurtEffect();
+
         if (damage <= 0)
             return false;
+
         if (hurtSoundOnHit)
         {
             PlayHurtSound(finalDamage);
@@ -56,6 +69,17 @@ public class HealthScript : MonoBehaviour
             OnDeath();
         }
         return true;
+    }
+    
+    public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
+    {
+        float timeInterval = totalDuration / numTicks;
+        
+        for (int i = 0; i < numTicks; i++)
+        {
+            yield return new WaitForSeconds(timeInterval);
+            ApplyDamage(damagePerTick, damageColor);
+        }
     }
 
     public virtual void OnDeath()
@@ -92,17 +116,25 @@ public class HealthScript : MonoBehaviour
         currentHealth += health;
     }
 
-    public void SetDamageMultiplier(float damageMultiplier)
+    public void AdditivelyAddDmgMultiplier(float damageMultiplier)
     {
-        //If not original value, dont overlap multipliers
-        if(this.damageMultiplier == 1.0f)
-        {
-            this.damageMultiplier = damageMultiplier;
-        }
+        // overlap multipliers
+        this.damageMultiplier *= damageMultiplier;
     }
+    
 
     public void ResetDamageMultiplier()
     {
         damageMultiplier = 1.0f;
+    }
+
+    public void SetHasShield(bool hasShield)
+    {
+        this.hasShield = hasShield;
+    }
+
+    public void SetShieldDamageColor(Color damageWithShieldColor)
+    {
+        this.damageWithShieldColor = damageWithShieldColor;
     }
 }

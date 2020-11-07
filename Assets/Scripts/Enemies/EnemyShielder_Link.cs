@@ -6,14 +6,18 @@ public class EnemyShielder_Link : MonoBehaviour
 {
     private GameObject enemyShielder;
     private GameObject enemyShielderLink;
+    private GameObject shielderShield;
     private float enemyShielderRadius;
+    private HealthScript health;
+    private LineRenderer line;
+    private Color shieldDamageColor = new Color(0.0f, 0.98f, 1.0f, 1.0f);
 
     void Update()
     {
         if(enemyShielder != null)
         {
-            enemyShielderLink.GetComponent<LineRenderer>().SetPosition(0, transform.position);
-            enemyShielderLink.GetComponent<LineRenderer>().SetPosition(1, enemyShielder.transform.position);
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, enemyShielder.transform.position);
 
             //Consider doing raycast (ignore enemy/player colliders)
             if((enemyShielder.transform.position - transform.position).magnitude > enemyShielderRadius)
@@ -22,7 +26,7 @@ public class EnemyShielder_Link : MonoBehaviour
             }
 
             //If enemy health = 0, destroy this as well
-            if(this.GetComponent<HealthScript>().GetHealth() <= 0.0f)
+            if(health.GetHealth() <= 0.0f)
             {
                 Destroy(this);
             }
@@ -35,17 +39,28 @@ public class EnemyShielder_Link : MonoBehaviour
         this.enemyShielderRadius = enemyShielderRadius;
 
         enemyShielderLink = new GameObject("ShielderLink");
-        LineRenderer lRend = enemyShielderLink.AddComponent<LineRenderer>();
-        lRend.material = linkMat;
-        lRend.startWidth = 0.02f;
-        lRend.endWidth = 0.02f;
+        line = enemyShielderLink.AddComponent<LineRenderer>();
+        line.material = linkMat;
+        line.startWidth = 0.02f;
+        line.endWidth = 0.02f;
 
-        GetComponent<HealthScript>().SetDamageMultiplier(damageMultiplier);
+        shielderShield = GameObject.Instantiate(GameManager.Instance.shielderShieldPrefab, gameObject.transform);
+        float scaleMultiplier = Mathf.Floor(GetComponentInChildren<SkinnedMeshRenderer>().bounds.extents.x);
+        if (scaleMultiplier < 1) scaleMultiplier = 1.0f;
+        shielderShield.transform.localScale *= scaleMultiplier;
+
+        health = GetComponent<HealthScript>();
+        health.AdditivelyAddDmgMultiplier(damageMultiplier);
+        health.SetHasShield(true);
+        health.SetShieldDamageColor(shieldDamageColor);
     }
 
     void OnDestroy()
     {
-        GetComponent<HealthScript>().ResetDamageMultiplier();
+        health.ResetDamageMultiplier();
+        health.SetHasShield(false);
         Destroy(enemyShielderLink);
+        Destroy(shielderShield);
+        enemyShielder.GetComponent<EnemyBehaviour_Shielder>().RemoveEnemyFromList(gameObject);
     }
 }

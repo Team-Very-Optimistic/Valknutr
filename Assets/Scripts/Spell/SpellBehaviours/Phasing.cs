@@ -1,21 +1,34 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TriggerEventHandler), typeof(Damage))]
-public class Phasing : MonoBehaviour
+public class Phasing : SpellBehaviour
 {
     public float _damage;
     public int _phaseNum = 2;
     public List<TriggerEventHandler> triggers;
-    
+    public Damage damageScript;
+    private PhasingDamageEffect _phaseDamageEffect;
+    private float duration;
+    public override void TriggerEvent(Collider other)
+    {
+    }
+
+
     public void Start()
     {
+        damageScript = gameObject.GetComponentElseAddIt<Damage>();
+        _phaseDamageEffect = new PhasingDamageEffect();
+        _phaseDamageEffect.SetDuration(duration);
+        damageScript.AddDamageEffect(_phaseDamageEffect);
         var trig = GetComponents<TriggerEventHandler>();
         triggers = new List<TriggerEventHandler>();
         foreach (var t in trig)
         {
-            t.OverrideEvent(Trigger);
-            triggers.Add(t);
+            if (t != this)
+            {
+                t.OverrideEvent(Trigger);
+                triggers.Add(t);
+            }
         }
     }
 
@@ -34,7 +47,7 @@ public class Phasing : MonoBehaviour
     //public bool CanTrigger { get; set; }
     public void Trigger(Collider other)
     {
-        var damageScript = GetComponent<Damage>();
+        if (other.CompareTag("Player")) return;
         damageScript.SetDamage(_damage);   
         damageScript.DealDamage(other);
         _phaseNum--;
@@ -48,4 +61,17 @@ public class Phasing : MonoBehaviour
             }
         }
     }
+
+    public override void SetProperties(float damage, float scale, float speed, float cooldown, params float[] additionalProperties)
+    {
+        this._damage = damage;
+        duration = additionalProperties[0];
+        if(_phaseDamageEffect != null)
+            _phaseDamageEffect.SetDuration(duration);
+        if (_phaseNum < 0)
+        {
+            _phaseNum += (int) additionalProperties[1];
+        }
+    }
+
 }

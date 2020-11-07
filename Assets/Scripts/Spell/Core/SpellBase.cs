@@ -38,7 +38,6 @@ public abstract class SpellBase : SpellElement
     
     [HideInInspector]
     public Action _behaviour; //The behaviour is the one being invoked when spell is cast.
-    public QualityManager.Quality _quality;
     [SerializeField]
     protected SpellProperty properties;
     #endregion
@@ -88,7 +87,7 @@ public abstract class SpellBase : SpellElement
         
         _cooldown = properties._cooldown;
 
-        _behaviour = properties.behaviour;
+        //_behaviour = properties.behaviour;
         
         animationType = properties.animationType; //will be mostly ignored by modifiers
     }
@@ -106,12 +105,19 @@ public abstract class SpellBase : SpellElement
         properties.OnDestroyed += ResetValues;
         properties.OnDestroyed += () => _copied = false; //neccessaryarayrayryaryryayasyyasrry
     }
-    
 
+    public void InitCopy()
+    {
+        SetValues();
+        _copied = true;
+        CopyValues();
+        AfterReset();
+    }
     #endregion
     
     public void Cast()
     {
+        AfterReset();
         _behaviour.Invoke();
     }
     
@@ -127,20 +133,23 @@ public abstract class SpellBase : SpellElement
         {
             ResetValues();
         }
+
+        AfterReset();
     }
+    
     protected abstract void SetValues();
-    //public virtual void AfterModified(){}
+    protected virtual void AfterReset(){}
 
     #region Tooltips
     protected virtual string DefaultBaseTitle()
     {
-        return $"<Base> (<b><color={QualityManager.GetQualityColor(_quality)}>{_quality}</color></b>)";
+        return $"<Base> (<b><color={QualityManager.GetQualityColor(quality)}>{quality}</color></b>)";
     }
 
    
     protected virtual string DefaultBaseBody()
     {
-        return $"\nCooldown: {_cooldown}\nDamage: {_damage} \nSpeed: {_speed}";
+        return $"\n\nCooldown: {_cooldown:F}\nDamage: {_damage:F} \nSpeed: {_speed:F}";
     }
     
     public override Tooltip GetTooltip()

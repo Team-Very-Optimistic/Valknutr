@@ -24,7 +24,9 @@ public class OrthoSmoothFollow : MonoBehaviour {
     private void Awake()
     {
         EnemyBehaviour_Boss.OnBossStart += BossCameraShift;
-        EnemyBehaviour_Boss.OnBossDeath += BossCameraShift;    
+        EnemyBehaviour_Boss.OnBossDeath += BossCameraShift;  
+        EnemyBehaviour_Boss_OakTree.OnBossStart += BossCameraShift;
+        EnemyBehaviour_Boss_OakTree.OnBossDeath += BossCameraShift;    
     }
 
     private void BossCameraShift()
@@ -44,7 +46,7 @@ public class OrthoSmoothFollow : MonoBehaviour {
     void Update() {
         Vector3 goalPos = target.position;
         newHeight = height * target.localScale.y;
-        goalPos.y = Mathf.Lerp(transform.position.y, newHeight, Time.deltaTime);
+        goalPos.y = Mathf.Lerp(transform.position.y, newHeight, Time.deltaTime * 2f);
         goalPos += offset;
         
         transform.position = Vector3.SmoothDamp(transform.position, goalPos, ref velocity, smoothTime);

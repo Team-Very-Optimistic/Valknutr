@@ -7,5 +7,6 @@ using UnityEngine;
 [Serializable]
 public abstract class SpellElement : ScriptableObject, ITooltip
 {
+    public QualityManager.Quality quality;
     public abstract Tooltip GetTooltip();
 }

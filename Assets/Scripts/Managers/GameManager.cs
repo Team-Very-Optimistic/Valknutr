@@ -18,11 +18,18 @@ public class GameManager : Singleton<GameManager>
     public GameObject itemDropPrefab;
     public GameObject healthPickupObj;
     public GameObject treasurePrefab;
-    private PlayerHealth _playerHealth;
+    public PlayerHealth _playerHealth;
     public float healthPickupValue = 2f;
     public float healthPickupDropChance = 0.3f;
+    public GameObject shielderShieldPrefab;
 
     public QualityManager QualityManager;
+    
+    public delegate void PlayerDeathAction();
+    public static event PlayerDeathAction OnPlayerDeath;
+    
+    public delegate void LevelCompleteAction();
+    public static event LevelCompleteAction OnLevelComplete;
     public void Awake()
     {
         _player = GameObject.Find("Player");
@@ -34,6 +41,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         SpellBase._player = _player.transform;
+        _playerHealth.OnPlayerDeath += () => OnPlayerDeath?.Invoke();
 
         //extension method (fluent)
         _weapon = _player.transform.FindDescendentTransform("Weapon").gameObject;
@@ -44,19 +52,34 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null)
+    public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, QualityManager.Quality quality = QualityManager.Quality.NotSet, SpellElement notThis = null)
     {
+        //Add quality to item
+        if (quality == QualityManager.Quality.NotSet)
+        {
+            quality = QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel);
+        }
         if (_SpellItem == null)
         {
             
             var itemListSpellItems = _itemList._SpellItems;
-             _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
-            Type type = _SpellItem._spellElement.GetType();
-            Debug.Log(type.Name);
-            _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
+            for (int i = 0; i < 10; i++)
+            {
+                _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
+                if (_SpellItem._spellElement != notThis && _SpellItem._spellElement.quality <= quality)
+                {
+                    break;
+                }
+            }
+
         }
-        //Add quality to item
-        QualityManager.RandomizeProperties(_SpellItem, QualityManager.GetQuality(DifficultyScalingSystem.Instance.difficultyLevel));
+
+        if (_SpellItem._spellElement.quality > quality)
+        {
+            Debug.LogWarning("Spell item quality lower than it should be: " + _SpellItem._spellElement);
+        }
+        _SpellItem._spellElement = Instantiate(_SpellItem._spellElement); //copies
+        QualityManager.RandomizeAndInitProperties(_SpellItem, quality);
         
         var itemDrop = Instantiate(itemDropPrefab, position, Quaternion.identity).GetComponent<ItemDrop>();
         itemDrop._spellItem = _SpellItem;
@@ -85,8 +108,7 @@ public class GameManager : Singleton<GameManager>
 
         //Disable controls?
 
-        EndGameManager.Instance.DisplayGameWin();
-
+        OnLevelComplete?.Invoke();
         //Kill all enemies
         List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
         //This code is scary
@@ -94,12 +116,24 @@ public class GameManager : Singleton<GameManager>
         {
             Destroy(enemy);
         }
-
     }
 
-    public void IncreasePlayerHealth()
+    public void HealthPickup()
     {
-        _playerHealth.IncreasePlayerHealth(healthPickupValue);
-        
+        _playerHealth.IncreaseCurrHealth(healthPickupValue);
+        _playerHealth.IncreaseMaxHealth(healthPickupValue);
+    }
+    public void AffectPlayerCurrHealth(float value)
+    {
+        if(value > 0)
+            _playerHealth.IncreaseCurrHealth(value);
+        else
+        {
+            if (-value >= _playerHealth.currentHealth)
+            {
+                _playerHealth.ApplyDamage(_playerHealth.currentHealth - 1);
+            }
+            _playerHealth.ApplyDamage(-value);
+        }
     }
 }

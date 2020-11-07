@@ -24,11 +24,20 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     private float lastKeyTime;
 
     //Explode
-    public float explodeRadius;
-    public Material explodeMaterial;
+    public float explodeRadius = 4.0f;
+    public float explodeDuration = 1.0f;
+    public GameObject explodeParticlePrefab;
+
+    //Post-explode lingering damage
+    public GameObject poisonLingerParticlePrefab;
     public Color explodeDamageColor;
+    [SerializeField]
     private float explodeDamagePerTick = 1.0f;
+    [SerializeField]
+
     private float explodeDamageTotalDuration = 2.0f;
+    [SerializeField]
+
     private int explodeDamageNumTicks = 2;
 
     public GameObject redIndicatorPrefab;
@@ -47,6 +56,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         lastKeyTime = jumpCurve[jumpCurve.length - 1].time;
 
         redIndicatorPosOffset = new Vector3(0.0f, GetComponent<Collider>().bounds.size.y, 0.0f);
+
+        //Disable knockback (buggy with navmesh)
+        canKnockback = false;
     }
 
     // Update is called once per frame
@@ -102,14 +114,14 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
             //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
             if (!isInKnockback)
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
+                if (rigidbody.velocity.magnitude > 0.0f)
                 {
                     isInKnockback = true;
                 }
             }
             else
             {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
+                if (rigidbody.velocity.magnitude <= knockbackVelStoppingThreshold)
                 {
                     EnableKnockback(false);
                     isInKnockback = false;
@@ -126,13 +138,17 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         //Change enum state
         spiderState = SpiderBehaviourStates.Windup;
+
+        //Trigger anim
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToWindup");
     }
 
     private void ShowRedIndicator()
     {
         float timeToDestroy = windUpTime * 0.5f;
 
-        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset, Quaternion.identity);
+        GameObject redIndicator = GameObject.Instantiate(redIndicatorPrefab, transform.position + redIndicatorPosOffset * 2.0f, Quaternion.identity);
         Destroy(redIndicator, timeToDestroy);
     }
 
@@ -144,6 +160,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         originalPosition = transform.position;
 
         GetComponent<Collider>().enabled = false;
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToJump");
     }
 
     private void Explode()
@@ -152,7 +171,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         foreach (Collider hit in colliders)
         {
-            if(hit.gameObject.CompareTag("Player"))
+            if(hit.CompareTag("Player"))
             {
                 //Player parts are all tagged as "Player", check for PlayerHealth script
                 PlayerHealth playerHealthScript = hit.gameObject.GetComponent<PlayerHealth>();
@@ -160,23 +179,43 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                 if (playerHealthScript != null)
                 {
                     GetComponent<Damage>().DealDamage(hit);
-                    hit.gameObject.GetComponent<PlayerHealth>().StartCoroutine(
-                        hit.gameObject.GetComponent<PlayerHealth>().ApplyDamageOverTime(
+                    playerHealthScript.StartCoroutine(
+                        playerHealthScript.ApplyDamageOverTime(
                             explodeDamagePerTick, explodeDamageNumTicks, explodeDamageTotalDuration, explodeDamageColor));
+
+                    GameObject poisonLingerObject = Instantiate(poisonLingerParticlePrefab, hit.transform.position, Quaternion.Euler(new Vector3(-90.0f, 0.0f, 0.0f)));
+                    poisonLingerObject.GetComponent<FollowObject>().SetFollowObject(hit.gameObject);
+                    ParticleSystem.MainModule poisonLingerParticleSystem = poisonLingerObject.GetComponent<ParticleSystem>().main;
+                    poisonLingerParticleSystem.startLifetime = explodeDamageTotalDuration;
+                    poisonLingerParticleSystem.duration = explodeDamageTotalDuration * 1.25f;
+                    Destroy(poisonLingerObject, explodeDamageTotalDuration * 2.0f);
+
                     break; //Player has two colliders, just apply damage once 
                 }
             }
         }
 
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = transform.position;
-        sphere.transform.localScale = new Vector3(explodeRadius * 2, explodeRadius * 2, explodeRadius * 2);
-        sphere.GetComponent<Renderer>().material = explodeMaterial;
-        sphere.GetComponent<Collider>().enabled = false;
-        Destroy(sphere, 1.0f);
+        GameObject poisonCloudParticle = GameObject.Instantiate(explodeParticlePrefab, transform.position, Quaternion.identity);
+        ParticleSystem poisonCloudParticleSystem = poisonCloudParticle.GetComponent<ParticleSystem>();
 
+        poisonCloudParticleSystem.startSize = explodeRadius + 4;
+        poisonCloudParticleSystem.startLifetime = explodeDuration;
+        poisonCloudParticle.GetComponent<ParticleSystem>().Play();
+        Destroy(poisonCloudParticle, 1.0f);
+        StartCoroutine(StopParticle(poisonCloudParticleSystem, explodeDuration));
         ScreenShakeManager.Instance.ScreenShake(0.25f, 0.4f);
-
         Destroy(gameObject);
+    }
+
+    IEnumerator StopParticle(ParticleSystem system, float time)
+    {
+        yield return new WaitForSeconds(time);
+        system.Stop();
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToWindup");
+        animator.ResetTrigger("ToJump");
     }
 }

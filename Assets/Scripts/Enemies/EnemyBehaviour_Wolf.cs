@@ -14,7 +14,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
     //Dashing Parameters
     public float dashWindupTime;
-    private Vector3 dashLocation;
+    private Vector3 dashDirection;
     [SerializeField] private AnimationCurve dashCurve;
 
     //Resting Parameter
@@ -27,9 +27,15 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
     //Collider for dash
     private Collider wolfCollider;
+    private Rigidbody wolfRigidbody;
+    private float chargeDuration = 1.0f;
+    private float chargeTimeElapsed = 0.0f;
 
     public GameObject redIndicatorPrefab;
     private Vector3 redIndicatorPosOffset;
+
+    //Wait frames between states - NavMeshAgent SetDestination bug: remaining distance always starts off at zero
+    int wait = 0, waitTicks = 1;
 
     public override void Start()
     {
@@ -44,17 +50,19 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         //Set collider
         wolfCollider = GetComponent<Collider>();
+        wolfRigidbody = GetComponent<Rigidbody>();
 
-        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y, 0.0f);
+        redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y * 2.0f, 0.0f);
+
+        //Disable knockback (buggy with navmesh)
+        canKnockback = false;
     }
 
     public override void Update()
     {
-        if (navMeshAgent.enabled) // Not in knockback
+        switch (wolfState)
         {
-            switch (wolfState)
-            {
-                case WolfBehaviourStates.Running:
+            case WolfBehaviourStates.Running:
                 {
                     if (!isInKnockback)
                     {
@@ -71,22 +79,20 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     break;
                 }
 
-                case WolfBehaviourStates.Windup:
+            case WolfBehaviourStates.Windup:
                 {
                     //Transition to Charging by invoking StartDash in SetupDash
                     break;
                 }
 
-                case WolfBehaviourStates.Charging:
+            case WolfBehaviourStates.Charging:
                 {
-                    //Change navMeshAgent speed according to curve multiplier
-                    float distanceLeftToDashLocation = (transform.position - dashLocation).magnitude;
-                    navMeshAgent.speed = originalSpeed *
-                                         dashCurve.Evaluate(
-                                             1.0f - (distanceLeftToDashLocation / distanceToDashLocation));
+                    //Change rigidbody velocity
+                    chargeTimeElapsed += Time.deltaTime;
+                    wolfRigidbody.velocity = dashDirection * dashCurve.Evaluate(chargeTimeElapsed) * 7.0f;
 
                     //If close enough to dash location, start resting
-                    if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                    if (chargeTimeElapsed >= chargeDuration)
                     {
                         StartRest();
                     }
@@ -94,44 +100,24 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     break;
                 }
 
-                case WolfBehaviourStates.Rest:
+            case WolfBehaviourStates.Rest:
                 {
                     //Transition to running state by invoking StartRunning by StartRest
                     transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y,
                         player.transform.position.z));
                     break;
                 }
-            }
-        }
-        else
-        {
-            //Check in knockback state before stopping knockback state - Velocity update not neccesarily within same frame of enableknockback
-            if (!isInKnockback)
-            {
-                if (GetComponent<Rigidbody>().velocity.magnitude > 0.0f)
-                {
-                    isInKnockback = true;
-                }
-            }
-            else
-            {
-                if (GetComponent<Rigidbody>().velocity.magnitude <= knockbackVelStoppingThreshold)
-                {
-                    EnableKnockback(false);
-                    isInKnockback = false;
-                }
-            }
         }
     }
 
     private void SetupDash()
     {
-        //Set location to dash to
-        Vector3 direction = (player.transform.position - transform.position).normalized;
-        dashLocation = transform.position + direction * 2.0f * originalStoppingDistance;
+        //Set direction to dash towards
+        dashDirection = (player.transform.position - transform.position).normalized;
+        dashDirection = new Vector3(dashDirection.x, 0.0f, dashDirection.z);
 
         //Set rotation to player when engaging (use enemy y to prevent vertical rotation)
-        transform.LookAt(new Vector3(dashLocation.x, this.transform.position.y, dashLocation.z));
+        transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
         //Temporarily disable navMeshAgent
         navMeshAgent.enabled = false;
@@ -142,6 +128,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         //Change enum state
         wolfState = WolfBehaviourStates.Windup;
+
+        //Trigger anim state
+        ResetWaitTicks();
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToWindup");
     }
 
     private void ShowRedIndicator()
@@ -155,23 +146,18 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
     private void StartDash()
     {
-        //Enable navMeshAgent
-        navMeshAgent.enabled = true;
+        wolfRigidbody.isKinematic = false;
+        wolfRigidbody.useGravity = false;
 
         //Change enum state
         wolfState = WolfBehaviourStates.Charging;
 
-        //Change stopping distance to smaller range
-        navMeshAgent.stoppingDistance = 0.05f;
-
-        //Navigation
-        navMeshAgent.SetDestination(dashLocation);
-
-        //Set overall distance
-        distanceToDashLocation = (transform.position - dashLocation).magnitude;
-
         //Disable knockback
-        canKnockback = false;
+        //canKnockback = false;
+
+        //Trigger anim state
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToCharge");
     }
 
     private void StartRest()
@@ -180,9 +166,15 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         wolfState = WolfBehaviourStates.Rest;
 
         //Enable knockback
-        canKnockback = false;
+        //canKnockback = true;
+        ResetRigidBody();
+        navMeshAgent.enabled = true;
+        chargeTimeElapsed = 0.0f;
 
-        Invoke(nameof(StartRunning), restTime);
+        Invoke(nameof(StartRunning), restTime + Random.Range(0, 1.5f));
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToRest");
     }
 
     private void StartRunning()
@@ -192,6 +184,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         navMeshAgent.stoppingDistance = originalStoppingDistance;
         navMeshAgent.speed = originalSpeed;
+
+        ResetAllAnimationTriggers();
+        animator.SetTrigger("ToRun");
     }
 
     public void OnTriggerEnter(Collider other)
@@ -200,10 +195,30 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         if (wolfState == WolfBehaviourStates.Charging)
         {
             //Check only player's capsule collider
-            if (!other.gameObject.CompareTag("Enemy") && other.GetType() == typeof(CapsuleCollider))
+            if (other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider) ||
+               (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Player")))
             {
-                this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
+                gameObject.GetComponentInParent<Damage>().DealDamage(other);
             }
         }
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        animator.ResetTrigger("ToRun");
+        animator.ResetTrigger("ToWindup");
+        animator.ResetTrigger("ToCharge");
+        animator.ResetTrigger("ToRest");
+    }
+
+    private void ResetWaitTicks()
+    {
+        wait = waitTicks;
+    }
+
+    private void ResetRigidBody()
+    {
+        wolfRigidbody.isKinematic = true;
+        wolfRigidbody.useGravity = true;
     }
 }

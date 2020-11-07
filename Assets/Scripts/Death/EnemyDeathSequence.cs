@@ -31,8 +31,8 @@ public class EnemyDeathSequence : BaseDeathSequence
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    public virtual void Update()
+    {  
         if(triggeredDeathSequence)
         {
             delayBeforeFade -= Time.deltaTime;
@@ -73,16 +73,17 @@ public class EnemyDeathSequence : BaseDeathSequence
         }
     }
 
-    public void StartDeathSequence()
+    public virtual void StartDeathSequence()
     {
         TriggerRagdoll();
         KnockbackRagdoll();
         CallDestroy(timeToDestroy);
         triggeredDeathSequence = true;
         GetComponent<NavMeshAgent>().speed = 0.0f;
-        Destroy(GetComponent("EnemyBehaviourBase"));
-        
-        if(GetComponent<DropsLoot>() != null)
+
+        Destroy(GetComponent<EnemyBehaviourBase>());
+
+        if (GetComponent<DropsLoot>() != null)
         {
             GetComponent<DropsLoot>().OnDeath();
         }
@@ -91,5 +92,7 @@ public class EnemyDeathSequence : BaseDeathSequence
         {
             GetComponent<EnemyBehaviour_Boss>().SetDeathState();
         }
+
+        Destroy(GetComponent<EnemyShielder_Link>());
     }
 }

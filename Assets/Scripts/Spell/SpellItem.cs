@@ -15,12 +15,10 @@ public class SpellItem : ScriptableObject, ITooltip
     {
         if (_spellElement == null)
         {
-            Debug.Log("Null spell element");
             return default;
         }
         else
         {
-            Debug.Log(_spellElement);
             return _spellElement.GetTooltip();
         }
     }

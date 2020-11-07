@@ -14,7 +14,8 @@ public class QualityManager : ScriptableObject
         Intricate,
         Arcane,
         Divine,
-        Sanctified
+        Sanctified,
+        NotSet
     }
 
     private float Value(Quality quality, bool positiveBetter = true)
@@ -128,27 +129,29 @@ public class QualityManager : ScriptableObject
     [Range(0f, 0.99f)]
     public float randomSpread = 0.2f;
     
-    public void RandomizeProperties(SpellItem element, Quality quality)
+    public void RandomizeAndInitProperties(SpellItem element, Quality quality)
     {
         if (element.isBaseSpell)
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
-            spellBase._cooldown /= Mathf.Clamp(Mathf.Log(Spread() * Value(quality)), 1, 10);
+            spellBase._cooldown /= Mathf.Clamp(Spread() * Value(quality), 1, 10);
             spellBase._damage *= Spread() * Value(quality);
-            spellBase._scale *= Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2);
-            spellBase._speed /= Mathf.Clamp(Spread() + 0.2f * Mathf.Log(Value(quality + 1), 2), 1, 10);
-            spellBase._quality = quality;
+            spellBase._scale *= Spread() * Value(quality);
+            spellBase._speed *= Spread() * Value(quality);
+            spellBase.quality = quality;
+            spellBase.InitCopy();
         }
         else
         {
             SpellModifier mod = (SpellModifier) element._spellElement;
-            mod._cooldownMultiplier *= 1 + 0.2f * Mathf.Log(Spread() * Value(quality), 2);
+            mod._cooldownMultiplier *= Spread();
             mod.value = Spread() * Value(quality);
             mod.quality = quality;
+            mod.UseValue();
         }
     }
-    
-    private float Spread()
+
+    public float Spread()
     {
         return Random.Range(1 - randomSpread, 1 + randomSpread);
     }

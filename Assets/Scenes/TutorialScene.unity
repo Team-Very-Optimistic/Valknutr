@@ -535,7 +535,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -718,7 +718,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1090,6 +1090,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 577665178370331402, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 992280942839996738, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1969380807673719502, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
@@ -1495,6 +1499,10 @@ PrefabInstance:
     - target: {fileID: 7455039571834122927, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
       propertyPath: m_Color.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7506325320712981915, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7506788887126792402, guid: 6cc7ae668d7ed9345a29ee4c8d00b8b5, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3860,7 +3868,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0fc2470d502208a4ab66fa084cb42359, type: 2}
     - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.93
+      value: 39.11
       objectReference: {fileID: 0}
     - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5511,11 +5519,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278204915}
   m_Mesh: {fileID: 4300000, guid: 1bff7d79ae1b141448f2db1e49eb3c81, type: 3}
---- !u!1 &291035205 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 285294324425765201, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
-  m_PrefabInstance: {fileID: 1140613816}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &291035206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 285294324425765229, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
@@ -5691,7 +5694,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5984,16 +5987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exits:
   - {fileID: 1815724269}
-  spawnZones:
-  - {fileID: 1978161649}
-  - {fileID: 1904259960}
-  - {fileID: 1484365331}
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 0
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 1
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
@@ -7361,67 +7355,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401764743}
   m_Mesh: {fileID: 4300000, guid: 1bff7d79ae1b141448f2db1e49eb3c81, type: 3}
---- !u!1001 &403583674
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3498559886049984015, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_Name
-      value: ItemDrop (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450349487207857786, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: _spellItem
-      value: 
-      objectReference: {fileID: 11400000, guid: d3decda6f38a9ec4a8423f4226cb8694, type: 2}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 39.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_RootOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877881693880458853, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
 --- !u!1 &404042311
 GameObject:
   m_ObjectHideFlags: 0
@@ -12931,13 +12864,7 @@ MonoBehaviour:
   exits:
   - {fileID: 641873991}
   - {fileID: 1679501017}
-  spawnZones: []
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 1
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 0
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
@@ -18806,13 +18733,7 @@ MonoBehaviour:
   - {fileID: 2132041867}
   - {fileID: 666212968}
   - {fileID: 1210187872}
-  spawnZones: []
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 3
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 0
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
@@ -18898,8 +18819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The basic strike spell (LMB) is \na quick attack that deals moderate damage\n\nUse
-    it to kill the enemy in the next room"
+  m_text: "The basic strike spell (LMB) is \na quick attack that deals moderate damage\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 00e17638c71c11148abd8a1ec3707ea7, type: 2}
   m_sharedMaterial: {fileID: 6662961888475869097, guid: 00e17638c71c11148abd8a1ec3707ea7, type: 2}
@@ -22709,14 +22629,7 @@ MonoBehaviour:
   exits:
   - {fileID: 606190858}
   - {fileID: 1274852005}
-  spawnZones:
-  - {fileID: 291035205}
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 2
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 0
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
@@ -26419,13 +26332,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Let''s try crafting a new spell
-
-
-    Pick these up with "Z" and hit "R"
-    to bring up the
-
-    spell binding menu'
+  m_text: "Let's try crafting a new spell\n\nPick these up with \"Spacebar\" \nand
+    hit \"R\" to bring up the\nspell binding menu"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 00e17638c71c11148abd8a1ec3707ea7, type: 2}
   m_sharedMaterial: {fileID: 6662961888475869097, guid: 00e17638c71c11148abd8a1ec3707ea7, type: 2}
@@ -28403,11 +28311,11 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808073672}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.79}
+  m_LocalPosition: {x: 0, y: 0, z: -1.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -30597,13 +30505,7 @@ MonoBehaviour:
   - {fileID: 810519593}
   - {fileID: 225988221}
   - {fileID: 1077953841}
-  spawnZones: []
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 0
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 0
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
@@ -31046,15 +30948,7 @@ MonoBehaviour:
   - {fileID: 894394306}
   - {fileID: 2049898151}
   - {fileID: 1817305601}
-  spawnZones:
-  - {fileID: 103979640}
-  - {fileID: 1098390650}
-  isActive: 0
-  isCleared: 0
-  roomType: 0
   depth: 4
-  minDepth: 0
-  lightingObjects: []
   lootQualityModifier: 1
   spawnTreasure: 1
   minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}

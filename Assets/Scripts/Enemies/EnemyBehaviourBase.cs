@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviourBase : MonoBehaviour
+public class EnemyBehaviourBase : Enemy
 {
     //Navigation
     protected GameObject player;
