@@ -21,6 +21,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void Awake()
     {
+        name = config.name ?? "";
         _navMeshSurface = GetComponent<NavMeshSurface>();
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
         RebuildNavMesh();
@@ -199,6 +200,8 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
+        name = config.name;
+        UiManager.SetLevelText(name);
         roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;

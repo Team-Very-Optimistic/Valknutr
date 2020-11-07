@@ -13,6 +13,7 @@ public class UiManager : Singleton<UiManager>
     public GameObject pauseMenu;
     public GameObject inWorldTooltipWindow;
     public GameObject blackOverlay;
+    public Text levelNameText;
 
     private bool isPaused = false;
     private HealthScript playerHealth;
@@ -204,6 +205,11 @@ public class UiManager : Singleton<UiManager>
     public static void HideBlackOverlay()
     {
         // throw new System.NotImplementedException();
+    }
+
+    public static void SetLevelText(string name)
+    {
+        Instance.levelNameText.text = name;
     }
 }
 
