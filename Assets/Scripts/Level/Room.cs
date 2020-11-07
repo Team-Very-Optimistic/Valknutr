@@ -23,7 +23,7 @@ public class Room : MonoBehaviour
     private bool isActive;
     private bool isCleared;
     private bool isPlayerInside;
-    [HideInInspector] public int depth;
+    public int depth;
 
     // Loot
     public float lootQualityModifier = 1f;
@@ -58,7 +58,7 @@ public class Room : MonoBehaviour
         isActive = true;
         isPlayerInside = true;
 
-        if (spawner) spawner.BeginSpawning();
+        if (spawner) spawner.BeginSpawning(depth);
 
         CheckCleared();
 

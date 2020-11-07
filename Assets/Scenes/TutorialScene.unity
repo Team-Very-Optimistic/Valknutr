@@ -5919,6 +5919,7 @@ GameObject:
   - component: {fileID: 326053087}
   - component: {fileID: 326053089}
   - component: {fileID: 326053088}
+  - component: {fileID: 326053090}
   m_Layer: 11
   m_Name: Room_Boss(Clone)
   m_TagString: Untagged
@@ -6004,6 +6005,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 24, y: 4, z: 36}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &326053090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326053086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints: []
+  availablePacks:
+  - {fileID: 11400000, guid: 73de25baa0dfea64986c76f6e94a3e39, type: 2}
+  difficultyTarget: 1
 --- !u!1 &331147275
 GameObject:
   m_ObjectHideFlags: 0
@@ -33615,6 +33632,14 @@ PrefabInstance:
       propertyPath: m_postProcessVolume
       value: 
       objectReference: {fileID: 754892963}
+    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
+      propertyPath: _enemyHurtTimeStopIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64389496, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
+      propertyPath: playerHurtIntensityMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1366040741080232428, guid: 1062831edea16d145a0e9a12a8134036, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.279426

@@ -1575,7 +1575,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d6224b51219714549bee9992ca46c981, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1619,7 +1619,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8713428985294554356}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 5
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1646,8 +1646,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stompPrefab: {fileID: 1561954506197372127, guid: cc7f134d5cf079444854bcfddd15112c, type: 3}
   stompFeet: {fileID: 8713428985294554492}
-  closeAttacksStopDist: 3
-  throwAttackStopDist: 10
+  closeAttacksStopDist: 4
+  throwAttackStopDist: 30
   closeAttackCollider: {fileID: 8713428986765253858}
   mossRockPrefab: {fileID: 6547608203363382485, guid: b0f9d2d9bcecba841bd606f37b31dca6, type: 3}
   leftHand: {fileID: 8713428985294554384}

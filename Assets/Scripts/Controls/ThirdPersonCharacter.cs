@@ -138,16 +138,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
 			if (move.magnitude > 1f) move.Normalize();
 
-
-			m_Rigidbody.velocity = move * m_MoveSpeedMultiplier;
 			// print(move);
-			
+			// var m = move;
+			// m.y = -m_GravityMultiplier;
+			// print(move);
+			m_Rigidbody.velocity = move * m_MoveSpeedMultiplier + Vector3.down;
 
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
 			move = transform.InverseTransformDirection(move);
-			//CheckGroundStatus();
+			// CheckGroundStatus();
 			m_TurnAmount = Mathf.Atan2(move.x, move.z);
 			m_ForwardAmount = move.z;
 			
@@ -279,7 +280,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// apply extra gravity from multiplier:
 			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 			m_Rigidbody.AddForce(extraGravityForce);
-
+			// var velocity = m_Rigidbody.velocity;
+			// velocity.y = extraGravityForce.y;
+			// print(velocity);
+			// m_Rigidbody.velocity = velocity;
 			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 		}
 
@@ -337,7 +341,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 			else
 			{
-				//m_IsGrounded = false;
+				m_IsGrounded = false;
 				m_GroundNormal = Vector3.up;
 			}
 		}
