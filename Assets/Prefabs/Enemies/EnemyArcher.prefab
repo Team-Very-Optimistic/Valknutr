@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackVelStoppingThreshold: 0.05
-  arrowPrefab: {fileID: 212749010089997258, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
+  arrowPrefab: {fileID: 5728015736105129911, guid: e5f80d787165a8044a87129b14e9e266, type: 3}
   arrowSpeed: 25
   redIndicatorMat: {fileID: 2100000, guid: 2b4bc0ff4f79ba04e96a02c7841759e7, type: 2}
   holdBowDuration: 1.5
@@ -695,7 +695,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &264226206149513945
 MonoBehaviour:
   m_ObjectHideFlags: 0

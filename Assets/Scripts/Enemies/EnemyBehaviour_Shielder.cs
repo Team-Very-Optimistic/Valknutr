@@ -94,6 +94,11 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
     {
         Vector3 optimalPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
+        if (enemies.Count <= 1)
+        {
+            return transform.position;
+        }
+
         //Mean of location of all enemies
         foreach (GameObject enemy in enemies)
         {

@@ -8,14 +8,16 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     /// <summary>
     /// Difficulty level 1 is easier, the higher it is the more difficult it gets
     /// </summary>
-    public int difficultyLevel = 1;
+    public float difficultyLevel = 1;
 
-    public float difficultyIncreaseInterval = 60f;
+    public float depthDifficulty = 3.5f;
+
+    //public float difficultyIncreaseInterval = 60f;
     
     public void Awake()
     {
         EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
-        StartCoroutine(IncreaseDifficulty(1, difficultyIncreaseInterval));
+        //StartCoroutine(IncreaseDifficulty(1, difficultyIncreaseInterval));
     }
 
     public void OnDestroy()
@@ -41,7 +43,7 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         hp.SetHealth(hp.maxHealth * difficultyLevel);
     }
 
-    public IEnumerator IncreaseDifficulty(int amount, float time)
+    public IEnumerator IncreaseDifficulty(float amount, float time)
     {
         yield return new WaitForSeconds(time);
         difficultyLevel += amount;

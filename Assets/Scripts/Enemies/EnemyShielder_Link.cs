@@ -61,6 +61,10 @@ public class EnemyShielder_Link : MonoBehaviour
         health.SetHasShield(false);
         Destroy(enemyShielderLink);
         Destroy(shielderShield);
+    }
+
+    public void RemoveSelfFromShielderList()
+    {
         enemyShielder.GetComponent<EnemyBehaviour_Shielder>().RemoveEnemyFromList(gameObject);
     }
 }

@@ -43,6 +43,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     public GameObject redIndicatorPrefab;
     private Vector3 redIndicatorPosOffset;
 
+    //NavMeshAgent SetDestination bug: remaining distance always starts off at zero
+    int wait = 0, waitTicks = 5;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -59,6 +62,8 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
         //Disable knockback (buggy with navmesh)
         canKnockback = false;
+
+        ResetWaitTicks();
     }
 
     // Update is called once per frame
@@ -70,11 +75,10 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
             {
                 case SpiderBehaviourStates.Running:
                     {
-                        if (!isInKnockback)
-                        {
-                            //Navigation
-                            navMeshAgent.SetDestination(player.transform.position);
-                        }
+                        //Navigation
+                        navMeshAgent.SetDestination(player.transform.position);
+
+                        if (--wait > 0) return;
 
                         //If close enough to player, switch to wind up
                         if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
@@ -142,6 +146,8 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         //Trigger anim
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToWindup");
+
+        ResetWaitTicks();
     }
 
     private void ShowRedIndicator()
@@ -217,5 +223,10 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     {
         animator.ResetTrigger("ToWindup");
         animator.ResetTrigger("ToJump");
+    }
+
+    private void ResetWaitTicks()
+    {
+        wait = waitTicks;
     }
 }

@@ -867,7 +867,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 24
+      scalar: 36
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4858,4 +4858,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
