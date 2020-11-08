@@ -31,7 +31,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
     public GameObject stompFeet;
 
     // Attack stopping distances
-    public float closeAttacksStopDist = 4.0f;
+    public float closeAttacksStopDist = 3.0f;
     public float throwAttackStopDist = 30.0f;
 
     public GameObject closeAttackCollider;
@@ -63,6 +63,8 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
         //Start off with choosing between 2 close attacks
         SetRandomNextAttack(2);
         ResetWaitTicks();
+
+        AudioManager.PlayBackgroundSound("boss2");
     }
 
     public void Update()
@@ -123,7 +125,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                     if (--wait > 0) return;
 
                     if ((animator.GetCurrentAnimatorStateInfo(0).IsName("ForwardAttack") || animator.GetCurrentAnimatorStateInfo(0).IsName("RegularAttack") ||
-                         animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowRock")) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.50f)
+                         animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowRock")) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f)
                     {
                         if(!preAnimTriggerSet)
                         {
@@ -140,6 +142,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                             case BossOakTreeBehaviourStates.Attack_Forward:
                                 {
                                     bossState = BossOakTreeBehaviourStates.Walking;
+                                    navMeshAgent.enabled = true;
                                     break;
                                 }
 
@@ -150,7 +153,6 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
                                 }
                         }
 
-                        navMeshAgent.enabled = true;
                         preAnimTriggerSet = false;
 
                         ResetWaitTicks();
@@ -192,13 +194,16 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
     private void SetRandomNextAttack(int numAttacks)
     {
-        if (Vector3.Distance(transform.position, player.transform.position) >= throwAttackStopDist / 1.5f)
+        if(numAttacks > 2)
         {
-            Debug.Log("Weighted throw");
-            SetRandomNextAttackWeightedForThrow();
-            return;
-        }
-
+            if (Vector3.Distance(transform.position, player.transform.position) >= throwAttackStopDist / 1.5f)
+            {
+                Debug.Log("Weighted throw");
+                SetRandomNextAttackWeightedForThrow();
+                return;
+            }
+        }    
+   
         ResetAllAnimatorTriggers();
 
         int randInteger = UnityEngine.Random.Range(1, numAttacks + 1);

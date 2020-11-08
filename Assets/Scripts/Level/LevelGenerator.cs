@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,10 +22,19 @@ public class LevelGenerator : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.levelName = config.name ?? "";
+        // name = config.name ?? "";
         _navMeshSurface = GetComponent<NavMeshSurface>();
+        print("Generating level");
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
-        RebuildNavMesh();
+        print("Done generating level");
+    }
+
+    private void Start()
+    {
         if (generateOnAwake) Generate();
+        else
+            StartCoroutine(rebuildNavMeshDelayed(0.5f));
     }
 
     /// <summary>
@@ -199,10 +209,11 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
-        if(!config) return;
+		if(!config) return;
         roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;
+        if (Application.isPlaying) GameManager.Instance.levelName = config.name ?? "???";
 
         var n = 10;
         while (n-- > 0)
@@ -229,10 +240,10 @@ public class LevelGenerator : MonoBehaviour
             }
 
             PlaceBossRoom();
-            RebuildNavMesh();
             break;
         }
 
+        StartCoroutine(rebuildNavMeshDelayed(0.5f));
         HideAllUnconnectedExitIcons();
     }
 
@@ -257,10 +268,21 @@ public class LevelGenerator : MonoBehaviour
 
         _rooms.Clear();
         _exits.Clear();
-
-        while (transform.childCount > 0)
+        
+        
+        if (Application.isPlaying)
         {
-            DestroyImmediate(transform.GetChild(0).gameObject);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+        else
+        {
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
         }
     }
 
@@ -330,6 +352,13 @@ public class LevelGenerator : MonoBehaviour
         if (!_navMeshSurface)
             _navMeshSurface = GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
+        print("Rebuilding Navmesh");
+    }
+
+    private IEnumerator rebuildNavMeshDelayed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        RebuildNavMesh();
     }
 }
 

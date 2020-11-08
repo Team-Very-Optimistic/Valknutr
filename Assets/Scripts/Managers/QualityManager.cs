@@ -129,16 +129,17 @@ public class QualityManager : ScriptableObject
     [Range(0f, 0.99f)]
     public float randomSpread = 0.2f;
     
-    public void RandomizeAndInitProperties(SpellItem element, Quality quality)
+    public void RandomizeAndInitProperties(SpellItem element, Quality quality, int level)
     {
         if (element.isBaseSpell)
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
             spellBase._cooldown /= Mathf.Clamp(Spread() * Value(quality), 1, 10);
-            spellBase._damage *= Spread() * Value(quality);
+            spellBase._damage *= Spread() * Value(quality) * level;
             spellBase._scale *= Spread() * Value(quality);
             spellBase._speed *= Spread() * Value(quality);
             spellBase.quality = quality;
+            spellBase.level = level;
             spellBase.InitCopy();
         }
         else
@@ -147,6 +148,7 @@ public class QualityManager : ScriptableObject
             mod._cooldownMultiplier *= Spread();
             mod.value = Spread() * Value(quality);
             mod.quality = quality;
+            mod.level = 1;
             mod.UseValue();
         }
     }

@@ -2,7 +2,7 @@
 
 public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 {
-    enum WolfBehaviourStates
+    public enum WolfBehaviourStates
     {
         Running,
         Windup,
@@ -28,6 +28,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     //Collider for dash
     private Collider wolfCollider;
     private Rigidbody wolfRigidbody;
+    private GameObject wolfChargeCollider;
     private float chargeDuration = 1.0f;
     private float chargeTimeElapsed = 0.0f;
 
@@ -51,6 +52,8 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Set collider
         wolfCollider = GetComponent<Collider>();
         wolfRigidbody = GetComponent<Rigidbody>();
+        wolfChargeCollider = gameObject.transform.Find("WolfChargeCollider").gameObject;
+        wolfChargeCollider.SetActive(false);
 
         redIndicatorPosOffset = new Vector3(0.0f, wolfCollider.bounds.size.y * 2.0f, 0.0f);
 
@@ -158,6 +161,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Trigger anim state
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToCharge");
+
+        gameObject.layer = LayerMask.NameToLayer("WolfChargeLayer");
+        wolfChargeCollider.SetActive(true);
     }
 
     private void StartRest()
@@ -175,6 +181,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToRest");
+
+        gameObject.layer = LayerMask.NameToLayer("Default");
+        wolfChargeCollider.SetActive(false);
     }
 
     private void StartRunning()
@@ -187,20 +196,6 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToRun");
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        //Only trigger when charging - Cannot toggle boxcollider + isTrigger
-        if (wolfState == WolfBehaviourStates.Charging)
-        {
-            //Check only player's capsule collider
-            if (other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider) ||
-               (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Player")))
-            {
-                gameObject.GetComponentInParent<Damage>().DealDamage(other);
-            }
-        }
     }
 
     private void ResetAllAnimationTriggers()
@@ -220,5 +215,15 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     {
         wolfRigidbody.isKinematic = true;
         wolfRigidbody.useGravity = true;
+    }
+
+    public WolfBehaviourStates GetWolfState()
+    {
+        return wolfState;
+    }
+
+    private void OnDestroy()
+    {
+        wolfChargeCollider.SetActive(false);
     }
 }
