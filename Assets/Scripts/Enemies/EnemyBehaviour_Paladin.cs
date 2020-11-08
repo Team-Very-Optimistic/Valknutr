@@ -73,4 +73,9 @@ public class EnemyBehaviour_Paladin : EnemyBehaviourBase
     {
         meleeWeapon.GetComponent<BoxCollider>().enabled = Convert.ToBoolean(value);
     }
+
+    public void OnDestroy()
+    {
+        meleeWeapon.GetComponent<BoxCollider>().enabled = false;
+    }
 }

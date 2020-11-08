@@ -426,6 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110327214717051005}
   - component: {fileID: 1110327214717051004}
+  - component: {fileID: 7405818734712748026}
   m_Layer: 0
   m_Name: Paladin_J_Nordstrom_Shield
   m_TagString: Enemy
@@ -500,6 +501,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.014343977, y: -0.04310405, z: -0.05314344}
     m_Extent: {x: 0.22419423, y: 0.06168222, z: 0.33789936}
   m_DirtyAABB: 0
+--- !u!114 &7405818734712748026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110327214717050978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1110327214778861618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110327215372407004}
   - component: {fileID: 1110327215372407007}
+  - component: {fileID: 6314858466001481466}
   m_Layer: 0
   m_Name: Paladin_J_Nordstrom
   m_TagString: Enemy
@@ -1627,6 +1643,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00036156178, y: -0.093905985, z: -0.0074091703}
     m_Extent: {x: 0.85255903, y: 0.86201745, z: 0.17210023}
   m_DirtyAABB: 0
+--- !u!114 &6314858466001481466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110327215372407005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1110327215377075513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,7 +2237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  isFriendly: 0
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1110327215755334053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,6 +2984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110327216418254855}
   - component: {fileID: 1110327216418254854}
+  - component: {fileID: 6757138714481532427}
   m_Layer: 0
   m_Name: Paladin_J_Nordstrom_Helmet
   m_TagString: Enemy
@@ -3030,6 +3063,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00022089481, y: 0.27315086, z: 0.009640962}
     m_Extent: {x: 0.09390791, y: 0.12635857, z: 0.13169779}
   m_DirtyAABB: 0
+--- !u!114 &6757138714481532427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110327216418254852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1110327216424408204
 GameObject:
   m_ObjectHideFlags: 0
@@ -3103,6 +3150,7 @@ GameObject:
   - component: {fileID: 1110327216500559343}
   - component: {fileID: 1110327216500559340}
   - component: {fileID: 1110327216500559341}
+  - component: {fileID: 2717935312422051646}
   m_Layer: 0
   m_Name: MeleeWeapon
   m_TagString: Enemy
@@ -3203,6 +3251,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordJoint: {fileID: 1110327216424408204}
+--- !u!114 &2717935312422051646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110327216500559315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1110327216512130474
 GameObject:
   m_ObjectHideFlags: 0
