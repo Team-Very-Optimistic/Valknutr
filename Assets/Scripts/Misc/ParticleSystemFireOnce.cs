@@ -7,6 +7,7 @@ public class ParticleSystemFireOnce : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.localRotation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
         Destroy(gameObject, GetComponent<ParticleSystem>().main.duration);
     }
 

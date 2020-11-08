@@ -18,6 +18,8 @@ public class MossRock : MonoBehaviour
     public GameObject targetParticlePrefab;
     public GameObject targetParticleRef;
 
+    public GameObject rockParticlePrefab;
+
     private Vector3 throwDirection;
     private float velocity = 20.0f;
 
@@ -94,7 +96,11 @@ public class MossRock : MonoBehaviour
 
         float screenShakeAmount = 1.0f - ((GameManager.Instance._player.transform.position - transform.position).magnitude / screenShakeMaxDistance);
         ScreenShakeManager.Instance.ScreenShake(0.25f, screenShakeAmount);
+
+        GameObject.Instantiate(rockParticlePrefab, transform.position, Quaternion.identity);
+
         Destroy(targetParticleRef);
         Destroy(gameObject);
+
     }
 }
