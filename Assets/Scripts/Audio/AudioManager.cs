@@ -112,7 +112,7 @@ public class AudioManager : Singleton<AudioManager>
             0, 1f).SetEase(Ease.InQuad);
         
         SoundEntry s = Array.Find(Instance.m_bgLibrary, sound => sound.m_Identifier == identifier);
-
+        
         if (s == null)
         {
             Debug.LogWarning("The requested sound \"" + identifier + "\" does not exist!");
@@ -129,7 +129,7 @@ public class AudioManager : Singleton<AudioManager>
         var newBG = audioSource;
         DOTween.To(() => newBG.volume, 
             x => newBG.volume =  x, 
-            volume, 1f).SetEase(Ease.InQuad);
+            s.m_Volume * volume, 1f).SetEase(Ease.InQuad);
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);

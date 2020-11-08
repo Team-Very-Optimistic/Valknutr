@@ -144,7 +144,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// print(move);
 			var velocityY = m_Rigidbody.velocity.y;
 			var newVelocity = move * m_MoveSpeedMultiplier;
-			newVelocity.y = velocityY;
+			newVelocity.y = velocityY - m_GravityMultiplier ;
 			m_Rigidbody.velocity = newVelocity;
 
 			// convert the world relative moveInput vector into a local-relative
