@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 {
@@ -76,7 +77,19 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     //If close enough to player, switch to wind up
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
-                        SetupDash();
+                        Vector3 direction = (player.transform.position - transform.position).normalized;
+
+                        RaycastHit raycastHitInfo;
+
+                        if(Physics.Raycast(transform.position, direction, out raycastHitInfo))
+                        {
+                            //we are here if the ray hit a collider
+                            //now to check if that collider is the player
+                            if (raycastHitInfo.collider.gameObject.tag == "Player")
+                            {
+                                SetupDash();
+                            }
+                        }
                     }
 
                     break;
@@ -93,6 +106,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     //Change rigidbody velocity
                     chargeTimeElapsed += Time.deltaTime;
                     wolfRigidbody.velocity = dashDirection * dashCurve.Evaluate(chargeTimeElapsed) * 7.0f;
+                    transform.position = new Vector3(transform.position.x, navMeshAgent.transform.position.y, transform.position.z);
 
                     //If close enough to dash location, start resting
                     if (chargeTimeElapsed >= chargeDuration)
@@ -123,11 +137,12 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
         //Temporarily disable navMeshAgent
-        navMeshAgent.enabled = false;
+        //navMeshAgent.enabled = false;
 
         //Invoke show red indicator function + start charge function
         Invoke(nameof(ShowRedIndicator), dashWindupTime * 0.5f);
         Invoke(nameof(StartDash), dashWindupTime);
+        Invoke(nameof(PlayGrowl), dashWindupTime * 0.5f);
 
         //Change enum state
         wolfState = WolfBehaviourStates.Windup;
@@ -150,7 +165,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private void StartDash()
     {
         wolfRigidbody.isKinematic = false;
-        wolfRigidbody.useGravity = false;
+        wolfRigidbody.useGravity = true;
 
         //Change enum state
         wolfState = WolfBehaviourStates.Charging;
@@ -209,6 +224,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private void ResetWaitTicks()
     {
         wait = waitTicks;
+    }
+
+    private void PlayGrowl()
+    {
+        AudioManager.PlaySound("WolfGrowl", 0.5f, Random.Range(0.75f, 1.5f));
     }
 
     private void ResetRigidBody()

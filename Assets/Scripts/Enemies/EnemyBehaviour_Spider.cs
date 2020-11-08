@@ -139,6 +139,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         //Invoke show red indicator function + start charge function
         Invoke(nameof(ShowRedIndicator), windUpTime * 0.5f);
         Invoke(nameof(StartJump), windUpTime);
+        Invoke(nameof(PlaySqueal), windUpTime * 0.5f);
 
         //Change enum state
         spiderState = SpiderBehaviourStates.Windup;
@@ -148,6 +149,11 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         animator.SetTrigger("ToWindup");
 
         ResetWaitTicks();
+    }
+
+    private void PlaySqueal()
+    {
+        AudioManager.PlaySound("SpiderSqueal", 0.3f, Random.Range(0.75f, 1.25f));
     }
 
     private void ShowRedIndicator()
@@ -173,6 +179,8 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
 
     private void Explode()
     {
+        AudioManager.PlaySound("SpiderExplode", 0.4f, Random.Range(0.75f, 1.25f));
+
         var colliders = Physics.OverlapSphere(transform.position, explodeRadius);
 
         foreach (Collider hit in colliders)

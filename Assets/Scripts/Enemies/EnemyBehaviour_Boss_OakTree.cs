@@ -319,4 +319,26 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
         Destroy(mossRockRef);
     }
+
+    public void StartFootstep()
+    {
+        AudioManager.PlaySoundAtPosition("OakTreeFootstep", transform.position, 0.7f, UnityEngine.Random.Range(0.25f, 1.0f));
+        AudioManager.PlaySoundAtPosition("OakTreeCreak", transform.position, 0.7f, UnityEngine.Random.Range(0.9f, 1.25f));
+        ScreenShakeManager.Instance.ScreenShake(0.25f, 0.3f);
+    }
+
+    public void PlayPickUpRockSound()
+    {
+        AudioManager.PlaySoundAtPosition("OakTreePickup", transform.position, 0.7f, UnityEngine.Random.Range(0.25f, 1.0f));
+    }
+
+    public void PlayCreakSound()
+    {
+        AudioManager.PlaySoundAtPosition("OakTreeCreak", transform.position, 0.8f, UnityEngine.Random.Range(0.25f, 1.0f));
+    }
+
+    public void PlayThrowRockSound()
+    {
+        AudioManager.PlaySoundAtPosition("OakTreeThrow", transform.position, 0.7f, UnityEngine.Random.Range(0.25f, 1.0f));
+    }
 }
