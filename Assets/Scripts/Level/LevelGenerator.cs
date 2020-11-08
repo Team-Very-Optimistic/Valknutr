@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,9 +25,16 @@ public class LevelGenerator : MonoBehaviour
         GameManager.Instance.levelName = config.name ?? "";
         // name = config.name ?? "";
         _navMeshSurface = GetComponent<NavMeshSurface>();
+        print("Generating level");
         // Rebuilds navmesh at start of game to prevent bugs with run-in-editor stuff
+        print("Done generating level");
+    }
+
+    private void Start()
+    {
         if (generateOnAwake) Generate();
-        RebuildNavMesh();
+        else
+            StartCoroutine(rebuildNavMeshDelayed(0.5f));
     }
 
     /// <summary>
@@ -232,10 +240,10 @@ public class LevelGenerator : MonoBehaviour
             }
 
             PlaceBossRoom();
-            RebuildNavMesh();
             break;
         }
 
+        StartCoroutine(rebuildNavMeshDelayed(0.5f));
         HideAllUnconnectedExitIcons();
     }
 
@@ -345,6 +353,12 @@ public class LevelGenerator : MonoBehaviour
             _navMeshSurface = GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
         print("Rebuilding Navmesh");
+    }
+
+    private IEnumerator rebuildNavMeshDelayed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        RebuildNavMesh();
     }
 }
 

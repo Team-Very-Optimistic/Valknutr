@@ -211,15 +211,17 @@ public readonly struct Tooltip
 {
     public readonly string Title;
     public readonly string Body;
+    public readonly string Subtitle;
 
-    public Tooltip(string title, string body)
+    public Tooltip(string title, string body, string subtitle="")
     {
         Title = title;
         Body = body;
+        Subtitle = subtitle;
     }
-
+    
     public string ToString()
     {
-        return $"{Title}\n{Body}";
+        return $"{Title}\n{Subtitle}\n{Body}";
     }
 }

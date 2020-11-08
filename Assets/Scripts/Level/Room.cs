@@ -25,7 +25,7 @@ public class Room : MonoBehaviour
     private bool isActive;
     public bool isCleared;
     private bool isPlayerInside;
-    private List<GameObject> minimapIcons;
+    private List<GameObject> minimapIcons = new List<GameObject>();
     public int depth;
 
     // Loot
@@ -40,8 +40,17 @@ public class Room : MonoBehaviour
     {
         roomCollider = GetComponent<BoxCollider>();
         spawner = GetComponent<Spawner>();
-        minimapIcons = transform.FindChildrenByPredicate(transform1 => transform1.GetComponent<SpriteRenderer>())
-            .Select(transform1 => transform1.gameObject).ToList();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+
+            if (child.name.Contains("Minimap"))
+            {
+                minimapIcons.Add(child.gameObject);
+            }
+        }
+        // minimapIcons = transform.FindChildrenByPredicate(transform1 => transform1.GetComponent<SpriteRenderer>())
+        //     .Select(transform1 => transform1.gameObject).ToList();
     }
 
     private void OnTriggerStay(Collider other)
@@ -109,7 +118,7 @@ public class Room : MonoBehaviour
 
     private void OnClear()
     {
-        UpdateMinimapIcon(new Color(0.02f, 0.58f, 0f));
+        UpdateMinimapIcon(new Color(0.16f, 0.32f, 0.17f));
         OpenAllDoors();
         ActivateLevelExit();
         SpawnTreasure();
@@ -123,7 +132,13 @@ public class Room : MonoBehaviour
     private void UpdateMinimapIcon(Color color)
     {
         // todo
-        minimapIcons.ForEach(go => { go.GetComponent<SpriteRenderer>().color = color; });
+        minimapIcons.ForEach(go =>
+        {
+            foreach (var spriteRenderer in go.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.color = color;
+            }
+        });
     }
 
     private void SpawnTreasure()

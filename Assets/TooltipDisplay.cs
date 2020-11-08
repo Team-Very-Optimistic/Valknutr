@@ -6,6 +6,7 @@ public class TooltipDisplay : MonoBehaviour
 {
     public TextMeshProUGUI titleTextObject;
     public TextMeshProUGUI bodyTextObject;
+    public TextMeshProUGUI subtitleObject;
 
     private void Start()
     {
@@ -13,11 +14,12 @@ public class TooltipDisplay : MonoBehaviour
         bodyTextObject.text = "";
     }
 
-    public void Show(string titleText, string bodyText)
+    public void Show(string titleText, string bodyText, string subtitleText="")
     {
         gameObject.SetActive(true);
         titleTextObject.text = titleText;
         bodyTextObject.text = bodyText;
+        subtitleObject.text = subtitleText;
     }
 
     public void Hide()
@@ -27,6 +29,6 @@ public class TooltipDisplay : MonoBehaviour
 
     public void Show(Tooltip tooltip)
     {
-        Show(tooltip.Title, tooltip.Body);
+        Show(tooltip.Title, tooltip.Body, tooltip.Subtitle);
     }
 }

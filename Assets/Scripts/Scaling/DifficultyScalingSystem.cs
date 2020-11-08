@@ -57,6 +57,11 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         return Instance.difficultyLevel + depth.GetValueOrDefault(0) * Instance.depthDifficulty;
     }
 
+    public static int GetLevel()
+    {
+        return Mathf.RoundToInt(Instance.difficultyLevel);
+    }
+
     public static float GetDensity(int depth)
     {
         return 1;

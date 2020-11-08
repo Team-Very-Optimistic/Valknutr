@@ -1,5 +1,4 @@
-﻿﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GroundStrikeBase : SpellBase
 {
@@ -7,27 +6,28 @@ public class GroundStrikeBase : SpellBase
     public float radius = 2F;
     public float power = 1000.0F;
     private Damage damageScript;
-    
+
     protected override void SetValues()
     {
         _objectForSpell = GameManager.Instance._weapon;
-        if(!damageScript)
+        if (!damageScript)
             damageScript = _objectForSpell.GetComponent<Damage>();
     }
-    
-    protected override void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f, Vector3 pos = default)
+
+    protected override void SpellEffects(bool screenshake, float duration = 0.1f, float intensity = 0.2f,
+        Vector3 pos = default)
     {
         if (screenshake)
         {
             ScreenShakeManager.Instance.ScreenShake(duration, intensity);
         }
-        
+
         AudioManager.PlaySoundAtPosition("groundStrike", pos, 0, Random.Range(0.8f, 1.3f));
-        EffectManager.PlayEffectAtPosition("groundStrike", pos + _offset, 
-            new Vector3(_scale,_scale,_scale));
+        EffectManager.PlayEffectAtPosition("groundStrike", pos + _offset,
+            new Vector3(_scale, _scale, _scale));
         EffectManager.Instance.UseStaffEffect();
     }
-    
+
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes
@@ -44,11 +44,11 @@ public class GroundStrikeBase : SpellBase
         var position = _objectForSpell.transform.position + _direction * _scale;
         position.y = Mathf.Max(position.y, 0.3f); //will not work with lower terrain
         var intensity = 0.1f * _damage / properties._damage + 0.05f * _scale / properties._scale;
-        
+
         SpellEffects(true, 0.1f, intensity, position);
-        
+
         var cols = Physics.OverlapSphere(position, radius);
-        
+
         foreach (var col in cols)
         {
             if (!col.CompareTag("Player") && !col.CompareTag("Projectile"))
@@ -72,9 +72,10 @@ public class GroundStrikeBase : SpellBase
             }
         }
     }
-    
+
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Strike {DefaultBaseTitle()}", $"Strikes the ground with a charged staff, dealing {_damage:F} to entities in a radius of {radius:F}. {DefaultBaseBody()}");
+        return new Tooltip($"Strike {DefaultBaseTitle()}",
+            $"Strikes the ground with a charged staff, dealing {_damage:F} to entities in a radius of {radius:F}. {DefaultBaseBody()}", $"Level {level}");
     }
 }

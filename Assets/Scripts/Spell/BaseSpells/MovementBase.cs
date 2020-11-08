@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 using Random = UnityEngine.Random;
@@ -8,7 +8,7 @@ class MovementBase : SpellBase
     private ThirdPersonCharacter _controller;
     public float _moveTime = 0.3f;
     public float invulnDuration = 0.2f;
-    
+
     protected override void SetValues()
     {
         _moveTime = 0.3f;
@@ -16,7 +16,7 @@ class MovementBase : SpellBase
         _controller = _objectForSpell.GetComponent<ThirdPersonCharacter>();
         _offset = 2 * (Random.value < 0.5f ? Vector3.left : Vector3.right);
     }
-    
+
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes
@@ -39,7 +39,7 @@ class MovementBase : SpellBase
         {
             var illu = Instantiate(_objectForSpell, _objectForSpell.transform.position + _offset,
                 Quaternion.Euler(new Vector3()));
-            
+
             var thirdPersonCharacter = illu.GetComponent<ThirdPersonCharacter>();
             illu.GetComponent<SpellCaster>().enabled = false;
 
@@ -50,18 +50,18 @@ class MovementBase : SpellBase
             _objectForSpell = illu;
         }
     }
-    
+
     public override Tooltip GetTooltip()
     {
-        return new Tooltip($"Dash {DefaultBaseTitle()}", $"Dash quickly in any direction in {(_moveTime * 30f / _speed):F}s. {DefaultBaseBody()}. Briefly becomes invulnerable to damage.");
+        return new Tooltip($"Dash {DefaultBaseTitle()}",
+            $"Dash quickly in any direction in {(_moveTime * 30f / _speed):F}s. {DefaultBaseBody()}. Briefly becomes invulnerable to damage.", $"Level {level}");
     }
 }
 
 public class Illusion : MonoBehaviour
 {
-    [HideInInspector]
-    private float timeAlive = 6f;
-    
+    [HideInInspector] private float timeAlive = 6f;
+
     public void Start()
     {
         Destroy(gameObject, timeAlive);

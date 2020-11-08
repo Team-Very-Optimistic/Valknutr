@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
@@ -16,8 +17,8 @@ public class RoomExit : MonoBehaviour
     private Vector3 _originalPosition;
     [SerializeField]
     private RoomExit _connectedExit;
-    private Collider _collider;
-    private Renderer _renderer;
+    private Collider[] _colliders;
+    private Renderer[] _renderers;
     private NavMeshObstacle _navMeshObstacle;
     [HideInInspector]
     public GameObject minimapIcon;
@@ -25,8 +26,8 @@ public class RoomExit : MonoBehaviour
     private void Start()
     {
         _originalPosition = transform.position;
-        _collider = GetComponentInChildren<Collider>();
-        _renderer = GetComponentInChildren<Renderer>();
+        _colliders = GetComponentsInChildren<Collider>();
+        _renderers = GetComponentsInChildren<MeshRenderer>();
         _navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
         HideMinimapIcon();
     }
@@ -75,10 +76,23 @@ public class RoomExit : MonoBehaviour
     private void _Open()
     {
         isOpen = true;
-        _renderer.enabled = false;
-        _collider.enabled = false;
+        foreach (var r in _renderers)
+        {
+            r.enabled = false;
+        }
+        
+        foreach (var c in _colliders)
+        {
+            c.enabled = false;
+        }
+        
         if(_navMeshObstacle)
             _navMeshObstacle.enabled = false;
+
+        // _renderer.enabled = false;
+        // _collider.enabled = false;
+        // if(_navMeshObstacle)
+        //     _navMeshObstacle.enabled = false;
     }
 
     public void Close()
@@ -86,12 +100,59 @@ public class RoomExit : MonoBehaviour
         if (isLocked) return;
 
         isOpen = false;
-        _renderer.enabled = true;
-        _collider.enabled = true;
-        _navMeshObstacle.enabled = true;
+        foreach (var r in _renderers)
+        {
+            r.enabled = true;
+        }
+        
+        foreach (var c in _colliders)
+        {
+            c.enabled = true;
+        }
+        
+        if(_navMeshObstacle)
+            _navMeshObstacle.enabled = true;
 
         // Close other door
         if (!isConnected || _connectedExit == null || !_connectedExit.isOpen) return;
         _connectedExit.Close();
+    }
+
+    [ContextMenu("Generate Minimap Icon")]
+    private void GenerateMinimapIcon()
+    {
+        foreach (var c in GetComponentsInChildren<Collider>())
+        {
+            var icon = generateMinimapIcon(c);
+            icon.transform.parent = transform;
+        }
+
+    }
+    
+    private GameObject generateMinimapIcon(Collider c)
+    {
+        var bounds = c.bounds;
+        var iconPrefab = Resources.Load<GameObject>("MinimapIcon_Exit");
+
+        var minimapIcon = Instantiate(iconPrefab);
+        var spriteRenderer = minimapIcon.GetComponent<SpriteRenderer>();
+        var spriteWidth = spriteRenderer.bounds.size.x;
+        var spriteHeight = spriteRenderer.bounds.size.z;
+
+        var cWidth = bounds.size.x;
+        var cHeight = bounds.size.z;
+
+        minimapIcon.transform.localScale = new Vector3(cWidth / spriteWidth, cHeight / spriteHeight, 1);
+        minimapIcon.transform.position = bounds.center + Vector3.up * 5;
+        return minimapIcon;
+    }
+
+    [ContextMenu("Auto center")]
+    private void AutoCenter()
+    {
+        var c =GetComponentInChildren<Collider>();
+        var center = c.bounds.center;
+        center.y = 0;
+        c.transform.position = -center;
     }
 }
