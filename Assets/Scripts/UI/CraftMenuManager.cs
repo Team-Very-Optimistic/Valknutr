@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using Doozy.Engine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CraftMenuManager : Singleton<CraftMenuManager>
 {
@@ -12,7 +14,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
     private const int BaseItemSlotIndex = 3;
-    
+    public Image craftEffect;
     #region CraftMenu
     public void DisplayCraftMenu()
     {
@@ -84,7 +86,23 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
             Inventory.Instance._spells.Add(spell); //crafted
+            craftEffect.gameObject.SetActive(true);
+            var alpha = craftEffect.color;
+            alpha.a = 0.05f;
+            craftEffect.color = alpha;
             AudioManager.PlaySound("craftSuccess");
+            DOTween.To(() => craftEffect.color.a, 
+                x =>
+                {
+                    var alp = craftEffect.color;
+                    alp.a = x;
+                    craftEffect.color = alp;
+                    if(x == 0)
+                        craftEffect.gameObject.SetActive(false);
+
+                }, 
+                0, 0.7f).SetEase(Ease.InQuad);
+            
         }
         else
         {
