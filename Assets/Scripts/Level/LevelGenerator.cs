@@ -213,7 +213,7 @@ public class LevelGenerator : MonoBehaviour
         roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;
-        GameManager.Instance.levelName = config.name ?? "???";
+        if (Application.isPlaying) GameManager.Instance.levelName = config.name ?? "???";
 
         var n = 10;
         while (n-- > 0)

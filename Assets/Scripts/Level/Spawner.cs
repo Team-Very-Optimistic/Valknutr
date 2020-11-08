@@ -32,14 +32,18 @@ public class Spawner : MonoBehaviour
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
         var toSpawn = new List<EnemyPack>();
-        var spawnDensity = DifficultyScalingSystem.GetDensity(depth); 
-        
+        var spawnDensity = DifficultyScalingSystem.GetDensity(depth);
+        var minPackDifficulty = availablePacks.Select(pack => pack.difficultyRating).Min();
+
+        var target = difficultyTarget * spawnDensity;
+
         // Select packs until we meet a difficulty target
-        while (currentDifficulty < difficultyTarget * spawnDensity)
+        while (currentDifficulty < target)
         {
             var newPack = Util.RandomItem(availablePacks);
             toSpawn.Add(newPack);
             currentDifficulty += newPack.difficultyRating;
+            if (currentDifficulty + minPackDifficulty > target) break;
         }
         
         toSpawn.ForEach(pack =>
