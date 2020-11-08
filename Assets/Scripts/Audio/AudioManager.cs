@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -29,7 +31,8 @@ public class AudioManager : Singleton<AudioManager>
     private SFXLibrary _library;
     [SerializeField]
     private SFXLibrary _backgroundMusic;
-    
+
+    private AudioSource backgroundAudio;
    
     void Awake()
     {
@@ -102,6 +105,11 @@ public class AudioManager : Singleton<AudioManager>
     
     public static void PlayBackgroundSound(string identifier, float volume = 1, float pitch = 1)
     {
+        if(Instance.backgroundAudio)
+            DOTween.To(() => Instance.backgroundAudio.volume, 
+            x => Instance.backgroundAudio.volume =  x, 
+            0, 1f).SetEase(Ease.InQuad);
+        
         SoundEntry s = Array.Find(Instance.m_bgLibrary, sound => sound.m_Identifier == identifier);
 
         if (s == null)
@@ -115,6 +123,7 @@ public class AudioManager : Singleton<AudioManager>
         audioSource.volume *= volume;
         audioSource.pitch *= pitch;
         audioSource.spatialBlend = 0.0f; // Important
+        Instance.backgroundAudio = audioSource;
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);
