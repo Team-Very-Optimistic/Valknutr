@@ -105,9 +105,10 @@ public class AudioManager : Singleton<AudioManager>
     
     public static void PlayBackgroundSound(string identifier, float volume = 1, float pitch = 1)
     {
+        var bg = Instance.backgroundAudio;
         if(Instance.backgroundAudio)
-            DOTween.To(() => Instance.backgroundAudio.volume, 
-            x => Instance.backgroundAudio.volume =  x, 
+            DOTween.To(() => bg.volume, 
+            x => bg.volume =  x, 
             0, 1f).SetEase(Ease.InQuad);
         
         SoundEntry s = Array.Find(Instance.m_bgLibrary, sound => sound.m_Identifier == identifier);
@@ -120,10 +121,15 @@ public class AudioManager : Singleton<AudioManager>
 
         GameObject tempSoundPlayer = Instantiate(s.m_Source.gameObject);
         AudioSource audioSource = tempSoundPlayer.GetComponent<AudioSource>();
-        audioSource.volume *= volume;
+        
+        audioSource.volume = 0;
         audioSource.pitch *= pitch;
         audioSource.spatialBlend = 0.0f; // Important
         Instance.backgroundAudio = audioSource;
+        var newBG = audioSource;
+        DOTween.To(() => newBG.volume, 
+            x => newBG.volume =  x, 
+            volume, 1f).SetEase(Ease.InQuad);
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);
