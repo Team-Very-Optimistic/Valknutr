@@ -21,6 +21,8 @@ public class MossRock : MonoBehaviour
     private Vector3 throwDirection;
     private float velocity = 20.0f;
 
+    private float rotateValue = 1.0f;
+
     //Screen shake
     private float screenShakeMaxDistance = 15.0f;
 
@@ -44,9 +46,9 @@ public class MossRock : MonoBehaviour
 
         if(isDetatched)
         {
-            transform.rotation = Quaternion.Euler(90.0f, 0, 90.0f);
-
             transform.position += throwDirection * velocity * Time.deltaTime;
+
+            transform.Rotate(new Vector3(rotateValue, rotateValue, rotateValue));
         }
     }
 
@@ -72,6 +74,8 @@ public class MossRock : MonoBehaviour
         isDetatched = true;
 
         rockCollider.enabled = true;
+
+        transform.rotation = Quaternion.Euler(90.0f, 0, 90.0f);
     }
 
     private void OnTriggerEnter(Collider other)
