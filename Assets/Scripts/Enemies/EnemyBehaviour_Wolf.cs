@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 {
@@ -76,7 +77,19 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     //If close enough to player, switch to wind up
                     if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                     {
-                        SetupDash();
+                        Vector3 direction = (player.transform.position - transform.position).normalized;
+
+                        RaycastHit raycastHitInfo;
+
+                        if(Physics.Raycast(transform.position, direction, out raycastHitInfo))
+                        {
+                            //we are here if the ray hit a collider
+                            //now to check if that collider is the player
+                            if (raycastHitInfo.collider.gameObject.tag == "Player")
+                            {
+                                SetupDash();
+                            }
+                        }
                     }
 
                     break;
