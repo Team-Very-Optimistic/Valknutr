@@ -40,6 +40,6 @@ class ShieldBase : SpellBase
     {
         return new Tooltip($"Shield {DefaultBaseTitle()}", 
             $"Spawns a shield that absorbs {(healthBuffer):F} " +
-            $"damage for the player. Player can have a maximum of {SpellManager.Instance.maxShields} shields active. \n{DefaultBaseBody()}");
+            $"damage for the player. Player can have a maximum of {SpellManager.Instance.maxShields} shields active. \n{DefaultBaseBody()}", $"Level {level}");
     }
 }

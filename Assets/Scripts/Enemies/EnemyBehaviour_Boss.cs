@@ -273,10 +273,10 @@ public class EnemyBehaviour_Boss : Enemy
 
     private void OnDestroy()
     {
-        if (GameManager.Instance)
-        {
-            // GameManager.Instance.SetGameWin();
-            LevelManager.Instance.StartNextLevel();
-        }
+        // if (GameManager.Instance)
+        // {
+        //     // GameManager.Instance.SetGameWin();
+        //     LevelManager.Instance.StartNextLevel();
+        // }
     }
 }
