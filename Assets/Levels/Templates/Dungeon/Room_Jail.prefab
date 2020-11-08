@@ -1852,22 +1852,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2d3d90170d554714a95307efb70e9ce6, type: 3}
---- !u!208 &4790176969751980382
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7629228008527327590}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.042000003, y: 0.97400004, z: 0.61800003}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.001, y: 0.99200004, z: -0.637}
-  m_TimeToStationary: 0.5
 --- !u!54 &4545631403734522668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1884,6 +1868,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!208 &4790176969751980382
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629228008527327590}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.042000003, y: 0.97400004, z: 0.61800003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.001, y: 0.99200004, z: -0.637}
+  m_TimeToStationary: 0.5
 --- !u!114 &4631744949570239033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17270,7 +17270,7 @@ GameObject:
   - component: {fileID: 3483879569234219764}
   - component: {fileID: 818267555817544154}
   - component: {fileID: 3176956376629992202}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Room_Jail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

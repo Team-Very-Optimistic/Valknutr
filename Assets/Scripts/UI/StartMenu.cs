@@ -8,7 +8,6 @@ public class StartMenu : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene(1);
-        AudioManager.PlayBackgroundSound("level1");
     }
 
     public void Tutorial()

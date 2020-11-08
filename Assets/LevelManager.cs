@@ -9,6 +9,8 @@ public class LevelManager : Singleton<LevelManager>
     public void Start()
     {
         levelIndex = 0;
+        AudioManager.PlayBackgroundSound("level1");
+        AudioManager.PlayBackgroundSound("ambient");
     }
 
     public void StartNextLevel()
