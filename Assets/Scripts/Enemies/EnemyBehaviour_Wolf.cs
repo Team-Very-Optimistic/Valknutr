@@ -106,6 +106,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                     //Change rigidbody velocity
                     chargeTimeElapsed += Time.deltaTime;
                     wolfRigidbody.velocity = dashDirection * dashCurve.Evaluate(chargeTimeElapsed) * 7.0f;
+                    transform.position = new Vector3(transform.position.x, navMeshAgent.transform.position.y, transform.position.z);
 
                     //If close enough to dash location, start resting
                     if (chargeTimeElapsed >= chargeDuration)
@@ -136,7 +137,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         transform.LookAt(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
 
         //Temporarily disable navMeshAgent
-        navMeshAgent.enabled = false;
+        //navMeshAgent.enabled = false;
 
         //Invoke show red indicator function + start charge function
         Invoke(nameof(ShowRedIndicator), dashWindupTime * 0.5f);
@@ -163,7 +164,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private void StartDash()
     {
         wolfRigidbody.isKinematic = false;
-        wolfRigidbody.useGravity = false;
+        wolfRigidbody.useGravity = true;
 
         //Change enum state
         wolfState = WolfBehaviourStates.Charging;
