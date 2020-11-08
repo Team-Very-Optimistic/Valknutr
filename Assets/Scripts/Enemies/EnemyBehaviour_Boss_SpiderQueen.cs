@@ -50,7 +50,7 @@ public class EnemyBehaviour_Boss_SpiderQueen : Enemy
             case BossBehaviourStates.Walking:
             {
                 //Navigation
-                navMeshAgent.SetDestination(player.transform.position);
+                navMeshAgent.SetDestination( 2 *(transform.position - player.transform.position) + RandomNavmeshLocation(5f));
 
                 //Wait frames to ensure navMeshAgent destination set properly
                 if (--waitMore > 0) return;

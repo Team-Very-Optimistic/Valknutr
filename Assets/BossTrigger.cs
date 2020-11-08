@@ -10,6 +10,7 @@ public class BossTrigger : MonoBehaviour
     #region Public Fields
 
     public GameObject boss;
+    public GameObject door;
     #endregion
  
     #region Unity Methods
@@ -24,8 +25,9 @@ public class BossTrigger : MonoBehaviour
 
     private IEnumerator SpawnBoss()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         boss.SetActive(true);
+        door.SetActive(true);
     }
 
     #endregion
