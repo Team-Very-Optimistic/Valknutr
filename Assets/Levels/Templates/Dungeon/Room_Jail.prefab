@@ -1167,6 +1167,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: 
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &7629228007867760357
 GameObject:
@@ -1901,6 +1902,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: 
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!65 &7629228008527502699
 BoxCollider:
@@ -12071,6 +12073,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: 
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &7629228009059160556
 GameObject:
@@ -17462,10 +17465,11 @@ MonoBehaviour:
   exits:
   - {fileID: 3112809311994916159}
   - {fileID: 4858267772851425639}
+  levelExit: {fileID: 0}
+  isCleared: 0
   depth: 0
   lootQualityModifier: 1
   spawnTreasure: 1
-  minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
 --- !u!114 &3176956376629992202
 MonoBehaviour:
   m_ObjectHideFlags: 0

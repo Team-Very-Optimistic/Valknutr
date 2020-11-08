@@ -55,8 +55,8 @@ public class LevelManager : Singleton<LevelManager>
 
             level.transform.position = Vector3.zero;
             level.Generate();
+            
             level.transform.position = offset;
-
             GameManager.Instance._player.transform.position = offset;
             GameManager.Instance.cameraRig.transform.position = offset;
             
