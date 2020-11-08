@@ -15,6 +15,8 @@ public class LevelManager : Singleton<LevelManager>
     {
         StartCoroutine(DifficultyScalingSystem.Instance.IncreaseDifficulty(1, 0.0f));
         StartLevel(++levelIndex % levels.Length);
+
+        AudioManager.PlayBackgroundSound("level2");
     }
 
     public void StartOptionalLevel()

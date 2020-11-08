@@ -58,6 +58,8 @@ public class EnemyBehaviour_Boss : Enemy
         summonInterval = summonTime / (float)(summonEnemiesNum);
         wait = waitTix;
         waitMore = waitTix;
+
+        AudioManager.PlayBackgroundSound("boss1");
     }
 
     public void Update()

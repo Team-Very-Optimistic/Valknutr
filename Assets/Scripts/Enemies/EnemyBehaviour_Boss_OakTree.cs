@@ -63,6 +63,8 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
         //Start off with choosing between 2 close attacks
         SetRandomNextAttack(2);
         ResetWaitTicks();
+
+        AudioManager.PlayBackgroundSound("boss2");
     }
 
     public void Update()
