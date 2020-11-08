@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
@@ -36,7 +37,15 @@ public class LevelManager : Singleton<LevelManager>
 
         GameManager.Instance._player.transform.position = offset;
     }
-    
+
+    public static IEnumerator MoveLevel(GameObject level, Vector3 offset)
+    {
+        yield return new WaitForSeconds(1.0f);
+        level.transform.position = offset; 
+        GameManager.Instance._player.transform.position = offset;
+        GameManager.Instance.cameraRig.transform.position += offset;
+
+    }
     public static void StartLevel(int levelIndex)
     {
         for (var index = 0; index < Instance.levels.Length; index++)
@@ -52,12 +61,9 @@ public class LevelManager : Singleton<LevelManager>
             level.gameObject.SetActive(true);
             var offset = levelIndex * new Vector3(1000, 0, 1000);
 
-            level.transform.position = Vector3.zero;
             level.Generate();
-            
-            level.transform.position = offset;
-            GameManager.Instance._player.transform.position = offset;
-            GameManager.Instance.cameraRig.transform.position = offset;
+            Instance.StartCoroutine(MoveLevel(level.gameObject, offset));
+
             
         }
         else

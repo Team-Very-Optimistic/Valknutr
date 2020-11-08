@@ -63,17 +63,30 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
                         //If close enough to player and animator not in transition, switch to draw bow
                         if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance && animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
                         {
-                            //Trigger anim state
-                            ResetAllAnimationTriggers();
-                            animator.SetTrigger("ToDraw");
+                            Vector3 direction = (player.transform.position - transform.position).normalized;
 
-                            //Change enum state
-                            archerState = ArcherBehaviourStates.DrawBow;
+                            RaycastHit raycastHitInfo;
 
-                            //Stop navMeshAgent
-                            navMeshAgent.isStopped = true;
+                            if (Physics.Raycast(transform.position, direction, out raycastHitInfo))
+                            {
+                                //we are here if the ray hit a collider
+                                //now to check if that collider is the player
+                                if (raycastHitInfo.collider.gameObject.tag == "Player")
+                                {
+                                    //Trigger anim state
+                                    ResetAllAnimationTriggers();
+                                    animator.SetTrigger("ToDraw");
 
-                            ResetWaitTicks();
+                                    //Change enum state
+                                    archerState = ArcherBehaviourStates.DrawBow;
+
+                                    //Stop navMeshAgent
+                                    navMeshAgent.isStopped = true;
+
+                                    ResetWaitTicks();
+                                }
+                            }
+                        
                         }
                     
                         break;
@@ -210,6 +223,7 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
         GameObject arrow = GameObject.Instantiate(arrowPrefab, bow.transform.position + bowVerticalOffset, Quaternion.LookRotation(fireDirection));
         arrow.GetComponent<EnemyProjectile>().Launch(fireDirection, arrowSpeed);
+        arrow.GetComponent<Damage>().SetDamage(GetComponent<Damage>().GetDamage());
 
         HideRedIndicator();
 
@@ -238,11 +252,31 @@ public class EnemyBehaviour_Archer : EnemyBehaviourBase
 
         if (navMeshAgent.remainingDistance != Mathf.Infinity && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+
+            RaycastHit raycastHitInfo;
+
+            if (Physics.Raycast(transform.position, direction, out raycastHitInfo))
+            {
+                //we are here if the ray hit a collider
+                //now to check if that collider is the player
+                if (raycastHitInfo.collider.gameObject.tag == "Player")
+                {
+                    //Trigger anim state
+                    animator.SetTrigger("ToDraw");
+
+                    //Change enum state
+                    archerState = ArcherBehaviourStates.DrawBow;
+
+                    return;
+                }
+            }
+
             //Trigger anim state
-            animator.SetTrigger("ToDraw");
+            animator.SetTrigger("ToRun");
 
             //Change enum state
-            archerState = ArcherBehaviourStates.DrawBow;
+            archerState = ArcherBehaviourStates.Running;
         }
         else
         {
