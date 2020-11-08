@@ -98,6 +98,7 @@ public class MossRock : MonoBehaviour
         ScreenShakeManager.Instance.ScreenShake(0.25f, screenShakeAmount);
 
         GameObject.Instantiate(rockParticlePrefab, transform.position, Quaternion.identity);
+        AudioManager.PlaySoundAtPosition("MossRockLand", transform.position, 1.0f, Random.Range(0.5f, 0.75f));
 
         Destroy(targetParticleRef);
         Destroy(gameObject);

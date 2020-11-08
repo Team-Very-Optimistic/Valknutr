@@ -142,6 +142,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
         //Invoke show red indicator function + start charge function
         Invoke(nameof(ShowRedIndicator), dashWindupTime * 0.5f);
         Invoke(nameof(StartDash), dashWindupTime);
+        Invoke(nameof(PlayGrowl), dashWindupTime * 0.5f);
 
         //Change enum state
         wolfState = WolfBehaviourStates.Windup;
@@ -223,6 +224,11 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     private void ResetWaitTicks()
     {
         wait = waitTicks;
+    }
+
+    private void PlayGrowl()
+    {
+        AudioManager.PlaySound("WolfGrowl", 0.5f, Random.Range(0.75f, 1.5f));
     }
 
     private void ResetRigidBody()
