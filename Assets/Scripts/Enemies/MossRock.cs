@@ -19,7 +19,7 @@ public class MossRock : MonoBehaviour
     public GameObject targetParticleRef;
 
     private Vector3 throwDirection;
-    private float velocity = 15.0f;
+    private float velocity = 20.0f;
 
     //Screen shake
     private float screenShakeMaxDistance = 15.0f;
