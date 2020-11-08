@@ -27,7 +27,7 @@ public class HealthPickup : ItemDrop
     // }
     public override void ShowTooltip()
     {
-        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."));
+        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."), true);
         UiManager.currentItemDrop = this;
     }
 

@@ -9,25 +9,24 @@ public class ItemDrop : MonoBehaviour
     public Action<ItemDrop> OnPickup;
     protected Collider playerCollider;
     public bool pickedup;
+    protected float mouseOverRadius = 0.5f;
 
     public void Update()
     {
-        var mousePos = Util.GetMousePositionOnWorldPlane(Camera.main);
-        var pos = transform.position;
-        pos.y = 0;
-        if ((mousePos - pos).magnitude < 0.5)
-        {
+        // var mousePos = Util.GetMousePositionOnWorldPlane(Camera.main);
+        // var pos = transform.position;
+        // pos.y = 0;
+        var mouseDistance =
+            Util.MinDistanceRayPoint(transform.position, Camera.main.ScreenPointToRay(Input.mousePosition));
+        if (mouseDistance < mouseOverRadius)
             ShowTooltip();
-        }
         else
-        {
             CancelTooltip();
-        }
     }
 
     public virtual void ShowTooltip()
     {
-        UiManager.ShowTooltip(((ITooltip)_spellItem).GetTooltip());
+        UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip(), true);
         UiManager.currentItemDrop = this;
     }
 
@@ -61,7 +60,7 @@ public class ItemDrop : MonoBehaviour
     public virtual void PlayerEnterHandler(Collider other)
     {
         playerCollider = other;
-        UiManager.ShowTooltip(((ITooltip)_spellItem).GetTooltip());
+        UiManager.ShowTooltip(((ITooltip) _spellItem).GetTooltip());
         UiManager.currentItemDrop = this;
     }
 
@@ -80,6 +79,7 @@ public class ItemDrop : MonoBehaviour
             Debug.Log("picked up already");
             return;
         }
+
         pickedup = true;
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);

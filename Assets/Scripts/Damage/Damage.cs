@@ -68,4 +68,8 @@ public class Damage : MonoBehaviour
         this.damage = damage;
     }
 
+    public void Scale(float multiplier)
+    {
+        damage *= multiplier;
+    }
 }

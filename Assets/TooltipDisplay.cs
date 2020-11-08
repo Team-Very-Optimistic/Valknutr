@@ -1,16 +1,25 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class TooltipDisplay : MonoBehaviour
 {
     public TextMeshProUGUI titleTextObject;
     public TextMeshProUGUI bodyTextObject;
+    public TextMeshProUGUI subtitleObject;
 
-    public void Show(string titleText, string bodyText)
+    private void Start()
+    {
+        titleTextObject.text = "";
+        bodyTextObject.text = "";
+    }
+
+    public void Show(string titleText, string bodyText, string subtitleText="")
     {
         gameObject.SetActive(true);
         titleTextObject.text = titleText;
         bodyTextObject.text = bodyText;
+        subtitleObject.text = subtitleText;
     }
 
     public void Hide()
@@ -20,6 +29,6 @@ public class TooltipDisplay : MonoBehaviour
 
     public void Show(Tooltip tooltip)
     {
-        Show(tooltip.Title, tooltip.Body);
+        Show(tooltip.Title, tooltip.Body, tooltip.Subtitle);
     }
 }

@@ -16,7 +16,7 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     
     public void Awake()
     {
-        EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
+        // EnemyBehaviourBase.OnEnemyStart += ManageDifficulty;
         //StartCoroutine(IncreaseDifficulty(1, difficultyIncreaseInterval));
     }
 
@@ -48,6 +48,27 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         yield return new WaitForSeconds(time);
         difficultyLevel += amount;
         GameManager.Instance.healthPickupValue *= difficultyLevel;
-        StartCoroutine(IncreaseDifficulty(amount, time));
+        // StartCoroutine(IncreaseDifficulty(amount, time));
+    }
+
+    public static float GetDifficulty()
+    {
+        int? depth = GameManager.Instance.activeRoom.depth;
+        return Instance.difficultyLevel + depth.GetValueOrDefault(0) * Instance.depthDifficulty;
+    }
+
+    public static int GetLevel()
+    {
+        return Mathf.RoundToInt(Instance.difficultyLevel);
+    }
+
+    public static float GetDensity(int depth)
+    {
+        return 1;
+    }
+
+    public static float GetDifficulty(float enemyDifficultyModifier, int depth)
+    {
+        return (Instance.difficultyLevel + depth * Instance.depthDifficulty) * enemyDifficultyModifier;
     }
 }

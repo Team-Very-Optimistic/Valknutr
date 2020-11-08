@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class Util
 {
@@ -77,6 +80,33 @@ public static class Util
     }
 
     /// <summary>
+    /// Performs a depth-first search of the transforms associated to the given transform, in search
+    /// of a descendant with the given name.  Avoid using this method on a frame-by-frame basis, as
+    /// it is recursive and quite capable of being slow!
+    /// </summary>
+    /// <param name="searchTransform">Transform to search within</param>
+    /// <param name="predicate">Predicate to match</param>
+    /// <returns>Descendant transform if found, otherwise null.</returns>
+    public static List<Transform> FindChildrenByPredicate(this Transform searchTransform, Predicate<Transform> predicate)
+    {
+        List<Transform> result = new List<Transform>();
+        
+        if (predicate(searchTransform))
+        {
+            result.Add(searchTransform);
+        }
+ 
+        int childCount = searchTransform.childCount;
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform childTransform = searchTransform.GetChild(i);
+            result.AddRange(FindChildrenByPredicate(childTransform, predicate));
+        }
+ 
+        return result;
+    }
+
+    /// <summary>
     /// Retrieves the generic component, if it doesnt exist add it instead
     /// </summary>
     public static T GetComponentElseAddIt<T>(this GameObject obj) where T : Component
@@ -105,5 +135,15 @@ public static class Util
         var ray = camera.ScreenPointToRay(Input.mousePosition);
         var d = -Vector3.Dot(ray.origin, Vector3.up) / Vector3.Dot(ray.direction, Vector3.up);
         return ray.origin + ray.direction * d;
+    }
+
+    public static float MinDistanceRayPoint(Vector3 point, Ray ray)
+    {
+        
+        // Vector3 direction = rigidbody.velocity.normalized;
+        // Vector3 startingPoint = transform.position;
+        //
+        // Ray ray = new Ray(startingPoint, direction);
+        return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
     }
 }
