@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5728015736105129904}
   - component: {fileID: 5728015736105129905}
   - component: {fileID: 5728015736105129910}
+  - component: {fileID: 7746318443202390882}
   m_Layer: 12
   m_Name: EnemyArcher_Arrow
   m_TagString: Projectile
@@ -147,6 +148,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7746318443202390882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728015736105129911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1001 &4834803510963108412
 PrefabInstance:
   m_ObjectHideFlags: 0
