@@ -221,4 +221,9 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
     {
         return wolfState;
     }
+
+    private void OnDestroy()
+    {
+        wolfChargeCollider.SetActive(false);
+    }
 }
