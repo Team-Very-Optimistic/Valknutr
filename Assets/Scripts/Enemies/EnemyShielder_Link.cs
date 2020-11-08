@@ -26,7 +26,7 @@ public class EnemyShielder_Link : MonoBehaviour
             }
 
             //If enemy health = 0, destroy this as well
-            if(health.GetHealth() <= 0.0f)
+            if(health && health.GetHealth() <= 0.0f)
             {
                 Destroy(this);
             }
