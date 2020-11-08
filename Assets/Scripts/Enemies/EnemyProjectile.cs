@@ -3,7 +3,6 @@
 [RequireComponent(typeof(Collider))]
 public class EnemyProjectile : MonoBehaviour
 {
-    public float _damage = 1;
     public Vector3 direction;
     public float speed;
     public float timeToExpire = 20f;
@@ -23,7 +22,6 @@ public class EnemyProjectile : MonoBehaviour
             if (other.gameObject.GetComponent<PlayerHealth>() != null && other.GetType() == typeof(CapsuleCollider))
             {
                 var damageScript = GetComponent<Damage>();
-                damageScript.SetDamage(_damage);
                 damageScript.DealDamage(other);
                 Destroy(gameObject);
             }
