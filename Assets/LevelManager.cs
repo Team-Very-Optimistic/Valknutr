@@ -13,6 +13,7 @@ public class LevelManager : Singleton<LevelManager>
         AudioManager.PlayBackgroundSound("ambient");
     }
 
+    [ContextMenu("Next Level")]
     public void StartNextLevel()
     {
         StartCoroutine(DifficultyScalingSystem.Instance.IncreaseDifficulty(1, 0.0f));
@@ -35,13 +36,14 @@ public class LevelManager : Singleton<LevelManager>
         optionalLevel.transform.position = offset;
 
         GameManager.Instance._player.transform.position = offset;
-        
     }
     
     public static void StartLevel(int levelIndex)
     {
-        foreach (var level in Instance.levels)
+        for (var index = 0; index < Instance.levels.Length; index++)
         {
+            if (index == levelIndex) continue;
+            var level = Instance.levels[index];
             level.gameObject.SetActive(false);
         }
 
@@ -51,10 +53,17 @@ public class LevelManager : Singleton<LevelManager>
             level.gameObject.SetActive(true);
             var offset = levelIndex * new Vector3(1000, 0, 1000);
 
+            level.transform.position = Vector3.zero;
             level.Generate();
+            
             level.transform.position = offset;
-
             GameManager.Instance._player.transform.position = offset;
+            GameManager.Instance.cameraRig.transform.position = offset;
+            
+        }
+        else
+        {
+            throw new Exception("Level index out of range");
         }
     }
 }

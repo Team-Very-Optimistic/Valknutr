@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class LevelExit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool activated;
+    private void OnTriggerStay(Collider other)
     {
-        
+        if (activated || other.gameObject != GameManager.Instance._player) return;
+        activated = true;
+        StartNextLevel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void StartNextLevel()
+    {        
+        StartCoroutine(_StartNextLevel());
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    static IEnumerator _StartNextLevel()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            print("level exit");
-            // todo: level exit
-        }
+        UiManager.FadeToBlack(1);
+        yield return new WaitForSeconds(1);
+        LevelManager.Instance.StartNextLevel();
+        UiManager.FadeFromBlack(1);
+        UiManager.HideBlackOverlay();
     }
 }

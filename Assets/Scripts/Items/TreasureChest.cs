@@ -9,7 +9,8 @@ public class TreasureChest : HealthScript
     private float offsetDistance;
 
     public static bool firstSpawn = true;
-    
+    public float quality;
+
     public override void OnDeath()
     {
         DamageTextManager.SpawnTempWord("Choose one . . .", transform.position + Vector3.up, Color.yellow);
@@ -52,7 +53,7 @@ public class TreasureChest : HealthScript
             }
             else
             {
-                itemDrop = GameManager.Instance.SpawnItem(transform.position + (i - (numTreasure - 1) / 2) * offset + direction, notThis: prevDrop);
+                itemDrop = GameManager.Instance.SpawnItem(transform.position + (i - (numTreasure - 1) / 2) * offset + direction, notThis: prevDrop, qualitymodifier: quality);
                 prevDrop = itemDrop._spellItem._spellElement;
             }
             itemDrops[i]  = itemDrop;

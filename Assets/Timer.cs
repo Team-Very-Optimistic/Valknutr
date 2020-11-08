@@ -19,6 +19,6 @@ public class Timer : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        textObj.text = $"{elapsedTime / 60:00}:{elapsedTime % 60:00}";
+        textObj.text = $"{Mathf.FloorToInt(elapsedTime / 60):00}:{Mathf.FloorToInt(elapsedTime % 60):00}";
     }
 }

@@ -22,6 +22,7 @@ public struct RoomPrefabConfig
 [CreateAssetMenu]
 public class LevelConfig : ScriptableObject
 {
+    public string name;
     public RoomPrefabConfig[] roomPrefabs;
     public GameObject bossRoomPrefab;
     public int numberOfRooms = 5;

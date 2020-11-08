@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -29,7 +31,8 @@ public class AudioManager : Singleton<AudioManager>
     private SFXLibrary _library;
     [SerializeField]
     private SFXLibrary _backgroundMusic;
-    
+
+    private AudioSource backgroundAudio;
    
     void Awake()
     {
@@ -57,7 +60,7 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public static GameObject PlaySoundAtPosition(string identifier, Vector3 position, float volume = 0, float pitch = 0)
+    public static GameObject PlaySoundAtPosition(string identifier, Vector3 position, float volume = 1, float pitch = 1)
     {
         SoundEntry s = Array.Find(Instance.m_SfxLibrary, sound => sound.m_Identifier == identifier);
 
@@ -102,6 +105,12 @@ public class AudioManager : Singleton<AudioManager>
     
     public static void PlayBackgroundSound(string identifier, float volume = 1, float pitch = 1)
     {
+        var bg = Instance.backgroundAudio;
+        if(Instance.backgroundAudio)
+            DOTween.To(() => bg.volume, 
+            x => bg.volume =  x, 
+            0, 1f).SetEase(Ease.InQuad);
+        
         SoundEntry s = Array.Find(Instance.m_bgLibrary, sound => sound.m_Identifier == identifier);
 
         if (s == null)
@@ -112,9 +121,15 @@ public class AudioManager : Singleton<AudioManager>
 
         GameObject tempSoundPlayer = Instantiate(s.m_Source.gameObject);
         AudioSource audioSource = tempSoundPlayer.GetComponent<AudioSource>();
-        audioSource.volume *= volume;
+        
+        audioSource.volume = 0;
         audioSource.pitch *= pitch;
         audioSource.spatialBlend = 0.0f; // Important
+        Instance.backgroundAudio = audioSource;
+        var newBG = audioSource;
+        DOTween.To(() => newBG.volume, 
+            x => newBG.volume =  x, 
+            volume, 1f).SetEase(Ease.InQuad);
 
         audioSource.Play();
         Destroy(tempSoundPlayer, s.m_Clip.length);

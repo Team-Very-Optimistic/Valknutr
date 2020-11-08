@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,16 +21,17 @@ public enum RoomType
 public class Room : MonoBehaviour
 {
     public GameObject[] exits;
+    public GameObject levelExit;
     private bool isActive;
-    private bool isCleared;
+    public bool isCleared;
     private bool isPlayerInside;
+    private List<GameObject> minimapIcons = new List<GameObject>();
     public int depth;
 
     // Loot
     public float lootQualityModifier = 1f;
     public bool spawnTreasure = true;
 
-    public GameObject minimapPrefab;
     private Collider roomCollider;
 
     private Spawner spawner;
@@ -38,6 +40,17 @@ public class Room : MonoBehaviour
     {
         roomCollider = GetComponent<BoxCollider>();
         spawner = GetComponent<Spawner>();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+
+            if (child.name.Contains("Minimap"))
+            {
+                minimapIcons.Add(child.gameObject);
+            }
+        }
+        // minimapIcons = transform.FindChildrenByPredicate(transform1 => transform1.GetComponent<SpriteRenderer>())
+        //     .Select(transform1 => transform1.gameObject).ToList();
     }
 
     private void OnTriggerStay(Collider other)
@@ -57,6 +70,8 @@ public class Room : MonoBehaviour
         GameManager.Instance.activeRoom = this;
         isActive = true;
         isPlayerInside = true;
+        UpdateMinimapIcon(new Color(0.78f, 0.77f, 0f));
+
 
         if (spawner) spawner.BeginSpawning(depth);
 
@@ -103,17 +118,36 @@ public class Room : MonoBehaviour
 
     private void OnClear()
     {
+        UpdateMinimapIcon(new Color(0.16f, 0.32f, 0.17f));
         OpenAllDoors();
-        if (spawnTreasure)
+        ActivateLevelExit();
+        SpawnTreasure();
+    }
+
+    private void ActivateLevelExit()
+    {
+        if (levelExit != null) levelExit.SetActive(true);
+    }
+
+    private void UpdateMinimapIcon(Color color)
+    {
+        // todo
+        minimapIcons.ForEach(go =>
         {
-            SpawnTreasure();
-            spawnTreasure = false;
-        }
+            foreach (var spriteRenderer in go.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.color = color;
+            }
+        });
     }
 
     private void SpawnTreasure()
     {
-        GameManager.SpawnTreasureChest(transform.position, lootQualityModifier);
+        if (spawnTreasure)
+        {
+            GameManager.SpawnTreasureChest(transform.position + Vector3.up * 5, lootQualityModifier);
+            spawnTreasure = false;
+        }
     }
 
     public void OpenAllDoors()
@@ -153,14 +187,67 @@ public class Room : MonoBehaviour
         }
     }
 
+    [ContextMenu("Remove Minimap Icons")]
+    public void RemoveSpriteRenderers()
+    {
+        // doesnt work
+        var minimaps = FindObjectsOfType<SpriteRenderer>();
+        foreach (var spriteRenderer in minimaps)
+        {
+            DestroyImmediate(spriteRenderer.gameObject);
+        }
+
+        PrefabUtility.SavePrefabAsset(gameObject);
+    }
+
     [ContextMenu("Generate Minimap Sprite")]
     public void GenerateMinimapSprite()
     {
-        var minimaps = FindObjectsOfType<SpriteRenderer>();
+        var root = new GameObject("MinimapIcons").transform;
+        root.parent = transform;
 
-        var bounds = GetComponent<Collider>().bounds;
-        print(bounds);
-        var minimapIcon = Instantiate(minimapPrefab, transform);
+        var colliders = Util.FindChildrenByPredicate(transform, transform1 => transform1.GetComponent<Collider>())
+            .Select(c => c.GetComponent<Collider>());
+
+        foreach (var c in colliders)
+        {
+            if (c.gameObject == gameObject) continue;
+            var icon = generateMinimapIcon(c);
+            icon.transform.parent = root;
+        }
+        
+        // foreach (var exit in exits)
+        // {
+        //     foreach (var c in exit.GetComponentsInChildren<Collider>())
+        //     {
+        //         var exit_icon = generateMinimapIcon(c);
+        //         exit_icon.GetComponent<SpriteRenderer>().color = Color.green;
+        //         exit_icon.transform.position += Vector3.up;
+        //         exit_icon.transform.parent = root;
+        //     }
+        // }
+        // var bounds = GetComponent<Collider>().bounds;
+        //
+        // var minimapIcon = Instantiate(iconPrefab, root);
+        // var spriteRenderer = minimapIcon.GetComponent<SpriteRenderer>();
+        // var spriteWidth = spriteRenderer.bounds.size.x;
+        // var spriteHeight = spriteRenderer.bounds.size.z;
+        //
+        // var roomWidth = bounds.size.x;
+        // var roomHeight = bounds.size.z;
+        //
+        // minimapIcon.transform.localScale = new Vector3(roomWidth / spriteWidth, roomHeight / spriteHeight, 1);
+        // minimapIcon.transform.position = bounds.center + Vector3.up * 10;
+
+        // PrefabUtility.SavePrefabAsset(gameObject);
+    }
+
+    private GameObject generateMinimapIcon(Collider collider)
+    {
+        var bounds = collider.bounds;
+        var iconPrefab = Resources.Load<GameObject>("MinimapIcon_Room");
+
+        var minimapIcon = Instantiate(iconPrefab);
         var spriteRenderer = minimapIcon.GetComponent<SpriteRenderer>();
         var spriteWidth = spriteRenderer.bounds.size.x;
         var spriteHeight = spriteRenderer.bounds.size.z;
@@ -170,6 +257,7 @@ public class Room : MonoBehaviour
 
         minimapIcon.transform.localScale = new Vector3(roomWidth / spriteWidth, roomHeight / spriteHeight, 1);
         minimapIcon.transform.position = bounds.center + Vector3.up;
+        return minimapIcon;
     }
 
     [ContextMenu("Detect Exits")]
