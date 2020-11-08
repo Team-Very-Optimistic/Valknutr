@@ -20,6 +20,12 @@ public class PlayerHealth : HealthScript
     
     public override bool ApplyDamage(float damage, Color dmgColor = new Color())
     {
+        if (IsInvulnerable())
+        {
+            AudioManager.PlaySoundAtPosition("dodge", transform.position);
+            return false;
+        }
+
         damage *= damageMultiplier;
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         if (dmgColor == new Color())
@@ -55,18 +61,13 @@ public class PlayerHealth : HealthScript
     public IEnumerator ApplyDamageOverTime(float damagePerTick, float numTicks, float totalDuration, Color damageColor)
     {
         damagePerTick *= damageMultiplier;
-
-        Debug.Log(this.gameObject);
-        Debug.Log("called coroutine");
+        
         //Ticks starts after timeInterval and ends on last frame(?)
         float timeInterval = totalDuration / (float)numTicks;
-        Debug.Log(timeInterval);
 
         for (int i = 0; i < numTicks; i++)
         {
-            Debug.Log("before wait for tick " + i);
             yield return new WaitForSeconds(timeInterval);
-            Debug.Log("after wait for tick " + i);
 
             Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
             DamageTextManager.SpawnDamage(damagePerTick, worldPositionText, damageColor);

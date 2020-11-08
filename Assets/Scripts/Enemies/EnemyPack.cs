@@ -10,7 +10,7 @@ public class EnemyPack:ScriptableObject
     public float difficultyModifier = 1;
     public float difficultyRating = 1;
 
-    public List<GameObject> SpawnEnemies(Vector3 position)
+    public List<GameObject> SpawnEnemies(Vector3 position, int depth)
     {
         var spawned = new List<GameObject>();
         foreach (var enemy in enemies)
@@ -18,7 +18,9 @@ public class EnemyPack:ScriptableObject
             if (!(Random.value < enemy.SpawnChance)) continue;
             for (var i = Mathf.Round(Random.Range(enemy.Count.x, enemy.Count.y)); i > 0 ; i--)
             {
-                spawned.Add(Instantiate(enemy.BaseType, position, Quaternion.identity));
+                var spawnedEnemy = Instantiate(enemy.BaseType, position, Quaternion.identity);
+                spawnedEnemy.GetComponent<EnemyBehaviourBase>()?.SetDifficulty(DifficultyScalingSystem.GetDifficulty(difficultyModifier * enemy.difficultyModifier, depth));
+                spawned.Add(spawnedEnemy);
             }
         }
         return spawned;

@@ -13,35 +13,47 @@ public class Spawner : MonoBehaviour
 
     public bool IsDone()
     {
-        return hasSpawnedEnemies && enemies.All(enemy => enemy == null); // todo
+        return hasSpawnedEnemies && enemies.All(enemy =>
+        {
+            if (enemy == null) return true;
+            return enemy.GetComponent<HealthScript>()?.dead ?? false;
+        });
     }
 
     public void BeginSpawning(int depth)
     {
         if (hasSpawnedEnemies) return;
         hasSpawnedEnemies = true;
-        SpawnEnemies(DifficultyScalingSystem.Instance.difficultyLevel + (float) depth / DifficultyScalingSystem.Instance.depthDifficulty);
+        SpawnEnemies(depth);
     }
 
-    private void SpawnEnemies(float difficulty)
+    private void SpawnEnemies(int depth)
     {
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
-        List<EnemyPack> toSpawn = new List<EnemyPack>();
-        print(difficulty);
+        var toSpawn = new List<EnemyPack>();
+        var spawnDensity = DifficultyScalingSystem.GetDensity(depth);
+        var minPackDifficulty = availablePacks.Select(pack => pack.difficultyRating).Min();
+
+        var target = difficultyTarget * spawnDensity;
+
         // Select packs until we meet a difficulty target
-        while (currentDifficulty < difficultyTarget * difficulty)
+        while (currentDifficulty < target)
         {
             var newPack = Util.RandomItem(availablePacks);
             toSpawn.Add(newPack);
             currentDifficulty += newPack.difficultyRating;
+            if (currentDifficulty + minPackDifficulty > target) break;
         }
-
-        var spawnPosition = spawnPoints.Length > 0 ? spawnPoints[0].position : transform.position;
-
+        
         toSpawn.ForEach(pack =>
-            pack.SpawnEnemies(spawnPosition).ForEach(enemies.Add)
+            pack.SpawnEnemies(RandomSpawnPosition(), depth).ForEach(enemies.Add)
         );
+    }
+
+    private Vector3 RandomSpawnPosition()
+    {
+        return spawnPoints.Length > 0 ? Util.RandomItem(spawnPoints).position : transform.position;
     }
 
     [ContextMenu("Detect SpawnZones")]

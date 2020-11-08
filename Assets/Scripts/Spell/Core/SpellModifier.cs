@@ -35,7 +35,7 @@ public abstract class SpellModifier : SpellElement
     }
     public override Tooltip GetTooltip()
     {
-        return new Tooltip(DefaultModTitle(), DefaultModBody());
+        return new Tooltip(DefaultModTitle(), DefaultModBody(), $"Level {level}");
     }
 
     public SpellBase Modify(SpellBase spell)

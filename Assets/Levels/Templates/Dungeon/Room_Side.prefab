@@ -249,6 +249,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: 
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!64 &1243463173581823867
 MeshCollider:
@@ -16372,10 +16373,11 @@ MonoBehaviour:
   exits:
   - {fileID: 8249123378001705404}
   - {fileID: 9091575058363174659}
+  levelExit: {fileID: 0}
+  isCleared: 0
   depth: 0
   lootQualityModifier: 1
   spawnTreasure: 1
-  minimapPrefab: {fileID: 5667023694663963339, guid: 1466b4ea7476a03419fbf04a579ef50d, type: 3}
 --- !u!114 &4599632100110537040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16456,6 +16458,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: 
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!64 &1243463175210136007
 MeshCollider:

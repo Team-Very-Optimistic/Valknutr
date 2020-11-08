@@ -12,37 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0bb0fcb6f794bacb504799081cdcccf, type: 3}
   m_Name: DungeonLevel
   m_EditorClassIdentifier: 
+  name: DUNGEONS
   roomPrefabs:
   - prefab: {fileID: 5531430571349274628, guid: fb174ff790cd86d4c8c097b623c97d51, type: 3}
-    weight: 10
+    weight: 5
     min: 0
     max: 1
     currentAmount: 0
   - prefab: {fileID: 5531430571349274628, guid: e17376fa87580404aab3432fd92db004, type: 3}
-    weight: 10
+    weight: 5
     min: 1
-    max: 4
-    currentAmount: 4
-  - prefab: {fileID: 5531430571349274628, guid: 38006217510a78f46840ba820cbc9c06, type: 3}
-    weight: 10
-    min: 0
-    max: 4
-    currentAmount: 2
+    max: 2
+    currentAmount: 1
   - prefab: {fileID: 5687494328397222223, guid: 01b99ea2247ba724f910150d1deea943, type: 3}
     weight: 15
     min: 0
     max: 3
-    currentAmount: 3
+    currentAmount: 1
   - prefab: {fileID: 8743510972604931550, guid: 257eba5f0ed053448917e52e0f8b687a, type: 3}
     weight: 6
     min: 0
     max: 3
-    currentAmount: 3
+    currentAmount: 1
   - prefab: {fileID: 7094900447616392279, guid: 5a140e5d958009848b69deff793b252a, type: 3}
     weight: 17
     min: 0
     max: 4
-    currentAmount: 3
+    currentAmount: 2
   - prefab: {fileID: 5531430571349274628, guid: bdc4d6f338d399f4587a087cd82d29c0, type: 3}
     weight: 4
     min: 0
@@ -51,17 +47,42 @@ MonoBehaviour:
   - prefab: {fileID: 5531430571349274628, guid: 4725c148267ceb74d8b1cb91d23f668f, type: 3}
     weight: 24
     min: 0
-    max: 2
-    currentAmount: 2
+    max: 4
+    currentAmount: 1
   - prefab: {fileID: 5531430571349274628, guid: cfa04ddfab4a4d34888703278e15f5db, type: 3}
     weight: 24
     min: 0
     max: 1
     currentAmount: 1
-  - prefab: {fileID: 5531430571349274628, guid: f01869c89404e2747af506945ae5b8e7, type: 3}
-    weight: 100
-    min: 0
+  - prefab: {fileID: 4993453460229131251, guid: 30d5b0f6268eb464197f18c33f838fe3, type: 3}
+    weight: 9
+    min: 1
     max: 1
     currentAmount: 1
+  - prefab: {fileID: 1278883567955002407, guid: b71c652572178e24abe848df18b6fc71, type: 3}
+    weight: 8
+    min: 0
+    max: 2
+    currentAmount: 2
+  - prefab: {fileID: 9131748860471209054, guid: 3aff629e89efa234bbe9b245208cd0ee, type: 3}
+    weight: 8
+    min: 0
+    max: 2
+    currentAmount: 1
+  - prefab: {fileID: 8047925363431736639, guid: 19183fd3e3b3b9041bcb360f2450f9a1, type: 3}
+    weight: 7
+    min: 0
+    max: 2
+    currentAmount: 2
+  - prefab: {fileID: 4027466794744454485, guid: 1d2ec501f1b4133419b24e3b0fb0242c, type: 3}
+    weight: 8
+    min: 0
+    max: 2
+    currentAmount: 2
+  - prefab: {fileID: 4181098106340201428, guid: 85eb749fd54352c449a4e6ad7ca66cf0, type: 3}
+    weight: 8
+    min: 0
+    max: 1
+    currentAmount: 2
   bossRoomPrefab: {fileID: 6568328073815770091, guid: 208f6225a9fd8094aa8fcef25e03e2e6, type: 3}
   numberOfRooms: 20

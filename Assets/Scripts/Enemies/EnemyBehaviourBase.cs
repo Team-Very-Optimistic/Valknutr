@@ -19,6 +19,7 @@ public class EnemyBehaviourBase : Enemy
 
     //Bool to allow knockback
     protected bool canKnockback = true;
+    public float difficultyModifier = 1;
     
     //For events
     public static Action<EnemyBehaviourBase> OnEnemyStart;
@@ -31,7 +32,18 @@ public class EnemyBehaviourBase : Enemy
         player = GameManager.Instance._player;
         navMeshAgent.SetDestination(player.transform.position);
         isAttacking = false;
-        OnEnemyStart(this);
+        // OnEnemyStart(this);
+    }
+
+    public virtual void SetDifficulty(float newDifficulty)
+    {
+        var multiplier = newDifficulty / difficultyModifier;
+        var modelScale = Mathf.Log(0.1f + newDifficulty/1.2f) * 0.2f + 1f;
+        GetComponent<HealthScript>()?.Scale(multiplier);
+        GetComponent<Damage>()?.Scale(multiplier);
+        transform.localScale = Vector3.one * modelScale;
+
+        difficultyModifier = newDifficulty;
     }
 
     public virtual void Update()

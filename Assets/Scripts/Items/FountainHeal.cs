@@ -8,6 +8,7 @@ public class FountainHeal : ItemDrop
     public GameObject effects;
     public GameObject light;
     private Material waterTemp;
+
     public override void PickUp(GameObject other)
     {
         if (used) return;
@@ -24,6 +25,7 @@ public class FountainHeal : ItemDrop
 
     private void Start()
     {
+        mouseOverRadius = 3f;
         waterTemp = GetComponent<MeshRenderer>().material;
 
         usedT = new Tooltip("Fountain <Depleted>", $"The fountain has dried up. . .");
@@ -32,7 +34,7 @@ public class FountainHeal : ItemDrop
 
     public override void ShowTooltip()
     {
-        UiManager.ShowTooltip(used?usedT:tooltip);
+        UiManager.ShowTooltip(used?usedT:tooltip,true);
         
         UiManager.currentItemDrop = this;
     }
