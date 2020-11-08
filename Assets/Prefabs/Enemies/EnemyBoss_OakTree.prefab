@@ -940,6 +940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713428985294657666}
   - component: {fileID: 8713428985306122256}
+  - component: {fileID: 3900407958623304459}
   m_Layer: 0
   m_Name: SK_OakTreeEntHair
   m_TagString: Enemy
@@ -1049,6 +1050,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -2.228939, y: -0.026108876, z: -0.020017147}
     m_Extent: {x: 0.57901955, y: 0.45719558, z: 0.7880893}
   m_DirtyAABB: 0
+--- !u!114 &3900407958623304459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713428985294554338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8713428985294554340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713428985294657668}
   - component: {fileID: 8713428985306122258}
+  - component: {fileID: 7702153493441939342}
   m_Layer: 0
   m_Name: SK_OakTreeEntFoliageBranches
   m_TagString: Enemy
@@ -1173,6 +1189,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.4546503, y: -0.3701769, z: 0.1947608}
     m_Extent: {x: 2.8784976, y: 1.5050123, z: 2.9157314}
   m_DirtyAABB: 0
+--- !u!114 &7702153493441939342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713428985294554340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8713428985294554342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713428985294657670}
   - component: {fileID: 8713428985306122260}
+  - component: {fileID: 7649168542225729519}
   m_Layer: 0
   m_Name: SK_OakTreeEntBeard
   m_TagString: Enemy
@@ -1295,6 +1326,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.3914893, y: 0.53843683, z: 0.006139636}
     m_Extent: {x: 0.98584056, y: 0.42424512, z: 0.8891334}
   m_DirtyAABB: 0
+--- !u!114 &7649168542225729519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713428985294554342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8713428985294554344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713428985294657672}
   - component: {fileID: 8713428985306122262}
+  - component: {fileID: 247259290511462995}
   m_Layer: 0
   m_Name: SK_OakTreeEnt
   m_TagString: Enemy
@@ -1457,6 +1503,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.07972717, y: 0.134179, z: 0.007793665}
     m_Extent: {x: 3.4538255, y: 1.4332397, z: 3.3046763}
   m_DirtyAABB: 0
+--- !u!114 &247259290511462995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713428985294554344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8713428985294554346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,7 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 6
+  damage: 3
   _damageCallback:
     m_PersistentCalls:
       m_Calls: []

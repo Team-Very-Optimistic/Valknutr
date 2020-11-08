@@ -31,7 +31,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
     public GameObject stompFeet;
 
     // Attack stopping distances
-    public float closeAttacksStopDist = 4.0f;
+    public float closeAttacksStopDist = 3.0f;
     public float throwAttackStopDist = 30.0f;
 
     public GameObject closeAttackCollider;
