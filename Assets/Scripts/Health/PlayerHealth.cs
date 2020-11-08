@@ -97,6 +97,15 @@ public class PlayerHealth : HealthScript
 
     public void IncreaseCurrHealth(float healthIncrease)
     {
+        if (currentHealth + healthIncrease >= maxHealth)
+        {
+            healthIncrease = maxHealth - currentHealth;
+            if (currentHealth == 0)
+            {
+                return;
+                
+            }
+        }
         DamageTextManager.SpawnDamage(healthIncrease, transform.position, new Color(1, 0.6f, 0.9f));
         currentHealth += healthIncrease;
     }
