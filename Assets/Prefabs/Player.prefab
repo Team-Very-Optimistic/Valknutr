@@ -2221,6 +2221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3151215489815060896}
   - component: {fileID: 3151215489815060899}
+  - component: {fileID: 2012451003324784087}
   m_Layer: 8
   m_Name: Lower_Armor
   m_TagString: Player
@@ -2305,6 +2306,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0001180768, y: -0.8491187, z: 0.073719315}
     m_Extent: {x: 0.21891272, y: 0.36032787, z: 0.19945142}
   m_DirtyAABB: 0
+--- !u!114 &2012451003324784087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151215489815060897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
 --- !u!1 &3151215489835600201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2536,6 +2551,7 @@ MonoBehaviour:
   destroyOnDeath: 1
   hurtSound: playerHurt
   hurtSoundOnHit: 1
+  dead: 0
   damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &3151215489875895760
 GameObject:
@@ -2735,6 +2751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3151215490062645847}
   - component: {fileID: 3151215490062645846}
+  - component: {fileID: 8671940377159508923}
   m_Layer: 8
   m_Name: Head_Hands
   m_TagString: Player
@@ -2873,6 +2890,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.016498387, y: 0.5719827, z: 0.021444324}
     m_Extent: {x: 1.0619049, y: 0.19391806, z: 0.1424342}
   m_DirtyAABB: 0
+--- !u!114 &8671940377159508923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151215490062645844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
 --- !u!1 &3151215490083326750
 GameObject:
   m_ObjectHideFlags: 0
@@ -3116,6 +3147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3151215490268575814}
   - component: {fileID: 3151215490268575809}
+  - component: {fileID: 4549519219596204509}
   m_Layer: 8
   m_Name: Body
   m_TagString: Player
@@ -3220,6 +3252,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.012955487, y: 0.048224032, z: -0.0015962869}
     m_Extent: {x: 0.8400168, y: 0.8081587, z: 0.21406758}
   m_DirtyAABB: 0
+--- !u!114 &4549519219596204509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151215490268575815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
 --- !u!1 &3151215490300130583
 GameObject:
   m_ObjectHideFlags: 0
