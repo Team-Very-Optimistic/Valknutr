@@ -25,14 +25,14 @@ public class PlayerHealth : HealthScript
             AudioManager.PlaySoundAtPosition("dodge", transform.position);
             return false;
         }
-
+        if (damage <= 0)
+            return false;
         damage *= damageMultiplier;
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         if (dmgColor == new Color())
             dmgColor = this.damageColor;
         DamageTextManager.SpawnDamage(damage, worldPositionText, dmgColor);
-        if (damage <= 0)
-            return false;
+        
         
         if (shields.Count > 0)
         {

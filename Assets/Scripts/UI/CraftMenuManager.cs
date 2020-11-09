@@ -88,7 +88,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             Inventory.Instance._spells.Add(spell); //crafted
             craftEffect.gameObject.SetActive(true);
             var alpha = craftEffect.color;
-            alpha.a = 0.05f;
+            alpha.a = 0.07f;
             craftEffect.color = alpha;
             AudioManager.PlaySound("craftSuccess");
             DOTween.To(() => craftEffect.color.a, 

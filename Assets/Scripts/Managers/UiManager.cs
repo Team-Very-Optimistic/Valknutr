@@ -14,7 +14,7 @@ public class UiManager : Singleton<UiManager>
     public GameObject inWorldTooltipWindow;
     public GameObject blackOverlay;
 
-    private bool isPaused = false;
+    public bool isPaused = false;
     private HealthScript playerHealth;
     private TooltipDisplay currentTooltipWindow;
     public static ItemDrop currentItemDrop;
