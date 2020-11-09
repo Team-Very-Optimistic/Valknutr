@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 [CreateAssetMenu]
@@ -29,18 +30,26 @@ public class Spell : SpellItem
     {
         int SpriteHeight = 128;
         var newTexture = Texture2D.Instantiate(baseType.texture);
-        Vector2Int offset = new Vector2Int(80,80); // use this to place the modifiers
-        
+        Vector2Int offset = new Vector2Int(85,85); // use this to place the modifiers
+        int i = 1;
         foreach (var modiSprite in modifiers)
         {
+            if (i == 2) i = -1;
+            i++;
             var modiTex = modiSprite.texture;
-            for (int x = offset.x; x < modiTex.width; x++) {
-                for (int y = offset.y; y < modiTex.height; y++) {
-                    newTexture.SetPixel(x, y, modiTex.GetPixel(x, y));
+            for (int x = offset.x * i; x < modiTex.width; x++) {
+                for (int y = offset.y * (1 - i) ; y < modiTex.height; y++)
+                {
+                    var color = modiTex.GetPixel(x, y);
+                    float intensity = ((float)x / 85) * ((float)y / 85);
+                    color.a = 0.5f * intensity;
+                    color /= (2/intensity);
+                    color += baseType.texture.GetPixel(x, y)/1.5f;
+                    newTexture.SetPixel(x, y, color);
                 }
             }
 
-            offset.y += 10;
+            // offset.y += 10;
         }
         newTexture.Apply();
         return Sprite.Create(newTexture, baseType.rect, Vector2.zero);
@@ -51,6 +60,11 @@ public class Spell : SpellItem
     /// </summary>
     public void CreateTooltip(string behav, List<string> modifiers)
     {
+        Dictionary<string, string[]> structure =
+            new Dictionary<string, string[]>{
+                {"structure", new string[]{"BaseTitle", "ModTitle", "FIRSTNAME LASTNAME", "killer of MONSTER", "FIRSTNAME LASTNAME" , "ADJECTIVE_", "MONSTER" }}
+        };
+            
         string tooltip = behav;
         
         foreach (var modiTooltip in modifiers)
@@ -62,8 +76,33 @@ public class Spell : SpellItem
 
     public override Tooltip GetTooltip()
     {
-        string bodyMessage = spellBase.GetTooltip().Body +
-                             _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip().Body);
+        // List<string> split = new List<string>(spellBase.GetTooltip().Body.Split(' '));spellBase.GetTooltip().Body.Split(' ');
+        // _spellModifiers.ForEach((a) =>
+        // {
+        //     string[] strings = a.GetTooltip().Body.Split();
+        //     split.AddRange(strings);
+        // });
+        //
+        //
+        // // _spellModifiers.Aggregate("", (s, modifier) => s + " " + modifier.GetTooltip().Body);
+        // // string bodyMessage = spellBase.GetTooltip().Body;
+        // string bodyMessage =  split.Aggregate("", (s, s2) =>
+        // {
+        //     Random.state = new Random.State();
+        //     if (Random.value < 0.1)
+        //     {
+        //         var str = s + " " + s2;
+        //         if (Random.value < 0.1)
+        //             str += " . . .";
+        //         return str;
+        //     }
+        //     else
+        //     {
+        //         return s;
+        //     }
+        // });
+
+        var bodyMessage = spellBase.GetTooltip().Body + _spellModifiers.Aggregate("\n", (s, modifier) => s + " " + modifier.GetTooltip().Title);
         return new Tooltip(spellBase.GetTooltip().Title, bodyMessage);
         
         /*
