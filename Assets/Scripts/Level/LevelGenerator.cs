@@ -311,7 +311,7 @@ public class LevelGenerator : MonoBehaviour
     private void PlaceBossRoom()
     {
         var success = false;
-        var n = 40;
+        var n = 100;
         var deepestRooms = new List<Room>();
         var depth = -1;
         foreach (var room in _rooms
@@ -334,7 +334,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (!success)
         {
-            n = 40;
+            n = 100;
             while (n-- > 0 && !success)
             {
                 var room = Util.RandomItem(_rooms).GetComponent<Room>();
