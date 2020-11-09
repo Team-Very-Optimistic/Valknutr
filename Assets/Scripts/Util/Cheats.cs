@@ -37,7 +37,7 @@ public class Cheats : MonoBehaviour
     void Update()
     {
         // check for click or touch and register it
-        if (CheckClickOrTouch())
+        if (Application.isEditor && CheckClickOrTouch())
         {
             // click will be registered at time since level load
             _clickTimes[_clickTimesIndex] = Time.timeSinceLevelLoad;
