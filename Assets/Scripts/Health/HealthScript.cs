@@ -27,7 +27,13 @@ public class HealthScript : MonoBehaviour
     public virtual void Start()
     {
         currentHealth = maxHealth;
-        height = GetComponent<Collider>().bounds.size.y / 2.0f;
+        var c =GetComponent<Collider>();
+        if(c)
+            height = c.bounds.size.y / 2.0f;
+        else
+        {
+            height = 4f;
+        }
     }
 
     private void Update()
