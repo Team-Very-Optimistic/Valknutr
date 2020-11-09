@@ -16,7 +16,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     private NavMeshSurface _navMeshSurface;
     public bool generateOnAwake;
-
+    [Range(0.0001f, 0.01f)]
+    public float noiseOffset = 0.001f;
     public LevelConfig config;
 
 
@@ -60,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
         // print(transform1.position);
         // print(validExit.transform.lossyScale);
         // print(rotation * validExit.transform.position);
-        var offset = transform1.position - Vector3.Scale(
+        var offset = transform1.position + noiseOffset * Random.insideUnitSphere - Vector3.Scale(
             Vector3.Scale(rotation * validExit.transform.position, Vector3.one), transform.localScale);
         var newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
         if (newRoom == null) return null;
