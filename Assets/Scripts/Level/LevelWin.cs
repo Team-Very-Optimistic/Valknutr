@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class LevelExit : MonoBehaviour
+public class LevelWin : MonoBehaviour
 {
     private bool activated;
     private void OnTriggerStay(Collider other)
@@ -20,8 +20,6 @@ public class LevelExit : MonoBehaviour
     {
         UiManager.FadeToBlack(1);
         yield return new WaitForSeconds(1);
-        LevelManager.Instance.StartNextLevel();
-        UiManager.FadeFromBlack(1);
-        UiManager.HideBlackOverlay();
+        GameManager.Instance.SetGameWin();
     }
 }

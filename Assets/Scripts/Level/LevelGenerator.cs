@@ -22,7 +22,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.levelName = config.name ?? "";
+        GameManager.Instance.levelName = config ? config.name : "";
         // name = config.name ?? "";
         _navMeshSurface = GetComponent<NavMeshSurface>();
         print("Generating level");
