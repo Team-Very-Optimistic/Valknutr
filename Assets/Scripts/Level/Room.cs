@@ -58,6 +58,11 @@ public class Room : MonoBehaviour
         if (other.gameObject == GameManager.Instance._player)
         {
             var bounds = other.bounds;
+            if (!roomCollider)
+            {
+                return;
+                
+            }
             if (roomCollider.bounds.Contains(bounds.min) && roomCollider.bounds.Contains(bounds.max))
                 ActivateRoom();
         }
