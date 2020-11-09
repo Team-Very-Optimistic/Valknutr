@@ -186,7 +186,7 @@ public class Room : MonoBehaviour
             }
         }
     }
-
+#if UNITY_EDITOR
     [ContextMenu("Remove Minimap Icons")]
     public void RemoveSpriteRenderers()
     {
@@ -196,8 +196,8 @@ public class Room : MonoBehaviour
         {
             DestroyImmediate(spriteRenderer.gameObject);
         }
-
-        PrefabUtility.SavePrefabAsset(gameObject);
+        if (Application.isEditor)
+            PrefabUtility.SavePrefabAsset(gameObject);
     }
 
     [ContextMenu("Generate Minimap Sprite")]
@@ -241,6 +241,7 @@ public class Room : MonoBehaviour
 
         // PrefabUtility.SavePrefabAsset(gameObject);
     }
+#endif
 
     private GameObject generateMinimapIcon(Collider collider)
     {
