@@ -75,6 +75,34 @@ public class SelectMenu : MonoBehaviour
         }
     }
 
+    public void QuickSlot(Spell newSpell)
+    {
+        for(int i = 0; i < m_spellCaster.spells.Length; i++)
+        {
+            var slot = m_spellCaster.spells[i];
+            if (!slot)
+            {
+                m_spellCaster.SetSpell(i, newSpell);
+                break;
+            }
+        }
+        foreach (var slot in UISlots)
+        {
+            if (!slot.IsSlotted()) return;
+            var slottedSpellItem = slot.GetSlottedSpellItem();
+            int index = 0;
+            foreach(var spell in m_spellCaster.spells)
+            {
+                if (slottedSpellItem == spell)
+                {
+                    slot.GetSlottedUiItem().SetKeyCode(keyBindings[index]);
+                    codedSlots[index] = slot;
+                }
+                index++;
+            }
+        }
+    }
+
     public void Update()
     {
         if (!CraftMenuManager.Instance.IsSelectMenuDisplayed()) return;
@@ -130,6 +158,11 @@ public class SelectMenu : MonoBehaviour
         }
         
         //set the new key
+        Slot(key, index, slottedUiItem);
+    }
+
+    public void Slot(KeyCode key, int index, UIItem slottedUiItem)
+    {
         slottedUiItem.SetKeyCode(key);
         m_spellCaster.SetSpell(index, (Spell) currentlySelectedSlot.GetSlottedSpellItem());
         codedSlots[index] = currentlySelectedSlot;

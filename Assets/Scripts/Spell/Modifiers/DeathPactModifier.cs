@@ -34,8 +34,8 @@ public class DeathPactModifier : SpellModifier
         Action spell = () =>
         {
             GameManager.Instance.AffectPlayerCurrHealth(GameManager.Instance._playerHealth.maxHealth * healthRatio * -1);
-            GameManager.Instance._playerHealth.AdditivelyAddDmgMultiplier(vulnerabilityAmp);
-            GameManager.Instance.StartCoroutine(ResetWeakness(vulnerabilityPeriod));
+            //GameManager.Instance._playerHealth.AdditivelyAddDmgMultiplier(vulnerabilityAmp);
+            //GameManager.Instance.StartCoroutine(ResetWeakness(vulnerabilityPeriod));
             oldBehavior.Invoke();
         };
         action._behaviour = spell;
@@ -52,7 +52,10 @@ public class DeathPactModifier : SpellModifier
     {
         return new Tooltip("Death Pact" + DefaultModTitle(), $"Partake in a trade with Nexus, reduce spell cooldown by {_cooldownMultiplier:P1}, " +
                                                              $"increase damage by {damageMultiplier:P1}, increase speed by {speedMultiplier:P1}. However," +
-                                                             $"everytime the spell is cast, lose {healthRatio:P1} of your health. (You cannot die from this). Furthermore, gain " +
-                                                             $"weakness, all damage against you increases by {vulnerabilityAmp:P1} for {vulnerabilityPeriod:0.##}s.  {DefaultModBody()}");
+                                                             $"everytime the spell is cast, lose {healthRatio:P1} of your health. (You cannot die from this). {DefaultModBody()}");
+        // return new Tooltip("Death Pact" + DefaultModTitle(), $"Partake in a trade with Nexus, reduce spell cooldown by {_cooldownMultiplier:P1}, " +
+        //                                                      $"increase damage by {damageMultiplier:P1}, increase speed by {speedMultiplier:P1}. However," +
+        //                                                      $"everytime the spell is cast, lose {healthRatio:P1} of your health. (You cannot die from this). Furthermore, gain " +
+        //                                                      $"weakness, all damage against you increases by {vulnerabilityAmp:P1} for {vulnerabilityPeriod:0.##}s.  {DefaultModBody()}");
     }
 }

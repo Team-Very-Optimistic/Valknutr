@@ -10,7 +10,7 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
     public UIView selectMenu;
     public TooltipDisplay craftMenuTooltip;
     public TooltipDisplay selectMenuTooltip;
-
+    public SelectMenu selectMenuComp;
     public DisplaySpells displaySpells;
     public List<UISlot> _itemSlots;
     private const int BaseItemSlotIndex = 3;
@@ -86,6 +86,8 @@ public class CraftMenuManager : Singleton<CraftMenuManager>
             spell.name = "spell " + baseSpellItem._spellElement.name + modStr;
             spell._UIsprite = spell.CreateProceduralSprite(baseSpellItem._UIsprite, modSprites);
             Inventory.Instance._spells.Add(spell); //crafted
+           
+            selectMenuComp.QuickSlot(spell);
             craftEffect.gameObject.SetActive(true);
             var alpha = craftEffect.color;
             alpha.a = 0.07f;
