@@ -89,7 +89,7 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
         foreach(GameObject enemy in enemiesArray)
         {
-            if (enemy.transform.parent == null && enemy != gameObject)
+            if (enemy.transform.parent == null && enemy != gameObject && Vector3.Magnitude(enemy.transform.position - transform.position) < 10.0f)
             {
                 enemies.Add(enemy);
             }
