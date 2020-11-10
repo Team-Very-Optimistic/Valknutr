@@ -39,7 +39,7 @@ class ShieldBase : SpellBase
     public override Tooltip GetTooltip()
     {
         return new Tooltip($"Shield {DefaultBaseTitle()}", 
-            $"Spawns a shield that absorbs {(healthBuffer):F} " +
-            $"damage for the player. Player can have a maximum of {SpellManager.Instance.maxShields} shields active. \n{DefaultBaseBody()}", $"Level {level}");
+            $"Spawns a shield that absorbs {_scale*10:F}% of your max health " +
+            $". Max {SpellManager.Instance.maxShields} active shields. \n{DefaultBaseBody()}", $"Level {level}");
     }
 }

@@ -101,7 +101,7 @@ public class EffectManager : Singleton<EffectManager>
     IEnumerator EnemyHurt()
     {
         Time.timeScale = 0.1f;
-        ScreenShakeManager.Instance.ScreenShake(0.05f * _enemyHurtTimeStopIntensity, 0.5f);
+        // ScreenShakeManager.Instance.ScreenShake(0.05f * _enemyHurtTimeStopIntensity, 0.5f);
         yield return new WaitForSeconds(0.01f * _enemyHurtTimeStopIntensity);
         Time.timeScale = 1;
     }

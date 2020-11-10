@@ -44,7 +44,7 @@ public class DropsLoot : MonoBehaviour
         else
         {
             if (Random.value < dropChance)
-                GameManager.Instance.SpawnHP(pos);
+                GameManager.Instance.SpawnHP(pos, DifficultyScalingSystem.GetHealthPickupHealAmount());
         }
     }
 }

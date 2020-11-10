@@ -49,7 +49,7 @@ class SplitSpellModifier : SpellModifier
     }
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Split" + DefaultModTitle(), 
-            $"Repeats the spell effects {iterations} times, but each spell effect is {damageReduction:P} weaker. {DefaultModBody()}");
+        return new Tooltip("Echo" + DefaultModTitle(), 
+            $"Repeats the spell effects {iterations} times, each proc is {1-damageReduction:P} weaker than the last. {DefaultModBody()}");
     }
 }

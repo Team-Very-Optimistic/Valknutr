@@ -25,16 +25,15 @@ public class Spawner : MonoBehaviour
     public void BeginSpawning(int depth, float densityModifer)
     {
         if (hasSpawnedEnemies) return;
-        hasSpawnedEnemies = true;
         SpawnEnemies(depth, densityModifer);
     }
 
     private void SpawnEnemies(int depth, float densityModifer)
     {
-        StartCoroutine(SpawnEnemiesCoroutine(depth));
+        StartCoroutine(SpawnEnemiesCoroutine(depth, densityModifer));
     }
 
-    private IEnumerator SpawnEnemiesCoroutine(int depth)
+    private IEnumerator SpawnEnemiesCoroutine(int depth, float densityModifer)
     {
         if (availablePacks.Length == 0) yield break;
         float currentDifficulty = 0;

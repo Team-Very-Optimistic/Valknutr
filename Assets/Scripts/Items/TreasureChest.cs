@@ -49,7 +49,7 @@ public class TreasureChest : HealthScript
             ItemDrop itemDrop; 
             if (i == hp)
             {
-                itemDrop = GameManager.Instance.SpawnHP(transform.position + (i - (numTreasure - 1) / 2) * offset + direction);
+                itemDrop = GameManager.Instance.SpawnHP(transform.position + (i - (numTreasure - 1) / 2) * offset + direction, DifficultyScalingSystem.GetHealthPickupHealAmount());
             }
             else
             {

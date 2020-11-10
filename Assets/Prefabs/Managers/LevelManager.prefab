@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2278183681047961610}
   - component: {fileID: 3979078063383611440}
+  - component: {fileID: 4021726065323557353}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -43,3 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10fb9bd8e75e8348954983c550a2605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levels: []
+  levelIndex: 0
+  optionalLevel: {fileID: 0}
+--- !u!114 &4021726065323557353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544174093724084044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f76ab11658e5b248ae439ac911669ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnParticles: {fileID: 1695937575831818685, guid: 6918077d94cee8241afded4a7df45b24, type: 3}
+  rockParticles: {fileID: 2083826442901869048, guid: 99e6200fad0ca6041839e7f3febf9858, type: 3}

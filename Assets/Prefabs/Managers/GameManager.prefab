@@ -56,9 +56,13 @@ MonoBehaviour:
   itemDropPrefab: {fileID: 3498559886049984015, guid: e0360c0eae50fc740af08dad288c9179, type: 3}
   healthPickupObj: {fileID: 0}
   treasurePrefab: {fileID: 9082468501717190872, guid: 239fa0c917ba3024fa470a8a516aa3fe, type: 3}
-  healthPickupValue: 2
+  _playerHealth: {fileID: 0}
+  healthPickupValue: 3
   healthPickupDropChance: 0.3
+  shielderShieldPrefab: {fileID: 134419529269394858, guid: b89bd9b2a31dcdb428fe042bf0961c85, type: 3}
+  cameraRig: {fileID: 0}
   QualityManager: {fileID: 0}
+  levelName: 
 --- !u!114 &2674764975012913393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +79,7 @@ MonoBehaviour:
   _defaultSpells: []
   maxShields: 10
   skeleton: {fileID: 0}
+  aoeEffect: {fileID: 0}
 --- !u!114 &2674764975012913399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MasterMixer: {fileID: 24100000, guid: 10036c82bf565df4396e0fb9156ac972, type: 2}
   _library: {fileID: 0}
+  _backgroundMusic: {fileID: 0}

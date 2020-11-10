@@ -45,7 +45,7 @@ public class PoisonModifier : SpellModifier
 
     public override Tooltip GetTooltip()
     {
-        return new Tooltip("Venomous Sting" + DefaultModTitle(), $"All damage caused by the spell will poison for {poisonTicks} ticks, by a proportion of {poisonRatio:P} " +
-                                                                 $"the original damage. Last for {duration} seconds. {DefaultModBody()}");
+        return new Tooltip("Venomous Sting" + DefaultModTitle(), $"The spell will deal {poisonTicks} ticks of {poisonRatio:P}  " +
+                                                                 $"the original damage over {duration} seconds. {DefaultModBody()}");
     }
 }
