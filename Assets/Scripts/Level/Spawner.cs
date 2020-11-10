@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Spawner : MonoBehaviour
 {
@@ -23,13 +25,17 @@ public class Spawner : MonoBehaviour
     public void BeginSpawning(int depth)
     {
         if (hasSpawnedEnemies) return;
-        hasSpawnedEnemies = true;
         SpawnEnemies(depth);
     }
 
     private void SpawnEnemies(int depth)
     {
-        if (availablePacks.Length == 0) return;
+        StartCoroutine(SpawnEnemiesCoroutine(depth));
+    }
+
+    private IEnumerator SpawnEnemiesCoroutine(int depth)
+    {
+        if (availablePacks.Length == 0) yield break;
         float currentDifficulty = 0;
         var toSpawn = new List<EnemyPack>();
         var spawnDensity = DifficultyScalingSystem.GetDensity(depth);
@@ -45,10 +51,25 @@ public class Spawner : MonoBehaviour
             currentDifficulty += newPack.difficultyRating;
             if (currentDifficulty + minPackDifficulty > target) break;
         }
-        
+
+        List<Vector3> randomSpawnPosition = new List<Vector3>();
+        int spawnPosIndex = 0;
+        for (int i = 0; i < toSpawn.Count; i++)
+        {
+            Vector3 location = RandomSpawnPosition();
+            randomSpawnPosition.Add(location);
+            SpawnSequenceManager.Instance.SpawnParticlesAtLocation(randomSpawnPosition[i]);
+        }
+
+        SpawnSequenceManager.Instance.StartScreenShakeOnSpawn();
+
+        yield return new WaitForSeconds(SpawnSequenceManager.Instance.GetSpawnTime());
+
         toSpawn.ForEach(pack =>
-            pack.SpawnEnemies(RandomSpawnPosition(), depth).ForEach(enemies.Add)
-        );
+           pack.SpawnEnemies(randomSpawnPosition[spawnPosIndex++], depth).ForEach(enemies.Add)
+       );
+
+        hasSpawnedEnemies = true;
     }
 
     private Vector3 RandomSpawnPosition()
