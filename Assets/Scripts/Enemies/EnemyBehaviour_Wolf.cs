@@ -199,6 +199,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         gameObject.layer = LayerMask.NameToLayer("Default");
         wolfChargeCollider.SetActive(false);
+        animator.speed = 1.0f;
     }
 
     private void StartRunning()
@@ -211,6 +212,7 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
 
         ResetAllAnimationTriggers();
         animator.SetTrigger("ToRun");
+        animator.speed = 2.0f;
     }
 
     private void ResetAllAnimationTriggers()
