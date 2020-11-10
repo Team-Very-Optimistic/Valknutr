@@ -58,10 +58,18 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
                 if ((transform.position - enemy.transform.position).magnitude <= shieldRadius)
                 {
-                    if (shielderLinkScript == null)
+                    //If dead, remove from list
+                    if(!enemy.GetComponent<EnemyBehaviourBase>())
                     {
-                        EnemyShielder_Link linkScript = enemy.AddComponent<EnemyShielder_Link>();
-                        linkScript.InitShielderLink(gameObject, shieldRadius, linkMat, linkDamageMultiplier);
+                        enemies.Remove(enemy);
+                    }
+                    else
+                    {
+                        if (shielderLinkScript == null)
+                        {
+                            EnemyShielder_Link linkScript = enemy.AddComponent<EnemyShielder_Link>();
+                            linkScript.InitShielderLink(gameObject, shieldRadius, linkMat, linkDamageMultiplier);
+                        }
                     }
                 }
                 else
