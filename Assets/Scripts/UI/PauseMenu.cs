@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         UiManager.Instance.GoToMainMenu();
-
+        AudioManager.PlayBackgroundSound("title");
     }
 
     public void QuitGame()

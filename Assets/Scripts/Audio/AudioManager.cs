@@ -135,7 +135,7 @@ public class AudioManager : Singleton<AudioManager>
             x => newBG.volume =  x, 
             s.m_Volume * volume, 1f).SetEase(Ease.InQuad);
 
+        audioSource.loop = true;
         audioSource.Play();
-        Destroy(tempSoundPlayer, s.m_Clip.length);
     }
 }
