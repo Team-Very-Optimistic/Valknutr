@@ -9,6 +9,8 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
     public List<GameObject> enemies;
     private bool enemiesFound = false;
+    private bool areEnemiesAllDead = false;
+    private float escapeSpeed;
 
     public Material linkMat;
 
@@ -19,11 +21,15 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
         base.Start();
 
         Invoke(nameof(FindAllEnemies), 0.1f);
+
+        canKnockback = false;
+
+        escapeSpeed = navMeshAgent.speed * 2.0f;
     }
 
     public override void Update()
     {
-        if(enemiesFound)
+        if(enemiesFound && !areEnemiesAllDead)
         {
             //Update list
             enemies = enemies.Where(enemy => enemy != null).ToList();
@@ -58,10 +64,18 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
                 if ((transform.position - enemy.transform.position).magnitude <= shieldRadius)
                 {
-                    if (shielderLinkScript == null)
+                    //If dead, remove from list
+                    if(!enemy.GetComponent<EnemyBehaviourBase>())
                     {
-                        EnemyShielder_Link linkScript = enemy.AddComponent<EnemyShielder_Link>();
-                        linkScript.InitShielderLink(gameObject, shieldRadius, linkMat, linkDamageMultiplier);
+                        enemies.Remove(enemy);
+                    }
+                    else
+                    {
+                        if (shielderLinkScript == null)
+                        {
+                            EnemyShielder_Link linkScript = enemy.AddComponent<EnemyShielder_Link>();
+                            linkScript.InitShielderLink(gameObject, shieldRadius, linkMat, linkDamageMultiplier);
+                        }
                     }
                 }
                 else
@@ -72,6 +86,23 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
                     }
                 }
             }
+
+            if (enemies.Count <= 0)
+            {
+                areEnemiesAllDead = true;
+                navMeshAgent.speed = escapeSpeed;
+            }
+            else if (enemies.Count <= 1 && enemies[0].gameObject.name.Equals("EnemyShielder"))
+            {
+                areEnemiesAllDead = true;
+                navMeshAgent.speed = escapeSpeed;
+            }
+        }
+        else if (enemiesFound && areEnemiesAllDead)
+        {
+            Vector3 runTo = transform.position + ((transform.position - player.transform.position) * 2.5f);
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            navMeshAgent.SetDestination(runTo);
         }
     }
 
@@ -81,7 +112,7 @@ public class EnemyBehaviour_Shielder : EnemyBehaviourBase
 
         foreach(GameObject enemy in enemiesArray)
         {
-            if (enemy.transform.parent == null && enemy != gameObject)
+            if (enemy.transform.parent == null && enemy != gameObject && Vector3.Magnitude(enemy.transform.position - transform.position) < 10.0f)
             {
                 enemies.Add(enemy);
             }
