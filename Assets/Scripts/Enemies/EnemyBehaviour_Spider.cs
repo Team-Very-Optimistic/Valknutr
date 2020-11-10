@@ -63,6 +63,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
         //Disable knockback (buggy with navmesh)
         canKnockback = false;
 
+        //Navigation
+        navMeshAgent.SetDestination(player.transform.position);
+
         ResetWaitTicks();
     }
 
@@ -70,7 +73,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
     public override void Update()
     {
         if (navMeshAgent.enabled) // Not in knockback
-        {
+        { 
             switch (spiderState)
             {
                 case SpiderBehaviourStates.Running:
@@ -81,9 +84,9 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                         if (--wait > 0) return;
 
                         //If close enough to player, switch to wind up
-                        if (navMeshAgent.hasPath && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                        if (navMeshAgent.hasPath && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
                         {
-                            SetupJump();
+                           SetupJump();
                         }
 
                         break;

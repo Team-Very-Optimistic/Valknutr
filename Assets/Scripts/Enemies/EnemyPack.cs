@@ -24,6 +24,7 @@ public class EnemyPack:ScriptableObject
                 spawned.Add(spawnedEnemy);
             }
         }
+
         return spawned;
     }
 }
