@@ -22,6 +22,6 @@ public class StartMenu : MonoBehaviour
 
     public void Awake()
     {
-        AudioManager.PlaySound("title");
+        AudioManager.PlayBackgroundSound("title");
     }
 }
