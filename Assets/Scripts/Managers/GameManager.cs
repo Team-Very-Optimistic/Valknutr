@@ -127,13 +127,14 @@ public class GameManager : Singleton<GameManager>
         return itemDrop;
     }
 
-    public ItemDrop SpawnHP(Vector3 position)
+    public ItemDrop SpawnHP(Vector3 position, float healAmount)
     {
 
         var hp = Instantiate(healthPickupObj, position, Quaternion.identity).GetComponent<ItemDrop>();
+        var healthPickup = hp.GetComponent<HealthPickup>();
+        healthPickup.healAmount = healAmount;
             
         return hp;
-        
     }
 
     public static TreasureChest SpawnTreasureChest(Vector3 position, float quality)

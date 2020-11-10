@@ -6,7 +6,7 @@ public class SpawnSequenceManager : MonoBehaviour
 {
     public static SpawnSequenceManager Instance;
 
-    float spawnTime = 1.0f;
+    float spawnTime = 3.0f;
 
     public GameObject spawnParticles;
     public GameObject rockParticles;
@@ -50,6 +50,6 @@ public class SpawnSequenceManager : MonoBehaviour
     private IEnumerator StartScreenShakeOnSpawnCoroutine()
     {
         yield return new WaitForSeconds(spawnTime);
-        ScreenShakeManager.Instance.ScreenShake(0.5f, 1.0f);
+        ScreenShakeManager.Instance.ScreenShake(0.5f, 0.3f);
     }
 }

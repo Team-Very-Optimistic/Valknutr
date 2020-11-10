@@ -9,6 +9,7 @@ public class MeleeWeapon : MonoBehaviour
     BoxCollider weaponBoxCollider;
     SkinnedMeshRenderer weaponSkinnedMeshRenderer;
     public GameObject swordJoint;
+    private List<Collider> hitObjects = new List<Collider>();
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +22,15 @@ public class MeleeWeapon : MonoBehaviour
     void Update()
     {
         weaponBoxCollider.transform.position = swordJoint.transform.position;
+        if (!weaponBoxCollider.enabled) hitObjects.Clear();
     }
 
     //Only used against player
     public void OnTriggerEnter(Collider other)
     {
         //Only apply damage one via capsule collider
-        if(other.gameObject.CompareTag("Player") && other.GetType() == typeof(CapsuleCollider))
-        {
-            this.gameObject.GetComponentInParent<Damage>().DealDamage(other);
-        }
+        if (other.gameObject != GameManager.Instance._player || hitObjects.Contains(other)) return;
+        gameObject.GetComponentInParent<Damage>().DealDamage(other);
+        hitObjects.Add(other);
     }
 }

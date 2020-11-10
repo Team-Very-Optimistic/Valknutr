@@ -29,6 +29,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyLevel: 1
   depthDifficulty: 0.1
+  difficultyScaling: 1.4
+  baseHealthPickupAmount: 5
 --- !u!114 &5381498070010606450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,8 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_postProcessVolume: {fileID: 0}
-  _enemyHurtTimeStopIntensity: 2
-  playerHurtIntensityMultiplier: 0
+  _enemyHurtTimeStopIntensity: 0.3
+  playerHurtIntensityMultiplier: 0.66
   m_VFXLibrary:
   - m_Identifier: projectileHit
     effect: {fileID: 8846962978078135933, guid: b245d7507cfe6244ba663fed90842ad0, type: 3}
@@ -75,6 +77,9 @@ MonoBehaviour:
   - m_Identifier: speedTrail
     effect: {fileID: 1406412963616399484, guid: f49128ffd17b8464d915aa1276bc7326, type: 3}
     duration: 4
+  - m_Identifier: PoisonEffect
+    effect: {fileID: 8820148364297313492, guid: 8a078905174f58e48abbfbdf6bac6f68, type: 3}
+    duration: 3
 --- !u!1 &7211583252000807825
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,10 +165,6 @@ PrefabInstance:
     - target: {fileID: 2978678392105749125, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
-      propertyPath: _defaultSpells.Array.size
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.data[0]

@@ -60,6 +60,6 @@ class GrowSpellModifier : SpellModifier
     public override Tooltip GetTooltip()
     {
         return new Tooltip("Size+" + DefaultModTitle(), 
-            $"Increases size of affected entities by {sizeChange:F} times. Capped at {cap:F} times the original size. Reduces speed by {speedSlow:F} times. " + DefaultModBody());
+            $"Increases size of spell effects by {sizeChange:F}x. Reduces speed by {speedSlow:F} times. " + DefaultModBody());
     }
 }

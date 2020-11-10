@@ -6,7 +6,7 @@ using Object = System.Object;
 /// </summary>
 public abstract class SpellModifier : SpellElement
 {
-    public float _cooldownMultiplier = 1;
+    public float _cooldownMultiplier = 1.2f;
     [HideInInspector]
     public float value = 1f;
     
