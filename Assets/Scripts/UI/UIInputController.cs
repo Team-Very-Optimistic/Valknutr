@@ -8,7 +8,6 @@ namespace UI
         private CraftMenuManager craftMenuManager;
         private UiManager uiManager;
         private ThirdPersonUserControl _controls;
-
         private void Start()
         {
             craftMenuManager = CraftMenuManager.Instance;
@@ -18,33 +17,46 @@ namespace UI
 
         private void Update()
         {
-            if (Input.GetButtonDown("CraftMenu")) craftMenuManager.DisplayCraftMenu();
-
-            if (!craftMenuManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
-                craftMenuManager.DisplaySelectMenu();
-
-            if (Input.GetButtonDown("PauseGame")) uiManager.TogglePause();
             
-            if (Input.GetButtonDown("MinimapToggle")) uiManager.ToggleMinimap();
+            if (Input.GetButtonDown("PauseGame"))
+            {
+                if (!craftMenuManager.IsUIDisplayed())
+                    uiManager.TogglePause();
+            }
 
-            //UI Specific controls follow
-            if (!craftMenuManager.IsUIDisplayed())
+            if (!UiManager.Instance.isPaused)
             {
-                //Enable player controls;
-                if (!_controls.enabled)
+                if (Input.GetButtonDown("CraftMenu"))
                 {
-                    _controls.enabled = true;
+                    craftMenuManager.DisplayCraftMenu();
                 }
-                return;
-            }
-            else
-            {
-                //Disable player controls;
-                if (_controls.enabled)
+
+                if (!craftMenuManager.IsUIDisplayed() && Input.GetButtonDown("SelectMenu"))
+                    craftMenuManager.DisplaySelectMenu();
+
+                if (Input.GetButtonDown("MinimapToggle")) uiManager.ToggleMinimap();
+
+                //UI Specific controls follow
+                if (!craftMenuManager.IsUIDisplayed())
                 {
-                    _controls.enabled = false;
+                    //Enable player controls;
+                    if (!_controls.enabled)
+                    {
+                        _controls.enabled = true;
+                    }
+
+                    return;
+                }
+                else
+                {
+                    //Disable player controls;
+                    if (_controls.enabled)
+                    {
+                        _controls.enabled = false;
+                    }
                 }
             }
+            
 
             if (Input.GetButtonDown("Cancel")) craftMenuManager.HideUI();
 

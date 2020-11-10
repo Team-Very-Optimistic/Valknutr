@@ -9,17 +9,17 @@ public class ExplosiveBase : SpellBase
 
     protected override void SetValues()
     {
-        power = 40.0F;
+        power = 50.0F;
     }
 
     protected override void AfterReset()
     {
-        power *= _damage / properties._damage + power * radius;
+        power *= radius;
         _offset += _player.forward * 1.3f;
         _direction = _direction * 2 + _offset;
         radius = 3 * _scale;
-
     }
+    
     /// <summary>
     /// todo: use the following properties:
     /// _direction: yes

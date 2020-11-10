@@ -41,7 +41,7 @@ public class Spell : SpellItem
                 for (int y = offset.y * (1 - i) ; y < modiTex.height; y++)
                 {
                     var color = modiTex.GetPixel(x, y);
-                    float intensity = ((float)x / 85) * ((float)y / 85);
+                    float intensity = ((((float)x - 60 * i)/85) *((float)y  - 60* i)/ 85);
                     color.a = 0.5f * intensity;
                     color /= (2/intensity);
                     color += baseType.texture.GetPixel(x, y)/1.5f;
@@ -102,7 +102,7 @@ public class Spell : SpellItem
         //     }
         // });
 
-        var bodyMessage = spellBase.GetTooltip().Body + _spellModifiers.Aggregate("\n", (s, modifier) => s + " " + modifier.GetTooltip().Title);
+        var bodyMessage = spellBase.GetTooltip().Body + _spellModifiers.Aggregate("", (s, modifier) => s + "\n" + modifier.GetTooltip().Title);
         return new Tooltip(spellBase.GetTooltip().Title, bodyMessage);
         
         /*

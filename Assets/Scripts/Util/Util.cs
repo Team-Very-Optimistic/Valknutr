@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public static class Util
@@ -145,5 +146,12 @@ public static class Util
         //
         // Ray ray = new Ray(startingPoint, direction);
         return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
+    }
+
+    public static T[] Shuffle<T>(this T[] arr)
+    {
+        var result = arr.Select(x => new {value = x, order = Random.Range(0, 1)})
+            .OrderBy(x => x.order).Select(x => x.value).ToList();
+        return result.ToArray();
     }
 }

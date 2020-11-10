@@ -36,6 +36,10 @@ public class HealthScript : MonoBehaviour
         }
     }
 
+    public float GetDamageMultiplier()
+    {
+        return damageMultiplier;
+    }
     private void Update()
     {
         invulnTime = Mathf.Clamp(invulnTime - Time.deltaTime, 0, Single.MaxValue);

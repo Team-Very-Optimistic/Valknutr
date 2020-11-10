@@ -8,6 +8,7 @@ public class HealthPickup : ItemDrop
  
     #region Public Fields
 
+    public float healAmount = 1f;
     #endregion
  
     #region Unity Methods
@@ -16,7 +17,7 @@ public class HealthPickup : ItemDrop
     {
         UiManager.HideInWorldTooltip();
         OnPickup?.Invoke(this);
-        GameManager.Instance.HealthPickup();
+        GameManager.Instance.HealthPickup(healAmount);
         AudioManager.PlaySoundAtPosition("healthPickup", transform.position);
         Destroy(gameObject);
     }
@@ -27,14 +28,14 @@ public class HealthPickup : ItemDrop
     // }
     public override void ShowTooltip()
     {
-        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."), true);
+        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {healAmount}."), true);
         UiManager.currentItemDrop = this;
     }
 
     public override void PlayerEnterHandler(Collider other)
     {
         playerCollider = other;
-        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {GameManager.Instance.healthPickupValue}."));
+        UiManager.ShowTooltip(new Tooltip("Potion <Consumable>", $"Restores and increase max health by {healAmount}."));
         UiManager.currentItemDrop = this;
     }
 

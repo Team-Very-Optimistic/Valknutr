@@ -14,12 +14,21 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     [ContextMenu("Next Level")]
-    public void StartNextLevel()
+    public static void StartNextLevel()
     {
-        StartCoroutine(DifficultyScalingSystem.Instance.IncreaseDifficulty(1, 0.0f));
-        StartLevel(++levelIndex % levels.Length);
 
-        AudioManager.PlayBackgroundSound("level2");
+        Instance.StartCoroutine(_StartNextLevel(++Instance.levelIndex % Instance.levels.Length));
+    }
+    
+    static IEnumerator _StartNextLevel(int levelIndex)
+    {
+        UiManager.FadeToBlack(1);
+        yield return new WaitForSeconds(1);
+        DifficultyScalingSystem.Instance.IncreaseDifficulty(1);
+        StartLevel(levelIndex);
+        AudioManager.PlayBackgroundSound(Instance.levels[levelIndex].config.ambientMusic);
+        UiManager.FadeFromBlack(1);
+        UiManager.HideBlackOverlay();
     }
 
     public void StartOptionalLevel()

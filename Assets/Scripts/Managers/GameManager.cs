@@ -161,10 +161,10 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void HealthPickup()
+    public void HealthPickup(float value)
     {
-        _playerHealth.IncreaseCurrHealth(healthPickupValue);
-        _playerHealth.IncreaseMaxHealth(healthPickupValue);
+        _playerHealth.IncreaseMaxHealth(value);
+        _playerHealth.IncreaseCurrHealth(value);
     }
     public void AffectPlayerCurrHealth(float value)
     {
@@ -172,11 +172,13 @@ public class GameManager : Singleton<GameManager>
             _playerHealth.IncreaseCurrHealth(value);
         else
         {
-            if (-value >= _playerHealth.currentHealth)
+            if (-value * _playerHealth.GetDamageMultiplier() >= _playerHealth.currentHealth)
             {
-                _playerHealth.ApplyDamage(_playerHealth.currentHealth - 1);
+
+                _playerHealth.ApplyDamage(_playerHealth.currentHealth/_playerHealth.GetDamageMultiplier() - 0.1f);
             }
-            _playerHealth.ApplyDamage(-value);
+            else
+                _playerHealth.ApplyDamage(-value);
         }
     }
 }

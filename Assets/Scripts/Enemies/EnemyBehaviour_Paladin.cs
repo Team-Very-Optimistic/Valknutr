@@ -23,7 +23,7 @@ public class EnemyBehaviour_Paladin : EnemyBehaviourBase
         if (navMeshAgent.enabled)
         {
             //Animation
-            if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+            if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
             {
                 isAttacking = true;
             }

@@ -12,16 +12,7 @@ public class LevelExit : MonoBehaviour
     }
 
     void StartNextLevel()
-    {        
-        StartCoroutine(_StartNextLevel());
-    }
-
-    static IEnumerator _StartNextLevel()
     {
-        UiManager.FadeToBlack(1);
-        yield return new WaitForSeconds(1);
-        LevelManager.Instance.StartNextLevel();
-        UiManager.FadeFromBlack(1);
-        UiManager.HideBlackOverlay();
+        LevelManager.StartNextLevel();
     }
 }

@@ -37,7 +37,7 @@ public class Cheats : MonoBehaviour
     void Update()
     {
         // check for click or touch and register it
-        if (CheckClickOrTouch())
+        if (Application.isEditor && CheckClickOrTouch())
         {
             // click will be registered at time since level load
             _clickTimes[_clickTimesIndex] = Time.timeSinceLevelLoad;
@@ -127,6 +127,7 @@ public class Cheats : MonoBehaviour
             DisplayCheat("Optional Level", () => LevelManager.Instance.StartOptionalLevel());
             DisplayCheat("Spawn Item", () => GameManager.Instance.SpawnItem(Util.GetMousePositionOnWorldPlane(Camera.main)));
             DisplayCheat("Spawn Chest (Q=1)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 1));
+            DisplayCheat("Next Level", LevelManager.StartNextLevel);
         }
     }
 

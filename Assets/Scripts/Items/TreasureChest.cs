@@ -9,7 +9,7 @@ public class TreasureChest : HealthScript
     private float offsetDistance;
 
     public static bool firstSpawn = true;
-    public float quality;
+    public float quality = 1f;
 
     public override void OnDeath()
     {

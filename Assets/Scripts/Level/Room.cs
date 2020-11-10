@@ -34,12 +34,13 @@ public class Room : MonoBehaviour
 
     private Collider roomCollider;
 
-    private Spawner spawner;
+    private Spawner[] spawners;
+    public float densityModifer;
 
     private void Start()
     {
         roomCollider = GetComponent<BoxCollider>();
-        spawner = GetComponent<Spawner>();
+        spawners = GetComponents<Spawner>();
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
@@ -78,7 +79,10 @@ public class Room : MonoBehaviour
         UpdateMinimapIcon(new Color(0.78f, 0.77f, 0f));
 
 
-        if (spawner) spawner.BeginSpawning(depth);
+        foreach (var spawner in spawners)
+        {
+            spawner.BeginSpawning(depth, densityModifer);
+        }
 
         CheckCleared();
 
@@ -115,7 +119,7 @@ public class Room : MonoBehaviour
 
     private void CheckCleared()
     {
-        isCleared = !spawner || spawner.IsDone();
+        isCleared = spawners.Length == 0 || spawners.All(spawner => spawner.IsDone());
 
         if (isCleared)
             OnClear();

@@ -87,7 +87,7 @@ public class DamageText : MonoBehaviour
         minScale *= scale;
         maxScale *= scale;
         
-        GetComponent<Text>().text = $"{damage:0.##}";
+        GetComponent<Text>().text = $"{damage:0.#}";
         GetComponent<Text>().color = damageColor;
         this.worldLocationStart = worldLocationStart;
     }

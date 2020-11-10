@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using cakeslice;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -88,15 +89,21 @@ public class EnemyDeathSequence : BaseDeathSequence
             GetComponent<DropsLoot>().OnDeath();
         }
 
-        if(GetComponent<EnemyBehaviour_Boss>() != null)
+        if (GetComponent<EnemyBehaviour_Boss>() != null)
         {
             GetComponent<EnemyBehaviour_Boss>().SetDeathState();
         }
 
-        if(GetComponent<EnemyShielder_Link>() != null)
+        if (GetComponent<EnemyShielder_Link>() != null)
         {
             GetComponent<EnemyShielder_Link>().RemoveSelfFromShielderList();
             Destroy(GetComponent<EnemyShielder_Link>());
         }
+
+        foreach (SkinnedMeshRenderer childMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            Destroy(childMeshRenderer.gameObject.GetComponent<Outline>());
+        }
+        
     }
 }
