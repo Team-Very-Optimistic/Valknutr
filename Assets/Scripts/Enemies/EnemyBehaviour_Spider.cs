@@ -81,7 +81,7 @@ public class EnemyBehaviour_Spider : EnemyBehaviourBase
                         if (--wait > 0) return;
 
                         //If close enough to player, switch to wind up
-                        if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                        if (navMeshAgent.hasPath && navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
                         {
                             SetupJump();
                         }

@@ -20,19 +20,19 @@ public class Spawner : MonoBehaviour
         });
     }
 
-    public void BeginSpawning(int depth)
+    public void BeginSpawning(int depth, float densityModifer)
     {
         if (hasSpawnedEnemies) return;
         hasSpawnedEnemies = true;
-        SpawnEnemies(depth);
+        SpawnEnemies(depth, densityModifer);
     }
 
-    private void SpawnEnemies(int depth)
+    private void SpawnEnemies(int depth, float densityModifer)
     {
         if (availablePacks.Length == 0) return;
         float currentDifficulty = 0;
         var toSpawn = new List<EnemyPack>();
-        var spawnDensity = DifficultyScalingSystem.GetDensity(depth);
+        var spawnDensity = DifficultyScalingSystem.GetDensity(depth) * densityModifer;
         var minPackDifficulty = availablePacks.Select(pack => pack.difficultyRating).Min();
 
         var target = difficultyTarget * spawnDensity;

@@ -16,9 +16,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<RoomExit> _exits = new List<RoomExit>();
     private NavMeshSurface _navMeshSurface;
     public bool generateOnAwake;
-    [Range(0.0001f, 0.01f)]
-    public float noiseOffset = 0.001f;
+    [Range(0.0001f, 0.01f)] public float noiseOffset = 0.001f;
     public LevelConfig config;
+    public GameObject bossRoom;
 
 
     private void Awake()
@@ -45,28 +45,44 @@ public class LevelGenerator : MonoBehaviour
     /// <param name="sourceExit"></param>
     /// <param name="rotation"></param>
     /// <returns></returns>
-    private GameObject GenerateRoomAtExit(GameObject roomPrefab, RoomExit sourceExit, Quaternion rotation)
+    private GameObject GenerateRoomAtExit(GameObject roomPrefab, RoomExit sourceExit)
     {
-        var newRoomExits = roomPrefab.GetComponent<Room>().exits;
+        var newRoomExits = roomPrefab.GetComponent<Room>().exits.Shuffle();
 
         // Select an exit in the new room that faces our chosen exit
-        var validExitCandidates = newRoomExits.Where(otherExit =>
-            Vector3.Angle(sourceExit.transform.forward, rotation * -otherExit.transform.forward) < 15).ToList();
-        if (validExitCandidates.Count == 0) return null;
-        var index = Random.Range(0, validExitCandidates.Count);
-        var validExit = validExitCandidates.ElementAt(index);
-        var validExitName = validExit.name;
+        Quaternion rotation;
+        GameObject newRoom = null;
+        String selectedExitName = "";
 
-        var transform1 = sourceExit.transform;
-        // print(transform1.position);
-        // print(validExit.transform.lossyScale);
-        // print(rotation * validExit.transform.position);
-        var offset = transform1.position + noiseOffset * Random.insideUnitSphere - Vector3.Scale(
-            Vector3.Scale(rotation * validExit.transform.position, Vector3.one), transform.localScale);
-        var newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
+        foreach (var exit in newRoomExits)
+        {
+            var angle = Vector3.Angle(sourceExit.transform.forward, exit.transform.forward);
+            rotation = Quaternion.Euler(0, angle, 0);
+            var transform1 = sourceExit.transform;
+            var offset = transform1.position + noiseOffset * Random.insideUnitSphere - Vector3.Scale(
+                Vector3.Scale(rotation * exit.transform.position, Vector3.one), transform.localScale);
+            newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
+            selectedExitName = exit.name;
+            if (newRoom != null) break;
+        }
+
+        // var validExitCandidates = newRoomExits.Where(otherExit =>
+        //     Vector3.Angle(sourceExit.transform.forward, rotation * -otherExit.transform.forward) < 15).ToList();
+        // if (validExitCandidates.Count == 0) return null;
+        // var index = Random.Range(0, validExitCandidates.Count);
+        // var validExit = validExitCandidates.ElementAt(index);
+        // var validExitName = validExit.name;
+        //
+        // var transform1 = sourceExit.transform;
+        // // print(transform1.position);
+        // // print(validExit.transform.lossyScale);
+        // // print(rotation * validExit.transform.position);
+        // var offset = transform1.position + noiseOffset * Random.insideUnitSphere - Vector3.Scale(
+        //     Vector3.Scale(rotation * validExit.transform.position, Vector3.one), transform.localScale);
+        // var newRoom = GenerateRoomAt(roomPrefab, offset, rotation);
         if (newRoom == null) return null;
 
-        var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == validExitName)
+        var newRoomExit = newRoom.GetComponent<Room>().exits.First(exit => exit.name == selectedExitName)
             .GetComponent<RoomExit>();
 
         sourceExit.Connect(newRoomExit);
@@ -76,11 +92,10 @@ public class LevelGenerator : MonoBehaviour
     private GameObject GenerateRoomConnectedTo(GameObject roomPrefab, Room targetRoom)
     {
         GameObject newRoom = null;
-        int n = 10;
-        while (newRoom == null && n-- > 0)
+        foreach (var exit in targetRoom.exits.Shuffle())
         {
-            var sourceExit = Util.RandomItem(targetRoom.exits).GetComponent<RoomExit>();
-            newRoom = GenerateRoomAtExit(roomPrefab, sourceExit, Util.RandomRotationXZ());
+            newRoom = GenerateRoomAtExit(roomPrefab, exit.GetComponent<RoomExit>());
+            if (newRoom != null) return newRoom;
         }
 
         return newRoom;
@@ -98,6 +113,7 @@ public class LevelGenerator : MonoBehaviour
     private GameObject GenerateRoomAt(GameObject roomPrefab, Vector3 position, Quaternion rotation)
     {
         var newRoom = Instantiate(roomPrefab, position, rotation, transform);
+        newRoom.GetComponent<Room>().densityModifer = config.densityModifier;
 
         if (CheckIntersect(newRoom))
         {
@@ -148,8 +164,6 @@ public class LevelGenerator : MonoBehaviour
         GameObject targetRoom = null;
         while (newRoom == null && iterations-- > 0)
         {
-            var rotation = Util.RandomRotationXZ();
-
             // rooms with at least 1 unconnected exit
             var validRooms = _rooms.Where(room =>
                 room.GetComponent<Room>().exits.Any(exit => !exit.GetComponent<RoomExit>().isConnected));
@@ -159,7 +173,7 @@ public class LevelGenerator : MonoBehaviour
             var validExits = targetRoom.GetComponent<Room>().exits
                 .Where(exit => !exit.GetComponent<RoomExit>().isConnected);
             var targetExit = Util.RandomItem(validExits).GetComponent<RoomExit>();
-            newRoom = GenerateRoomAtExit(roomType, targetExit, rotation);
+            newRoom = GenerateRoomAtExit(roomType, targetExit);
         }
 
         if (newRoom != null)
@@ -210,7 +224,8 @@ public class LevelGenerator : MonoBehaviour
 
     public void Generate()
     {
-		if(!config) return;
+        if (!config) return;
+        var startTime = Time.realtimeSinceStartup;
         roomPrefabs = config.roomPrefabs;
         bossRoomPrefab = config.bossRoomPrefab;
         numberOfRooms = config.numberOfRooms;
@@ -240,11 +255,24 @@ public class LevelGenerator : MonoBehaviour
                 continue;
             }
 
-            PlaceBossRoom();
+            try
+            {
+                PlaceBossRoom();
+            }
+            catch (GenerationException e)
+            {
+                print("failed generation");
+                continue;
+            }
+
+            print($"success: {Time.realtimeSinceStartup - startTime}");
             break;
         }
 
-        StartCoroutine(rebuildNavMeshDelayed(0.5f));
+        if (Application.isPlaying)
+            StartCoroutine(rebuildNavMeshDelayed(0.5f));
+        else
+            RebuildNavMesh();
         HideAllUnconnectedExitIcons();
     }
 
@@ -269,8 +297,8 @@ public class LevelGenerator : MonoBehaviour
 
         _rooms.Clear();
         _exits.Clear();
-        
-        
+
+
         if (Application.isPlaying)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -312,48 +340,31 @@ public class LevelGenerator : MonoBehaviour
     private void PlaceBossRoom()
     {
         var success = false;
-        var n = 100;
-        var deepestRooms = new List<Room>();
-        var depth = -1;
-        foreach (var room in _rooms
-            .Select(room => room.GetComponent<Room>()))
+        var n = 10;
+
+        var sortedRooms = _rooms.Select(room =>
+            (room.GetComponent<Room>().depth,
+            room
+        )).OrderBy(a => -a.depth).ToArray();
+
+        foreach ((_, GameObject go) in sortedRooms)
         {
-            if (room.depth > depth)
-            {
-                deepestRooms.Clear();
-                depth = room.depth;
-            }
-            if (room.depth == depth)
-                deepestRooms.Add(room);
+            bossRoom = GenerateRoomConnectedTo(bossRoomPrefab, go.GetComponent<Room>());
+            success = bossRoom != null;
+            if (success) break;
         }
 
-        while (n-- > 0 && !success)
-        {
-            var room = Util.RandomItem(deepestRooms);
-            success = GenerateRoomConnectedTo(bossRoomPrefab, room) != null;
-        }
-
-        if (!success)
-        {
-            n = 100;
-            while (n-- > 0 && !success)
-            {
-                var room = Util.RandomItem(_rooms).GetComponent<Room>();
-                success = GenerateRoomConnectedTo(bossRoomPrefab, room) != null;
-            }
-            
-        }
-        
         if (!success)
             throw new GenerationException();
     }
 
     public void RebuildNavMesh()
     {
+        var startTime = Time.realtimeSinceStartup;
         if (!_navMeshSurface)
             _navMeshSurface = GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
-        print("Rebuilding Navmesh");
+        print($"Rebuilding Navmesh: {Time.realtimeSinceStartup - startTime}");
     }
 
     private IEnumerator rebuildNavMeshDelayed(float time)

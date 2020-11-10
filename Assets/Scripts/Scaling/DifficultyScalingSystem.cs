@@ -10,7 +10,9 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     /// </summary>
     public float difficultyLevel = 1;
 
-    public float depthDifficulty = 3.5f;
+    public float depthDifficulty = 0.2f;
+    public float difficultyScaling = 1.4f;
+    public float baseHealthPickupAmount = 2f;
 
     //public float difficultyIncreaseInterval = 60f;
     
@@ -43,12 +45,18 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         hp.SetHealth(hp.maxHealth * difficultyLevel);
     }
 
-    public IEnumerator IncreaseDifficulty(float amount, float time)
+    public IEnumerator _IncreaseDifficulty(float amount, float time)
     {
         yield return new WaitForSeconds(time);
         difficultyLevel += amount;
         GameManager.Instance.healthPickupValue *= difficultyLevel;
         // StartCoroutine(IncreaseDifficulty(amount, time));
+    }
+
+    public void IncreaseDifficulty(float amount)
+    {
+        difficultyLevel += amount;
+        GameManager.Instance.healthPickupValue *= difficultyLevel;
     }
 
     public static float GetDifficulty()
@@ -70,5 +78,15 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
     public static float GetDifficulty(float enemyDifficultyModifier, int depth)
     {
         return (Instance.difficultyLevel + depth * Instance.depthDifficulty) * enemyDifficultyModifier;
+    }
+
+    public static float GetEnemyStatsScale(float enemyDifficultyModifier, int depth)
+    {
+        return Mathf.Pow(Instance.difficultyScaling, GetDifficulty(enemyDifficultyModifier, depth) - 1);
+    }
+
+    public static float GetHealthPickupHealAmount()
+    {
+        return Instance.baseHealthPickupAmount * Mathf.Pow(Instance.difficultyScaling, GetLevel() - 1);
     }
 }

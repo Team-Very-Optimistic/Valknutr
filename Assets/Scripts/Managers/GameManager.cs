@@ -161,10 +161,10 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void HealthPickup()
+    public void HealthPickup(float value)
     {
-        _playerHealth.IncreaseCurrHealth(healthPickupValue);
-        _playerHealth.IncreaseMaxHealth(healthPickupValue);
+        _playerHealth.IncreaseMaxHealth(value);
+        _playerHealth.IncreaseCurrHealth(value);
     }
     public void AffectPlayerCurrHealth(float value)
     {

@@ -26,4 +26,6 @@ public class LevelConfig : ScriptableObject
     public RoomPrefabConfig[] roomPrefabs;
     public GameObject bossRoomPrefab;
     public int numberOfRooms = 5;
+    public float densityModifier = 1f;
+    public string ambientMusic = "level1";
 }

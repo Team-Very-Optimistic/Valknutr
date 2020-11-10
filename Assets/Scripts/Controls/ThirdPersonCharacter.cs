@@ -144,7 +144,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// print(move);
 			var velocityY = m_Rigidbody.velocity.y;
 			var newVelocity = move * m_MoveSpeedMultiplier;
-			newVelocity.y = velocityY - m_GravityMultiplier ;
+			newVelocity.y = velocityY + Physics.gravity.y * (m_GravityMultiplier - 1) * Time.deltaTime;
 			m_Rigidbody.velocity = newVelocity;
 
 			// convert the world relative moveInput vector into a local-relative
@@ -169,8 +169,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			ApplyExtraTurnRotation();
 			HandleGroundedMovement(crouch, jump);
 			//control and velocity handling is different when grounded and airborne:
-			if (!m_IsGrounded)
-				HandleAirborneMovement();
 
 			//ScaleCapsuleForCrouching(crouch);
 			//PreventStandingInLowHeadroom();
@@ -275,19 +273,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// don't use that while airborne
 				m_Animator.speed = 1;
 			}
-		}
-
-
-		void HandleAirborneMovement()
-		{
-			// apply extra gravity from multiplier:
-			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-			m_Rigidbody.AddForce(extraGravityForce);
-			// var velocity = m_Rigidbody.velocity;
-			// velocity.y = extraGravityForce.y;
-			// print(velocity);
-			// m_Rigidbody.velocity = velocity;
-			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 		}
 
 

@@ -19,6 +19,8 @@ public class AudioManager : Singleton<AudioManager>
 
         [HideInInspector]
         public AudioSource m_Source;
+
+        public bool loop;
     }
 
     [SerializeField]
@@ -46,6 +48,7 @@ public class AudioManager : Singleton<AudioManager>
             s.m_Source.clip = s.m_Clip;
             s.m_Source.volume = s.m_Volume;
             s.m_Source.pitch = s.m_Pitch;
+            s.m_Source.loop = s.loop;
         }
         m_bgLibrary = _backgroundMusic.m_SfxLibrary;
         foreach(SoundEntry s in m_bgLibrary)
@@ -57,6 +60,7 @@ public class AudioManager : Singleton<AudioManager>
             s.m_Source.clip = s.m_Clip;
             s.m_Source.volume = s.m_Volume;
             s.m_Source.pitch = s.m_Pitch;
+            s.m_Source.loop = s.loop;
         }
     }
 

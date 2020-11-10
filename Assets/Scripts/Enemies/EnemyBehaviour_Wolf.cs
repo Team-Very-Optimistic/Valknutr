@@ -90,6 +90,10 @@ public class EnemyBehaviour_Wolf : EnemyBehaviourBase
                                 SetupDash();
                             }
                         }
+                        else
+                        {
+                            navMeshAgent.SetDestination(player.transform.position);
+                        }
                     }
 
                     break;

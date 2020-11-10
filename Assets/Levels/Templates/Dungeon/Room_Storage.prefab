@@ -1151,7 +1151,6 @@ GameObject:
   - component: {fileID: 1181645888703964596}
   - component: {fileID: 6014733477265074157}
   - component: {fileID: 1484168823991624756}
-  - component: {fileID: 7427858272014440679}
   m_Layer: 11
   m_Name: Room_Storage
   m_TagString: Untagged
@@ -1310,6 +1309,7 @@ MonoBehaviour:
   depth: 0
   lootQualityModifier: 1
   spawnTreasure: 1
+  densityModifer: 0
 --- !u!114 &1484168823991624756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,22 +1324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoints:
   - {fileID: 1013848554210242898}
-  availablePacks:
-  - {fileID: 11400000, guid: d37bd3236b643ba44b1a22fe484223e0, type: 2}
-  difficultyTarget: 4
---- !u!114 &7427858272014440679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278883567955002407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc3c23bc1b440cab37a12f9364054f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoints:
   - {fileID: 335533679386917599}
   availablePacks:
   - {fileID: 11400000, guid: d37bd3236b643ba44b1a22fe484223e0, type: 2}
@@ -14458,6 +14442,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8479314334072742250
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743831954144641614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4521432, y: 0.4147601, z: 0.39387047}
+  m_Center: {x: -0.00062751025, y: 0.21266183, z: -0.00081493706}
 --- !u!114 &2095735771109419376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14477,19 +14474,6 @@ MonoBehaviour:
   hurtSoundOnHit: 1
   dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!65 &8479314334072742250
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743831954144641614}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4521432, y: 0.4147601, z: 0.39387047}
-  m_Center: {x: -0.00062751025, y: 0.21266183, z: -0.00081493706}
 --- !u!114 &3954944544006176315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21103,6 +21087,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &201252869908475397
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743831955715840768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4521432, y: 0.4147601, z: 0.39387047}
+  m_Center: {x: -0.00062751025, y: 0.21266183, z: -0.00081493706}
 --- !u!114 &4704965337335789197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21122,19 +21119,6 @@ MonoBehaviour:
   hurtSoundOnHit: 1
   dead: 0
   damageColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!65 &201252869908475397
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743831955715840768}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4521432, y: 0.4147601, z: 0.39387047}
-  m_Center: {x: -0.00062751025, y: 0.21266183, z: -0.00081493706}
 --- !u!114 &7523100125055539990
 MonoBehaviour:
   m_ObjectHideFlags: 0

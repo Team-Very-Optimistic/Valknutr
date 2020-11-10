@@ -127,6 +127,7 @@ public class Cheats : MonoBehaviour
             DisplayCheat("Optional Level", () => LevelManager.Instance.StartOptionalLevel());
             DisplayCheat("Spawn Item", () => GameManager.Instance.SpawnItem(Util.GetMousePositionOnWorldPlane(Camera.main)));
             DisplayCheat("Spawn Chest (Q=1)", () => GameManager.SpawnTreasureChest(Util.GetMousePositionOnWorldPlane(Camera.main), 1));
+            DisplayCheat("Next Level", LevelManager.StartNextLevel);
         }
     }
 
