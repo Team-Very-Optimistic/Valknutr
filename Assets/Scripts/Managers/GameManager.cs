@@ -159,7 +159,6 @@ public class GameManager : Singleton<GameManager>
         return treasure;
     }
 
-    [MenuItem("Level/Trigger Win")]
     public static void SetGameWin()
     {
         //Display winning screen

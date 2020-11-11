@@ -18,6 +18,12 @@ public class EditorTools : MonoBehaviour
     {
         
     }
+    
+    [MenuItem("Tools/Next Level")]
+    public static void GoNextLevel()
+    {
+        LevelManager.StartNextLevel();
+    }
 
     [MenuItem("Tools/Trigger Lose")]
     public static void TriggerLose()
