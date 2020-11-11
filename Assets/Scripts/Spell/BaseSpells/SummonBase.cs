@@ -22,7 +22,7 @@ class SummonBase : SpellBase
     public override void SpellBehaviour(Spell spell)
     {
         _objectForSpell = Instantiate(_objectForSpell, _player.position + _offset, Quaternion.identity);
-        _objectForSpell.GetComponent<Summon>().Set(this, _duration);
+        _objectForSpell.GetComponentElseAddIt<Summon>().Set(this, _duration);
     }
 
     public override Tooltip GetTooltip()

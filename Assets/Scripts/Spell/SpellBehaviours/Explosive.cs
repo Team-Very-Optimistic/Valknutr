@@ -53,8 +53,16 @@ public class Explosive : TriggerEventHandler {
         AudioManager.PlaySoundAtPosition("explosion", transform.position);
         ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f * power / 2000f);
         //ONly works for one prefab
-        var o = gameObject.transform.GetChild(1).gameObject;
-        var explosionPhysicsForce = o.GetComponentElseAddIt<ExplosionPhysicsForce>();
+        GameObject o = null;
+        if(gameObject.transform.childCount < 1)
+        {
+            o = gameObject;
+        }
+        else
+        {
+            o = gameObject.transform.GetChild(1).gameObject;
+        }
+        var explosionPhysicsForce = gameObject.GetComponentElseAddIt<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
         o.transform.localScale *= radius;
