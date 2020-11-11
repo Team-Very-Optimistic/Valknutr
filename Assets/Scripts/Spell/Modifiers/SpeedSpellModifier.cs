@@ -18,6 +18,7 @@ class SpeedSpellModifier : SpellModifier
         {
             oldBehavior.Invoke();
             var obj = action._objectForSpell.transform;
+            
             EffectManager.PlayEffectAtPosition("speedTrail", obj.position, obj.lossyScale).transform.SetParent(obj);
         };
         action._behaviour = spell;

@@ -48,8 +48,13 @@ public class Shield : NoTrigger
 
     public bool Damage(float damage)
     {
-        var dead = _healthScript.ApplyDamage(damage);
-        return dead;
+        if (_healthScript != null)
+        {
+            var dead = _healthScript.ApplyDamage(damage);
+            return dead;
+        }
+
+        return false;
     }
 
     private void OnDestroy()
