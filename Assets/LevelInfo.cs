@@ -14,6 +14,6 @@ public class LevelInfo : MonoBehaviour
 
     void Update()
     {
-        text.text = $"{GameManager.Instance.levelName}[{Mathf.RoundToInt(DifficultyScalingSystem.GetLevel())}]";
+        text.text = $"{GameManager.Instance.levelName}";
     }
 }

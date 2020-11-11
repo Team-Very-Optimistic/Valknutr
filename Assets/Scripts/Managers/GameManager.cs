@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -26,6 +27,12 @@ public class GameManager : Singleton<GameManager>
 
     public QualityManager QualityManager;
     public string levelName;
+    
+    [HideInInspector]
+    public float playTime = 0;
+    
+    [HideInInspector]
+    public bool timerPaused;
 
     public delegate void PlayerDeathAction();
     public static event PlayerDeathAction OnPlayerDeath;
@@ -52,6 +59,12 @@ public class GameManager : Singleton<GameManager>
             Debug.LogError("No weapon in player in this scene for GameManager");
             return;
         }
+    }
+
+    private void Update()
+    {
+        if (timerPaused) return;
+        playTime += Time.deltaTime;
     }
 
     public ItemDrop SpawnItem(Vector3 position, SpellItem _SpellItem = null, 
@@ -146,7 +159,8 @@ public class GameManager : Singleton<GameManager>
         return treasure;
     }
 
-    public void SetGameWin()
+    [MenuItem("Level/Trigger Win")]
+    public static void SetGameWin()
     {
         //Display winning screen
 
@@ -160,6 +174,11 @@ public class GameManager : Singleton<GameManager>
         {
             Destroy(enemy);
         }
+    }
+
+    public static void SetGameLose()
+    {
+        OnPlayerDeath?.Invoke();
     }
 
     public void HealthPickup(float value)
@@ -181,5 +200,10 @@ public class GameManager : Singleton<GameManager>
             else
                 _playerHealth.ApplyDamage(-value);
         }
+    }
+
+    public static float GetPlayTime()
+    {
+        return Instance.playTime;
     }
 }

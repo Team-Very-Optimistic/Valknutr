@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,18 @@ public class EditorTools : MonoBehaviour
     void Update()
     {
         
+    }
+
+    [MenuItem("Tools/Trigger Lose")]
+    public static void TriggerLose()
+    {
+        GameManager.Instance._player.GetComponent<PlayerHealth>().ApplyDamage(float.MaxValue);
+    }
+    
+    [MenuItem("Tools/Trigger Win")]
+    public static void TriggerWin()
+    {
+        GameManager.SetGameWin();
     }
     
     [MenuItem("Tools/Generate Minimap Icon %#m")]

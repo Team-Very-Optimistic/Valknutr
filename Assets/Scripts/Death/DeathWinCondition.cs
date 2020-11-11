@@ -6,6 +6,6 @@ public class DeathWinCondition : MonoBehaviour
 {
     public void OnDeath()
     {
-        GameManager.Instance.SetGameWin();
+        GameManager.SetGameWin();
     }
 }

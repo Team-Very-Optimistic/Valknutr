@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,6 +70,7 @@ public class EndGameUI : MonoBehaviour
 
     IEnumerator DisplayGameOver(float time)
     {
+        GameManager.Instance.timerPaused = true;
         yield return new WaitForSeconds(time);
         HideGameUI();
         gameOverObjects.SetActive(true);
@@ -76,6 +78,7 @@ public class EndGameUI : MonoBehaviour
 
     public void DisplayGameWin()
     {
+        GameManager.Instance.timerPaused = true;
         HideGameUI();
         gameWinObjects.SetActive(true);
     }

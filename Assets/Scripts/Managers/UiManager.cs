@@ -191,7 +191,7 @@ public class UiManager : Singleton<UiManager>
         Instance.blackOverlay.SetActive(true);
         Instance.blackOverlay.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(0, 0, true);
-        Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(1, duration, false);
+        Instance.blackOverlay.GetComponent<Image>().CrossFadeAlpha(1, duration, true);
     }
 
 

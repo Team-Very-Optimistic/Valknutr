@@ -20,6 +20,6 @@ public class LevelWin : MonoBehaviour
     {
         UiManager.FadeToBlack(1);
         yield return new WaitForSeconds(1);
-        GameManager.Instance.SetGameWin();
+        GameManager.SetGameWin();
     }
 }

@@ -286,7 +286,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
     private void OnDestroy()
     {
         if(GameManager.Instance)
-            GameManager.Instance.SetGameWin();
+            GameManager.SetGameWin();
     }
 
     public void EnableCloseAttackCollider(int value)
