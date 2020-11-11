@@ -20,7 +20,7 @@ public class DamageText : MonoBehaviour
     public float maxScale;
     public float horizontalScaleMultiplier;
     public float scaleReductionRate;
-    public const float BASE_DAMAGE = 10f;
+    public const float BASE_DAMAGE = 20f;
     
     void Start()
     {
@@ -74,7 +74,7 @@ public class DamageText : MonoBehaviour
     public void SetDamageTextProperties(float damage, Vector3 worldLocationStart, Color damageColor)
     {
         var scale = 1f;
-        if (damage < BASE_DAMAGE/10)
+        if (damage < BASE_DAMAGE/8)
         {
             // scale = Mathf.Pow(BASE_DAMAGE, damage - BASE_DAMAGE - 0.3f) + 0.3f;
             scale = 0.5f;
