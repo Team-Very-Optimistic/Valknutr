@@ -27,8 +27,6 @@ public class LevelManager : Singleton<LevelManager>
         DifficultyScalingSystem.Instance.IncreaseDifficulty(1);
         StartLevel(levelIndex);
         AudioManager.PlayBackgroundSound(Instance.levels[levelIndex].config.ambientMusic);
-        UiManager.FadeFromBlack(1);
-        UiManager.HideBlackOverlay();
     }
 
     public void StartOptionalLevel()
@@ -49,12 +47,15 @@ public class LevelManager : Singleton<LevelManager>
 
     public static IEnumerator MoveLevel(GameObject level, Vector3 offset)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         level.transform.position = offset;
         var ofst = GameManager.Instance.cameraRig.transform.position - GameManager.Instance._player.transform.position;
         GameManager.Instance._player.transform.position = offset;
-        GameManager.Instance.cameraRig.transform.position = offset + ofst;
+        GameManager.Instance.cameraRig.transform.position += offset;
         Instance.transform.position = offset;
+        UiManager.FadeFromBlack(1);
+        yield return new WaitForSeconds(1.5f);
+        UiManager.HideBlackOverlay();
     }
     public static void StartLevel(int levelIndex)
     {
@@ -69,12 +70,10 @@ public class LevelManager : Singleton<LevelManager>
         {
             var level = Instance.levels[levelIndex];
             level.gameObject.SetActive(true);
-            var offset = levelIndex * new Vector3(1000, 0, 1000);
+            var offset = levelIndex * new Vector3(500, 0, 500);
 
             level.Generate();
             Instance.StartCoroutine(MoveLevel(level.gameObject, offset));
-            
-            
         }
         else
         {

@@ -80,7 +80,7 @@ public class GameManager : Singleton<GameManager>
         {
             
             var itemListSpellItems = _itemList._SpellItems;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 _SpellItem = Instantiate(itemListSpellItems[Random.Range(0, itemListSpellItems.Count)]);
                 if (_SpellItem._spellElement != notThis && _SpellItem._spellElement.quality <= quality)

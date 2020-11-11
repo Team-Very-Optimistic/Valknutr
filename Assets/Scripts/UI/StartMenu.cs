@@ -20,7 +20,7 @@ public class StartMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void Awake()
+    public void Start()
     {
         AudioManager.PlayBackgroundSound("title");
     }
