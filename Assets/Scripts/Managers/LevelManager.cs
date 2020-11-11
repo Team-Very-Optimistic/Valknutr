@@ -47,8 +47,10 @@ public class LevelManager : Singleton<LevelManager>
 
     public static IEnumerator MoveLevel(GameObject level, Vector3 offset)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.9f);
+
         level.transform.position = offset;
+        yield return new WaitForSeconds(0.1f);
         var ofst = GameManager.Instance.cameraRig.transform.position - GameManager.Instance._player.transform.position;
         GameManager.Instance._player.transform.position = offset;
         GameManager.Instance.cameraRig.transform.position += offset;
