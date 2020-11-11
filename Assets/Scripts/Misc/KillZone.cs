@@ -14,7 +14,7 @@ public class KillZone : MonoBehaviour
         }
         else
         {
-            other.transform.position = activeRoom + Random.insideUnitSphere + Vector3.up;
+            other.transform.position = activeRoom + 2 * (Random.insideUnitSphere + Vector3.up);
         }
     }
 }
