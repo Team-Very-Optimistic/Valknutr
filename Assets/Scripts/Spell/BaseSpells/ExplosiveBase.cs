@@ -40,7 +40,7 @@ public class ExplosiveBase : SpellBase
         var p = Instantiate(_objectForSpell, _player.position + _offset,
             Quaternion.Euler(_direction));
         
-        Explosive explosive = p.GetComponent<Explosive>();
+        Explosive explosive = p.GetComponentElseAddIt<Explosive>();
 
         explosive.radius = radius;
         explosive._damage = _damage;

@@ -17,7 +17,7 @@ public class Explosive : TriggerEventHandler {
     private bool _explode;
     public void Launch(Vector3 direction, float speed)
     {
-        gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
+        gameObject.GetComponentElseAddIt<Rigidbody>().velocity = direction.normalized * speed;
         //StartCoroutine(Explode(timeToExpire));
         Destroy(gameObject, timeToExpire);
     }
@@ -54,7 +54,7 @@ public class Explosive : TriggerEventHandler {
         ScreenShakeManager.Instance.ScreenShake(0.5f, 0.8f * power / 2000f);
         //ONly works for one prefab
         var o = gameObject.transform.GetChild(1).gameObject;
-        var explosionPhysicsForce = o.GetComponent<ExplosionPhysicsForce>();
+        var explosionPhysicsForce = o.GetComponentElseAddIt<ExplosionPhysicsForce>();
         explosionPhysicsForce.explosionForce = power;
         explosionPhysicsForce.explosionRadius = radius;
         o.transform.localScale *= radius;

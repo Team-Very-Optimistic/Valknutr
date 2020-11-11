@@ -12,7 +12,7 @@ public class SpellManager : Singleton<SpellManager>
     private int currShields = 0;
     public GameObject skeleton;
     public GameObject aoeEffect;
-
+    public GameObject[] chaosPrefabs;
     public Spell[] GetDefaultSpells()
     {
         int i = 0;

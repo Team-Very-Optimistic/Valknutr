@@ -7,10 +7,12 @@ public class ChaoticPropertiesModifier : SpellModifier
     public float speedBase = 1f;
     public float _cooldownBase;
     public GameObject randObj;
+    public float randChance = 1.0f;
     public override void ModifySpell(SpellBase spell)
     {
         base.ModifySpell(spell);
-        spell._objectForSpell = randObj;
+        if (Random.value <= randChance)
+            spell._objectForSpell = randObj;
         spell._damage += damageBase;
         if (spell._damage <= 0) spell._damage = 0;
         
@@ -30,11 +32,12 @@ public class ChaoticPropertiesModifier : SpellModifier
         var allBad = true;
         randObj = new GameObject[]
         {
-            GameObject.CreatePrimitive(PrimitiveType.Sphere),
-            GameObject.CreatePrimitive(PrimitiveType.Capsule),
-            GameObject.CreatePrimitive(PrimitiveType.Cube),
-            SpellManager.Instance.skeleton,
-            SpellManager.Instance.fireObject
+            SpellManager.Instance.chaosPrefabs[0],
+            SpellManager.Instance.chaosPrefabs[1],
+            SpellManager.Instance.chaosPrefabs[2],
+            SpellManager.Instance.chaosPrefabs[3],
+
+            SpellManager.Instance.skeleton
 
         }[Random.Range(0, 5)];
         for (int i = 0; i < 3; i++)

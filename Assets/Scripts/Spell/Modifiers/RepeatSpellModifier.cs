@@ -8,15 +8,16 @@ public class RepeatSpellModifier : SpellModifier
     private SpellBase action;
     private TriggerEventHandler eventHandler;
     
+    
     public override SpellBase ModifyBehaviour(SpellBase action)
     {
         //important to make sure it doesnt cast a recursive method
         Action oldBehavior = action._behaviour;
-        
+        var i = iterations;
         Action temp = () =>
         {
             oldBehavior.Invoke();
-            if (--iterations <= 0) return;
+            if (--i <= 0) return;
             eventHandler = action._objectForSpell.GetComponent<TriggerEventHandler>();
             if (eventHandler != null)
                 //existingHandler = action._objectForSpell.AddComponent<TriggerEventHandler>();
@@ -44,6 +45,6 @@ public class RepeatSpellModifier : SpellModifier
     
     public override Tooltip GetTooltip()
     {
-        return new Tooltip(DefaultModTitle(), "Repeats the spell and changes the central object of the spell to the first object that had been interacted." + DefaultModBody());
+        return new Tooltip(DefaultModTitle(), "Repeats the spell and changes the central object of the spell to the first collided object." + DefaultModBody());
     }
 }

@@ -15,7 +15,7 @@ public class Projectile : TriggerEventHandler
         this.direction = direction;
         this._damage = damage;
         this.speed = speed;
-        gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
+        gameObject.GetComponentElseAddIt<Rigidbody>().velocity = direction * speed;
         AudioManager.PlaySoundAtPosition("projectileLaunch", transform.position);
         Destroy(gameObject, timeToExpire);
     }
@@ -53,7 +53,7 @@ public class Projectile : TriggerEventHandler
         }
 
         EffectManager.PlayEffectAtPosition("projectileHit", transform.position, transform.localScale/10);
-        var damageScript = GetComponent<Damage>();
+        var damageScript = gameObject.GetComponentElseAddIt<Damage>();
         damageScript.SetDamage(_damage);
         damageScript.DealDamage(other);
         Destroy(gameObject);
