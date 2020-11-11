@@ -54,7 +54,7 @@ public class LevelManager : Singleton<LevelManager>
         GameManager.Instance.cameraRig.transform.position += offset;
         Instance.transform.position = offset;
         UiManager.FadeFromBlack(1);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
         UiManager.HideBlackOverlay();
     }
     public static void StartLevel(int levelIndex)
@@ -70,7 +70,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             var level = Instance.levels[levelIndex];
             level.gameObject.SetActive(true);
-            var offset = levelIndex * new Vector3(1000, 0, 1000);
+            var offset = levelIndex * new Vector3(500, 0, 500);
 
             level.Generate();
             Instance.StartCoroutine(MoveLevel(level.gameObject, offset));
