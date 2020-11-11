@@ -6,10 +6,11 @@ public class ChaoticPropertiesModifier : SpellModifier
     public float damageBase = 1f;
     public float speedBase = 1f;
     public float _cooldownBase;
+    public GameObject randObj;
     public override void ModifySpell(SpellBase spell)
     {
         base.ModifySpell(spell);
-        
+        spell._objectForSpell = randObj;
         spell._damage += damageBase;
         if (spell._damage <= 0) spell._damage = 0;
         
@@ -27,6 +28,15 @@ public class ChaoticPropertiesModifier : SpellModifier
             Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)
         };
         var allBad = true;
+        randObj = new GameObject[]
+        {
+            GameObject.CreatePrimitive(PrimitiveType.Sphere),
+            GameObject.CreatePrimitive(PrimitiveType.Capsule),
+            GameObject.CreatePrimitive(PrimitiveType.Cube),
+            SpellManager.Instance.skeleton,
+            SpellManager.Instance.fireObject
+
+        }[Random.Range(0, 5)];
         for (int i = 0; i < 3; i++)
         {
             if (rand[i] >= 0)
