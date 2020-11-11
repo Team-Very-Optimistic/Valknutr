@@ -31,21 +31,6 @@ MonoBehaviour:
   depthDifficulty: 0.1
   difficultyScaling: 1.4
   baseHealthPickupAmount: 5
---- !u!114 &5381498070010606450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3167201728770615237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7c19036723053949a40b4a013b02043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActivateAreaSize: 0.1
-  ClicksCount: 5
-  WaitTime: 2
 --- !u!114 &64389496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_postProcessVolume: {fileID: 0}
   _enemyHurtTimeStopIntensity: 0.3
-  playerHurtIntensityMultiplier: 0.66
+  playerHurtIntensityMultiplier: 0.5
   m_VFXLibrary:
   - m_Identifier: projectileHit
     effect: {fileID: 8846962978078135933, guid: b245d7507cfe6244ba663fed90842ad0, type: 3}
@@ -167,6 +152,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
+      propertyPath: _defaultSpells.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: e046a92c0d44c42448efa64fce5cab8c, type: 2}
@@ -177,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 2530d35f6540ded4ba9de1616f0145c3, type: 2}
+      objectReference: {fileID: 11400000, guid: 7b5878b48f27daa4ca9786131c07e33f, type: 2}
     - target: {fileID: 5406720814185953310, guid: 5a2e2f1bdf2bf13488de5e755d13f915, type: 3}
       propertyPath: _defaultSpells.Array.data[3]
       value: 
@@ -420,6 +409,10 @@ PrefabInstance:
     - target: {fileID: 3544174093724084044, guid: 7f6275ce97516bb4ba280266add8d366, type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979078063383611440, guid: 7f6275ce97516bb4ba280266add8d366, type: 3}
+      propertyPath: levels.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f6275ce97516bb4ba280266add8d366, type: 3}
