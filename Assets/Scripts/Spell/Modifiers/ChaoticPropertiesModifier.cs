@@ -27,7 +27,7 @@ public class ChaoticPropertiesModifier : SpellModifier
     {
         var rand = new float[3]
         {
-            Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)
+            Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)
         };
         var allBad = true;
         randObj = new GameObject[]
@@ -55,9 +55,9 @@ public class ChaoticPropertiesModifier : SpellModifier
             rand[v] *= -1;
             rand[v] -= 0.1f;
         }
-        speedBase *= value * Random.Range(-1, 1);
-        damageBase *= value * Random.Range(-1, 1);
-        _cooldownBase = _cooldownMultiplier * value * Random.Range(-1, 1);
+        speedBase *= value * Random.Range(-1f, 1f);
+        damageBase *= value * Random.Range(-1f, 1f);
+        _cooldownBase = _cooldownMultiplier * value * Random.Range(-1f, 1f);
         
     }
     
