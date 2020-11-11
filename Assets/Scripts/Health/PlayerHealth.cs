@@ -28,6 +28,7 @@ public class PlayerHealth : HealthScript
         if (damage <= 0)
             return false;
         damage *= damageMultiplier;
+        SetInvulnerable(0.01f);
         Vector3 worldPositionText = transform.position + new Vector3(0.0f, height, 0.0f);
         if (dmgColor == new Color())
             dmgColor = this.damageColor;

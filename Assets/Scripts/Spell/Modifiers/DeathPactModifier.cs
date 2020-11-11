@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class DeathPactModifier : SpellModifier
 {
     public float healthRatio = 0.1f;

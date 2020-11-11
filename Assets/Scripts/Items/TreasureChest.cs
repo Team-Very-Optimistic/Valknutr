@@ -1,5 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Experimental.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TreasureChest : HealthScript
@@ -26,8 +29,13 @@ public class TreasureChest : HealthScript
             for (int i = 0; i < numTreasure; i++)
             {
                 ItemDrop itemDrop; 
-
-                itemDrop = GameManager.Instance.SpawnBase(transform.position + (i - (numTreasure - 1) / 2) * offset + direction, notThis: prev);
+                NavMeshHit hit;
+                Vector3 finalPosition = transform.position + (i - (numTreasure - 1) / 2) * offset + direction;
+                if (NavMesh.SamplePosition(finalPosition, out hit, 1f, 1))
+                {
+                    finalPosition = hit.position;
+                }
+                itemDrop = GameManager.Instance.SpawnBase(finalPosition, notThis: prev);
                 prev = itemDrop._spellItem._spellElement;
             
                 itemDrops[i]  = itemDrop;
