@@ -189,7 +189,8 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
 
     public void SetStomp()
     {
-       GameObject.Instantiate(stompPrefab, stompFeet.transform.position, Quaternion.identity);
+       var go = GameObject.Instantiate(stompPrefab, stompFeet.transform.position, Quaternion.identity);
+       go.GetComponent<Damage>().SetDamage(GetComponent<Damage>().GetDamage());
     }
 
     private void SetRandomNextAttack(int numAttacks)
@@ -300,6 +301,7 @@ public class EnemyBehaviour_Boss_OakTree : Enemy
         Vector3 rockPosition = (leftHand.transform.position + rightHand.transform.position) / 2.0f;
         GameObject mossRock = GameObject.Instantiate(mossRockPrefab, rockPosition, Quaternion.identity);
         mossRock.GetComponent<MossRock>().SetHandReferences(leftHand, rightHand);
+        mossRock.GetComponent<Damage>().SetDamage(GetComponent<Damage>().GetDamage() * 2f);
         mossRockRef = mossRock;
     }
 

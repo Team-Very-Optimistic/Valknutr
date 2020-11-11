@@ -19,7 +19,7 @@ public class EnemyPack:ScriptableObject
             for (var i = Mathf.Round(Random.Range(enemy.Count.x, enemy.Count.y)); i > 0 ; i--)
             {
                 var spawnedEnemy = Instantiate(enemy.BaseType, position, Quaternion.identity);
-                spawnedEnemy.GetComponent<EnemyBehaviourBase>()?.ScaleStats(DifficultyScalingSystem.GetEnemyStatsScale(difficultyModifier + enemy.difficultyModifier, depth));
+                spawnedEnemy.GetComponent<Enemy>()?.ScaleStats(DifficultyScalingSystem.GetEnemyStatsScale(difficultyModifier + enemy.difficultyModifier, depth));
                 spawnedEnemy.transform.localScale = Vector3.one * Mathf.Sqrt(enemy.difficultyModifier);
                 spawned.Add(spawnedEnemy);
             }

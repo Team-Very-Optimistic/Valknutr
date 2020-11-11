@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 747411179884346154}
   - component: {fileID: 747411179884346153}
   - component: {fileID: 747411179884346151}
+  - component: {fileID: -3443629553339277076}
   m_Layer: 0
   m_Name: EnemyBoss
   m_TagString: Enemy
@@ -605,6 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8548314fb387a4f801b82b7e012b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsMultiplier: 1
   windingUpTime:
   - 3
   - 2
@@ -636,6 +638,22 @@ MonoBehaviour:
   timeToDestroy: 10
   triggeredParticle: 0
   triggeredDeathSequence: 0
+--- !u!114 &-3443629553339277076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747411179884346150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d702f14fb72db345b93ee8340c85acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 4
+  _damageCallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &747411179909116939
 GameObject:
   m_ObjectHideFlags: 0

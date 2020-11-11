@@ -233,6 +233,7 @@ public class EnemyBehaviour_Boss : Enemy
     public void SetStomp()
     {
         GameObject go = GameObject.Instantiate(stompPrefab, rightFeet.transform.position, Quaternion.identity);
+        go.GetComponent<Damage>().SetDamage(GetComponent<Damage>().GetDamage());
     }
 
     public void SummonEnemy()
@@ -241,14 +242,18 @@ public class EnemyBehaviour_Boss : Enemy
 
         //Randomly summon paladin or arche 
         bool shouldSummonPaladin = UnityEngine.Random.Range(0.0f, 1.0f) > 0.5f;
+        GameObject spawnedEnemy;
         if (shouldSummonPaladin)
         {
-            GameObject.Instantiate(paladinPrefab, randNavMeshLocation, Quaternion.identity);
+            spawnedEnemy = GameObject.Instantiate(paladinPrefab, randNavMeshLocation, Quaternion.identity);
+            
         }
         else
         {
-            GameObject.Instantiate(archerPrefab, randNavMeshLocation, Quaternion.identity);
+            spawnedEnemy = GameObject.Instantiate(archerPrefab, randNavMeshLocation, Quaternion.identity);
         }
+        spawnedEnemy.GetComponent<Enemy>()?.ScaleStats(DifficultyScalingSystem.GetEnemyStatsScale(DifficultyScalingSystem.GetDifficulty(), 0));
+
     }
 
     private Vector3 RandomNavmeshLocation(float radius)

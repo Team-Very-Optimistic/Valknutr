@@ -36,6 +36,13 @@ public class EditorTools : MonoBehaviour
     {
         GameManager.SetGameWin();
     }
+
+    [MenuItem("Tools/Teleport to Boss")]
+    public static void TeleportToBoss()
+    {
+        var target = LevelManager.Instance.levels[LevelManager.Instance.levelIndex].bossRoom?.transform.position;
+        GameManager.Instance._player.transform.position = target.GetValueOrDefault(GameManager.Instance._player.transform.position);
+    }
     
     [MenuItem("Tools/Generate Minimap Icon %#m")]
     private static void GenerateMinimapIcons()
