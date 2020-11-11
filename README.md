@@ -1,4 +1,4 @@
-![](/gifs/level2.gif)
+![](/Gifs/level2.gif)
 
 Craft spells on-the-fly with a combination of base spells and modifiers!
 
