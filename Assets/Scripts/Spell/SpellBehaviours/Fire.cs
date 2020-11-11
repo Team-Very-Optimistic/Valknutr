@@ -11,7 +11,7 @@ public class Fire : SpellBehaviour
     //public string debugTag;
     private float timeToExpire = 5f;
     public static int totalFires = 0;
-    public static int maxTotalFires = 500;
+    public static int maxTotalFires = 100;
     private float fireDelay = 0.5f;
     
     public override void TriggerEvent(Collider other)
@@ -39,8 +39,8 @@ public class Fire : SpellBehaviour
         parent = gameObject.transform.parent;
         Destroy(gameObject, timeToExpire + 0.2f);
         StartCoroutine(WaitCooldown(timeToExpire, 0.5f));
-        if (maxFires == 5)
-            StartCoroutine(WaitCooldown(0.01f));
+        if (maxFires == 3)
+            StartCoroutine(WaitCooldown(0.05f));
         else
         {
             StartCoroutine(WaitCooldown(fireDelay));
@@ -49,7 +49,7 @@ public class Fire : SpellBehaviour
         //debugTag = parent.tag;
     }
 
-    public static Fire SpawnFire(GameObject parent, Vector3 _origPosition = new Vector3(), int maxFires = 5)
+    public static Fire SpawnFire(GameObject parent, Vector3 _origPosition = new Vector3(), int maxFires = 3)
     {
 
         var fire = SpellManager.Instance.fireObject;
