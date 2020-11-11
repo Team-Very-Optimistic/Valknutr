@@ -135,7 +135,7 @@ public class QualityManager : ScriptableObject
         {
             SpellBase spellBase = (SpellBase) element._spellElement;
             spellBase._cooldown /= Mathf.Clamp(Spread() * Value(quality), 1, 10);
-            spellBase._damage *= Spread() * Value(quality) * level;
+            spellBase._damage *= Spread() * Value(quality) * DifficultyScalingSystem.GetStatsScale(level);
             spellBase._scale *= Spread() * Value(quality);
             spellBase._speed *= Spread() * Value(quality);
             spellBase.quality = quality;

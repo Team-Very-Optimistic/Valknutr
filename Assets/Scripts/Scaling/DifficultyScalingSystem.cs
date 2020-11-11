@@ -80,6 +80,11 @@ public class DifficultyScalingSystem : Singleton<DifficultyScalingSystem>
         return (Instance.difficultyLevel + depth * Instance.depthDifficulty) * enemyDifficultyModifier;
     }
 
+    public static float GetStatsScale(int level)
+    {
+        return Mathf.Pow(Instance.difficultyScaling, level - 1); 
+    }
+
     public static float GetEnemyStatsScale(float enemyDifficultyModifier, int depth)
     {
         return Mathf.Pow(Instance.difficultyScaling, GetDifficulty(enemyDifficultyModifier, depth) - 1);
