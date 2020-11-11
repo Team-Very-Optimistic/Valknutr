@@ -1,3 +1,5 @@
+![](/gifs/level2.gif)
+
 Craft spells on-the-fly with a combination of base spells and modifiers!
 
 * Unleash your imagination with thousands of different combinations.
