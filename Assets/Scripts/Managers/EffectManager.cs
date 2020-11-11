@@ -65,14 +65,13 @@ public class EffectManager : Singleton<EffectManager>
     public void PlayerHurtEffect(Vector3 pos, float damageRatio)
     {
         _playerHurtIntensity = Mathf.Min(1, damageRatio) * playerHurtIntensityMultiplier;
-        PlayEffectAtPosition("bloodExplosion", pos).transform.localScale *= 4 * _playerHurtIntensity;
+        PlayEffectAtPosition("bloodExplosion", pos).transform.localScale *= 0.1f + 2 * _playerHurtIntensity;
         StartCoroutine(PlayerHurt());
     }
 
     IEnumerator PlayerHurt()
     {
-        
-        m_Vignette.intensity.value =  ori +  0.45f * _playerHurtIntensity;
+        m_Vignette.intensity.value =  ori +  0.5f * _playerHurtIntensity;
         m_ColorGrading.mixerRedOutRedIn.value = mixerRedOutRedIn + 50f * _playerHurtIntensity ;
         Time.timeScale = 0.1f;
         ScreenShakeManager.Instance.ScreenShake(0.3f * _playerHurtIntensity, 0.9f * _playerHurtIntensity);

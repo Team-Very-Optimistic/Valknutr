@@ -10412,6 +10412,7 @@ MonoBehaviour:
   depth: 0
   lootQualityModifier: 3
   spawnTreasure: 1
+  densityModifer: 0
 --- !u!65 &1210930100674292244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15831,9 +15832,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2817932060098534885}
     m_Modifications:
+    - target: {fileID: 4567597314748436911, guid: c0e31962d80638b4f805d9ce6efff45a, type: 3}
+      propertyPath: m_Radius
+      value: 1.0504884
+      objectReference: {fileID: 0}
     - target: {fileID: 6545228950292788615, guid: c0e31962d80638b4f805d9ce6efff45a, type: 3}
       propertyPath: m_Name
       value: LevelExit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545228950292788615, guid: c0e31962d80638b4f805d9ce6efff45a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6545228950292788728, guid: c0e31962d80638b4f805d9ce6efff45a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17512,7 +17521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 285294324425765229, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -6.47
       objectReference: {fileID: 0}
     - target: {fileID: 285294324425765229, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17520,7 +17529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 285294324425765229, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33
+      value: 23.209
       objectReference: {fileID: 0}
     - target: {fileID: 285294324425765229, guid: 38d381c29a2f8d044bc250dd773aba14, type: 3}
       propertyPath: m_LocalRotation.x

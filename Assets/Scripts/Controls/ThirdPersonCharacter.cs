@@ -337,6 +337,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void CastPoint()
 		{
 			ClearCastingAnimation();
+
 			spellCaster.CastPoint();
 		}
 
@@ -347,6 +348,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void SetCastingAnimation(CastAnimation animationType, float speed = 1f)
 		{
+			m_Animator.applyRootMotion = true;
 			m_Animator.SetFloat(AnimationSpeed, speed);
 			switch (animationType)
 			{
@@ -387,6 +389,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void ClearCastingAnimation()
 		{
 			m_Casting = false;
+			m_Animator.applyRootMotion = false;
 
 			m_Dashing = false;
 			m_Animator.SetFloat(AnimationSpeed, 1f);

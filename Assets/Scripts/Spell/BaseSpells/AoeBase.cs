@@ -25,6 +25,7 @@ public class AoeBase : SpellBase
         var aoe = AoeBlast.SpawnBlast(_objectForSpell);
         aoe.Set(this, _aoeInterval, _duration);
         _objectForSpell = aoe._aoeEffect;
+        
     }
     
     public override Tooltip GetTooltip()

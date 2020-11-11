@@ -31,7 +31,7 @@ public class Spell : SpellItem
         int SpriteHeight = 128;
         var newTexture = Texture2D.Instantiate(baseType.texture);
         Vector2Int offset = new Vector2Int(85,85); // use this to place the modifiers
-        int i = 1;
+        int i = 0;
         foreach (var modiSprite in modifiers)
         {
             if (i == 2) i = -1;
@@ -41,10 +41,11 @@ public class Spell : SpellItem
                 for (int y = offset.y * (1 - i) ; y < modiTex.height; y++)
                 {
                     var color = modiTex.GetPixel(x, y);
-                    float intensity = ((((float)x - 60 * i)/85) *((float)y  - 60* i)/ 85);
-                    color.a = 0.5f * intensity;
-                    color /= (2/intensity);
-                    color += baseType.texture.GetPixel(x, y)/1.5f;
+                    float intensity = 0.2f + ((((float) x - 60 * i) / 90) * ((float) y + 60 * i) / 90);
+                    intensity *= 0.05f + (0.1f  *(x + y) / 256);
+                    color.a = 0.3f + 0.7f * intensity;
+                    color *= 0.3f + 0.7f * intensity;
+                    color += newTexture.GetPixel(x, y)/(1.1f + intensity);
                     newTexture.SetPixel(x, y, color);
                 }
             }
